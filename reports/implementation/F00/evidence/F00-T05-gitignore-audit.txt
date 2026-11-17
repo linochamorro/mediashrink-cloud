@@ -150,3 +150,7 @@ decisión documentada (versionar el lockfile). G-6b: OK (todos los artefactos IA
 presentes). Secretos: 0 reales. Único concern: 7 rutas absolutas preexistentes
 fuera de ámbito, derivadas a auditoría final (ver [6]).
 Estado del Developer: DONE_WITH_CONCERNS. No se emite PASSED ni se cierra la tarea.
+
+=== NOTA FINAL (commit 9f6a19c) ===
+Tras anadir F00-T05-developer.md el arbol versionado tiene 135 archivos (134 + este reporte).
+El unico archivo anadido es un reporte de trazabilidad G-6b; todas las exclusiones y conteos de secretos se mantienen (0 excluidos, 0 secretos reales).

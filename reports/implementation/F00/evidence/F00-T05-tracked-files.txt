@@ -56,6 +56,7 @@ reports/implementation/F00/F00-T04-architect.md
 reports/implementation/F00/F00-T04-developer.md
 reports/implementation/F00/F00-T04-task.md
 reports/implementation/F00/F00-T04-tester.md
+reports/implementation/F00/F00-T05-developer.md
 reports/implementation/F00/F00-T05-task.md
 reports/implementation/F00/F00-T06-task.md
 reports/implementation/F00/evidence/F00-T01-A03-emulator-probe.txt

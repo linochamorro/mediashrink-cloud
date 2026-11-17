@@ -6,4 +6,3 @@ origin	https://github.com/linochamorro/mediashrink-cloud.git (fetch)
 origin	https://github.com/linochamorro/mediashrink-cloud.git (push)
 === git status --short (limpio = sin salida) ===
 STATUS_LINES=0
-=== fin: arbol limpio en el momento de la captura ===
