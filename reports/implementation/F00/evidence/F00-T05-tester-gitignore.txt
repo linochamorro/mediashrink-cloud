@@ -1,0 +1,91 @@
+MediaShrink Cloud - F00-T05 - Auditoria de .gitignore (Tester: ejecucion PROPIA)
+Fecha: 2026-11-17 - Rol Tester F00-T05 - solo lectura
+Raiz del proyecto: <PROJECT_ROOT> (ruta absoluta redactada a proposito)
+
+=== Contenido de .gitignore (numero de linea) ===
+  1: # MediaShrink Cloud — .gitignore
+  2: # F00-T05 · CA-05 · G-3 (secretos) / G-6b (trazabilidad IA visible)
+  3: # Creado ANTES de cualquier `git add` para cerrar A-05 y T04-A-01/A-02.
+  4: 
+  5: # --- Secretos y entorno de configuración (G-3 / PR-08) ---
+  6: # Solo .env.example se versiona; nunca valores reales de configuración.
+  7: .env
+  8: .env.*
+  9: !.env.example
+ 10: 
+ 11: # --- Credenciales efímeras del emulador aws-emulator (A-05, F00-T03) ---
+ 12: # docker-compose + `docker cp` escriben ca.pem, config y emulator_credentials aquí.
+ 13: # Se excluyen por disciplina G-3 aunque sean credenciales efímeras de prueba.
+ 14: .local/
+ 15: 
+ 16: # --- Dependencias y artefactos de compilación ---
+ 17: node_modules/
+ 18: dist/
+ 19: build/
+ 20: *.tsbuildinfo
+ 21: 
+ 22: # --- Terraform ---
+ 23: # Plugins descargados por `terraform init`: regenerables y voluminosos (T04-A-02).
+ 24: .terraform/
+ 25: # Estados: nunca versionar (pueden contener secretos). Patrón recursivo (T04-A-01):
+ 26: # cubre tanto infra/terraform/terraform.tfstate como
+ 27: # infra/terraform/.terraform/terraform.tfstate (estado de arranque de `init`).
+ 28: *.tfstate*
+ 29: **/*.tfstate*
+ 30: # Variables locales con posibles secretos; se conserva el ejemplo.
+ 31: *.tfvars
+ 32: *.tfvars.json
+ 33: !*.tfvars.example
+ 34: # NOTA de decisión (T04-A-02): `.terraform.lock.hcl` SÍ SE VERSIONA.
+ 35: # Contiene únicamente versión/constraint del provider (5.100.0 / ~> 5.0) y sus
+ 36: # hashes públicos: es artefacto de trazabilidad y reproducibilidad, NO un secreto.
+ 37: # `terraform init` recomienda incluirlo. Por ello NO se ignora (ver reporte T05).
+ 38: 
+ 39: # --- Material efímero del proyecto (G-11: borrado físico en Fase 3) ---
+ 40: temporary/
+ 41: 
+ 42: # --- Caches, logs y artefactos del sistema operativo ---
+ 43: *.log
+ 44: npm-debug.log*
+ 45: yarn-debug.log*
+ 46: yarn-error.log*
+ 47: pnpm-debug.log*
+ 48: .eslintcache
+ 49: .cache/
+ 50: coverage/
+ 51: .DS_Store
+ 52: Thumbs.db
+ 53: *.tmp
+ 54: *.swp
+ 55: *~
+
+=== Patrones obligatorios presentes (lectura literal) ===
+.env             => PRESENTE
+.env.*           => PRESENTE
+!.env.example    => PRESENTE
+.local/          => PRESENTE
+node_modules/    => PRESENTE
+dist/            => PRESENTE
+.terraform/      => PRESENTE
+*.tfstate*       => PRESENTE
+**/*.tfstate*    => PRESENTE
+temporary/       => PRESENTE
+
+=== Rutas G-6b NO excluidas (git check-ignore -q: 1 = no ignorado) ===
+AGENTS.md                                                  => EXIT=1 (NO ignorado (correcto))
+STATE.md                                                   => EXIT=1 (NO ignorado (correcto))
+.agents/roles/tester.md                                    => EXIT=1 (NO ignorado (correcto))
+docs/sdd/constitution.md                                   => EXIT=1 (NO ignorado (correcto))
+docs/sdd/packages/P-00-foundation-and-emulator.md          => EXIT=1 (NO ignorado (correcto))
+reports/implementation/F00/F00-T05-task.md                 => EXIT=1 (NO ignorado (correcto))
+.env.example                                               => EXIT=1 (NO ignorado (correcto))
+
+=== Rutas que SI deben estar ignoradas (git check-ignore -q: 0 = ignorado) ===
+.env                                                       => EXIT=0 (ignorado (correcto))
+.env.production                                            => EXIT=0 (ignorado (correcto))
+.local/aws-emulator/ca.pem                                 => EXIT=0 (ignorado (correcto))
+node_modules/vite/package.json                             => EXIT=0 (ignorado (correcto))
+dist/assets/index.js                                       => EXIT=0 (ignorado (correcto))
+infra/terraform/.terraform/terraform.tfstate               => EXIT=0 (ignorado (correcto))
+infra/terraform/terraform.tfstate                          => EXIT=0 (ignorado (correcto))
+temporary/F00-T01-secrets-audit.ps1                        => EXIT=0 (ignorado (correcto))

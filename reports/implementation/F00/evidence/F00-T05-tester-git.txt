@@ -1,0 +1,23 @@
+MediaShrink Cloud - F00-T05 - Estado Git (Tester: ejecucion PROPIA, solo lectura)
+Fecha: 2026-11-17 - Rol Tester F00-T05 - sin commits, sin pushes
+Raiz del proyecto: <PROJECT_ROOT> (ruta absoluta redactada a proposito)
+
+=== git status --short ===
+STATUS_LINES=0
+
+=== git remote -v ===
+origin	https://github.com/linochamorro/mediashrink-cloud.git (fetch)
+origin	https://github.com/linochamorro/mediashrink-cloud.git (push)
+
+=== git branch --show-current ===
+main
+
+=== git log -1 --oneline ===
+4d321a5 chore: sincronizar evidencia F00-T05 con el arbol remoto final
+
+=== Sincronizacion local/remoto ===
+HEAD=4d321a5e51f623cf33eeb83e05aca6dc75bc3b82
+origin/main=4d321a5e51f623cf33eeb83e05aca6dc75bc3b82
+
+=== gh repo view linochamorro/mediashrink-cloud --json visibility,name,url ===
+{"name":"mediashrink-cloud","url":"https://github.com/linochamorro/mediashrink-cloud","visibility":"PUBLIC"}

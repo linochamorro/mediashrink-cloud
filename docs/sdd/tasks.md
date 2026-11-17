@@ -25,7 +25,7 @@ Fase Final: Integración, E2E, auditoría de seguridad, pruebas de Lino,
 
 ## Fase 0 — Entorno, credenciales y herramientas base (`F00`)
 
-- **Estado:** `RE-DESPACHO EN CURSO (Opción A, sin G-9)` — `F00-T01` (A-03), `F00-T02`, `F00-T03` y `F00-T04` `PASSED`; `F00-T05` en curso; `F00-T06` pendiente |
+- **Estado:** **`CERRADA — FASE_COMPLETA`** (2026-11-17) — `F00-T01`…`F00-T06` `PASSED`; CA-01…CA-06 verificados por Tester; auditorías sin bloqueantes. Seguimientos no bloqueantes: P4 → F05/G-12, deudas CI/herramientas a tareas futuras. `P-01` NO iniciada |
 - **Objetivo:** proyecto ejecutable en local/CI sin cuenta AWS: `.env.example`, `package.json`, `docker-compose.yml`, bootstrap Terraform, repo GitHub público, CI base de typecheck/lint.
 - **Gates:** G-1 aprobado, G-3 (solo `.env.example`), G-6 + G-6b (repo público `mediashrink-cloud`, incluir archivos IA), G-7 (Docker `2g`/`2.0`), G-8 (dependencias), G-5 = no aplica.
 - **Riesgo:** 2 → Auditor en cierre.
@@ -36,8 +36,8 @@ Fase Final: Integración, E2E, auditoría de seguridad, pruebas de Lino,
 | `F00-T02` | Inicializar workspace Vite/React + Hono + Vitest/Playwright | `F00-T01` | Developer | **PASSED (Loop 1/3)** — `F00-T02-architect.md`; typecheck/lint 0, 35/35 tests, `npm ci` reproducible |
 | `F00-T03` | `docker-compose.yml` para `aws/aws-emulator` con límites | `F00-T01` | Developer | **PASSED (v2, Loop 1/3)** — `F00-T03-architect.md`; `up`/`inspect` (`2147483648`/`2000000000`)/TLS `ca.pem`/`down` reales; A-01/A-02 cerrados; A-05 → T05 |
 | `F00-T04` | Bootstrap Terraform (proveedor Emulator, backend local) | `F00-T03` | Developer | **PASSED (Loop 1/3)** — `F00-T04-architect.md`; `fmt`/`init`/`validate`/`plan` exit 0, STS en vivo, 0 cambios de infra, sin `apply` |
-| `F00-T05` | Repo GitHub público + `.gitignore` (excluir `.env`, secretos, `temporary/`) | `F00-T02` | Developer | **PENDIENTE** — habilitada por T02; `gh` autenticado; no despachada por retorno activo |
-| `F00-T06` | CI base (install, typecheck, lint, unit test) | `F00-T02`, `F00-T05` | Developer | **PENDIENTE** — depende de T05 |
+| `F00-T05` | Repo GitHub público + `.gitignore` (excluir `.env`, secretos, `temporary/`) | `F00-T02` | Developer | **PASSED (Loop 1/3)** — `F00-T05-architect.md`; repo `PUBLIC`, G-6b 5/5, 0 secretos; A-05/T04-A-01/A-02 cerrados; P4 → F05 |
+| `F00-T06` | CI base (install, typecheck, lint, unit test) | `F00-T02`, `F00-T05` | Developer | **PASSED (Loop 1/3)** — `F00-T06-architect.md`; run `44184037945` `success`, 4/4 pasos |
 
 ---
 

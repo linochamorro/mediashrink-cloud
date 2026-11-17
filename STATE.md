@@ -2,33 +2,36 @@
 
 | Campo | Valor |
 |---|---|
-| **Última actualización** | `2026-11-17 (re-despacho F00 — T03 cerrada en vivo)` |
+| **Última actualización** | `2026-11-17 (P-00 CERRADA — FASE_COMPLETA)` |
 | **Estructura del proyecto** | `Canónica completa` (`frontend/` + `backend/` + `infra/terraform/`) |
-| **Fase actual** | `Fase 0 re-despachada — docs/sdd/packages/P-00-foundation-and-emulator.md` |
-| **Estado de retorno** | `RE-DESPACHO EN CURSO — F00-T01 (A-03), T02, T03 y T04 PASSED; F00-T05 en curso; F00-T06 pendiente` |
-| **Única tarea o bloque autorizado** | `F00-T05 (.gitignore + repo público) en curso; luego F00-T06 (CI). Fase 1 NO autorizada` |
-| **Último dictamen verificado** | `F00-T04 PASSED por Tester (fmt/init/validate/plan exit 0, STS en vivo, 0 cambios, sin apply) + Auditor READY_WITH_CONCERNS (4 LOW + 1 INFO; A-05 y T04-A-01/A-02 → T05)` |
-| **Harness en curso** | `OpenCode (re-despacho P-00; Developer de F00-T05 activo)` |
+| **Fase actual** | `Fase 0 CERRADA — docs/sdd/packages/P-00-foundation-and-emulator.md` |
+| **Estado de retorno** | **`FASE_COMPLETA` — retorno a CTO; Fase 1 (P-01) NO iniciada** |
+| **Única tarea o bloque autorizado** | `Ninguna. Siguiente: revisión CTO y autorización expresa de P-01` |
+| **Último dictamen verificado** | `F00-T06 PASSED por Tester (run 44184037945 success, 4/4 pasos) + Auditor READY_WITH_CONCERNS sin bloqueantes. CA-01…CA-06 PASSED; sin G-9/G-10` |
+| **Harness en curso** | `OpenCode → CTO (Atenea)` |
 | **Gate Git (G-6) y archivos IA en GitHub (G-6b)** | `Git: Autorizado desde Fase 0 (repo público 'mediashrink-cloud') · Archivos agentes/IA en GitHub: Permitidos (G-6b abierto)` |
 | **Otros gates abiertos** | `G-2 (F00 autorizada) · G-3 (.env.example) · G-4 (BD en emulador para F01) · G-8 (dependencias F00) · G-11 (borrado temporary/ en F05) · G-12 (publicación final) · G-7 Docker: Autorizado con límite --memory=2g --cpus="2.0"` |
 
 ## 1. Trabajo en curso
-**Re-despacho en curso (Opción A, sin `G-9`).** Addendum `A-03` cerrado en `F00-T01` (Tester `PASSED`, QueueUrls canónicas + credenciales por archivos). `F00-T03` cerrada `PASSED` con verificación en vivo: arranque healthy, límites efectivos `2147483648`/`2000000000`, TLS con `ca.pem`, apagado limpio; imagen por digest (A-01) y runbook con procedencia (A-02); N-01/N-02 corregidos. Auditor `READY_WITH_CONCERNS` con A-05 (`.gitignore`) transferido a `F00-T05`. Terraform CLI en `D:\Programs\DevApps\DevOps\Terraform\CLI\terraform.exe` (fuera de PATH).
+**Fase 0 cerrada (`FASE_COMPLETA`).** Opción A ejecutada sin `G-9` ni `G-10`: addendum A-03 en `F00-T01`; `F00-T03` en vivo (límites `2147483648`/`2000000000`, TLS con `ca.pem`, apagado limpio, imagen por digest y procedencia documentada); `F00-T04` bootstrap Terraform (`fmt`/`init`/`validate`/`plan`, STS en vivo, sin `apply`); `F00-T05` repo público `mediashrink-cloud` con G-6b y A-05 cerrado; `F00-T06` CI verde (run `44184037945`). Las seis tareas tienen `PASSED` de Tester y auditorías `READY_WITH_CONCERNS` sin bloqueantes. Binarios de tooling fuera de PATH: resolver marcadores `<TF_CLI_DIR>` / `<DOCKER_CLI_DIR>` (ver `AGENTS.md` §6).
 
 ## 2. Pendientes inmediatos (en orden de prioridad)
-1. `F00-T04`: bootstrap Terraform contra el emulador `:9297`, `init`/`validate`/`plan` sin AWS real; cierre Tester + Auditor riesgo 2 — Responsable: `Architect` — Condición de entrada: `F00-T03 PASSED (hecho)`
-2. `F00-T05`: `.gitignore` (`.env`, `.local/`, `node_modules/`, `dist/`, `.terraform/`, `temporary/`; cierra A-05) + repo público `mediashrink-cloud` con G-6b — Responsable: `Architect` — Condición de entrada: `F00-T04 cerrada`
-3. `F00-T06`: `.github/workflows/ci.yml` con `npm ci`/typecheck/lint/test:unit y run verde — Responsable: `Architect` — Condición de entrada: `F00-T05 cerrada`
-4. Cierre de Fase 0: actualizar `AGENTS.md` §6, `tasks.md`, `STATE.md` y `reports/verification/F00-architect.md` con CA-01..CA-06 en PASSED — Responsable: `Architect` — Condición de entrada: `F00-T06 cerrada`
+1. Revisión del retorno `FASE_COMPLETA` por CTO y autorización expresa de `P-01` (Fase 1) — Responsable: `CTO / Lino` — Condición de entrada: `reports/verification/F00-architect.md §7 (hecho)`
+2. Resolver P4 antes de `G-12`: anonimizar rutas en artefactos G-6b (opción A) o decisión expresa de Lino (opción B, G-10) — Responsable: `CTO / Lino` — Destino: `F05`
+3. Sincronizar el commit local `ab5ef7c` (reportes/evidencias T06) con el remoto — Responsable: `Architect` tras autorización — Condición de entrada: `Antes de G-12`
+4. No heredar flags `skip_*` del bootstrap en F04; migrar ESLint 8 y reevaluar scripts nativos en tareas futuras — Responsable: `CTO` al planificar fases
 
 ## 3. Bloqueos activos
 | ID / Tarea | Causa del bloqueo (`BLOCKED` / `GATE` / `NEEDS_CONTEXT`) | Quién desbloquea | Desde |
 |---|---|---|---|
-| `Ninguno` | `Docker Desktop y Terraform CLI confirmados por Lino` | — | — |
+| `Ninguno` | `F00` cerrada; `P-01` requiere autorización expresa (`G-2`) | `CTO / Lino` | — |
 
 ## 4. Últimos hitos cerrados
 | Fecha | Fase / Tarea | Veredicto | Reporte verificable |
 |---|---|---|---|
+| `2026-11-17` | `F00-T06` — CI base (run verde) | `PASSED (1/3)` | `reports/implementation/F00/F00-T06-{developer,tester,architect}.md` + `reports/audits/F00/F00-T06-auditor.md` |
+| `2026-11-17` | `F00-T05` — `.gitignore` + repo público | `PASSED (1/3)` | `reports/implementation/F00/F00-T05-{developer,tester,architect}.md` + `reports/audits/F00/F00-T05-auditor.md` |
+| `2026-11-17` | `F00-T04` — Bootstrap Terraform | `PASSED (1/3)` | `reports/implementation/F00/F00-T04-{developer,tester,architect}.md` + `reports/audits/F00/F00-T04-auditor.md` |
 | `2026-11-17` | `F00-T03` (v2) — Docker/aws-emulator en vivo + A-01/A-02 | `PASSED (1/3)` | `reports/implementation/F00/F00-T03-{developer,tester,architect}.md` + `reports/audits/F00/F00-T03-auditor.md` + `evidence/` |
 | `2026-11-17` | `F00-T01` — addendum A-03 (Auditor MEDIUM) | `PASSED (addendum)` | `F00-T01-{developer,tester,architect}.md` (addenda) + `evidence/F00-T01-A03-*` |
 | `2026-11-17` | `F00-T02` — Workspaces Vite/React + Hono + Vitest/Playwright | `PASSED (1/3)` | `reports/implementation/F00/F00-T02-{developer,tester,architect}.md` + `evidence/` |
@@ -38,6 +41,12 @@
 | `2026-11-17` | `Selección de ruta, stack y G-6b/G-7` | `APROBADO` | `docs/decisions/ADR-001-stack-and-aws-emulator.md` |
 
 ## 5. Relevos de sesión (append-only, el más reciente arriba)
+### `2026-11-17` — `Architect (cierre de F00 — FASE_COMPLETA)`
+- **Realizado:** `F00-T04`, `F00-T05` y `F00-T06` cerradas `PASSED` con Tester independiente y Auditor riesgo 2 sin bloqueantes. Terraform `init`/`validate`/`plan` en vivo; repo público `mediashrink-cloud` con G-6b y A-05 cerrado; CI run `44184037945` `success` (4/4 pasos). Actualizados `AGENTS.md` §6 (comandos comprobados, cifra final 40/40), `tasks.md`, `STATE.md` y `reports/verification/F00-architect.md` §7 (consolidación append-only).
+- **Decidido / Verificado:** CA-01…CA-06 `PASSED`; sin `G-9` ni `G-10`; P4 y deudas CI/herramientas quedan como seguimientos no bloqueantes con responsable y fase. `G-12` no ejecutado (sin release/deploy); contenedor Docker apagado tras cada prueba.
+- **Pendiente al retomar:** Revisión CTO y autorización de `P-01`; resolución de P4 antes de G-12; sincronización de `ab5ef7c`.
+- **No repetir:** No iniciar Fase 1 sin autorización; no aceptar riesgos por Lino; no publicar release sin G-12.
+
 ### `2026-11-17` — `Architect (re-despacho F00: A-03 y T03 en vivo)`
 - **Realizado:** Addendum A-03 de `F00-T01` corregido y re-verificado (`PASSED`): sin `:9324`, credenciales por archivos generados, QueueUrls canónicas con `AWS_ENDPOINT_URL` como transporte (sonda SigV4 real). `F00-T03` reanudada con Docker real: corregido el montaje (volumen named + `docker cp`, sin `user:`), imagen fijada por digest (A-01), procedencia documentada (A-02) y N-01/N-02 resueltos. Cerrada `PASSED` por Tester v2 con evidencia propia; Auditor `READY_WITH_CONCERNS` con A-05 transferido a T05. Actualizados `tasks.md` y `STATE.md`.
 - **Decidido / Verificado:** Opción A sin G-9 ni G-10. Binarios fuera de PATH: Docker en `D:\Programs\DevApps\Containers\Docker\Desktop\resources\bin`, Terraform en `D:\Programs\DevApps\DevOps\Terraform\CLI` — se pasan rutas explícitas a cada subagente. Contenedor dejado APAGADO.
@@ -95,4 +104,4 @@
 - Retorno de Fase 0: [F00-architect.md](reports/verification/F00-architect.md)
 
 ## 7. Retorno al CTO
-**Estado: `GATE_PENDIENTE / NEEDS_CONTEXT`.** Fase 0 **no cerrada**: `F00-T01` y `F00-T02` `PASSED`, `F00-T03` `NEEDS_CONTEXT` (Docker ausente; auditoría `INCONCLUSIVE` sin bloqueantes), `F00-T04`…`F00-T06` no despachados. Se detiene la ejecución del Architect de Fase 0 y se solicita a CTO/Lino: decisión sobre Docker/Terraform (instalación con admin u opcional `G-9`) y corrección del hallazgo `A-03` en `.env.example`. No se inició Fase 1, no se usaron Git/GitHub ni Docker y no se concedió ningún `G-10`.
+**Estado: `FASE_COMPLETA`.** P-00 cerrada: `F00-T01`…`F00-T06` `PASSED` con evidencia de Tester; CA-01…CA-06 verificados; auditorías de riesgo 2 `READY_WITH_CONCERNS` sin hallazgos bloqueantes. No se concedió `G-9` ni `G-10`; G-6/G-6b/G-7/G-8 ejecutados; G-12 no ejecutado. Seguimientos no bloqueantes: **P4** (rutas en G-6b → anonimizar en F05 o decisión de Lino), deuda ESLint 8 / scripts nativos / acciones `@v4`, flags `skip_*` para F04 y sincronización del commit `ab5ef7c`. Se detiene la ejecución del Architect; **Fase 1 no iniciada** y se solicita autorización expresa de `P-01`. Detalle: [F00-architect.md §7](reports/verification/F00-architect.md).

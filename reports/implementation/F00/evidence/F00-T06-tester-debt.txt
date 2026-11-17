@@ -1,0 +1,40 @@
+=== F00-T06 — Deuda residual y observaciones de alcance (Tester) ===
+Fecha: 2026-11-17
+
+--- Deuda heredada documentada SIN aceptación de riesgo (G-10) ---
+[OK] F00-T02-P2 — ESLint 8 deprecado:
+     package.json fija `eslint": "^8.57.1"` con configuración embebida (`eslintConfig`).
+     Developer reporte §5 / problema 02 y evidence/F00-T06-debt.txt lo declaran como
+     deuda NO bloqueante, migración a ESLint 9/config plana fuera de alcance.
+     No se rebajó ninguna regla ni se omitió el paso Lint (conclusion=success en CI).
+     NO se acepta G-10. Sin sanción de Lino.
+
+[OK] F00-T02-P1 — scripts postinstall no aprobados (esbuild/sharp):
+     Verificado en el log del run: `npm ci --no-audit --no-fund` mostró el aviso
+     "2 packages have install scripts not yet covered by allowScripts" y terminó en
+     success. Es decir: NO se aprobaron scripts, NO se usó `--ignore-scripts` ni
+     `--foreground-scripts` ni allowlist. Lockfile v3 + binarios de plataforma cubren
+     el runner ubuntu-latest / Node 26. Declarado, no aceptado (sin G-10).
+     Límite declarado: no se validaron otros runners/versiones de Node.
+
+[OK] El run verde NO se logró relajando comandos: los cuatro pasos ejecutan los scripts
+     idénticos a T02 (ver F00-T06-tester-workflow.txt y F00-T06-tester-steps.txt).
+     Sin `continue-on-error`, sin pasos condicionales, sin `--passWithNoTests`.
+
+[OK] Anotaciones INFO del runner (Node 20 deprecado en @v4; ubuntu-latest → Ubuntu 26)
+     documentadas como no bloqueantes. Run = success pese a ellas.
+
+--- Observación de alcance (no fallo de CA-06) ---
+`git status --short` muestra `M STATE.md`, `M docs/sdd/tasks.md` y archivos `??` de
+F00-T05 (cierre del Architect) más los evidencias de este Tester. Son trabajo de otros
+roles; el Tester NO los tocó. `git log -3 --oneline`:
+  ab5ef7c docs(F00-T06): anadir evidencias del run CI y reporte del Developer  (LOCAL, sin push)
+  03e6208 ci: anadir workflow base de GitHub Actions (F00-T06, CA-06)          (PUSHADO a main)
+  4d321a5 chore: sincronizar evidencia F00-T05 con el arbol remoto final
+El push autorizado cobre únicamente el workflow (`03e6208`), que es el HEAD del run
+verde. El commit `ab5ef7c` permanece local. Se registra como observación para el
+Architect (consolidación de F00), no como incumplimiento de CA-06.
+
+--- Conclusión de deuda ---
+Ningún hallazgo bloqueante. Deuda P1/P2 permanece declarada y sin aceptar; CA-06
+no depende de ella.

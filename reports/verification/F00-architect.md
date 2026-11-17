@@ -78,3 +78,56 @@ Tiempo observado: marcas de evidencia entre `10:31` y `10:52` (RED/GREEN de T01 
 ---
 
 **Estado final del retorno:** `GATE_PENDIENTE / NEEDS_CONTEXT`. Se detiene aquí la ejecución del Architect de Fase 0. **No se ha iniciado Fase 1.**
+
+---
+
+## 7. Consolidación final — re-despacho de P-00 (2026-11-17, Opción A sin G-9)
+
+> Esta sección **actualiza y supera** el estado de las secciones 1–6 (que quedan conservadas como historial del primer retorno). Lino instaló Docker Desktop y Terraform CLI; el CTO autorizó el re-despacho con addendum A-03, hardening A-01/A-02 y verificación real.
+
+| Campo | Valor |
+|---|---|
+| **Motivo de retorno (final)** | **`FASE_COMPLETA`** — `F00-T01`…`F00-T06` con `PASSED` de Tester y auditorías sin hallazgos bloqueantes |
+| **Estado de `tasks.md` / `STATE.md` / `AGENTS.md` §6** | Actualizados |
+| **Fase 1 (`P-01`)** | **NO iniciada** |
+
+### 7.1 Resumen final de tareas
+
+| ID | Resultado | Loops | Tester | Auditor | Cierre |
+|---|---|---|---|---|---|
+| `F00-T01` | `.env.example` + validación (con addendum A-03) | `1/3` | `PASSED` | N/A (riesgo 1) | `F00-T01-architect.md` |
+| `F00-T02` | Workspaces Vite/Hono/Vitest | `1/3` | `PASSED` | N/A (riesgo 1) | `F00-T02-architect.md` |
+| `F00-T03` | Docker/emulador en vivo (A-01/A-02/N-01/N-02) | v1 `NEEDS_CONTEXT` (loop no consumido) → v2 `1/3` | `PASSED` | `READY_WITH_CONCERNS` (A-05 → T05) | `F00-T03-architect.md` |
+| `F00-T04` | Bootstrap Terraform | `1/3` | `PASSED` | `READY_WITH_CONCERNS` | `F00-T04-architect.md` |
+| `F00-T05` | `.gitignore` + repo público | `1/3` | `PASSED` | `READY_WITH_CONCERNS` (P4 → F05) | `F00-T05-architect.md` |
+| `F00-T06` | CI en GitHub Actions | `1/3` | `PASSED` | `READY_WITH_CONCERNS` | `F00-T06-architect.md` |
+
+### 7.2 Criterios de aceptación (estado final)
+
+| Criterio | Estado | Evidencia verificada por Tester |
+|---|---|---|
+| `CA-01` | **`PASSED`** | 28 variables sin secretos, sin `:9324`, credenciales por archivos, QueueUrls canónicas con `AWS_ENDPOINT_URL` como transporte; **40/40** tests finales (35 base + 5 A-03) |
+| `CA-02` | **`PASSED`** | `typecheck`/`lint` exit 0; workspaces y `npm ci` reproducibles; sin producto F01–F03 |
+| `CA-03` | **`PASSED`** | `config`/`up`/`inspect`/healthcheck con `ca.pem`/`down` reales; límites efectivos `2147483648` / `2000000000`; imagen por digest; TLS real (sin CA → exit 60) |
+| `CA-04` | **`PASSED`** | `fmt`/`init`/`validate`/`plan` exit 0; STS en vivo `id=000000000000`; 0 cambios de infra; sin `apply` ni AWS real |
+| `CA-05` | **`PASSED`** | Repo `PUBLIC` `linochamorro/mediashrink-cloud`, rama `main`; G-6b 5/5; 0 secretos; A-05/T04-A-01/A-02 cerrados |
+| `CA-06` | **`PASSED`** | Run `44184037945` `success`, 4/4 pasos con comandos idénticos a T02; sin relajar expectativas |
+
+**Sin hallazgos bloqueantes de Auditor** en ninguna tarea. Ningún `PASSED` condicional. Ningún riesgo aceptado: **no se concedió G-9 ni G-10**.
+
+### 7.3 Seguimientos no bloqueantes (responsable y fase)
+
+| ID | Descripción | Destino |
+|---|---|---|
+| **P4 / T05-A-04** | 7 rutas Windows absolutas preexistentes en artefactos G-6b (metadata de entorno, **no secretos**): (A) addendum de anonimización con marcadores o (B) decisión expresa de Lino | **F05 / G-12** |
+| `T04-A-03` | Flags `skip_*` del provider justificados para el emulador pero no condicionados: no heredarlos en entorno real | **F04 (fase posterior)** |
+| `F00-T02-P1/P2`, `T06-A-02/T06-A-03` | ESLint 8 deprecado (migrar a 9), `postinstall` no aprobados y acciones `@v4` por tag mutable: deuda declarada, **no aceptada** | Tareas futuras / decisión Lino |
+| `O-02` | Commit local `ab5ef7c` con reportes/evidencias T06; solo `03e6208` (workflow) fue pushado | Sincronización documental antes de G-12 |
+
+### 7.4 Operación y confinamiento
+
+- G-6 ejecutado (repo público) y G-6b respetado; G-7 ejecutado con límites y contenedor **apagado** tras cada prueba; G-8 ejecutado (lockfile). G-12 **no ejecutado** (sin release/deploy).
+- `AGENTS.md` §6 actualizado con comandos comprobados y marcadores de entorno (no amplía P4); `docs/sdd/tasks.md` y `STATE.md` actualizados.
+- No se inició Fase 1, no se implementó producto ni se escribieron pruebas como Architect, no se ejecutaron pruebas por este rol (se revisó evidencia de Tester/Auditor), no se borró nada fuera de la raíz. `temporary/` sigue intacto para borrado verificado en Fase Final.
+
+**Retorno final:** `FASE_COMPLETA` — P-00 cerrada. Se detiene la ejecución del Architect y se entrega al CTO para revisión y autorización de `P-01`.

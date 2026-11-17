@@ -1,0 +1,48 @@
+=== F00-T06 — Verificación propia del workflow de CI (Tester) ===
+Fuente inspeccionada: .github/workflows/ci.yml (lectura directa, sin editar)
+Fecha: 2026-11-17
+Ámbito: CA-06 (P-00 §5) — comparación con scripts verificados en F00-T02.
+
+--- Extracto literal del workflow (n.º de línea) ---
+  1  name: CI
+  8  on:
+  9    push:
+ 10      branches: [main]
+ 11    pull_request:
+ 12      branches: [main]
+ 15  permissions:
+ 16    contents: read
+ 19    verify:
+ 20      name: install / typecheck / lint / test:unit
+ 21      runs-on: ubuntu-latest
+ 23        - name: Checkout
+ 24          uses: actions/checkout@v4
+ 26        - name: Setup Node.js
+ 27          uses: actions/setup-node@v4
+ 32            node-version: '26'
+ 34            cache: 'npm'
+ 36        - name: Install
+ 39          run: npm ci --no-audit --no-fund
+ 41        - name: Typecheck
+ 42          run: npm run typecheck
+ 44        - name: Lint
+ 45          run: npm run lint
+ 47        - name: Test unit
+ 48          run: npm run test:unit
+
+--- Comprobaciones (criterio: task.md §2/§5 y F00-T02-architect.md §1) ---
+[OK] Trigger `push` sobre `main`.
+[OK] Trigger `pull_request` sobre `main`.
+[OK] `permissions: contents: read` (mínimo, sin write).
+[OK] `actions/checkout@v4`.
+[OK] `actions/setup-node@v4` con `node-version: '26'` y `cache: 'npm'`.
+[OK] Paso Install = `npm ci --no-audit --no-fund` (idéntico a T02).
+[OK] Paso Typecheck = `npm run typecheck` (idéntico a T02).
+[OK] Paso Lint = `npm run lint` (idéntico a T02).
+[OK] Paso Test unit = `npm run test:unit` (idéntico a T02).
+[OK] Los cuatro pasos aparecen en el orden exigido: install → typecheck → lint → test:unit.
+[OK] Sin `--ignore-scripts`, sin allowlists de scripts, sin `continue-on-error`, sin `if:` que omita pasos, sin matrices que reduzcan cobertura.
+[OK] Sin secretos, tokens ni rutas Windows absolutas en el archivo (ver F00-T06-tester-secrets.txt).
+[OK] Sin pasos de release/deploy/publicación (G-12 no aplica en F00).
+
+Resultado: CONFORME. El workflow no redefine ni debilita los comandos verificados en T02.

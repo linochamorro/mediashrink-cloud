@@ -34,4 +34,49 @@ Vigente desde: 2026-11-17 · Coordinación global: CTO (Atenea) · Aprobación d
 - **Confinamiento:** todo trabajo y borrado se limita a `D:\Projects\Bluemind_Lab\projects\portfolio\mediashrink-cloud`.
 
 ## 6. Comandos comprobados
-*(Se completarán y validarán en Fase 0 tras inicializar `package.json`, `docker-compose.yml` y `infra/terraform/`).*
+*Validados en Fase 0 (`P-00`). Ejecutar siempre desde la raíz del proyecto.*
+
+### Nota de entorno (Windows)
+Los binarios de Docker y Terraform **pueden no estar en PATH**. Resuelve `<DOCKER_CLI_DIR>` y `<TF_CLI_DIR>` en tu entorno y anteponlos a `$env:PATH` (o usa rutas absolutas locales). Las rutas concretas de este harness quedan fuera del documento versionado para no ampliar el seguimiento P4 de anonimización (G-6b): versiones verificadas Docker engine 29.9.3 / Compose v5.7.0 y Terraform v1.17.2.
+
+### Node / TDD (verificado en `F00-T01`, `F00-T02` y CI)
+| Comando | Resultado esperado |
+|---|---|
+| `npm ci --no-audit --no-fund` | exit 0 · 243 paquetes desde `package-lock.json` |
+| `npm run typecheck` | exit 0 · sin diagnósticos |
+| `npm run lint` | exit 0 · sin hallazgos |
+| `npm run test:unit` | exit 0 · 3 archivos, **40/40** tests (35 base + 5 de regresión A-03) |
+| `npx vitest run tests/unit/config.test.ts` | exit 0 · 35/35 (30 base + 5 de regresión A-03) |
+
+### Docker / `aws/aws-emulator` (verificado en `F00-T03`)
+| Comando | Resultado esperado |
+|---|---|
+| `docker compose config` | exit 0 · esquema válido, `memory=2147483648`, `cpus=2`, `host_ip=127.0.0.1` |
+| `docker compose up -d` | exit 0 · contenedor `healthy` (~9 s), límites efectivos `2147483648` bytes / `2000000000` nanoCpus, `user=1000:1000` |
+| `curl.exe --cacert ./.local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health` | cuerpo `ok`, exit 0 · sin CA debe fallar (exit 60) |
+| `docker compose down` | exit 0 · sin contenedor ni red `mediashrink-cloud_default` |
+
+**G-7:** levantar el contenedor **solo** durante pruebas/desarrollo con esos límites y **apagarlo al terminar**. Con volumen named, repetir `docker cp` de `ca.pem`/`config`/`emulator_credentials` en cada arranque (ver runbook).
+
+### Terraform (verificado en `F00-T04`)
+| Comando | Resultado esperado |
+|---|---|
+| `terraform fmt -check` | exit 0 |
+| `terraform init` | exit 0 · backend local, provider `hashicorp/aws v5.100.0` |
+| `terraform validate` | exit 0 |
+| `terraform plan` | exit 0 · sonda STS en vivo `id=000000000000`, **0 cambios de infraestructura** |
+
+**Prohibido:** `terraform apply` contra AWS real. El bootstrap consume `AWS_ENDPOINT_URL=https://127.0.0.1:9297` y credenciales por `AWS_SHARED_CREDENTIALS_FILE`/`AWS_CONFIG_FILE`; nunca `:9324`.
+
+### Git / GitHub (verificado en `F00-T05` y `F00-T06`)
+Repo público: `https://github.com/linochamorro/mediashrink-cloud` · rama `main`.
+| Comando | Resultado esperado |
+|---|---|
+| `git status --short` | sin cambios propios tras commit |
+| `git ls-files` | sin `.env`, `.local/`, `temporary/`, `.terraform/`, `*.tfstate*`; G-6b incluido |
+| `gh repo view --json visibility,name,url` | `PUBLIC`, `mediashrink-cloud` |
+| `gh api repos/linochamorro/mediashrink-cloud/git/trees/main?recursive=1` | G-6b 5/5 rutas presentes |
+| `gh run list --workflow ci.yml --limit 5` | run más reciente en `main` |
+| `gh run view <id>` | conclusión `success` (4 pasos: Install, Typecheck, Lint, Test unit) |
+
+CI verificada: run `44184037945` → `success` (https://github.com/linochamorro/mediashrink-cloud/actions/runs/44184037945).

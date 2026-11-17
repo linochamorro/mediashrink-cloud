@@ -1,0 +1,51 @@
+=== F00-T06 — Verificación propia de los pasos del job (Tester) ===
+Comando: gh api repos/linochamorro/mediashrink-cloud/actions/runs/44184037945/jobs
+Fecha: 2026-11-17
+
+--- Datos estructurados del job ---
+total_count: 1
+job: install / typecheck / lint / test:unit
+id: 134395645994 · run_id: 44184037945 · run_attempt: 1
+head_branch: main
+head_sha: 03e6208bcc353ec9f8557fbefc5d6520eb2e91be
+status: completed · conclusion: success
+labels: ["ubuntu-latest"]
+
+--- Pasos (nombre / número / status / conclusion) ---
+ 1  Set up job           completed  success
+ 2  Checkout             completed  success
+ 3  Setup Node.js        completed  success
+ 4  Install              completed  success
+ 5  Typecheck            completed  success
+ 6  Lint                 completed  success
+ 7  Test unit            completed  success
+13  Post Setup Node.js   completed  success
+14  Post Checkout        completed  success
+15  Complete job         completed  success
+
+--- Comprobación de los cuatro pasos exigidos por CA-06 ---
+[OK] Install   (`npm ci --no-audit --no-fund`) → success
+[OK] Typecheck (`npm run typecheck`)           → success
+[OK] Lint      (`npm run lint`)                 → success
+[OK] Test unit (`npm run test:unit`)            → success
+[OK] Ningún paso de los cuatro con `skipped`, `failure` ni `cancelled`.
+
+--- Log del paso Test unit (gh run view 44184037945 --log; ANSI eliminado) ---
+> vitest run tests/unit
+ Test Files  3 passed (3)
+ Tests  40 passed (40)
+
+--- Reejecución independiente en local (Tester) ---
+Comando: npm run test:unit
+Resultado: Test Files 3 passed (3) · Tests 40 passed (40) · exit 0
+
+--- OBSERVACIÓN (discrepancia documental, NO incumplimiento de CA-06) ---
+El task.md §5 y el reporte del Developer citan "35/35" como cifra heredada de F00-T02.
+La comprobación propia (log del run + reejecución local) da **40/40**.
+Causa: la suite creció en tareas posteriores a T02 con pruebas A-03 (p. ej. "rechaza el
+puerto retirado :9324", "apunta SQS/DLQ a las QueueUrls reales", "no contiene secretos
+reales en .env.example"). config.test.ts pasó de 30 a 35 casos; total 35 → 40.
+Interpretación: 40/40 es un SUPERCONJUNTO de 35/35. El comando `npm run test:unit`
+es idéntico al verificado en T02, no se relajó ni se saltó; hay MÁS cobertura, no menos.
+Por tanto la integridad de CA-06 se mantiene. Se recomienda al Architect corregir la
+cifra "35/35" → "40/40" en el cierre de fase (documentación, no código).

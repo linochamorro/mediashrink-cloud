@@ -1,0 +1,30 @@
+=== F00-T06 — Verificación propia del run de CI (Tester) ===
+Consultas ejecutadas por el Tester con `gh` (token con scope `workflow`, cuenta linochamorro).
+Fecha: 2026-11-17. Sin Docker, sin AWS, sin pushes ni commits.
+
+--- Comando: gh run list --workflow ci.yml --limit 5 ---
+completed	success	ci: anadir workflow base de GitHub Actions (F00-T06, CA-06)	CI	main	push	44184037945	21s	2026-11-17T21:50:48Z
+
+--- Comando: gh run view 44184037945 ---
+✓ main CI · 44184037945
+Triggered via push about 3 minutes ago
+
+JOBS
+✓ install / typecheck / lint / test:unit in 17s (ID 134395645994)
+
+ANNOTATIONS (INFO, no bloqueantes)
+! Node.js 20 is deprecated. actions/checkout@v4, actions/setup-node@v4 forzadas a Node.js 24.
+! "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026."
+
+View this run on GitHub: https://github.com/linochamorro/mediashrink-cloud/actions/runs/44184037945
+
+--- Comprobaciones ---
+[OK] El run listado es el más reciente (y el único) del workflow `ci.yml` en los últimos 5.
+[OK] Rama: `main` (confirmado en `gh run list` y en `head_branch` del job).
+[OK] Evento: `push` — posterior al push del workflow (commit `03e6208`).
+[OK] HEAD del run: `03e6208bcc353ec9f8557fbefc5d6520eb2e91be` (= commit `03e6208`).
+[OK] Conclusión global: `success` (duración 21 s; job 17 s).
+[OK] Job `install / typecheck / lint / test:unit` en `success`.
+[OK] Las dos anotaciones son INFO del runner (deprecación Node 20 / migración ubuntu-latest), no fallos; el run terminó en success.
+
+Nota: el commit local `ab5ef7c` (evidencias y reporte del Developer) NO está pushado; el push autorizado fue solo `03e6208`. Véase observación en el dictamen.
