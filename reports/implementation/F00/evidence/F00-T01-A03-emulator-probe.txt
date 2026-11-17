@@ -1,0 +1,91 @@
+ADDENDUM A-03 — Investigación del formato real de SQS y del mecanismo de credenciales
+Fecha: 2026-11-17 · Rol: Developer · Alcance: F00-T01 (.env.example + config)
+Propósito: corregir el hallazgo A-03 de reports/audits/F00/F00-T03-auditor.md §3/§5.
+
+===============================================================================
+1. FUENTES DOCUMENTALES (lectura directa)
+===============================================================================
+- docker-compose.yml L12-14: "Un único endpoint HTTPS (9297) sirve S3, SQS + DLQ,
+  DynamoDB y STS. No existe un puerto SQS separado (9324) en aws-emulator."
+- docker-compose.yml L26-32: publica solo 127.0.0.1:9297; bind mount
+  ./.local/aws-emulator:/home/emulator/.aws/emulator/9297.
+- docs/runbooks/development-workflow.md §1.3 L49-61: el emulador rechaza
+  credenciales que no sean las suyas (generadas en cada arranque, prefijo
+  EMULATOR); usar AWS_SHARED_CREDENTIALS_FILE / AWS_CONFIG_FILE y NO definir
+  AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY / AWS_PROFILE (las variables de
+  entorno tienen prioridad sobre el archivo de credenciales). L63 declara el
+  desajuste pendiente de .env.example (:9324 + test/test).
+- Documentación oficial del mantenedor de la imagen usada en el compose
+  (https://xsavikx.github.io/aws-emulator-docker, "Quick start" e "Important
+  facts"): el emulador escribe ~/.aws/emulator/<port>/{emulator_credentials,
+  config,ca.pem}; configurar AWS_ENDPOINT_URL, AWS_SHARED_CREDENTIALS_FILE,
+  AWS_CONFIG_FILE, AWS_CA_BUNDLE, AWS_EC2_METADATA_DISABLED=true; no definir
+  AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY. Advierte: "The emulator returns
+  queue URLs with the real AWS host ... Set useQueueUrlAsEndpoint: false on
+  the SQSClient" (SDK JS v3). Cuenta fija del emulador: 000000000000.
+- DevelopersIO, "The AWS Emulator Has Been Released, So I Tried It Out"
+  (https://dev.classmethod.jp/en/articles/aws-emulator-local-try, §SQS):
+  aws sqs create-queue --queue-name orders ==>
+  {"QueueUrl": "https://sqs.us-east-1.amazonaws.com/000000000000/orders"}
+  y el mismo URL funciona como --queue-url para send/receive.
+
+===============================================================================
+2. VERIFICACIÓN EMPÍRICA CON EL EMULADOR REAL (garantía añadida)
+===============================================================================
+Docker CLI provisto por el harness; daemon 29.9.3. Se usan límites G-7
+equivalentes (--memory=2g --memory-swap=2g --cpus=2.0), puerto 127.0.0.1:9297,
+volumen named (no bind mount, para evitar el error de permisos del usuario
+1000:1000 del compose en este harness) y telemetría off.
+
+- Intento con `docker compose up -d`: el contenedor terminó con
+  "emulator serve failed: server I/O error: Operation not permitted (os error 1)"
+  (permisos del bind mount con user 1000:1000). compose down ejecutado; sin
+  cambios en docker-compose.yml (fuera del alcance del addendum).
+- Arranque aislado: docker run -d --name a03-verify --memory=2g
+  --memory-swap=2g --cpus=2.0 -p 127.0.0.1:9297:9297
+  -e EMULATOR_TELEMETRY=off -e EMULATOR_HEALTHCHECK_PORT=9297
+  -v a03-verify-data:/home/emulator/.aws/emulator
+  ghcr.io/xsavikx/aws-emulator:1.0.491.1 -p 9297
+  Resultado: health=healthy en ~3 s. Logs del emulador (sin secretos):
+  endpoint_url=https://127.0.0.1:9297
+  credentials_file=/home/emulator/.aws/emulator/9297/emulator_credentials
+  config_file=/home/emulator/.aws/emulator/9297/config
+  ca_file=/home/emulator/.aws/emulator/9297/ca.pem
+- Archivos generados copiados a ubicación efímera FUERA del repositorio.
+  emulator_credentials: perfil [default] con aws_access_key_id y
+  aws_secret_access_key (valores NUNCA impresos ni versionados).
+- Sonda efímera (script fuera del repositorio) con firma SigV4 (AWS4-HMAC-SHA256,
+  región us-east-1, servicio sqs, x-amz-target AmazonSQS.*), usando las
+  credenciales generadas y el ca.pem del emulador. Salida literal:
+
+  CreateQueue status=200 body={"QueueUrl":"https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs"}
+  CreateQueueDLQ status=200 body={"QueueUrl":"https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq"}
+  SendMessage(queueUrl at root) status=200 body={"MD5OfMessageBody":"8da843ff65205a61374b09b81ed0fa35","MessageId":"18f32805-e92d-4f69-bc6e-531d4603f3ce"}
+  SendMessage(queueUrl at /000000000000/mediashrink-jobs) status=200 body={"MD5OfMessageBody":"f0488d5ddd7813c6e36acf76190b9970","MessageId":"3bd6cc3b-3bfc-43a2-97b2-b330ae94be68"}
+
+- Limpieza G-7: docker rm -f a03-verify + docker volume rm a03-verify-data.
+  `docker ps -a` y `docker volume ls` sin rastro del addendum.
+
+===============================================================================
+3. CONCLUSIÓN PARA EL ADDENDUM
+===============================================================================
+- FORMATO DE QUEUE URL (confirmado por documento oficial del mantenedor, por
+  documento de terceros y por ejecución real contra el emulador 1.0.491.1):
+  https://sqs.us-east-1.amazonaws.com/000000000000/<nombre-de-cola>
+  Es la URL canónica que el emulador DEVUELVE y ACEPTA como QueueUrl. El host
+  'sqs.us-east-1.amazonaws.com' es un identificador lógico: el tráfico se
+  enruta al emulador mediante AWS_ENDPOINT_URL=https://127.0.0.1:9297; en el
+  SDK JS v3 hay que fijar useQueueUrlAsEndpoint:false para que no intente
+  resolver ese host contra AWS real (fuente: documentación del mantenedor).
+  Por tanto NO se escribe ':9297' en SQS_QUEUE_URL/SQS_DLQ_URL: hacerlo sería
+  fabricar una QueueUrl que el emulador no devuelve y romper la coherencia con
+  el valor que recibirá Terraform/Fase 1. El ':9324' queda eliminado.
+- CREDENCIALES: se eliminan AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY fijos y se
+  usan AWS_SHARED_CREDENTIALS_FILE=./.local/aws-emulator/emulator_credentials
+  y AWS_CONFIG_FILE=./.local/aws-emulator/config, más
+  AWS_EC2_METADATA_DISABLED=true (recomendado por la documentación). Se conserva
+  AWS_ACCOUNT_ID=000000000000: es el account ID fijo del emulador, no un secreto.
+- Matiz de incertidumbre resuelto: la auditoría proponía "apuntar SQS a 9297";
+  la evidencia demuestra que el endpoint de transporte es 9297
+  (AWS_ENDPOINT_URL) mientras que el identificador de cola conserva el host AWS
+  estándar. Se documenta aquí para evitar una futura "corrección" inversa.

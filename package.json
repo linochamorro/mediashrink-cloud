@@ -1,0 +1,76 @@
+{
+  "name": "mediashrink-cloud",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MediaShrink Cloud — monorepo de workspaces TypeScript (Fase 0, F00-T02)",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev:frontend": "npm run dev --workspace=@mediashrink/frontend",
+    "dev:backend": "npm run dev --workspace=@mediashrink/backend",
+    "build": "npm run build --workspace=@mediashrink/frontend && npm run build --workspace=@mediashrink/backend",
+    "typecheck": "tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json",
+    "lint": "eslint . --ext .ts,.tsx",
+    "test:unit": "vitest run tests/unit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^26.6.6",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.1",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.9"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "es2022": true,
+      "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2022,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "ignorePatterns": [
+      "node_modules/",
+      "dist/",
+      "coverage/",
+      "*.config.ts"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "frontend/src/**/*.ts",
+          "frontend/src/**/*.tsx"
+        ],
+        "env": {
+          "browser": true,
+          "node": false
+        }
+      }
+    ],
+    "rules": {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_"
+        }
+      ]
+    }
+  }
+}

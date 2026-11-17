@@ -1,0 +1,12 @@
+# Nota: ruta absoluta del proyecto redactada como <PROJECT_ROOT> (G-6b). Resultados intactos.
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/config.test.ts [2m([22m[2m35 tests[22m[2m)[22m[90m 27[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m35 passed[39m[22m[90m (35)[39m
+[2m   Start at [22m 16:02:03
+[2m   Duration [22m 1.01s[2m (transform 287ms, setup 0ms, collect 343ms, tests 27ms, environment 0ms, prepare 208ms)[22m
+
+EXITCODE=0

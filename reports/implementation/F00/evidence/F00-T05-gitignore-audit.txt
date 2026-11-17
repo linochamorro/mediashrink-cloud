@@ -1,0 +1,152 @@
+MediaShrink Cloud — F00-T05 · Auditoría de .gitignore e higiene de secretos
+Fecha: 2026-11-17 · Autor: Developer F00-T05 (v1, loop 1/3)
+Alcance: CA-05 · cierre de A-05 (F00-T03) y T04-A-01 / T04-A-02 (F00-T04)
+Raíz del proyecto: <PROJECT_ROOT> (ruta absoluta redactada a propósito)
+
+=====================================================================
+[1] VERIFICACIÓN DE PATRONES (git check-ignore -v)
+=====================================================================
+Deben quedar IGNORADOS — 16/16 OK:
+  [OK] .env                       -> .gitignore:7  .env
+  [OK] .env.local                 -> .gitignore:8  .env.*
+  [OK] .env.production            -> .gitignore:8  .env.*
+  [OK] .local/aws-emulator/ca.pem -> .gitignore:14 .local/
+  [OK] .local/aws-emulator/config -> .gitignore:14 .local/
+  [OK] .local/aws-emulator/emulator_credentials -> .gitignore:14 .local/
+  [OK] node_modules/vite/package.json -> .gitignore:17 node_modules/
+  [OK] dist/assets/index.js       -> .gitignore:18 dist/
+  [OK] infra/terraform/.terraform/terraform.tfstate -> .gitignore:24 .terraform/
+  [OK] infra/terraform/.terraform/providers/.../terraform-provider-aws_v5.100.0_x5.exe -> .gitignore:24 .terraform/
+  [OK] infra/terraform/terraform.tfstate        -> .gitignore:29 **/*.tfstate*
+  [OK] infra/terraform/terraform.tfstate.backup -> .gitignore:29 **/*.tfstate*
+  [OK] temporary/F00-T01-secrets-audit.ps1 -> .gitignore:40 temporary/
+  [OK] debug.log                  -> .gitignore:43 *.log
+  [OK] .DS_Store                  -> .gitignore:51 .DS_Store
+  [OK] coverage/index.html        -> .gitignore:50 coverage/
+
+Deben ser VERSIONABLES (G-6b + trazabilidad) — 10/10 OK:
+  [OK] .gitignore, .env.example, AGENTS.md, STATE.md,
+       .agents/roles/developer.md, docs/sdd/constitution.md,
+       reports/implementation/F00/F00-T05-task.md,
+       infra/terraform/.terraform.lock.hcl, infra/terraform/provider.tf,
+       docker-compose.yml, package.json
+
+Caso especial .env.example (negación):
+  git check-ignore -q -- .env.example            => EXIT=1 (NO ignorado, correcto)
+  git add --dry-run -- .env.example              => "add '.env.example'" EXIT=0
+  git ls-files --stage                           => .env.example y .gitignore en el índice
+  Nota: `check-ignore -v` muestra la regla de negación `!.env.example` como patrón
+  coincidente; eso NO significa que el archivo esté ignorado (confirmado arriba).
+
+=====================================================================
+[2] CONTENIDO DEL ÍNDICE (git ls-files)
+=====================================================================
+Total de archivos versionados: 134
+
+Exclusiones presentes en el índice (0 esperado en todos los casos):
+  (^|/)\.env$           => 0
+  (^|/)\.local/         => 0
+  (^|/)temporary/       => 0
+  \.tfstate             => 0
+  (^|/)node_modules/    => 0
+  (^|/)dist/            => 0
+  (^|/)\.terraform/     => 0
+  \.(exe|pem)$          => 0   <- ca.pem y el binario del provider NO se versionan
+
+Archivos G-6b presentes en el índice:
+  AGENTS.md                     => 1
+  STATE.md                      => 1
+  .agents/                      => 5  (roles: architect/auditor/designer/developer/tester)
+  docs/sdd/                     => 5  (constitution, spec, plan, tasks, packages/P-00)
+  reports/                      => 90
+  .env.example                  => 1  (G-3: único archivo de entorno permitido)
+  infra/terraform/.terraform.lock.hcl => 1
+  .gitignore                    => 1
+
+=====================================================================
+[3] DECISIÓN SOBRE .terraform.lock.hcl (T04-A-02) — VERSIONADO
+=====================================================================
+Decisión: INCLUIR en el repositorio. Justificación:
+  - Contiene únicamente provider registry.terraform.io/hashicorp/aws,
+    version = 5.100.0, constraints = "~> 5.0" y 15 hashes públicos del proveedor.
+  - NO contiene secretos, credenciales ni rutas Windows absolutas (lectura directa,
+    25 líneas, verificado).
+  - Es artefacto de trazabilidad y reproducibilidad: fija la selección exacta del
+    provider (coherente con PR-04 / ADR-001 Decisión 4), y `terraform init` recomienda
+    expresamente incluirlo en el repositorio.
+  - Se distingue así de `.terraform/` (plugins descargados, regenerables y voluminosos)
+    y de `*.tfstate*` (estado local, potencialmente sensible), que SÍ se excluyen.
+Regla aplicada en .gitignore: no se ignora `.terraform.lock.hcl`; se documenta con
+comentario explícito para evitar una exclusión por omisión en tareas futuras.
+
+=====================================================================
+[4] CIERRE DE A-05 Y T04-A-01
+=====================================================================
+A-05 (.gitignore ausente con credenciales efímeras en .local/): CERRADO por corrección.
+  .gitignore creado ANTES de cualquier `git add`; `.local/` excluido (regla L14);
+  0 archivos de .local/ en el índice. Contenidos de ca.pem/config/emulator_credentials
+  NUNCA impresos: solo se verificó su ruta con check-ignore.
+
+T04-A-01 (*.tfstate* anidado no cubierto): CERRADO por corrección.
+  Reglas recursivas `*.tfstate*` y `**/*.tfstate*` (L28-L29) cubren tanto
+  infra/terraform/terraform.tfstate como infra/terraform/.terraform/terraform.tfstate.
+  0 archivos *.tfstate* en el índice.
+
+=====================================================================
+[5] ESCANEO DE SECRETOS EN ARCHIVOS VERSIONADOS
+=====================================================================
+Método: Select-String sobre los 134 archivos del índice. Se registran SOLO conteos
+y rutas relativas; NUNCA el contenido de una coincidencia.
+
+  AKIA[0-9A-Z]{16}                 => 2 coincidencias / 1 archivo
+  gh[pousr]_[A-Za-z0-9]{20,}       => 1 coincidencia  / 1 archivo
+  github_pat_                      => 2 coincidencias / 2 archivos
+  -----BEGIN ... PRIVATE KEY-----  => 0 coincidencias
+  AWS_SECRET_ACCESS_KEY=<valor>    => 5 coincidencias / 5 archivos
+
+Clasificación de TODAS las coincidencias (falsos positivos controlados, ya triados
+por el Tester en F00-T01 — `F00-T01-tester-secrets.txt`, "Hallazgos reales: 0"):
+  - tests/unit/config.test.ts L194/L196/L214: fixtures SINTÉTICAS deliberadas
+    ('AKIAABCDEFGHIJKLMNOP', 'ghp_abcdefghijklmnopqrstuvwxyz0123456789') usadas
+    como literales negativos para probar el detector de secretos de la app.
+  - reports/.../F00-T01-tester-secrets.txt L5/L9/L10 y F00-T01-tester.md L19:
+    nombres de patrones buscados y valores DUMMY documentados (`test/test`,
+    `REPLACE_WITH_LOCAL_DEV_SECRET_32_CHARS`), con veredicto "SIN HALLAZGOS REALES".
+  - reports/audits/F00/F00-T03-auditor.md L214 y F00-T03-developer.md L93:
+    descripción histórica del estado de .env.example antes del addendum A-03
+    (ya corregido y cerrado en F00-T01). No son valores vigentes.
+
+Resultado: 0 secretos reales, 0 credenciales del emulador, 0 tokens, 0 claves
+privadas en el árbol versionado. G-3 / PR-08 CUMPLIDO.
+
+=====================================================================
+[6] RUTAS WINDOWS ABSOLUTAS — CONCERN PREEXISTENTE (FUERA DE ÁMBITO T05)
+=====================================================================
+Se detectaron 7 ocurrencias en artefactos de gobernanza PREEXISTENTES:
+  AGENTS.md L34; STATE.md L16 y L43; reports/implementation/F00/F00-T03-task.md L40;
+  reports/implementation/F00/F00-T04-developer.md L40;
+  reports/implementation/F00/F00-T04-task.md L36;
+  reports/intake/intake-mediashrink.md L23.
+(Los valores de esas rutas NO se reproducen aquí: ya están en archivos G-6b.)
+
+Todos están en archivos CUY CONTENIDO ESTÁ FUERA DE MI ÁMBITO DE ESCRITURA
+(`.gitignore`, operaciones git/gh, evidence/F00-T05-* y F00-T05-developer.md):
+está PROHIBIDO tocar AGENTS.md, STATE.md, tasks.md y reportes ajenos. Además,
+G-6b exige versionar AGENTS.md, STATE.md y reports/, por lo que no pueden
+excluirse sin incumplir la directiva de Lino.
+
+El auditor de F00-T04 ya lo registró como "nota fuera de alcance, se traslada a la
+auditoría final" (F00-T04-auditor.md, nota tras §4). Conforme a ese criterio:
+  - No se ha introducido NINGUNA ruta absoluta nueva: todos los artefactos
+    generados por T05 usan la notación <PROJECT_ROOT>.
+  - Se documenta como CONCERN abierto para la auditoría final / decisión de Lino.
+  - No se emite PASSED sobre este punto; no se acepta riesgo (sin G-10).
+
+=====================================================================
+[7] CONCLUSIÓN
+=====================================================================
+Exclusiones: OK. A-05, T04-A-01 cerrados por corrección; T04-A-02 cerrado por
+decisión documentada (versionar el lockfile). G-6b: OK (todos los artefactos IA
+presentes). Secretos: 0 reales. Único concern: 7 rutas absolutas preexistentes
+fuera de ámbito, derivadas a auditoría final (ver [6]).
+Estado del Developer: DONE_WITH_CONCERNS. No se emite PASSED ni se cierra la tarea.

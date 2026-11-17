@@ -1,0 +1,35 @@
+AUDITORIA DE SECRETOS — F00-T01 (v1, loop 1/3) — G-3 / PR-08
+
+Archivos analizados:
+  - .env.example
+  - package.json
+  - backend/src/config/index.ts
+  - tests/unit/config.test.ts
+  - reports/implementation/F00/F00-T01-developer.md
+  - reports/implementation/F00/evidence/F00-T01-red.txt
+  - reports/implementation/F00/evidence/F00-T01-green.txt
+  - reports/implementation/F00/evidence/F00-T01-refactor.txt
+  - reports/implementation/F00/evidence/F00-T01-typecheck.txt
+
+Motivo del refinamiento: el primer escaneo genero 5 hallazgos, todos falsos positivos:
+  4 fixtures negativas sinteticas del test (AKIA/JWT/ghp_/hex) y 1 identificador
+  camelCase (jwtAccessSecret =). Se acotaron los patrones a formatos concretos y a
+  asignaciones con sintaxis .env (CLAVE_EN_MAYUSCULAS=valor).
+
+Hallazgos reales: 0
+Falsos positivos controlados (fixtures del test): 6
+tests/unit/config.test.ts :: AKIA[0-9A-Z]{16} :: fixture negativa sintetica
+tests/unit/config.test.ts :: eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,} :: fixture negativa sintetica
+tests/unit/config.test.ts :: gh[pousr]_[A-Za-z0-9]{20,} :: fixture negativa sintetica
+tests/unit/config.test.ts :: [A-Fa-f0-9]{32,} :: fixture negativa sintetica
+tests/unit/config.test.ts :: AKIA[0-9A-Z]{16} :: fixture negativa sintetica
+tests/unit/config.test.ts :: eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,} :: fixture negativa sintetica
+
+Archivo .env real presente: False
+JWT_ACCESS_SECRET en .env.example: JWT_ACCESS_SECRET=REPLACE_WITH_LOCAL_DEV_SECRET_32_CHARS
+JWT_REFRESH_SECRET en .env.example: JWT_REFRESH_SECRET=REPLACE_WITH_LOCAL_DEV_SECRET_32_CHARS
+AWS_ACCESS_KEY_ID en .env.example: AWS_ACCESS_KEY_ID=test
+AWS_SECRET_ACCESS_KEY en .env.example: AWS_SECRET_ACCESS_KEY=test
+Rutas absolutas Windows en .env.example: False
+
+VEREDICTO FINAL: SIN HALLAZGOS REALES — G-3 CUMPLIDO

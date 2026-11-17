@@ -1,0 +1,38 @@
+F00-T03 (reanudacion v2, loop 1/3) - Apagado limpio del emulador (G-7)
+Fecha: 2026-11-17 | Rol: Developer | OBLIGATORIO: contenedor APAGADO al terminar
+===============================================================================
+COMANDO: docker compose down
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed 
+EXITCODE_DOWN=0
+
+=== VERIFICACION 1: docker ps -a (no debe quedar contenedor) ===
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+EXITCODE_PS_A=0
+CHECK contenedor ausente: PASS
+
+=== VERIFICACION 2: docker network ls (no debe quedar red del compose) ===
+NETWORK ID     NAME      DRIVER    SCOPE
+1adbab21dbfb   bridge    bridge    local
+2a54e466a5d8   host      host      local
+6c03fe569a85   none      null      local
+EXITCODE_NETWORK_LS=0
+CHECK red compose ausente: PASS
+
+=== VERIFICACION 3: docker inspect del contenedor (debe fallar = no existe) ===
+[]
+error: no such object: mediashrink-aws-emulator
+EXITCODE_INSPECT=1  (distinto de 0 confirma que no existe)
+
+=== NOTA: volumen named (no es contenedor ni red; G-7 no exige borrarlo) ===
+DRIVER    VOLUME NAME
+local     mediashrink-cloud_aws-emulator-data
+EXITCODE_VOLUME_LS=0
+El volumen mediashrink-cloud_aws-emulator-data persiste por diseno; se puede
+eliminar con 'docker compose down -v' (documentado en el runbook §1.4).
+===============================================================================
+RESULTADO: down_exit=0 contenedor=APAGADO red=ELIMINADA

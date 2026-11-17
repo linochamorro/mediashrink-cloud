@@ -1,0 +1,46 @@
+F00-T03 v2 (Tester independiente) - A-01: imagen fijada por digest inmutable
+Fecha: 2026-11-17 | Rol: Tester | Ejecutado por este Tester (no se toma evidencia del Developer)
+===============================================================================
+=== 1) Referencia declarada en docker-compose.yml (lectura directa) ===
+image: ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+CHECK compose referencia @sha256:9cd91ae8...68376: PASS
+===============================================================================
+=== 2) Resolver el digest publicado hoy para el tag de origen ===
+COMANDO: docker buildx imagetools inspect ghcr.io/xsavikx/aws-emulator:1.0.491.1
+Name:      ghcr.io/xsavikx/aws-emulator:1.0.491.1
+MediaType: application/vnd.oci.image.index.v1+json
+Digest:    sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+           
+Manifests: 
+  Name:        ghcr.io/xsavikx/aws-emulator:1.0.491.1@sha256:76dd09170fe4b1d960818777e9f50fc2a793c1517d1daffe05d841bda90370bc
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/arm64
+               
+  Name:        ghcr.io/xsavikx/aws-emulator:1.0.491.1@sha256:6891fe96e54397a9c45b9b8fa7747ee799e4190a1a51c3bda82d3b245f70bcf7
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.digest: sha256:76dd09170fe4b1d960818777e9f50fc2a793c1517d1daffe05d841bda90370bc
+    vnd.docker.reference.type:   attestation-manifest
+               
+  Name:        ghcr.io/xsavikx/aws-emulator:1.0.491.1@sha256:b7576d5d7367e08aaedf03cd25a113fb85d5b09433879a6f4987d0ec75a7877d
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/amd64
+               
+  Name:        ghcr.io/xsavikx/aws-emulator:1.0.491.1@sha256:9503d01f105f20270142912643dd99286258a9b7218fb18599149eb6aa61fbd3
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.digest: sha256:b7576d5d7367e08aaedf03cd25a113fb85d5b09433879a6f4987d0ec75a7877d
+    vnd.docker.reference.type:   attestation-manifest
+EXITCODE_IMAGETOOLS=0
+DIGEST_RESUELTO=sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+CHECK tag->digest resuelto coincide con compose: PASS
+===============================================================================
+=== 3) RepoDigests de la imagen arrancada (docker image inspect) ===
+COMANDO: docker image inspect --format '{{json .RepoDigests}}' ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8...68376
+["ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376"]
+EXITCODE_IMAGE_INSPECT=0
+CHECK RepoDigests coincide con digest fijado: PASS
+===============================================================================
+RESULTADO A-01: compose_por_digest=PASS tag_resuelto=PASS repoDigests=PASS

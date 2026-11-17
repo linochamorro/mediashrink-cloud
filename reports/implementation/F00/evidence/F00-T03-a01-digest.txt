@@ -1,0 +1,57 @@
+A-01 (reanudacion v2) - Verificacion del digest inmutable de la imagen del emulador
+Fecha: 2026-11-17 | Rol: Developer | Tarea: F00-T03 | Evidencia: F00-T03-a01-digest.txt
+Proposito: sustituir el tag mutable por un digest inmutable verificable (hallazgo A-01).
+
+=== COMANDO 1 (resolver digest publicado para el tag de origen) ===
+docker buildx imagetools inspect ghcr.io/xsavikx/aws-emulator:1.0.491.1
+Name:      ghcr.io/xsavikx/aws-emulator:1.0.491.1
+MediaType: application/vnd.oci.image.index.v1+json
+Digest:    sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+           
+Manifests: 
+  Name:        ghcr.io/xsavikx/aws-emulator:1.0.491.1@sha256:76dd09170fe4b1d960818777e9f50fc2a793c1517d1daffe05d841bda90370bc
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/arm64
+               
+  Name:        ghcr.io/xsavikx/aws-emulator:1.0.491.1@sha256:6891fe96e54397a9c45b9b8fa7747ee799e4190a1a51c3bda82d3b245f70bcf7
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.digest: sha256:76dd09170fe4b1d960818777e9f50fc2a793c1517d1daffe05d841bda90370bc
+    vnd.docker.reference.type:   attestation-manifest
+               
+  Name:        ghcr.io/xsavikx/aws-emulator:1.0.491.1@sha256:b7576d5d7367e08aaedf03cd25a113fb85d5b09433879a6f4987d0ec75a7877d
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/amd64
+               
+  Name:        ghcr.io/xsavikx/aws-emulator:1.0.491.1@sha256:9503d01f105f20270142912643dd99286258a9b7218fb18599149eb6aa61fbd3
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.digest: sha256:b7576d5d7367e08aaedf03cd25a113fb85d5b09433879a6f4987d0ec75a7877d
+    vnd.docker.reference.type:   attestation-manifest
+EXITCODE=0
+
+=== COMANDO 2 (confirmar RepoDigests tras pull local por digest) ===
+docker pull ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376: Pulling from xsavikx/aws-emulator
+Digest: sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+Status: Image is up to date for ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+EXITCODE=0
+docker image inspect --format '{{json .RepoDigests}}' <referencia-por-digest>
+["ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376"]
+EXITCODE=0
+
+=== DIGEST RESUELTO (indice OCI multi-arch, coincide con el comentario v1) ===
+sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+Manifests por plataforma devueltos por el comando 1:
+  linux/amd64     -> sha256:b7576d5d7367e08aaedf03cd25a113fb85d5b09433879a6f4987d0ec75a7877d
+  linux/arm64     -> sha256:76dd09170fe4b1d960818777e9f50fc2a793c1517d1daffe05d841bda90370bc
+(se fija el digest del INDICE, no el de una arquitectura, para conservar multi-arch)
+
+=== REFERENCIA FINAL APLICADA EN docker-compose.yml ===
+image: ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+
+Nota: no se imprimen secretos ni rutas Windows absolutas. El tag 1.0.491.1 se
+conserva solo como documentacion de procedencia (runbook seccion 3).

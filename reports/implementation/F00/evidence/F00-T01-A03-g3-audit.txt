@@ -1,0 +1,9 @@
+Fecha: 2026-11-17 · Addendum A-03 · alcance: .env.example, backend/src/config/index.ts, tests/unit/config.test.ts
+Variables activas en .env.example: 28
+Valores activos con :9324: 0
+AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY activas: 0
+AWS_SHARED_CREDENTIALS_FILE activa: 1
+AWS_CONFIG_FILE activa: 1
+AWS_EC2_METADATA_DISABLED activa: 1
+Rutas Windows absolutas en los 3 archivos: 0
+Marcadores AKIA/eyJ/ghp_ en valores activos de .env.example: 0

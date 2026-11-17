@@ -1,0 +1,57 @@
+=== npm ci --no-audit --no-fund ===
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+
+added 243 packages in 59s
+npm warn install-scripts 2 packages have install scripts not yet covered by allowScripts:
+npm warn install-scripts   esbuild@0.21.5 (postinstall: node install.js)
+npm warn install-scripts   sharp@0.33.5 (install: node install/check)
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+CI_EXITCODE=0
+LOCKFILE_PRESENT=True
+
+=== POST-CI: npm run typecheck ===
+
+> mediashrink-cloud@0.0.0 typecheck
+> tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json
+
+EXITCODE=0
+
+=== POST-CI: npm run lint ===
+
+> mediashrink-cloud@0.0.0 lint
+> eslint . --ext .ts,.tsx
+
+EXITCODE=0
+
+=== POST-CI: npm run test:unit ===
+
+> mediashrink-cloud@0.0.0 test:unit
+> vitest run tests/unit
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/frontend.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/health.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 19[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/config.test.ts [2m([22m[2m30 tests[22m[2m)[22m[90m 32[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m35 passed[39m[22m[90m (35)[39m
+[2m   Start at [22m 10:51:16
+[2m   Duration [22m 878ms[2m (transform 340ms, setup 0ms, collect 559ms, tests 58ms, environment 1ms, prepare 637ms)[22m
+
+EXITCODE=0
+
+
+=== POST-CI: verificación de dependencias nativas ===
+VITEST_VERSION_OUTPUT=vitest/2.1.9 win32-x64 node-v26.13.0
+VITEST_EXITCODE=0
+SHARP_OUTPUT=SHARP_OK function
+SHARP_EXITCODE=0
+

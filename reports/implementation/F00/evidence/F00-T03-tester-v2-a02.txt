@@ -1,0 +1,30 @@
+F00-T03 v2 (Tester independiente) - A-02: procedencia de la imagen en el runbook
+Fecha: 2026-11-17 | Rol: Tester | Fuente: docs/runbooks/development-workflow.md (lectura directa)
+NOTA: 1ra pasada marco falsamente FAIL el check de responsable por no tolerar el acento en 'actualizacion'; se corrige el patron (actualizaci[oó]n) y se re-ejecuta.
+===============================================================================
+CHECK procedencia comunitaria / terceros: PASS
+CHECK AWS no publica imagen oficial: PASS
+CHECK registro ghcr.io/xsavikx: PASS
+CHECK tag de origen 1.0.491.1: PASS
+CHECK digest fijado sha256: PASS
+CHECK comando docker buildx imagetools inspect: PASS
+CHECK comando docker image inspect RepoDigests: PASS
+CHECK responsable de actualizacion (seccion '### Responsable de la actualización'): PASS
+===============================================================================
+FRAGMENTO LITERAL (secciones 3 y responsable, sin rutas Windows ni secretos):
+## 3. Proveniencia de la imagen (A-02)
+
+**AWS no publica una imagen oficial preconstruida de `aws/aws-emulator`.** El AWS News Blog (11-Nov-2026) indica que en macOS/Windows se construye una imagen desde el Dockerfile corto de la documentación ("We don't publish a ready-made image"). Por ello, este proyecto ejecuta una imagen pública de **terceros**:
+
+| Campo | Valor |
+|---|---|
+| Registro / repositorio | `ghcr.io/xsavikx/aws-emulator` (comunidad; **no es una imagen oficial de AWS**) |
+| Tag de origen | `1.0.491.1` (corresponde al upstream `aws/aws-emulator` 1.0.491.1) |
+| Digest fijado (A-01) | `sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376` — índice OCI multi-arch (amd64 + arm64) |
+| Referencia en `docker-compose.yml` | `ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8...68376` |
+
+La imagen empaqueta el paquete oficial de AWS verificado por SHA-256 y firma del proveedor. Se fija por **digest inmutable** (no por tag) para impedir la republicación silenciosa del tag; el nombre del tag se conserva solo como documentación de procedencia.
+
+#
+
+L112: ### Responsable de la actualización

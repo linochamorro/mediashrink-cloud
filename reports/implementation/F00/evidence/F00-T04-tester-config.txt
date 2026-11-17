@@ -1,0 +1,61 @@
+﻿F00-T04 (Tester, loop 1/3) - Inspeccion estatica de configuracion Terraform (CA-04 / A-03)
+Fecha: 2026-11-17 | Rol: Tester | verificacion propia
+==============================================================================
+Archivos fuente inspeccionados: .terraform.lock.hcl, data.tf, outputs.tf, provider.tf, README.md, variables.tf, versions.tf
+
+[1] Endpoint del emulador (AWS_ENDPOINT_URL / :9297)
+  | `aws_endpoint_url` | `https://127.0.0.1:9297` | `AWS_ENDPOINT_URL` |
+  $env:AWS_ENDPOINT_URL = 'https://127.0.0.1:9297'
+  default     = "https://127.0.0.1:9297"
+
+[2] Bloque endpoints del provider (s3/sqs/dynamodb/sts)
+  endpoints {
+  s3       = var.aws_endpoint_url
+  sqs      = var.aws_endpoint_url
+  dynamodb = var.aws_endpoint_url
+  sts      = var.aws_endpoint_url
+
+[3] custom_ca_bundle
+  custom_ca_bundle = var.ca_bundle_path
+
+[4] Credenciales por archivo compartido (sin credenciales fijas)
+  # No se declaran access_key/secret_key fijos (G-3, hallazgo A-03 cerrado).
+  shared_credentials_files = [var.aws_shared_credentials_file]
+  shared_config_files      = [var.aws_config_file]
+  # NO definir AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY / AWS_PROFILE
+
+[5] skip_* y justificacion
+  # El emulador no ofrece IMDS ni validación de credenciales contra AWS real.
+  skip_credentials_validation = true
+  skip_requesting_account_id  = true
+  skip_metadata_api_check     = true
+
+[6] Backend local y versiones
+  version     = "5.100.0"
+  required_version = ">= 1.5.0"
+  source  = "hashicorp/aws"
+  version = "~> 5.0"
+  backend "local" {
+  path = "terraform.tfstate"
+
+[7] Coherencia A-03: clasificacion de las ocurrencias de :9324
+  Ocurrencias textuales totales: 6
+  [COMENTARIO/PROHIBICION] #   (1) el provider usa AWS_ENDPOINT_URL y no :9324;
+  [COMENTARIO/PROHIBICION] # Un único transporte HTTPS para S3, SQS, DynamoDB y STS. No existe :9324.
+  [DOCUMENTACION_PROHIBICION] `:9324` (addendum A-03): el emulador solo expone `127.0.0.1:9297`.
+  [DOCUMENTACION_PROHIBICION] y STS). Equivale a AWS_ENDPOINT_URL en .env.example. NUNCA debe contener :9324:
+  [VALIDACION_ANTI_9324 (salvaguarda)] condition     = !can(regex(":9324", var.aws_endpoint_url))
+  [MENSAJE_DE_VALIDACION_ANTI_9324] error_message = "aws_endpoint_url no debe contener :9324; el emulador solo expone 127.0.0.1:9297 (A-03)."
+  Usos activos como valor de configuracion: 0  (esperado: 0)
+  Nota: la unica referencia funcional es la VALIDACION que RECHAZA :9324; ningun endpoint/QueueUrl lo usa.
+
+[8] Secretos y rutas Windows absolutas en infra/terraform (debe ser 0)
+  Patrones de secretos: 0
+  Rutas absolutas Windows: 0
+
+[9] Alcance bootstrap: sin recursos de producto; una sonda STS
+  Bloques resource: 0
+  data -> data "aws_caller_identity" "emulator" {}
+
+==============================================================================
+LIMITE: inspeccion estatica de archivos .tf/.md/.hcl; no sustituye a la ejecucion REAL (ver tester-init/validate/plan).

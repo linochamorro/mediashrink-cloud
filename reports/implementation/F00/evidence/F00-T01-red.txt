@@ -1,0 +1,590 @@
+EXITCODE=1
+
+
+ RUN  v2.1.9 D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud
+
+ ÔØ» tests/unit/config.test.ts (30 tests | 30 failed) 40ms
+   ├ù loadConfig ÔÇö caso positivo > carga un entorno v├ílido y convierte n├║meros y booleanos a su tipo 8ms
+     ÔåÆ NOT_IMPLEMENTED: loadConfig (F00-T01 RED)
+   ├ù loadConfig ÔÇö caso positivo > aplica valores por defecto seguros a las variables opcionales 1ms
+     ÔåÆ NOT_IMPLEMENTED: loadConfig (F00-T01 RED)
+   ├ù loadConfig ÔÇö caso positivo > acepta USE_SSL=false y NODE_ENV=test 1ms
+     ÔåÆ NOT_IMPLEMENTED: loadConfig (F00-T01 RED)
+   ├ù loadConfig ÔÇö casos negativos > falla con mensaje claro cuando falta una variable obligatoria 6ms
+     ÔåÆ expected [Function] to throw error matching /DYNAMODB_TABLE_JOBS/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza variables vac├¡as como ausentes 1ms
+     ÔåÆ expected [Function] to throw error matching /S3_BUCKET_RAW/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de MAX_FILE_SIZE_MB = "abc" con el nombre de la variable 1ms
+     ÔåÆ expected [Function] to throw error matching /MAX_FILE_SIZE_MB/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de MAX_IMAGES_PER_BATCH = "-1" con el nombre de la variable 1ms
+     ÔåÆ expected [Function] to throw error matching /MAX_IMAGES_PER_BATCH/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de MAX_PIXELS = "1.5" con el nombre de la variable 1ms
+     ÔåÆ expected [Function] to throw error matching /MAX_PIXELS/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de PORT = "70000" con el nombre de la variable 1ms
+     ÔåÆ expected [Function] to throw error matching /PORT/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de JWT_ACCESS_TTL = "0" con el nombre de la variable 1ms
+     ÔåÆ expected [Function] to throw error matching /JWT_ACCESS_TTL/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de JWT_REFRESH_TTL = "no-es-numero" con el nombre de la variable 1ms
+     ÔåÆ expected [Function] to throw error matching /JWT_REFRESH_TTL/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de RATE_LIMIT_AUTH_MAX = "1e3" con el nombre de la variable 1ms
+     ÔåÆ expected [Function] to throw error matching /RATE_LIMIT_AUTH_MAX/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de RATE_LIMIT_AUTH_WINDOW_MS = "abc" con el nombre de la variable 1ms
+     ÔåÆ expected [Function] to throw error matching /RATE_LIMIT_AUTH_WINDOW_MS/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de RETENTION_DAYS = "-30" con el nombre de la variable 1ms
+     ÔåÆ expected [Function] to throw error matching /RETENTION_DAYS/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de SQS_MAX_RETRIES = "0" con el nombre de la variable 2ms
+     ÔåÆ expected [Function] to throw error matching /SQS_MAX_RETRIES/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de POLL_INTERVAL_MS = "abc" con el nombre de la variable 1ms
+     ÔåÆ expected [Function] to throw error matching /POLL_INTERVAL_MS/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de USE_SSL = "maybe" con el nombre de la variable 1ms
+     ÔåÆ expected [Function] to throw error matching /USE_SSL/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de NODE_ENV = "staging" con el nombre de la variable 0ms
+     ÔåÆ expected [Function] to throw error matching /NODE_ENV/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza TTLs incoherentes (access >= refresh) 1ms
+     ÔåÆ expected [Function] to throw error matching /JWT_ACCESS_TTL/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù loadConfig ÔÇö casos negativos > rechaza placeholders de JWT cuando NODE_ENV=production 1ms
+     ÔåÆ expected [Function] to throw error matching /JWT_ACCESS_SECRET/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù detecci├│n de secretos reales (G-3) > identifica patrones evidentes de secreto real 1ms
+     ÔåÆ NOT_IMPLEMENTED: findRealSecretPattern (F00-T01 RED)
+   ├ù detecci├│n de secretos reales (G-3) > no marca como reales los marcadores locales del emulador 1ms
+     ÔåÆ expected [Function] to not throw an error but 'Error: NOT_IMPLEMENTED: assertNoRealSÔÇª' was thrown
+   ├ù detecci├│n de secretos reales (G-3) > rechaza un AWS Access Key ID con aspecto real 1ms
+     ÔåÆ expected [Function] to throw error matching /AWS_ACCESS_KEY_ID/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù detecci├│n de secretos reales (G-3) > rechaza un JWT real como secreto de access 1ms
+     ÔåÆ expected [Function] to throw error matching /JWT_ACCESS_SECRET/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+   ├ù parseEnvFile y .env.example > ignora comentarios, l├¡neas vac├¡as y recorta comillas envolventes 0ms
+     ÔåÆ NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)
+   ├ù parseEnvFile y .env.example > contiene todas las variables declaradas como requeridas por el loader 1ms
+     ÔåÆ NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)
+   ├ù parseEnvFile y .env.example > los nombres del archivo coinciden exactamente con el inventario del loader 1ms
+     ÔåÆ NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)
+   ├ù parseEnvFile y .env.example > no contiene secretos reales en ninguno de sus valores 1ms
+     ÔåÆ NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)
+   ├ù parseEnvFile y .env.example > usa marcadores locales para los secretos JWT y credenciales dummy para el emulador 1ms
+     ÔåÆ NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)
+   ├ù parseEnvFile y .env.example > el propio .env.example pasa la validaci├│n completa del loader 1ms
+     ÔåÆ NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 30 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö caso positivo > carga un entorno v├ílido y convierte n├║meros y booleanos a su tipo
+Error: NOT_IMPLEMENTED: loadConfig (F00-T01 RED)
+ ÔØ» Module.loadConfig backend/src/config/index.ts:55:9
+     53| 
+     54| export function loadConfig(_env?: NodeJS.ProcessEnv): AppConfig {
+     55|   throw new Error('NOT_IMPLEMENTED: loadConfig (F00-T01 RED)');
+       |         ^
+     56| }
+     57| 
+ ÔØ» tests/unit/config.test.ts:62:20
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö caso positivo > aplica valores por defecto seguros a las variables opcionales
+Error: NOT_IMPLEMENTED: loadConfig (F00-T01 RED)
+ ÔØ» Module.loadConfig backend/src/config/index.ts:55:9
+     53| 
+     54| export function loadConfig(_env?: NodeJS.ProcessEnv): AppConfig {
+     55|   throw new Error('NOT_IMPLEMENTED: loadConfig (F00-T01 RED)');
+       |         ^
+     56| }
+     57| 
+ ÔØ» tests/unit/config.test.ts:92:20
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö caso positivo > acepta USE_SSL=false y NODE_ENV=test
+Error: NOT_IMPLEMENTED: loadConfig (F00-T01 RED)
+ ÔØ» Module.loadConfig backend/src/config/index.ts:55:9
+     53| 
+     54| export function loadConfig(_env?: NodeJS.ProcessEnv): AppConfig {
+     55|   throw new Error('NOT_IMPLEMENTED: loadConfig (F00-T01 RED)');
+       |         ^
+     56| }
+     57| 
+ ÔØ» tests/unit/config.test.ts:105:20
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > falla con mensaje claro cuando falta una variable obligatoria
+AssertionError: expected [Function] to throw error matching /DYNAMODB_TABLE_JOBS/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/DYNAMODB_TABLE_JOBS/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:115:62
+    113| describe('loadConfig ÔÇö casos negativos', () => {
+    114|   it('falla con mensaje claro cuando falta una variable obligatoria', ÔÇª
+    115|     expect(() => loadConfig(without('DYNAMODB_TABLE_JOBS'))).toThrow(/ÔÇª
+       |                                                              ^
+    116|     expect(() => loadConfig(without('JWT_ACCESS_SECRET'))).toThrow(/JWÔÇª
+    117|     expect(() => loadConfig(without('AWS_ENDPOINT_URL'))).toThrow(/AWSÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza variables vac├¡as como ausentes
+AssertionError: expected [Function] to throw error matching /S3_BUCKET_RAW/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/S3_BUCKET_RAW/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:121:68
+    119| 
+    120|   it('rechaza variables vac├¡as como ausentes', () => {
+    121|     expect(() => loadConfig(withOverride('S3_BUCKET_RAW', '   '))).toTÔÇª
+       |                                                                    ^
+    122|   });
+    123| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de MAX_FILE_SIZE_MB = "abc" con el nombre de la variable
+AssertionError: expected [Function] to throw error matching /MAX_FILE_SIZE_MB/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/MAX_FILE_SIZE_MB/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:139:56
+    137|     ['NODE_ENV', 'staging'],
+    138|   ])('rechaza el valor inv├ílido de %s = "%s" con el nombre de la variaÔÇª
+    139|     expect(() => loadConfig(withOverride(key, value))).toThrow(new RegÔÇª
+       |                                                        ^
+    140|   });
+    141| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[6/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de MAX_IMAGES_PER_BATCH = "-1" con el nombre de la variable
+AssertionError: expected [Function] to throw error matching /MAX_IMAGES_PER_BATCH/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/MAX_IMAGES_PER_BATCH/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:139:56
+    137|     ['NODE_ENV', 'staging'],
+    138|   ])('rechaza el valor inv├ílido de %s = "%s" con el nombre de la variaÔÇª
+    139|     expect(() => loadConfig(withOverride(key, value))).toThrow(new RegÔÇª
+       |                                                        ^
+    140|   });
+    141| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[7/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de MAX_PIXELS = "1.5" con el nombre de la variable
+AssertionError: expected [Function] to throw error matching /MAX_PIXELS/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/MAX_PIXELS/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:139:56
+    137|     ['NODE_ENV', 'staging'],
+    138|   ])('rechaza el valor inv├ílido de %s = "%s" con el nombre de la variaÔÇª
+    139|     expect(() => loadConfig(withOverride(key, value))).toThrow(new RegÔÇª
+       |                                                        ^
+    140|   });
+    141| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[8/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de PORT = "70000" con el nombre de la variable
+AssertionError: expected [Function] to throw error matching /PORT/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/PORT/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:139:56
+    137|     ['NODE_ENV', 'staging'],
+    138|   ])('rechaza el valor inv├ílido de %s = "%s" con el nombre de la variaÔÇª
+    139|     expect(() => loadConfig(withOverride(key, value))).toThrow(new RegÔÇª
+       |                                                        ^
+    140|   });
+    141| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[9/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de JWT_ACCESS_TTL = "0" con el nombre de la variable
+AssertionError: expected [Function] to throw error matching /JWT_ACCESS_TTL/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/JWT_ACCESS_TTL/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:139:56
+    137|     ['NODE_ENV', 'staging'],
+    138|   ])('rechaza el valor inv├ílido de %s = "%s" con el nombre de la variaÔÇª
+    139|     expect(() => loadConfig(withOverride(key, value))).toThrow(new RegÔÇª
+       |                                                        ^
+    140|   });
+    141| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[10/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de JWT_REFRESH_TTL = "no-es-numero" con el nombre de la variable
+AssertionError: expected [Function] to throw error matching /JWT_REFRESH_TTL/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/JWT_REFRESH_TTL/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:139:56
+    137|     ['NODE_ENV', 'staging'],
+    138|   ])('rechaza el valor inv├ílido de %s = "%s" con el nombre de la variaÔÇª
+    139|     expect(() => loadConfig(withOverride(key, value))).toThrow(new RegÔÇª
+       |                                                        ^
+    140|   });
+    141| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[11/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de RATE_LIMIT_AUTH_MAX = "1e3" con el nombre de la variable
+AssertionError: expected [Function] to throw error matching /RATE_LIMIT_AUTH_MAX/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/RATE_LIMIT_AUTH_MAX/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:139:56
+    137|     ['NODE_ENV', 'staging'],
+    138|   ])('rechaza el valor inv├ílido de %s = "%s" con el nombre de la variaÔÇª
+    139|     expect(() => loadConfig(withOverride(key, value))).toThrow(new RegÔÇª
+       |                                                        ^
+    140|   });
+    141| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[12/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de RATE_LIMIT_AUTH_WINDOW_MS = "abc" con el nombre de la variable
+AssertionError: expected [Function] to throw error matching /RATE_LIMIT_AUTH_WINDOW_MS/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/RATE_LIMIT_AUTH_WINDOW_MS/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:139:56
+    137|     ['NODE_ENV', 'staging'],
+    138|   ])('rechaza el valor inv├ílido de %s = "%s" con el nombre de la variaÔÇª
+    139|     expect(() => loadConfig(withOverride(key, value))).toThrow(new RegÔÇª
+       |                                                        ^
+    140|   });
+    141| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[13/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de RETENTION_DAYS = "-30" con el nombre de la variable
+AssertionError: expected [Function] to throw error matching /RETENTION_DAYS/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/RETENTION_DAYS/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:139:56
+    137|     ['NODE_ENV', 'staging'],
+    138|   ])('rechaza el valor inv├ílido de %s = "%s" con el nombre de la variaÔÇª
+    139|     expect(() => loadConfig(withOverride(key, value))).toThrow(new RegÔÇª
+       |                                                        ^
+    140|   });
+    141| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[14/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de SQS_MAX_RETRIES = "0" con el nombre de la variable
+AssertionError: expected [Function] to throw error matching /SQS_MAX_RETRIES/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/SQS_MAX_RETRIES/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:139:56
+    137|     ['NODE_ENV', 'staging'],
+    138|   ])('rechaza el valor inv├ílido de %s = "%s" con el nombre de la variaÔÇª
+    139|     expect(() => loadConfig(withOverride(key, value))).toThrow(new RegÔÇª
+       |                                                        ^
+    140|   });
+    141| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[15/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de POLL_INTERVAL_MS = "abc" con el nombre de la variable
+AssertionError: expected [Function] to throw error matching /POLL_INTERVAL_MS/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/POLL_INTERVAL_MS/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:139:56
+    137|     ['NODE_ENV', 'staging'],
+    138|   ])('rechaza el valor inv├ílido de %s = "%s" con el nombre de la variaÔÇª
+    139|     expect(() => loadConfig(withOverride(key, value))).toThrow(new RegÔÇª
+       |                                                        ^
+    140|   });
+    141| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[16/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de USE_SSL = "maybe" con el nombre de la variable
+AssertionError: expected [Function] to throw error matching /USE_SSL/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/USE_SSL/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:139:56
+    137|     ['NODE_ENV', 'staging'],
+    138|   ])('rechaza el valor inv├ílido de %s = "%s" con el nombre de la variaÔÇª
+    139|     expect(() => loadConfig(withOverride(key, value))).toThrow(new RegÔÇª
+       |                                                        ^
+    140|   });
+    141| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[17/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza el valor inv├ílido de NODE_ENV = "staging" con el nombre de la variable
+AssertionError: expected [Function] to throw error matching /NODE_ENV/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/NODE_ENV/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:139:56
+    137|     ['NODE_ENV', 'staging'],
+    138|   ])('rechaza el valor inv├ílido de %s = "%s" con el nombre de la variaÔÇª
+    139|     expect(() => loadConfig(withOverride(key, value))).toThrow(new RegÔÇª
+       |                                                        ^
+    140|   });
+    141| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[18/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza TTLs incoherentes (access >= refresh)
+AssertionError: expected [Function] to throw error matching /JWT_ACCESS_TTL/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/JWT_ACCESS_TTL/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:144:35
+    142|   it('rechaza TTLs incoherentes (access >= refresh)', () => {
+    143|     const env = { ...BASE_ENV, JWT_ACCESS_TTL: '604800', JWT_REFRESH_TÔÇª
+    144|     expect(() => loadConfig(env)).toThrow(/JWT_ACCESS_TTL/);
+       |                                   ^
+    145|   });
+    146| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[19/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > loadConfig ÔÇö casos negativos > rechaza placeholders de JWT cuando NODE_ENV=production
+AssertionError: expected [Function] to throw error matching /JWT_ACCESS_SECRET/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/JWT_ACCESS_SECRET/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:149:35
+    147|   it('rechaza placeholders de JWT cuando NODE_ENV=production', () => {
+    148|     const env = { ...BASE_ENV, NODE_ENV: 'production' };
+    149|     expect(() => loadConfig(env)).toThrow(/JWT_ACCESS_SECRET/);
+       |                                   ^
+    150|   });
+    151| });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[20/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > detecci├│n de secretos reales (G-3) > identifica patrones evidentes de secreto real
+Error: NOT_IMPLEMENTED: findRealSecretPattern (F00-T01 RED)
+ ÔØ» Module.findRealSecretPattern backend/src/config/index.ts:47:9
+     45| 
+     46| export function findRealSecretPattern(_value: string): string | null {
+     47|   throw new Error('NOT_IMPLEMENTED: findRealSecretPattern (F00-T01 REDÔÇª
+       |         ^
+     48| }
+     49| 
+ ÔØ» tests/unit/config.test.ts:155:12
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[21/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > detecci├│n de secretos reales (G-3) > no marca como reales los marcadores locales del emulador
+AssertionError: expected [Function] to not throw an error but 'Error: NOT_IMPLEMENTED: assertNoRealSÔÇª' was thrown
+
+- Expected: 
+undefined
+
++ Received: 
+"Error: NOT_IMPLEMENTED: assertNoRealSecret (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:169:51
+    167|       'http://127.0.0.1:9324/queue/mediashrink-jobs',
+    168|     ]) {
+    169|       expect(() => assertNoRealSecret(value)).not.toThrow();
+       |                                                   ^
+    170|     }
+    171|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[22/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > detecci├│n de secretos reales (G-3) > rechaza un AWS Access Key ID con aspecto real
+AssertionError: expected [Function] to throw error matching /AWS_ACCESS_KEY_ID/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/AWS_ACCESS_KEY_ID/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:174:89
+    172| 
+    173|   it('rechaza un AWS Access Key ID con aspecto real', () => {
+    174|     expect(() => loadConfig(withOverride('AWS_ACCESS_KEY_ID', 'AKIAABCÔÇª
+       |                                                                                         ^
+    175|       /AWS_ACCESS_KEY_ID/,
+    176|     );
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[23/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > detecci├│n de secretos reales (G-3) > rechaza un JWT real como secreto de access
+AssertionError: expected [Function] to throw error matching /JWT_ACCESS_SECRET/ but got 'NOT_IMPLEMENTED: loadConfig (F00-T01 ÔÇª'
+
+- Expected: 
+/JWT_ACCESS_SECRET/
+
++ Received: 
+"NOT_IMPLEMENTED: loadConfig (F00-T01 RED)"
+
+ ÔØ» tests/unit/config.test.ts:187:7
+    185|         ),
+    186|       ),
+    187|     ).toThrow(/JWT_ACCESS_SECRET/);
+       |       ^
+    188|   });
+    189| });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[24/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > parseEnvFile y .env.example > ignora comentarios, l├¡neas vac├¡as y recorta comillas envolventes
+Error: NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)
+ ÔØ» Module.parseEnvFile backend/src/config/index.ts:43:9
+     41| 
+     42| export function parseEnvFile(_content: string): Record<string, string>ÔÇª
+     43|   throw new Error('NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)');
+       |         ^
+     44| }
+     45| 
+ ÔØ» tests/unit/config.test.ts:196:20
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[25/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > parseEnvFile y .env.example > contiene todas las variables declaradas como requeridas por el loader
+Error: NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)
+ ÔØ» Module.parseEnvFile backend/src/config/index.ts:43:9
+     41| 
+     42| export function parseEnvFile(_content: string): Record<string, string>ÔÇª
+     43|   throw new Error('NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)');
+       |         ^
+     44| }
+     45| 
+ ÔØ» readExample tests/unit/config.test.ts:193:5
+ ÔØ» tests/unit/config.test.ts:209:20
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[26/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > parseEnvFile y .env.example > los nombres del archivo coinciden exactamente con el inventario del loader
+Error: NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)
+ ÔØ» Module.parseEnvFile backend/src/config/index.ts:43:9
+     41| 
+     42| export function parseEnvFile(_content: string): Record<string, string>ÔÇª
+     43|   throw new Error('NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)');
+       |         ^
+     44| }
+     45| 
+ ÔØ» readExample tests/unit/config.test.ts:193:5
+ ÔØ» tests/unit/config.test.ts:217:20
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[27/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > parseEnvFile y .env.example > no contiene secretos reales en ninguno de sus valores
+Error: NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)
+ ÔØ» Module.parseEnvFile backend/src/config/index.ts:43:9
+     41| 
+     42| export function parseEnvFile(_content: string): Record<string, string>ÔÇª
+     43|   throw new Error('NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)');
+       |         ^
+     44| }
+     45| 
+ ÔØ» readExample tests/unit/config.test.ts:193:5
+ ÔØ» tests/unit/config.test.ts:222:20
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[28/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > parseEnvFile y .env.example > usa marcadores locales para los secretos JWT y credenciales dummy para el emulador
+Error: NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)
+ ÔØ» Module.parseEnvFile backend/src/config/index.ts:43:9
+     41| 
+     42| export function parseEnvFile(_content: string): Record<string, string>ÔÇª
+     43|   throw new Error('NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)');
+       |         ^
+     44| }
+     45| 
+ ÔØ» readExample tests/unit/config.test.ts:193:5
+ ÔØ» tests/unit/config.test.ts:229:20
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[29/30]ÔÄ»
+
+ FAIL  tests/unit/config.test.ts > parseEnvFile y .env.example > el propio .env.example pasa la validaci├│n completa del loader
+Error: NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)
+ ÔØ» Module.parseEnvFile backend/src/config/index.ts:43:9
+     41| 
+     42| export function parseEnvFile(_content: string): Record<string, string>ÔÇª
+     43|   throw new Error('NOT_IMPLEMENTED: parseEnvFile (F00-T01 RED)');
+       |         ^
+     44| }
+     45| 
+ ÔØ» readExample tests/unit/config.test.ts:193:5
+ ÔØ» tests/unit/config.test.ts:240:20
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[30/30]ÔÄ»
+
+ Test Files  1 failed (1)
+      Tests  30 failed (30)
+   Start at  10:31:24
+   Duration  1.05s (transform 147ms, setup 0ms, collect 188ms, tests 40ms, environment 0ms, prepare 240ms)
+
+

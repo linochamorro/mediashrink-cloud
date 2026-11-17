@@ -1,0 +1,32 @@
+F00-T03 - Verificacion documental (addendum N-01 / N-02 del Auditor v2)
+Fecha: 2026-11-17 | Rol: Developer | Alcance: SOLO docs/runbooks/development-workflow.md
+Motivo: cerrar N-02 (frase obsoleta) y N-01 (usuario efectivo + docker cp por arranque).
+===============================================================================
+=== 1) N-01 ANADIDO (runbook L53, seccion 1.3 - volumen named) ===
+> **Nota N-01 (volumen named):** al usar un volumen named los archivos `ca.pem`, `config` y `emulator_credentials` se generan dentro del contenedor en cada arranque y **no se reflejan automáticamente en `./.local/aws-emulator/`**. Por tanto, el bloque de `docker cp` de esta sección debe **repetirse en cada arranque** (tras `docker compose up -d` y con el contenedor `healthy`) antes de ejecutar el healthcheck o apuntar los SDK; si no, se usarían un CA y unas credenciales de una sesión anterior. Que el volumen named persista tras `docker compose down` no exime de repetir esta exportación.
+
+=== 2) N-02 CORREGIDO (runbook L69, antes 'Pendiente de alineacion') ===
+> **Estado de `.env.example` (alineado por el addendum A-03 de `F00-T01`):** ya **no** declara el puerto SQS alternativo ni credenciales fijas. Las colas SQS/DLQ usan sus QueueUrls canónicas `https://sqs.us-east-1.amazonaws.com/000000000000/<cola>` y `AWS_ENDPOINT_URL=https://127.0.0.1:9297` actúa únicamente como **transporte** hacia el emulador; las credenciales se leen de `AWS_SHARED_CREDENTIALS_FILE` / `AWS_CONFIG_FILE` generados por el emulador. **No escribir `:9297` en la QueueUrl**: el host AWS de la QueueUrl es un identificador lógico y sustituirlo por el endpoint rompería la coherencia con el valor que devuelve el emulador (en el SDK JS v3, usar `useQueueUrlAsEndpoint: false`). La afirmación obsoleta que figuraba en versiones anteriores de este runbook (puerto SQS alternativo y credenciales fijas) debe entenderse como **valor obsoleto corregido**, nunca como estado vigente.
+
+=== 3) N-01 ANADIDO (runbook L99, seccion 3 - usuario efectivo) ===
+**Usuario efectivo del contenedor (N-01):** el usuario con el que corre el emulador no se fija en el compose: procede del `USER 1000:1000` **declarado por la propia imagen** (verificado con `docker image inspect`). Por eso se retiró la directiva `user:` de `docker-compose.yml` en la reanudación v2: era redundante y además dependía de `${UID_GID}`. Quitarla **no cambia el usuario efectivo ni debilita la seguridad**: `docker inspect` en vivo confirmó `user=1000:1000`. Cualquier cambio de imagen obliga a reverificar este valor.
+
+=== 4) AUSENCIA DE VALORES OBSOLETOS VIGENTES ===
+Select-String ':9324' en el runbook -> coincidencias = 0 (esperado 0)
+Select-String 'test/test' en el runbook -> coincidencias = 0 (esperado 0)
+CHECK ':9324' ausente: PASS
+CHECK 'test/test' ausente: PASS
+Nota: L34 conserva 'no hay puerto SQS 9324' (afirmacion correcta, sin dos puntos).
+Los valores obsoletos se citan solo como VALOR OBSOLETO CORREGIDO en la nota N-02.
+
+=== 5) PRESENCIA DE CONTENIDO EXIGIDO ===
+QueueUrl canonica con cuenta fija: PASS
+AWS_ENDPOINT_URL como transporte: PASS
+AWS_SHARED_CREDENTIALS_FILE: PASS
+AWS_CONFIG_FILE: PASS
+Advertencia no escribir endpoint en QueueUrl: PASS
+N-01 usuario por imagen: PASS
+N-01 docker cp cada arranque: PASS
+===============================================================================
+RESULTADO: PASS - N-01 y N-02 resueltos; sin valores obsoletos vigentes
+Sin secretos ni rutas Windows absolutas. No se tocaron compose, codigo, tests, STATE.md ni tasks.md.

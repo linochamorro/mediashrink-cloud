@@ -1,0 +1,43 @@
+F00-T03 — AUDITORIA ESTATICA INDEPENDIENTE DE docker-compose.yml (Tester)
+Fecha: 2026-11-17T10:52:44-05:00
+Metodo: lectura directa del archivo + comprobaciones con Select-String/-match
+        sobre docker-compose.yml. NO se uso `docker compose config`
+        (Docker ausente; ver F00-T03-tester-environment.txt).
+Limitacion: es una verificacion TEXTUAL del archivo declarado. No valida el
+        esquema YAML por CLI ni demuestra que Compose acepte el archivo.
+
+Requisito CA-03 / fuente -> comportamiento observable -> resultado
+
+C01 | PASSED | Imagen fijada con tag concreto (no latest)
+     | fuente: P-00 CA-03, Developer P2 | image: ghcr.io/xsavikx/aws-emulator:1.0.491.1
+C02 | PASSED | CPU limite 2.0 en servicio | cpus: 2.0
+C03 | PASSED | Memoria 2g | mem_limit: 2g
+C04 | PASSED | Swap 2g | memswap_limit: 2g
+C05 | PASSED | deploy.resources.limits.cpus "2.0" (equivalente Compose V2/Swarm)
+C06 | PASSED | deploy.resources.limits.memory 2g (equivalente)
+C07 | PASSED | HTTPS local enlazado solo a loopback | "127.0.0.1:9297:9297"
+C08 | PASSED | Bind mount RELATIVO para ca.pem |
+     | ./.local/aws-emulator:/home/emulator/.aws/emulator/9297
+C09 | PASSED | Healthcheck HTTPS con CA | bloque `healthcheck:` (lineas 43-52)
+     | con CMD-SHELL, escalar plegado `>-`, `curl --silent --fail
+     | --cacert /home/emulator/.aws/emulator/9297/ca.pem` y
+     | `https://127.0.0.1:9297/__admin/health`; interval 5s / timeout 5s /
+     | retries 12 / start_period 20s.
+     | Nota: un primer patron propio tuvo un anclaje erroneo que partia la
+     | comprobacion en dos fragmentos; corregido y verificado por inspeccion
+     | directa de las lineas (ambos fragmentos presentes). No es un fallo del
+     | archivo.
+C10 | PASSED | Apagado limpio | stop_grace_period: 10s
+C11 | PASSED | Sin reinicios automaticos | restart: "no"
+C12 | PASSED | Sin caracteres TAB en YAML
+C13 | PASSED | Unico servicio declarado (aws-emulator)
+C14 | PASSED | Sin rutas Windows absolutas en el compose
+C15 | PASSED | Sin credenciales AWS reales asignadas en el compose
+
+TOTALES: PASSED=15  FAIL=0
+
+CONCLUSION: La parte ESTATICA de CA-03 esta correctamente declarada: limites
+    --memory=2g/--cpus=2.0 (servicio + deploy), puerto 127.0.0.1:9297, bind
+    mount relativo de ca.pem, healthcheck HTTPS con --cacert, stop_grace_period
+    e imagen con version fijada. NO acredita arranque, healthcheck en vivo ni
+    apagado real del contenedor.

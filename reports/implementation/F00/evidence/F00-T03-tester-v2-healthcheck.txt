@@ -1,0 +1,22 @@
+F00-T03 v2 (Tester independiente) - Healthcheck HTTPS con ca.pem del emulador
+Fecha: 2026-11-17 | Rol: Tester | Endpoint: https://127.0.0.1:9297/__admin/health
+===============================================================================
+=== 1) Exportar ca.pem desde el volumen del contenedor (docker cp) ===
+docker cp .../ca.pem ./.local/aws-emulator/ca.pem
+EXITCODE_CP_ca=0
+FILE ca.pem bytes=566 (contenido NO impreso)
+===============================================================================
+=== 2) Healthcheck HTTPS autenticado con el CA ===
+COMANDO: curl.exe --silent --show-error --fail --cacert ./.local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health
+CUERPO=ok
+EXITCODE_CON_CA=0
+===============================================================================
+=== 3) Control negativo: TLS sin CA debe fallar (demuestra TLS real) ===
+COMANDO: curl.exe --silent --fail https://127.0.0.1:9297/__admin/health
+(sin salida util con --silent)
+EXITCODE_SIN_CA=60
+===============================================================================
+CHECK cuerpo 'ok' con CA: PASS
+CHECK exit 0 con CA: PASS
+CHECK rechazo TLS sin CA (exit 60): PASS (exit=60)
+RESULTADO: healthcheck_exit=0 sin_ca_exit=60

@@ -1,0 +1,47 @@
+F00-T04 (v1, loop 1/3) - Ciclo de vida del emulador: arranque, limites, certificados, healthcheck y apagado
+Fecha: 2026-11-17 | Rol: Developer | CA-04 | G-7 (2g/2.0)
+==============================================================================
+--- Estado previo: docker ps -a ---
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+EXITCODE_PRE=0
+--- Arranque: docker compose up -d ---
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Created 
+ Network mediashrink-cloud_default Created 
+ Container mediashrink-aws-emulator Creating 
+ Container mediashrink-aws-emulator Created 
+ Container mediashrink-aws-emulator Starting 
+ Container mediashrink-aws-emulator Started 
+EXITCODE_UP=0
+--- Espera a healthy (max 180 s) ---
+POLL 0: starting
+POLL 1: starting
+POLL 2: starting
+POLL 3: healthy
+HEALTHY=True
+--- Limites efectivos (docker inspect) ---
+memory=2147483648 nanoCpus=2000000000 user=1000:1000
+EXITCODE_INSPECT=0
+--- Exportacion de archivos generados (docker cp; contenidos NO impresos) ---
+docker cp ca.pem -> EXITCODE=0
+docker cp config -> EXITCODE=0
+docker cp emulator_credentials -> EXITCODE=0
+Tamanos exportados (bytes): ca.pem=566 config=152 emulator_credentials=116
+--- Healthcheck HTTPS con CA ---
+BODY=ok
+EXITCODE_HEALTHCHECK=0
+--- terraform plan (con entorno AWS del emulador, sin AWS real) ---
+EXITCODE_PLAN=0
+--- Apagado: docker compose down ---
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed 
+EXITCODE_DOWN=0
+--- Verificacion: docker ps -a (sin contenedor residual) ---
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+EXITCODE_PS=0
+EXITCODE=0

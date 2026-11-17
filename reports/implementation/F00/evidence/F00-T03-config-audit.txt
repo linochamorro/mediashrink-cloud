@@ -1,0 +1,20 @@
+F00-T03 — AUDITORIA ESTATICA DE CONFIGURACION (docker-compose.yml)
+Fecha: 2026-11-17T10:49:47-05:00
+Comando: verificacion textual con -match sobre docker-compose.yml, docs/runbooks/development-workflow.md y .env.example (solo lectura)
+Limitacion: docker compose config NO disponible (Docker ausente; ver F00-T03-environment.txt). No se valida schema YAML por CLI.
+
+C01 | PASS | Imagen publica fijada a version verificada | ghcr.io/xsavikx/aws-emulator:1.0.491.1
+C02 | PASS | CPU limite 2.0 (servicio + deploy) | cpus: 2.0 + deploy.resources.limits.cpus: "2.0"
+C03 | PASS | Memoria 2g + swap 2g + deploy memory 2g | mem_limit: 2g, memswap_limit: 2g, deploy memory: 2g
+C04 | PASS | Puerto enlazado solo a loopback 127.0.0.1:9297 | 127.0.0.1:9297:9297
+C05 | PASS | Volumen relativo para ca.pem | ./.local/aws-emulator:/home/emulator/.aws/emulator/9297
+C06 | PASS | Healthcheck HTTPS con ca.pem sobre /__admin/health | curl --cacert .../ca.pem https://127.0.0.1:9297/__admin/health
+C07 | PASS | Apagado limpio (stop_grace_period y restart no) | stop_grace_period: 10s, restart: "no"
+C08 | PASS | Sin credenciales AWS asignadas en compose ni runbook | sin asignaciones reales; unica mencion: valores dummy citados del .env.example en prosa
+C09 | PASS | Sin rutas Windows absolutas en artefactos publicos | regex [A-Za-z]: sin coincidencias en compose ni runbook
+C10 | PASS | Endpoint HTTPS coherente con .env.example (solo lectura) | .env.example: 127.0.0.1:9297 y ./.local/aws-emulator/ca.pem
+C11 | PASS | Sin tabuladores en YAML | sin caracteres TAB
+C12 | PASS | Unico servicio declarado | servicios detectados: 1
+
+TOTALES: PASS=12 FAIL=0
+EXITCODE=0

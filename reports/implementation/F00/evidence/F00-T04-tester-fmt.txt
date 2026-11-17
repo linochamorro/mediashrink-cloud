@@ -1,0 +1,6 @@
+﻿F00-T04 (Tester, loop 1/3) - Comprobacion de formato (terraform fmt -check)
+Fecha: 2026-11-17 | Rol: Tester | CA-04 | verificacion propia
+==============================================================================
+
+
+EXITCODE_FMT=0

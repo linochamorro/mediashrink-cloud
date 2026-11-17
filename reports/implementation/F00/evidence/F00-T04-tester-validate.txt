@@ -1,0 +1,6 @@
+﻿F00-T04 (Tester, loop 1/3) - Validacion (terraform validate -no-color)
+Fecha: 2026-11-17 | Rol: Tester | CA-04 | verificacion propia
+==============================================================================
+
+Success! The configuration is valid.
+EXITCODE_VALIDATE=0

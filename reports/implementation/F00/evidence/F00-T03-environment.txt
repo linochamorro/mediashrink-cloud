@@ -1,0 +1,45 @@
+F00-T03 — EVIDENCIA DE ENTORNO Y BLOQUEO DE DOCKER
+Fecha: 2026-11-17T10:49:47-05:00
+Nota: rutas locales absolutas redactadas como <USERPROFILE> / <ProgramFiles> / <ProgramData> (G-3, PR-08).
+
+[1] cmd /c where docker
+SALIDA: INFORMACIÓN: no se pudo encontrar ningún archivo para los patrones dados.
+EXITCODE=1
+
+[2] Get-Command winget, choco
+winget.exe -> <USERPROFILE>\AppData\Local\Microsoft\WindowsApps\winget.exe
+choco.exe -> <ProgramData>\chocolatey\bin\choco.exe
+
+[3] Rutas habituales comprobadas (Test-Path)
+<ProgramFiles>\Docker\Docker\resources\bin\docker.exe -> Exists=False
+<ProgramFiles>\Docker\Docker\resources\bin\dockerd.exe -> Exists=False
+<ProgramFiles>\Docker CLI\docker.exe -> Exists=False
+<ProgramData>\chocolatey\bin\docker.exe -> Exists=False
+<USERPROFILE>\AppData\Local\Docker\bin\docker.exe -> Exists=False
+
+[4] Perfil de permisos
+IsInRole(Administrator)=False  (usuario sin privilegios de administrador según DoR de Architect)
+
+[5] Intento 1 de instalación (winget, sintaxis con parametro no soportado)
+COMANDO: winget install --id Docker.DockerDesktop --accept-source-agreements --accept-package-agreements --disable-interactivity --silent --skip-dependency
+SALIDA: ayuda de `winget install` (el parametro --silent no es valido para install)
+EXITCODE=-1978335230  (0x8A150012 aprox.; error de parametros, no de permisos)
+
+[6] Intento 2 de instalación (winget, sintaxis valida)
+COMANDO: winget install --id Docker.DockerDesktop --accept-source-agreements --accept-package-agreements --disable-interactivity
+RESULTADO: sin salida util en 180 s; interrumpido por timeout del harness
+EXITCODE=143 (SIGTERM del harness; NO se obtuvo exit code propio de winget)
+EFECTO: quedo un proceso winget huerfano; detenido con Stop-Process -Force (PID verificado, ya no en ejecucion)
+
+[7] Intento 3 de instalación (chocolatey)
+COMANDO: choco install docker-desktop --yes --no-progress --limit-output
+SALIDA (recortada): 'Acceso denegado a la ruta de acceso <ProgramData>\\chocolatey\\lib-bad' ; Chocolatey installed 0/0 packages.
+EXITCODE=1  (causa: permisos de administrador insuficientes sobre <ProgramData>)
+
+[8] Estado final
+docker en PATH: NO
+procesos winget/Docker activos: NINGUNO
+NO se ejecutaron `docker compose up` / healthcheck / `down`: no existen => no se generan F00-T03-up.txt, F00-T03-healthcheck.txt ni F00-T03-down.txt (prohibido simularlos).
+
+CONCLUSION: Docker NO disponible en este entorno. CA-03 queda SIN VERIFICAR EN VIVO; estado Developer = BLOCKED.
+EXITCODE=1

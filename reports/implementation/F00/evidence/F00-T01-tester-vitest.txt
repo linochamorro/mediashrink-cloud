@@ -1,0 +1,12 @@
+COMANDO: npx vitest run tests/unit/config.test.ts
+
+ RUN  v2.1.9 D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud
+
+ ✓ tests/unit/config.test.ts (30 tests) 27ms
+
+ Test Files  1 passed (1)
+      Tests  30 passed (30)
+   Start at  10:37:22
+   Duration  767ms (transform 128ms, setup 0ms, collect 191ms, tests 27ms, environment 0ms, prepare 185ms)
+
+EXITCODE=0

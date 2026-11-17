@@ -1,0 +1,18 @@
+# Addendum A-03 - reejecucion independiente del Tester - vitest
+Fecha: 2026-11-17
+Comando: npx vitest run tests/unit/config.test.ts (FORCE_COLOR=0; secuencias ANSI y ruta absoluta redactadas, resultados intactos)
+Entorno: Node 26.13.0 / npm 11.20.0 / Vitest 2.1.9 / win32
+
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ✓ tests/unit/config.test.ts (35 tests) 26ms
+
+ Test Files  1 passed (1)
+      Tests  35 passed (35)
+   Start at  16:06:20
+   Duration  825ms (transform 162ms, setup 0ms, collect 208ms, tests 26ms, environment 0ms, prepare 194ms)
+
+
+EXITCODE=0
+

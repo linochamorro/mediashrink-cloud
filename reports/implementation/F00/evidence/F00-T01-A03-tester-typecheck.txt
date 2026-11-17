@@ -1,0 +1,9 @@
+# Addendum A-03 - reejecucion independiente del Tester - typecheck
+Fecha: 2026-11-17
+Comando: npx tsc --noEmit --strict --target es2022 --module esnext --moduleResolution bundler --skipLibCheck --types node backend/src/config/index.ts tests/unit/config.test.ts
+Entorno: TypeScript (npx) / Node 26.13.0 / win32
+
+(sin salida / sin diagnosticos)
+EXITCODE=0
+Lineas de diagnostico: 0
+

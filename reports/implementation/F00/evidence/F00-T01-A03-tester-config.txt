@@ -1,0 +1,51 @@
+# Addendum A-03 - auditoria G-3/A-03 propia del Tester
+Fecha: 2026-11-17
+
+=== AUDITORIA G-3 / A-03 propia del Tester (independiente) ===
+Fecha: 2026-11-17
+Fuentes: .env.example, backend/src/config/index.ts, tests/unit/config.test.ts
+Nota: el Tester reejecuta sus propias busquedas; no atribuye las del Developer como propias.
+
+--- C1. Variables activas en .env.example (esperado 28) ---
+C1 = 28 -> OK
+
+--- C2. :9324 en valores activos de .env.example (debe ser 0) ---
+C2 = 0 -> OK
+Nota: loader :9324 x2 (deteccion), tests :9324 x7 (negativos). Esperado: la prohibicion aplica a la config consumible.
+
+--- C3. Credenciales AWS fijas activas (debe ser 0) ---
+   AWS_ACCESS_KEY_ID: ausente OK
+   AWS_SECRET_ACCESS_KEY: ausente OK
+   AWS_PROFILE: ausente OK
+
+--- C4. Archivos generados del emulador ---
+   AWS_CONFIG_FILE = ./.local/aws-emulator/config -> OK
+   AWS_EC2_METADATA_DISABLED = true -> OK
+   AWS_SHARED_CREDENTIALS_FILE = ./.local/aws-emulator/emulator_credentials -> OK
+
+--- C5. SQS/DLQ HTTPS y formato real del emulador ---
+   SQS_QUEUE_URL = https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs -> OK
+   SQS_DLQ_URL   = https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq -> OK
+   AWS_ENDPOINT_URL = https://127.0.0.1:9297 -> OK
+   Coherencia QueueUrl(host AWS) vs transporte(9297) -> OK
+   Justificacion del formato aceptada: evidencia F00-T01-A03-emulator-probe.txt (docs del mantenedor + sonda SigV4 real: CreateQueue devolvio esa QueueUrl y SendMessage HTTP 200 contra https://127.0.0.1:9297). No se exige :9297 literal en la QueueUrl.
+
+--- C6. Rutas Windows absolutas en los 3 archivos (debe ser 0) ---
+   .env.example -> 0 -> OK
+   backend/src/config/index.ts -> 0 -> OK
+   tests/unit/config.test.ts -> 0 -> OK
+
+--- C7. Patrones de secreto real en valores activos (debe ser 0) ---
+   AKIA/ASIA -> 0
+   GitHub token -> 0
+   hex>=32 -> 0
+   JWT eyJ -> 0
+   PRIVATE KEY -> 0
+   Total hallazgos reales = 0 -> OK
+   Nota: literales AKIA/eyJ/ghp_ en el test son fixtures negativas deliberadas, no secretos.
+
+--- C8. skip/only/todo en el test (debe ser 0) ---
+   = 0 -> OK
+
+=== RESULTADO: C1..C8 todos OK ===
+

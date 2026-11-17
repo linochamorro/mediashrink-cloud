@@ -1,0 +1,42 @@
+F00-T03 — VERIFICACION INDEPENDIENTE DE ENTORNO (Tester)
+Fecha: 2026-11-17T10:52:44-05:00
+Alcance: comprobacion propia de disponibilidad de Docker. NO se instalo software
+         (sin autorizacion del sistema). NO se uso Docker ni Git/GitHub.
+Nota G-3/PR-08: rutas locales absolutas redactadas como <ProgramFiles> /
+         <ProgramData> / <USERPROFILE>. Sin secretos en este archivo.
+
+[1] Get-Command docker -ErrorAction SilentlyContinue
+    SALIDA: vacia (no se encontro comando, funcion, script ni ejecutable)
+    LASTEXITCODE: (sin valor; comando no encontrado)
+
+[2] cmd /c where docker
+    SALIDA: "INFORMACION: no se pudo encontrar ningun archivo para los
+             patrones dados."
+    EXITCODE=1
+
+[3] docker --version
+    SALIDA: "The term 'docker' is not recognized as a name of a cmdlet,
+             function, script file, or executable program."
+    EXITCODE=1
+
+[4] Rutas habituales comprobadas (Test-Path -LiteralPath)
+    <ProgramFiles>\Docker\Docker\resources\bin\docker.exe ....... Exists=False
+    <ProgramFiles>\Docker\Docker\resources\bin\dockerd.exe ...... Exists=False
+    <ProgramFiles> (x86)\Docker CLI\docker.exe ................... Exists=False
+    <ProgramData>\chocolatey\bin\docker.exe ..................... Exists=False
+    <USERPROFILE>\AppData\Local\Docker\bin\docker.exe ........... Exists=False
+    <USERPROFILE>\AppData\Local\Programs\Docker\Docker\resources\bin\docker.exe
+                                                                Exists=False
+
+[5] Perfil de privilegios
+    IsInRole(Administrator)=False
+
+CONCLUSION (propia, independiente del Developer):
+    Docker NO esta disponible en PATH ni en las seis rutas habituales, y el
+    usuario carece de privilegios de administrador. Coincide con el hallazgo
+    del Developer (evidencia F00-T03-environment.txt, where docker EXITCODE=1).
+    No es posible ejecutar `docker compose up -d`, healthcheck HTTPS ni
+    `docker compose down` en este entorno.
+
+LIMITE DE COBERTURA: CA-03 no puede verificarse en vivo. No se fabrico evidencia
+    de arranque/healthcheck/apagado. EXITCODE global de esta verificacion=1.

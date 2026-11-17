@@ -1,0 +1,28 @@
+F00-T03 (reanudacion v2, loop 1/3) - Healthcheck HTTPS con ca.pem del emulador
+Fecha: 2026-11-17 | Rol: Developer | Endpoint: https://127.0.0.1:9297/__admin/health
+===============================================================================
+=== 1) Exportar archivos generados desde el volumen named (docker cp) ===
+New-Item -ItemType Directory -Force ./.local/aws-emulator   (cmdlet: directorio asegurado)
+docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/ca.pem ./.local/aws-emulator/ca.pem
+EXITCODE_CP_ca.pem=0
+docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/config ./.local/aws-emulator/config
+EXITCODE_CP_config=0
+docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/emulator_credentials ./.local/aws-emulator/emulator_credentials
+EXITCODE_CP_emulator_credentials=0
+
+=== 2) Verificar presencia de archivos (NO se imprimen contenidos) ===
+FILE ca.pem bytes=566
+FILE config bytes=152
+FILE emulator_credentials bytes=116
+
+=== 3) Healthcheck HTTPS autenticado con el CA ===
+curl.exe --silent --show-error --fail --cacert ./.local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health
+ok
+EXITCODE_HEALTHCHECK=0
+
+=== 4) Control negativo: TLS sin CA debe fallar (curl --silent, solo exit code) ===
+curl.exe --silent --fail https://127.0.0.1:9297/__admin/health
+(sin salida: --silent; el codigo de salida demuestra el rechazo TLS)
+EXITCODE_SIN_CA=60
+===============================================================================
+RESULTADO: healthcheck_exit=0 sin_ca_exit=60

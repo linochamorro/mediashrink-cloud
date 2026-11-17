@@ -1,0 +1,55 @@
+# MediaShrink Cloud — .gitignore
+# F00-T05 · CA-05 · G-3 (secretos) / G-6b (trazabilidad IA visible)
+# Creado ANTES de cualquier `git add` para cerrar A-05 y T04-A-01/A-02.
+
+# --- Secretos y entorno de configuración (G-3 / PR-08) ---
+# Solo .env.example se versiona; nunca valores reales de configuración.
+.env
+.env.*
+!.env.example
+
+# --- Credenciales efímeras del emulador aws-emulator (A-05, F00-T03) ---
+# docker-compose + `docker cp` escriben ca.pem, config y emulator_credentials aquí.
+# Se excluyen por disciplina G-3 aunque sean credenciales efímeras de prueba.
+.local/
+
+# --- Dependencias y artefactos de compilación ---
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+
+# --- Terraform ---
+# Plugins descargados por `terraform init`: regenerables y voluminosos (T04-A-02).
+.terraform/
+# Estados: nunca versionar (pueden contener secretos). Patrón recursivo (T04-A-01):
+# cubre tanto infra/terraform/terraform.tfstate como
+# infra/terraform/.terraform/terraform.tfstate (estado de arranque de `init`).
+*.tfstate*
+**/*.tfstate*
+# Variables locales con posibles secretos; se conserva el ejemplo.
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+# NOTA de decisión (T04-A-02): `.terraform.lock.hcl` SÍ SE VERSIONA.
+# Contiene únicamente versión/constraint del provider (5.100.0 / ~> 5.0) y sus
+# hashes públicos: es artefacto de trazabilidad y reproducibilidad, NO un secreto.
+# `terraform init` recomienda incluirlo. Por ello NO se ignora (ver reporte T05).
+
+# --- Material efímero del proyecto (G-11: borrado físico en Fase 3) ---
+temporary/
+
+# --- Caches, logs y artefactos del sistema operativo ---
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.eslintcache
+.cache/
+coverage/
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+*~

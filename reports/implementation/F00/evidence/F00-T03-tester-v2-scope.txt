@@ -1,0 +1,41 @@
+F00-T03 v2 (Tester independiente) - Control de alcance de archivos del Developer
+Fecha: 2026-11-17 | Rol: Tester | Metodo: mtimes + contenido (sin Git: limite documentado)
+===============================================================================
+Ventana de trabajo v2 del Developer (según sus evidencias y logs): ~2026-11-17 21:14 UTC.
+===============================================================================
+=== A) Archivos que el Developer DEBIA tocar (compose y runbook) ===
+docker-compose.yml  LastWrite=2026-11-17 16:12:05
+docs\runbooks\development-workflow.md  LastWrite=2026-11-17 16:12:33
+reports\implementation\F00\F00-T03-developer.md  LastWrite=2026-11-17 16:15:55
+Contenido esperado presente:
+  compose digest A-01: SI
+  runbook seccion 3 A-02: SI
+  runbook nota verificacion v2: SI
+===============================================================================
+=== B) Archivos PROHIBIDOS que el Developer NO debia tocar (mtimes) ===
+.env.example  LastWrite=2026-11-17 16:03:23
+STATE.md  LastWrite=2026-11-17 15:44:58
+docs\sdd\tasks.md  LastWrite=2026-11-17 10:55:27
+AGENTS.md  LastWrite=2026-11-17 06:51:54
+directorio infra\terraform: NO EXISTE
+directorio .github: NO EXISTE
+===============================================================================
+=== C) Reportes ajenos (no deben haber sido modificados por T03) ===
+F00-T01-architect.md  LastWrite=2026-11-17 16:08:37
+F00-T01-developer.md  LastWrite=2026-11-17 16:04:51
+F00-T01-task.md  LastWrite=2026-11-17 10:27:38
+F00-T01-tester.md  LastWrite=2026-11-17 16:07:44
+F00-T02-architect.md  LastWrite=2026-11-17 10:53:02
+F00-T02-developer.md  LastWrite=2026-11-17 10:47:41
+F00-T02-task.md  LastWrite=2026-11-17 10:27:38
+F00-T02-tester.md  LastWrite=2026-11-17 10:52:22
+F00-T04-task.md  LastWrite=2026-11-17 16:16:54
+F00-T05-task.md  LastWrite=2026-11-17 16:16:54
+F00-T06-task.md  LastWrite=2026-11-17 16:16:54
+===============================================================================
+=== D) Contenido: .env.example sigue con A-03 de T01 (no revertido por T03) ===
+  AWS_ENDPOINT_URL 9297: PRESENTE
+  credenciales por archivos: PRESENTE
+  SQS host canonico: PRESENTE
+===============================================================================
+LIMITE: sin Git no se puede probar autoria absoluta; mtimes son INDICATIVOS. Dentro de la ventana v2, los unicos archivos de producto modificados coherentemente con el addendum son docker-compose.yml y el runbook; el resto no muestra cambios atribuibles a F00-T03.

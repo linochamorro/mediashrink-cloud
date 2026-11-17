@@ -1,0 +1,36 @@
+A-02 (reanudacion v2) - Proveniencia de la imagen documentada en el runbook
+Fecha: 2026-11-17 | Rol: Developer | Tarea: F00-T03 | Evidencia: F00-T03-a02-runbook.txt
+Archivo: docs/runbooks/development-workflow.md (seccion anadida al final, append).
+Nota: fragmento extraido directamente del runbook; sin rutas Windows absolutas ni secretos.
+===============================================================================
+## 3. Proveniencia de la imagen (A-02)
+
+**AWS no publica una imagen oficial preconstruida de `aws/aws-emulator`.** El AWS News Blog (11-Nov-2026) indica que en macOS/Windows se construye una imagen desde el Dockerfile corto de la documentación ("We don't publish a ready-made image"). Por ello, este proyecto ejecuta una imagen pública de **terceros**:
+
+| Campo | Valor |
+|---|---|
+| Registro / repositorio | `ghcr.io/xsavikx/aws-emulator` (comunidad; **no es una imagen oficial de AWS**) |
+| Tag de origen | `1.0.491.1` (corresponde al upstream `aws/aws-emulator` 1.0.491.1) |
+| Digest fijado (A-01) | `sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376` — índice OCI multi-arch (amd64 + arm64) |
+| Referencia en `docker-compose.yml` | `ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8...68376` |
+
+La imagen empaqueta el paquete oficial de AWS verificado por SHA-256 y firma del proveedor. Se fija por **digest inmutable** (no por tag) para impedir la republicación silenciosa del tag; el nombre del tag se conserva solo como documentación de procedencia.
+
+### Cómo comprobar el digest
+
+```powershell
+# 1) Resolver hoy el digest publicado para el tag de origen
+docker buildx imagetools inspect ghcr.io/xsavikx/aws-emulator:1.0.491.1
+
+# 2) Confirmar la referencia fijada y sus RepoDigests tras descargarla
+docker pull ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+docker image inspect --format '{{json .RepoDigests}}' ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+```
+
+El campo `Digest:` del paso 1 debe coincidir con el digest fijado en el compose. Si el mantenedor publica una versión nueva, el digest cambiará: **no se actualiza automáticamente**.
+
+### Responsable de la actualización
+
+El **Developer propietario del contenedor** (en esta fase `F00-T03`; en fases posteriores quien herede `docker-compose.yml`) es responsable de: (1) revisar nuevas versiones del upstream/mantenedor, (2) resolver y verificar el nuevo digest con los comandos anteriores, (3) actualizar el digest tanto en `docker-compose.yml` como en esta sección del runbook, y (4) dejar evidencia del cambio en `reports/implementation/F00/evidence/`. Todo cambio de imagen exige una nueva verificación de `CA-03` por el Tester. Conservar una imagen con digest desactualizado no se da por aceptado de forma implícita: requiere decisión expresa de Lino (G-10).
+
+> La dependencia de terceros queda registrada además en `ADR-001` Decisión 4 y en la cabecera de `docker-compose.yml`; esta sección la hace visible a quien solo consulte el runbook (repositorio público, G-6b).

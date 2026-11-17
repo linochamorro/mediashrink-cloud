@@ -1,0 +1,26 @@
+﻿F00-T04 (Tester, loop 1/3) - Apagado del emulador y verificacion de ausencia de residuos
+Fecha: 2026-11-17 | Rol: Tester | CA-04 | verificacion propia
+==============================================================================
+
+--- docker compose down ---
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed
+EXITCODE_DOWN=0
+
+--- docker ps -a (debe estar vacio) ---
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+CONTENEDORES_RESIDUALES=0
+
+--- docker network ls (sin red mediashrink-cloud_default) ---
+NETWORK ID     NAME      DRIVER    SCOPE
+050bb72401a8   bridge    bridge    local
+2a54e466a5d8   host      host      local
+6c03fe569a85   none      null      local
+RED_COMPOSE_RESIDUAL=NO
+
+LIMPIEZA_OK=TRUE
+==============================================================================

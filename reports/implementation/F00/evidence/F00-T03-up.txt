@@ -1,0 +1,35 @@
+F00-T03 (reanudacion v2, loop 1/3) - Arranque real del emulador (G-7)
+Fecha: 2026-11-17 | Rol: Developer | Limites: memory=2g cpus=2.0 | Timeout arranque: 180 s
+===============================================================================
+COMANDO: docker compose up -d
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Created 
+ Network mediashrink-cloud_default Created 
+ Container mediashrink-aws-emulator Creating 
+ Container mediashrink-aws-emulator Created 
+ Container mediashrink-aws-emulator Starting 
+ Container mediashrink-aws-emulator Started 
+EXITCODE_UP=0
+
+=== POLLING DE SALUD (docker inspect .State.Health.Status) ===
+poll 1: health=starting
+poll 2: health=starting
+poll 3: health=healthy
+HEALTH_STATUS_FINAL=healthy
+POLLS=3
+
+=== docker compose ps ===
+NAME                       IMAGE                                                                                                  COMMAND                  SERVICE        CREATED          STATUS                   PORTS
+mediashrink-aws-emulator   ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376   "aws-emulator -b 0.0…"   aws-emulator   10 seconds ago   Up 8 seconds (healthy)   127.0.0.1:9297->9297/tcp
+EXITCODE_PS=0
+
+=== docker compose logs --tail=25 aws-emulator (sin secretos) ===
+mediashrink-aws-emulator  | {"timestamp":"2026-11-17T21:14:00.323263Z","level":"INFO","fields":{"message":"aws-emulator emulator starting"},"target":"aws_emulator"}
+mediashrink-aws-emulator  | This emulator collects usage and error telemetry: disabled (via EMULATOR_TELEMETRY=off); to turn it back on, remove every opt-out setting and restart
+mediashrink-aws-emulator  | {"timestamp":"2026-11-17T21:14:00.475008Z","level":"INFO","fields":{"message":"request authentication enabled","credentials_file":"/home/emulator/.aws/emulator/9297/emulator_credentials"},"target":"aws_emulator_server"}
+mediashrink-aws-emulator  | {"timestamp":"2026-11-17T21:14:00.475285Z","level":"INFO","fields":{"message":"emulator server information","endpoint_url":"https://127.0.0.1:9297","health_check_url":"https://127.0.0.1:9297/__admin/health","config_file":"/home/emulator/.aws/emulator/9297/config","ca_file":"/home/emulator/.aws/emulator/9297/ca.pem","java_truststore_file":"/home/emulator/.aws/emulator/9297/truststore.p12"},"target":"aws_emulator_server"}
+mediashrink-aws-emulator  | {"timestamp":"2026-11-17T21:14:00.475302Z","level":"WARN","fields":{"message":"the emulator listens on 0.0.0.0, port 9297, so other machines on your network can reach it, and the ports it opens for resource endpoints, which check no request signature. This is expected in a container. Otherwise, bind 127.0.0.1 (-b 127.0.0.1) unless other machines should reach it","bind_address":"0.0.0.0"},"target":"aws_emulator_server"}
+EXITCODE_LOGS=0
+===============================================================================
+RESULTADO: EXITCODE_UP=0 HEALTH=healthy

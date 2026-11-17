@@ -1,0 +1,23 @@
+F00-T03 v2 (Tester independiente) - Coherencia .env.example (addendum A-03 de T01)
+Fecha: 2026-11-17 | Rol: Tester | Fuente: .env.example (solo lectura)
+NOTA: 1ra pasada marco falsamente FAIL 'sin :9324' por encontrar '9324' en un COMENTARIO que dice 'No existe el puerto 9324'. Se corrige: se comprueban solo lineas ACTIVAS (no comentario).
+===============================================================================
+CHECK sin puerto :9324 en lineas ACTIVAS: PASS (lineas activas con 9324=0; unica mencion: comentario L57 'No existe el puerto 9324')
+CHECK AWS_ENDPOINT_URL=https://127.0.0.1:9297: PASS
+CHECK SQS QueueUrl host AWS canonico (sqs.us-east-1.amazonaws.com, cuenta fija) en lineas activas: PASS
+CHECK AWS_ENDPOINT_URL=:9297 como transporte al emulador: PASS
+CHECK credenciales por archivos generados (AWS_SHARED_CREDENTIALS_FILE + AWS_CONFIG_FILE): PASS
+CHECK sin credenciales fijas AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY en lineas activas: PASS
+CHECK CA_BUNDLE_PATH=./.local/aws-emulator/ca.pem: PASS
+===============================================================================
+LINEAS RELEVANTES:
+L39: # AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY / AWS_PROFILE: las variables de entorno
+L44: AWS_ENDPOINT_URL=https://127.0.0.1:9297
+L45: AWS_SHARED_CREDENTIALS_FILE=./.local/aws-emulator/emulator_credentials
+L46: AWS_CONFIG_FILE=./.local/aws-emulator/config
+L50: CA_BUNDLE_PATH=./.local/aws-emulator/ca.pem
+L54: # SQS_QUEUE_URL / SQS_DLQ_URL son las QueueUrl que devuelve el emulador: host AWS
+L55: # estándar + cuenta fija. El tráfico se enruta al emulador con AWS_ENDPOINT_URL
+L57: # useQueueUrlAsEndpoint:false. No existe el puerto 9324.
+L61: SQS_QUEUE_URL=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs
+L62: SQS_DLQ_URL=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq

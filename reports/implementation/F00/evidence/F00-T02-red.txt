@@ -1,0 +1,134 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [31mÔØ»[39m tests/unit/frontend.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[90m 20[2mms[22m[39m
+[31m   [31m├ù[31m frontend ÔÇö entrypoint del esqueleto Vite + React (F00-T02)[2m > [22mexiste el HTML de entrada con el nodo root y el m├│dulo main.tsx[90m 15[2mms[22m[31m[39m
+[31m     ÔåÆ expected '<!doctype html>\n<html lang="es">\n  ÔÇª' to contain '<div id="root"></div>'[39m
+[31m   [31m├ù[31m frontend ÔÇö entrypoint del esqueleto Vite + React (F00-T02)[2m > [22mel entrypoint monta React con createRoot[90m 2[2mms[22m[31m[39m
+[31m     ÔåÆ expected 'export {};\n' to contain 'createRoot'[39m
+[31m   [31m├ù[31m frontend ÔÇö entrypoint del esqueleto Vite + React (F00-T02)[2m > [22mApp.tsx existe y exporta el componente ra├¡z del esqueleto[90m 2[2mms[22m[31m[39m
+[31m     ÔåÆ expected 'export default function App() {\n  reÔÇª' to contain 'MediaShrink Cloud'[39m
+ [31mÔØ»[39m tests/unit/health.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[90m 22[2mms[22m[39m
+[31m   [31m├ù[31m backend ÔÇö healthcheck de humo (F00-T02)[2m > [22mresponde 200 con status ok en GET /health[90m 18[2mms[22m[31m[39m
+[31m     ÔåÆ expected 501 to be 200 // Object.is equality[39m
+[31m   [31m├ù[31m backend ÔÇö healthcheck de humo (F00-T02)[2m > [22mexpone una f├íbrica de app aislada y funcional para pruebas[90m 2[2mms[22m[31m[39m
+[31m     ÔåÆ expected 501 to be 200 // Object.is equality[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 5 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/unit/frontend.test.ts > frontend ÔÇö entrypoint del esqueleto Vite + React (F00-T02) > existe el HTML de entrada con el nodo root y el m├│dulo main.tsx
+AssertionError: expected '<!doctype html>\n<html lang="es">\n  ÔÇª' to contain '<div id="root"></div>'
+
+- Expected
++ Received
+
+- <div id="root"></div>
++ <!doctype html>
++ <html lang="es">
++   <head>
++     <meta charset="UTF-8" />
++     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++     <title>MediaShrink Cloud</title>
++   </head>
++   <body>
++     <div id="app"></div>
++   </body>
++ </html>
++
+
+ ÔØ» tests/unit/frontend.test.ts:16:18
+     14| 
+     15|     const html = read('frontend/index.html');
+     16|     expect(html).toContain('<div id="root"></div>');
+       |                  ^
+     17|     expect(html).toContain('/src/main.tsx');
+     18|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/5]ÔÄ»
+
+ FAIL  tests/unit/frontend.test.ts > frontend ÔÇö entrypoint del esqueleto Vite + React (F00-T02) > el entrypoint monta React con createRoot
+AssertionError: expected 'export {};\n' to contain 'createRoot'
+
+- Expected
++ Received
+
+- createRoot
++ export {};
++
+
+ ÔØ» tests/unit/frontend.test.ts:23:18
+     21|     const main = read('frontend/src/main.tsx');
+     22| 
+     23|     expect(main).toContain('createRoot');
+       |                  ^
+     24|     expect(main).toContain('react-dom/client');
+     25|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/5]ÔÄ»
+
+ FAIL  tests/unit/frontend.test.ts > frontend ÔÇö entrypoint del esqueleto Vite + React (F00-T02) > App.tsx existe y exporta el componente ra├¡z del esqueleto
+AssertionError: expected 'export default function App() {\n  reÔÇª' to contain 'MediaShrink Cloud'
+
+- Expected
++ Received
+
+- MediaShrink Cloud
++ export default function App() {
++   return null;
++ }
++
+
+ ÔØ» tests/unit/frontend.test.ts:31:17
+     29| 
+     30|     expect(app).toContain('export default function App');
+     31|     expect(app).toContain('MediaShrink Cloud');
+       |                 ^
+     32|   });
+     33| });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/5]ÔÄ»
+
+ FAIL  tests/unit/health.test.ts > backend ÔÇö healthcheck de humo (F00-T02) > responde 200 con status ok en GET /health
+AssertionError: expected 501 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 501
+
+ ÔØ» tests/unit/health.test.ts:9:29
+      7|     const response = await app.request('/health');
+      8| 
+      9|     expect(response.status).toBe(200);
+       |                             ^
+     10|     expect(await response.json()).toEqual({ status: 'ok' });
+     11|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/5]ÔÄ»
+
+ FAIL  tests/unit/health.test.ts > backend ÔÇö healthcheck de humo (F00-T02) > expone una f├íbrica de app aislada y funcional para pruebas
+AssertionError: expected 501 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 501
+
+ ÔØ» tests/unit/health.test.ts:16:29
+     14|     const isolated = await createApp().request('/health');
+     15| 
+     16|     expect(isolated.status).toBe(200);
+       |                             ^
+     17|   });
+     18| });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/5]ÔÄ»
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[31m5 failed[39m[22m[90m (5)[39m
+[2m   Start at [22m 10:43:49
+[2m   Duration [22m 908ms[2m (transform 199ms, setup 0ms, collect 319ms, tests 42ms, environment 1ms, prepare 514ms)[22m
+
+EXITCODE=1

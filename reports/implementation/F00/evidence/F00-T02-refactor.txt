@@ -1,0 +1,22 @@
+REFACTOR — F00-T02 (v1, loop 1/3)
+
+Evaluación: sin cambios de código. El esqueleto backend expone una única ruta
+mediante la fábrica createApp() (app es la instancia exportada reutilizada por
+el test); el entrypoint frontend solo monta React y App es un componente raíz
+sin estado. Extraer helpers o constantes añadiría indirección sin eliminar
+duplicación real. Las aserciones de humo se mantienen intactas (no se debilitan).
+
+Resultado: sin refactorización aplicada; se reejecutan los 5 tests de humo como
+verificación de no regresión (salida continuación).
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/frontend.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/health.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 10:44:29
+[2m   Duration [22m 1.02s[2m (transform 209ms, setup 0ms, collect 276ms, tests 22ms, environment 1ms, prepare 535ms)[22m
+
+EXITCODE=0

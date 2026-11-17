@@ -1,0 +1,32 @@
+REFACTOR — F00-T01 (v1, loop 1/3)
+
+Evaluación realizada sobre backend/src/config/index.ts y tests/unit/config.test.ts:
+
+- La lógica está dividida en funciones puras y pequeñas (parseEnvFile,
+  findRealSecretPattern, isLocalPlaceholder, assertNoRealSecret, readRequired,
+  readString, readPositiveInt, readBool, readNodeEnv, loadConfig) sin duplicación
+  de reglas de validación.
+- Los patrones de secreto real están centralizados en REAL_SECRET_PATTERNS y los
+  marcadores locales en dos expresiones regulares con responsabilidades distintas
+  (prefijo vs. valor exacto). Extraerlos a más archivos no reduce complejidad,
+  sólo añade superficie de importación en el esqueleto base de F00.
+- Las expectativas del test no se debilitan ni se eliminan: se conservan los
+  30 casos (positivos, negativos, secretos y cobertura de .env.example).
+
+Decisión: SIN CAMBIOS NECESARIOS. Se reejecuta la suite para confirmar que el
+estado REFACTOR coincide con GREEN.
+
+--- Reejecución de verificación ---
+EXITCODE=0
+
+
+ RUN  v2.1.9 D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud
+
+ Ô£ô tests/unit/config.test.ts (30 tests) 26ms
+
+ Test Files  1 passed (1)
+      Tests  30 passed (30)
+   Start at  10:32:56
+   Duration  872ms (transform 136ms, setup 0ms, collect 188ms, tests 26ms, environment 0ms, prepare 190ms)
+
+

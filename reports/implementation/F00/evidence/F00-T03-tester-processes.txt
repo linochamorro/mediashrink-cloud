@@ -1,0 +1,58 @@
+F00-T03 — VERIFICACION DE PROCESOS, EVIDENCIAS FALSAS Y AMBITO (Tester)
+Fecha: 2026-11-17T10:52:44-05:00
+Alcance: comprobacion propia de que no quedo contenedor/instalador en ejecucion,
+         que no se fabricaron evidencias de up/healthcheck/down y que el
+         Developer respeto el ambito de escritura.
+Nota G-3/PR-08: sin rutas Windows absolutas ni secretos en este archivo.
+
+[1] Procesos docker / dockerd / compose / winget
+    Get-Process | Where-Object { ProcessName -match 'docker|winget|dockerd|compose' }
+    RESULTADO: NINGUNO
+
+[2] Procesos chocolatey (choco)
+    RESULTADO: NINGUNO
+
+[3] Evidencias de integracion NO fabricadas
+    reports/implementation/F00/evidence/F00-T03-up.txt .......... Exists=False
+    reports/implementation/F00/evidence/F00-T03-healthcheck.txt . Exists=False
+    reports/implementation/F00/evidence/F00-T03-down.txt ........ Exists=False
+    Busqueda recursiva en reports/ de 'F00-T03-(up|healthcheck|down).*':
+    RESULTADO: ningun archivo.
+
+[4] Ambito de escritura — mtimes (ISO 8601, zona -05:00)
+    Autorizados (propios de F00-T03):
+      docker-compose.yml .......................... 2026-11-17T10:42:30
+      docs/runbooks/development-workflow.md ...... 2026-11-17T10:42:43
+      evidence/F00-T03-config-audit.txt .......... 2026-11-17T10:49:47
+      evidence/F00-T03-environment.txt ........... 2026-11-17T10:49:48
+      F00-T03-developer.md ....................... 2026-11-17T10:50:59
+
+    Prohibidos / ajenos (NO tocados por F00-T03):
+      .env.example ............................... 2026-11-17T10:31:33 (F00-T01)
+      STATE.md ................................... 2026-11-17T10:40:09 (Architect)
+      docs/sdd/tasks.md .......................... 2026-11-17T10:39:43 (Architect)
+      frontend/ .................................. 2026-11-17T10:42:20 (F00-T02)
+      backend/ ................................... 2026-11-17T10:42:20 (F00-T02)
+      infra/terraform/ ........................... NO EXISTE
+      .github/ ................................... NO EXISTE
+      .gitignore ................................. NO EXISTE
+
+    Ventana de escritura 10:49-10:51: solo evidencias F00-T03-config-audit,
+    F00-T03-environment y F00-T03-developer.md (mas evidencias paralelas de
+    F00-T02-tester, de otro rol/tarea). No hay escrituras de F00-T03 en zonas
+    prohibidas.
+
+[5] Contraste del reporte del Developer
+    - 5 problemas registrados (F00-T03-P1..P5), cada uno con los 7 campos
+      obligatorios (identificacion, problema, causa, solucion/intentos,
+      verificacion, pendientes, aprendizaje).
+    - No emite PASSED propio; declara "No se emite PASSED" y estado BLOCKED.
+    - Documenta ejecucion real de `where docker` (EXITCODE=1), winget
+      (EXITCODE -1978335230 y 143/SIGTERM) y choco (EXITCODE=1), coherente con
+      la comprobacion propia de este Tester en
+      F00-T03-tester-environment.txt.
+
+CONCLUSION: No hay evidencia falsa de integracion, no quedo contenedor ni
+    instalador en ejecucion y el ambito de escritura del Developer fue correcto.
+    Las unicas salvedades de CA-03 siguen siendo la ausencia de Docker (P1) y
+    la falta de validacion de esquema YAML por CLI (P5).

@@ -1,0 +1,23 @@
+F00-T03 v2 (Tester independiente) - Inspeccion de limites EFECTIVOS (G-7)
+Fecha: 2026-11-17 | Rol: Tester | Contenedor: mediashrink-aws-emulator
+===============================================================================
+COMANDO: docker inspect --format 'memory={{.HostConfig.Memory}} nanoCpus={{.HostConfig.NanoCpus}} memorySwap={{.HostConfig.MemorySwap}}' mediashrink-aws-emulator
+memory=2147483648 nanoCpus=2000000000 memorySwap=2147483648
+EXITCODE_1=0
+===============================================================================
+COMANDO: docker inspect --format 'user={{.Config.User}} image={{.Config.Image}} status={{.State.Status}} health={{if .State.Health}}{{.State.Health.Status}}{{end}}' mediashrink-aws-emulator
+user=1000:1000 image=ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376 status=running health=healthy
+EXITCODE_2=0
+===============================================================================
+COMANDO: docker inspect --format 'ports={{json .NetworkSettings.Ports}} mounts={{json .Mounts}}' mediashrink-aws-emulator
+ports={"9297/tcp":[{"HostIp":"127.0.0.1","HostPort":"9297"}]} mounts=[{"Type":"volume","Name":"mediashrink-cloud_aws-emulator-data","Source":"/var/lib/docker/volumes/mediashrink-cloud_aws-emulator-data/_data","Destination":"/home/emulator/.aws/emulator","Driver":"local","Mode":"rw","RW":true,"Propagation":""}]
+EXITCODE_3=0
+===============================================================================
+=== COMPROBACIONES DE VALORES EFECTIVOS ===
+CHECK memory=2147483648: PASS
+CHECK nanoCpus=2000000000: PASS
+CHECK user=1000:1000: PASS
+CHECK image por digest: PASS
+CHECK status=running health=healthy: PASS
+===============================================================================
+RESULTADO: inspect_exit=0/0/0

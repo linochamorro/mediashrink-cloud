@@ -1,0 +1,71 @@
+# MediaShrink Cloud — emulador AWS local (ADR-001 Decisión 4, G-7, CA-03)
+#
+# AWS NO publica una imagen preconstruida de aws-emulator (confirmado en el
+# AWS News Blog 2026-11-11: en macOS/Windows se construye desde un Dockerfile).
+# Se usa la imagen pública comunitaria ghcr.io/xsavikx/aws-emulator, que
+# empaqueta el paquete oficial de AWS (upstream aws/aws-emulator 1.0.491.1),
+# verificado por SHA-256 y firma del proveedor, multi-arch (amd64/arm64) y
+# con HEALTHCHECK propio sobre /__admin/health.
+# A-01: imagen fijada por DIGEST inmutable del indice OCI multi-arch (tag de
+# origen 1.0.491.1). Verificado con `docker buildx imagetools inspect` y
+# `docker image inspect`; procedural y responsable en el runbook §3.
+#   sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+#
+# Un único endpoint HTTPS (9297) sirve S3, SQS + DLQ, DynamoDB y STS.
+# No existe un puerto SQS separado (9324) en aws-emulator.
+# Todo se enlaza a 127.0.0.1: nunca exponer el emulador a la red local.
+
+services:
+  aws-emulator:
+    image: ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+    container_name: mediashrink-aws-emulator
+    command: ["-p", "9297"]
+    # Fix montaje (reanudacion v2): NO se declara `user:`. La imagen ya define
+    # USER 1000:1000 (verificado con `docker image inspect`), por lo que quitar
+    # la directiva no cambia el usuario efectivo ni debilita la seguridad.
+    environment:
+      HOME: /home/emulator
+      EMULATOR_TELEMETRY: "off"
+      EMULATOR_HEALTHCHECK_PORT: "9297"
+    ports:
+      - "127.0.0.1:9297:9297"
+    volumes:
+      # Fix montaje (reanudacion v2): se sustituye el bind mount
+      # `./.local/aws-emulator:/.../9297` por un volumen named. En Windows el
+      # bind mount (9p/virtiofs) provoca "Operation not permitted (os error 1)"
+      # al crear los archivos del emulador; el volumen named usa el FS nativo
+      # de Linux y funciona. El emulador escribe en
+      # /home/emulator/.aws/emulator/9297/{ca.pem,config,emulator_credentials}
+      # y se exportan a ./.local/aws-emulator/ con `docker cp` tras el arranque
+      # (runbook §1.3). Asi se satisfacen CA_BUNDLE_PATH/AWS_* de .env.example
+      # sin rutas locales absolutas ni secretos versionados.
+      - aws-emulator-data:/home/emulator/.aws/emulator
+    # G-7: --memory=2g --cpus="2.0". Se declaran las claves de servicio
+    # (para `docker compose up`) y deploy.resources.limits (Compose V2/Swarm).
+    cpus: 2.0
+    mem_limit: 2g
+    memswap_limit: 2g
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2g
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          curl --silent --fail --cacert /home/emulator/.aws/emulator/9297/ca.pem
+          https://127.0.0.1:9297/__admin/health >/dev/null || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    stop_grace_period: 10s
+    restart: "no"
+
+# Volumen named del emulador. Persiste tras `docker compose down` (no es un
+# contenedor ni una red, asi que no rompe el apagado limpio de G-7). Contiene
+# solo credenciales efímeras del emulador (no secretos reales); su exclusion
+# de Git se verifica en F00-T05 (hallazgo A-05).
+volumes:
+  aws-emulator-data:

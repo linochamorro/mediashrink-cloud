@@ -1,0 +1,13 @@
+EXITCODE=0
+
+
+ RUN  v2.1.9 D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud
+
+ Ô£ô tests/unit/config.test.ts (30 tests) 30ms
+
+ Test Files  1 passed (1)
+      Tests  30 passed (30)
+   Start at  10:32:32
+   Duration  881ms (transform 137ms, setup 0ms, collect 196ms, tests 30ms, environment 0ms, prepare 189ms)
+
+
