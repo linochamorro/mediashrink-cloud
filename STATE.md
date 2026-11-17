@@ -18,7 +18,7 @@
 ## 2. Pendientes inmediatos (en orden de prioridad)
 1. Revisión del retorno `FASE_COMPLETA` por CTO y autorización expresa de `P-01` (Fase 1) — Responsable: `CTO / Lino` — Condición de entrada: `reports/verification/F00-architect.md §7 (hecho)`
 2. Resolver P4 antes de `G-12`: anonimizar rutas en artefactos G-6b (opción A) o decisión expresa de Lino (opción B, G-10) — Responsable: `CTO / Lino` — Destino: `F05`
-3. Sincronizar el commit local `ab5ef7c` (reportes/evidencias T06) con el remoto — Responsable: `Architect` tras autorización — Condición de entrada: `Antes de G-12`
+3. ~~Sincronizar el commit local `ab5ef7c` (reportes/evidencias T06) con el remoto~~ — **RESUELTO**: push a `main` en los commits `ab5ef7c` y `f9bab63`; árbol de trabajo limpio
 4. No heredar flags `skip_*` del bootstrap en F04; migrar ESLint 8 y reevaluar scripts nativos en tareas futuras — Responsable: `CTO` al planificar fases
 
 ## 3. Bloqueos activos
@@ -104,4 +104,4 @@
 - Retorno de Fase 0: [F00-architect.md](reports/verification/F00-architect.md)
 
 ## 7. Retorno al CTO
-**Estado: `FASE_COMPLETA`.** P-00 cerrada: `F00-T01`…`F00-T06` `PASSED` con evidencia de Tester; CA-01…CA-06 verificados; auditorías de riesgo 2 `READY_WITH_CONCERNS` sin hallazgos bloqueantes. No se concedió `G-9` ni `G-10`; G-6/G-6b/G-7/G-8 ejecutados; G-12 no ejecutado. Seguimientos no bloqueantes: **P4** (rutas en G-6b → anonimizar en F05 o decisión de Lino), deuda ESLint 8 / scripts nativos / acciones `@v4`, flags `skip_*` para F04 y sincronización del commit `ab5ef7c`. Se detiene la ejecución del Architect; **Fase 1 no iniciada** y se solicita autorización expresa de `P-01`. Detalle: [F00-architect.md §7](reports/verification/F00-architect.md).
+**Estado: `FASE_COMPLETA`.** P-00 cerrada: `F00-T01`…`F00-T06` `PASSED` con evidencia de Tester; CA-01…CA-06 verificados; auditorías de riesgo 2 `READY_WITH_CONCERNS` sin hallazgos bloqueantes. No se concedió `G-9` ni `G-10`; G-6/G-6b/G-7/G-8 ejecutados; G-12 no ejecutado. Seguimientos no bloqueantes: **P4** (rutas en G-6b → anonimizar en F05 o decisión de Lino), deuda ESLint 8 / scripts nativos / acciones `@v4`, flags `skip_*` para F04 (sincronización de `ab5ef7c` ya resuelta en `f9bab63`). Se detiene la ejecución del Architect; **Fase 1 no iniciada** y se solicita autorización expresa de `P-01`. Detalle: [F00-architect.md §7](reports/verification/F00-architect.md).

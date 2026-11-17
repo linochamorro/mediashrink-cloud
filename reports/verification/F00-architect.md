@@ -122,7 +122,7 @@ Tiempo observado: marcas de evidencia entre `10:31` y `10:52` (RED/GREEN de T01 
 | **P4 / T05-A-04** | 7 rutas Windows absolutas preexistentes en artefactos G-6b (metadata de entorno, **no secretos**): (A) addendum de anonimización con marcadores o (B) decisión expresa de Lino | **F05 / G-12** |
 | `T04-A-03` | Flags `skip_*` del provider justificados para el emulador pero no condicionados: no heredarlos en entorno real | **F04 (fase posterior)** |
 | `F00-T02-P1/P2`, `T06-A-02/T06-A-03` | ESLint 8 deprecado (migrar a 9), `postinstall` no aprobados y acciones `@v4` por tag mutable: deuda declarada, **no aceptada** | Tareas futuras / decisión Lino |
-| `O-02` | Commit local `ab5ef7c` con reportes/evidencias T06; solo `03e6208` (workflow) fue pushado | Sincronización documental antes de G-12 |
+| `O-02` | Commit local `ab5ef7c` con reportes/evidencias T06; solo `03e6208` (workflow) fue pushado | **RESUELTO**: push a `main` de `ab5ef7c` + `f9bab63` (G-6); árbol limpio |
 
 ### 7.4 Operación y confinamiento
 
