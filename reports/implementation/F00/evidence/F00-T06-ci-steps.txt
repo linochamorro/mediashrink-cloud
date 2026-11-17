@@ -1,0 +1,25 @@
+# F00-T06 — Conclusiones de los pasos del job `verify` (run 44184037945)
+# Fuente: `gh run view 44184037945 --json jobs` (job ID 134395645994).
+# Los 4 pasos exigidos por CA-06, con sus `conclusion`:
+
+| # | Paso | Comando / acción | status | conclusion |
+|---|------|------------------|--------|------------|
+| 4 | Install | `npm ci --no-audit --no-fund` | completed | success |
+| 5 | Typecheck | `npm run typecheck` | completed | success |
+| 6 | Lint | `npm run lint` | completed | success |
+| 7 | Test unit | `npm run test:unit` (35/35 en local, F00-T02) | completed | success |
+
+--- Secuencia completa de pasos del job (según GH API) ---
+1  Set up job          completed  success
+2  Checkout            completed  success  (actions/checkout@v4)
+3  Setup Node.js       completed  success  (actions/setup-node@v4, node 26, cache npm)
+4  Install             completed  success
+5  Typecheck           completed  success
+6  Lint                completed  success
+7  Test unit           completed  success
+13 Post Setup Node.js  completed  success
+14 Post Checkout       completed  success
+15 Complete job        completed  success
+
+Job conclusion: success · Job duración: 17s · startedAt 2026-11-17T21:50:51Z · completedAt 2026-11-17T21:51:08Z
+Run conclusion: success · 21s total.

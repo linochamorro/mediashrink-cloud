@@ -1,0 +1,51 @@
+# F00-T06 — Contenido de `.github/workflows/ci.yml` (commit 03e6208)
+# Evidencia: archivo versionado y pushado a main. Sin secretos.
+
+name: CI
+
+# F00-T06 — CA-06 (P-00 §5). Workflow base de Fase 0.
+# Comandos declarados: exactamente los verificados en F00-T02 por el Tester
+# (npm ci, typecheck, lint, test:unit → 35/35). No se redefinen ni debilitan.
+
+# Disparadores: push y pull_request sobre la rama principal `main`.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Permisos mínimos: solo lectura. Sin secretos, sin releases ni deploy (G-12 no aplica en F00).
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: install / typecheck / lint / test:unit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # No hay campo `engines` en package.json. Se alinea con el entorno
+          # local verificado en F00-T02 (Node 26.13.0, npm 11.20.0).
+          # Se fija la línea mayor 26; setup-node resuelve al último 26.x.
+          node-version: '26'
+          # Lockfile versionado (package-lock.json v3) → caché npm segura.
+          cache: 'npm'
+
+      - name: Install
+        # Sin --ignore-scripts ni allowlists: no se aprueban scripts por defecto
+        # (postinstall de esbuild/sharp, deuda F00-T02-P1 bajo evaluación).
+        run: npm ci --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test unit
+        run: npm run test:unit

@@ -1,0 +1,38 @@
+# F00-T06 — `gh run view 44184037945`
+# Veredicto final del run real en GitHub Actions.
+
+✓ main CI · 44184037945
+Triggered via push less than a minute ago
+
+JOBS
+✓ install / typecheck / lint / test:unit in 17s (ID 134395645994)
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+install / typecheck / lint / test:unit: .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+install / typecheck / lint / test:unit: .github#1
+
+For more information about the job, try: gh run view --job=134395645994
+View this run on GitHub: https://github.com/linochamorro/mediashrink-cloud/actions/runs/44184037945
+
+--- `gh run view 44184037945 --json ...` (veredicto estructurado) ---
+{
+  "conclusion": "success",
+  "status": "completed",
+  "databaseId": 44184037945,
+  "displayTitle": "ci: anadir workflow base de GitHub Actions (F00-T06, CA-06)",
+  "event": "push",
+  "headSha": "03e6208bcc353ec9f8557fbefc5d6520eb2e91be",
+  "createdAt": "2026-11-17T21:50:48Z",
+  "updatedAt": "2026-11-17T21:51:09Z",
+  "url": "https://github.com/linochamorro/mediashrink-cloud/actions/runs/44184037945"
+}
+
+--- `gh run view 44184037945 --log-failed` ---
+# Sin salida; exit code 0 → ningún paso fallido (coherente con conclusion=success).
+
+--- ID y URL del run ---
+ID: 44184037945
+URL: https://github.com/linochamorro/mediashrink-cloud/actions/runs/44184037945

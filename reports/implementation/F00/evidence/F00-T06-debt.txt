@@ -1,0 +1,26 @@
+# F00-T06 — Evaluación de la deuda residual heredada (sin aceptar G-10)
+
+Run evaluado: 44184037945 (https://github.com/linochamorro/mediashrink-cloud/actions/runs/44184037945)
+Runner: `ubuntu-latest` · Node 26 (alineado con local 26.13.0) · npm 11 · lockfile v3.
+
+## F00-T02-P2 — ESLint 8.57.1 deprecado
+- Origen: `package.json` fija `eslint: ^8.57.1` con configuración embebida (`eslintConfig`).
+- Evaluación en CI: el paso `Lint` (`npm run lint`) terminó con `conclusion=success`. La deprecación no produjo error ni aviso bloqueante en el run.
+- Decisión: **deuda declarada, NO bloqueante**. La migración a ESLint 9 / configuración plana (`eslint.config.js`) está fuera del alcance de F00 (no se tocó `package.json`). No se rebajó ninguna regla ni se saltó el paso para lograr verde.
+- Seguimiento: Fase posterior / decisión de Lino. **No se acepta riesgo G-10.**
+
+## F00-T02-P1 — Scripts `postinstall` no aprobados de `esbuild`/`sharp`
+- Origen: npm 11 no aprueba por defecto los `postinstall` de dependencias nativas; en T01 no había lockfile.
+- Evaluación en CI: el paso `Install` (`npm ci --no-audit --no-fund`) terminó con `conclusion=success` en Linux, **sin** `--ignore-scripts`, sin `--foreground-scripts` y sin allowlist. Es decir: no se aprobó ningún script; el lockfile v3 versionado y los binarios de plataforma vía dependencias opcionales funcionan también en el runner, no solo en local.
+- Decisión: **NO aprobar scripts por defecto**. No se modificó el workflow para relajarlo. No hubo fallo que diagnosticar. No se acepta riesgo G-10.
+- Límite de cobertura: la verificación es sobre `ubuntu-latest` / Node 26; no se validaron otros runners ni versiones de Node. Deuda declarada para seguimiento, sin impacto en CA-06.
+
+## Anotaciones informativas del run (NO bloqueantes)
+1. `Node.js 20 is deprecated ... actions/checkout@v4, actions/setup-node@v4 ... forced to run on Node.js 24` — aviso del runner sobre las acciones en sí mismas, no sobre el job. Las acciones están fijadas a `@v4` porque el `task.md` lo exige; cambiarlas sería desviarse del alcance. Sin acción.
+2. `ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026` — aviso de migración de imagen. El job pasó igualmente. Sin acción en F00.
+
+## G-12 (publicación final)
+- No se hizo release, deploy ni publicación final. Solo push del workflow a `main` (G-6/G-6b autorizados).
+
+## Conclusión
+Ningún hallazgo bloqueante. Los dos puntos de deuda (P1/P2) permanecen **declarados y sin aceptación de riesgo**; el run verde se logró ejecutando los comandos verificados en T02, sin debilitar expectativas ni saltarse pasos.

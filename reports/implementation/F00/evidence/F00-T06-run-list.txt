@@ -1,0 +1,4 @@
+# F00-T06 — `gh run list --workflow ci.yml --limit 5`
+# Capturado tras el push a main (commit 03e6208bcc353ec9f8557fbefc5d6520eb2e91be).
+
+completed	success	ci: anadir workflow base de GitHub Actions (F00-T06, CA-06)	CI	main	push	44184037945	21s	2026-11-17T21:50:48Z
