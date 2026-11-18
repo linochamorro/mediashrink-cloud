@@ -1,0 +1,51 @@
+EXITCODE=0
+
+> mediashrink-cloud@0.0.0 test:unit
+> vitest run tests/unit
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/config.test.ts [2m([22m[2m35 tests[22m[2m)[22m[90m 49[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/frontend/core.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 59[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/imageHeader.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 23[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/contracts.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 96[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/userstore.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 368[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mAuthService registra y hace login sobre el adaptador DynamoDB [33m343[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 708[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 958[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/download.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 980[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/service.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1290[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mdevuelve el mismo error para correo desconocido y contrase├▒a incorrecta [33m422[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/stateMachine.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/routes.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1107[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-routes.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1138[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/antiBomb.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/jwt.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 70[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/antiBomb.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 97[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/processImage.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 186[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-keys.test.ts [2m([22m[2m30 tests[22m[2m)[22m[90m 22[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/savings.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/authz.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1134[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mPOST /jobs/:id/confirm ajeno devuelve 404 y no publica [33m302[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1230[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22mla clave de /jobs deriva del userId: agotar A no afecta a B [33m312[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22muna cabecera con el userId ajeno no consume el cupo de ese usuario [33m302[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22m/auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 [33m343[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete-partial.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 426[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip-cap.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 556[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/confirm.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 439[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/guards.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/frontend.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/middleware.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/health.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 24[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/password.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 950[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m hash de contrase├▒as ÔÇö scrypt (A-02, IN-05)[2m > [22mverifica la contrase├▒a correcta y rechaza una incorrecta [33m316[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m30 passed[39m[22m[90m (30)[39m
+[2m      Tests [22m [1m[32m266 passed[39m[22m[90m (266)[39m
+[2m   Start at [22m 23:31:50
+[2m   Duration [22m 7.58s[2m (transform 2.72s, setup 0ms, collect 15.17s, tests 12.00s, environment 12ms, prepare 7.57s)[22m
+

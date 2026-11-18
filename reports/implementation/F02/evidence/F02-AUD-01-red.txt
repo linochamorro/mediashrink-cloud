@@ -1,0 +1,159 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [31mÔØ»[39m tests/unit/api/jobs-contract.test.ts [2m([22m[2m9 tests[22m[2m | [22m[31m7 failed[39m[2m)[22m[33m 1037[2mms[22m[39m
+[31m   [31m├ù[31m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22m201 devuelve job PENDING y uploads con imageId seguro, URL HTTPS PUT y sin bucket/key[90m 91[2mms[22m[31m[39m
+[31m     ÔåÆ expected 400 to be 201 // Object.is equality[39m
+[31m   [31m├ù[31m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22mgenera un imageId nuevo por archivo con randomUUID y nunca lo deriva del fileName[90m 59[2mms[22m[31m[39m
+[31m     ÔåÆ expected 400 to be 201 // Object.is equality[39m
+[31m   [31m├ù[31m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22macepta todos los MIME raster permitidos y rechaza SVG/GIF/no-raster[90m 60[2mms[22m[31m[39m
+[31m     ÔåÆ image/jpeg: expected 400 to be 201 // Object.is equality[39m
+[31m   [31m├ù[31m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22mvalida fileName no vac├¡o sin separadores, NUL ni %xx (sin usarlo en la clave)[33m 578[2mms[22m[31m[39m
+[31m     ÔåÆ expected 400 to be 201 // Object.is equality[39m
+[31m   [31m├ù[31m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22mrechaza preset inv├ílido, lote vac├¡o y lote que excede maxImagesPerBatch[90m 61[2mms[22m[31m[39m
+[31m     ÔåÆ expected 400 to be 201 // Object.is equality[39m
+[31m   [31m├ù[31m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22mvalida sizeBytes entero > 0 y dentro de maxFileSizeMb reutilizando JobMetrics[90m 62[2mms[22m[31m[39m
+[31m     ÔåÆ expected 400 to be 201 // Object.is equality[39m
+[31m   [31m├ù[31m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22mla suplantaci├│n de userId por cabeceras no afecta a la clave presignada[90m 61[2mms[22m[31m[39m
+[31m     ÔåÆ expected 400 to be 201 // Object.is equality[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 7 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/unit/api/jobs-contract.test.ts > F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads } > 201 devuelve job PENDING y uploads con imageId seguro, URL HTTPS PUT y sin bucket/key
+AssertionError: expected 400 to be 201 // Object.is equality
+
+- Expected
++ Received
+
+- 201
++ 400
+
+ ÔØ» tests/unit/api/jobs-contract.test.ts:34:29
+     32| 
+     33|     const response = await postJson(app, '/jobs', validBatch, token);
+     34|     expect(response.status).toBe(201);
+       |                             ^
+     35| 
+     36|     const body = await jsonOf(response);
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/7]ÔÄ»
+
+ FAIL  tests/unit/api/jobs-contract.test.ts > F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads } > genera un imageId nuevo por archivo con randomUUID y nunca lo deriva del fileName
+AssertionError: expected 400 to be 201 // Object.is equality
+
+- Expected
++ Received
+
+- 201
++ 400
+
+ ÔØ» tests/unit/api/jobs-contract.test.ts:82:29
+     80|       token,
+     81|     );
+     82|     expect(response.status).toBe(201);
+       |                             ^
+     83| 
+     84|     const uploads = (await jsonOf(response)).uploads as JsonObject[];
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/7]ÔÄ»
+
+ FAIL  tests/unit/api/jobs-contract.test.ts > F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads } > acepta todos los MIME raster permitidos y rechaza SVG/GIF/no-raster
+AssertionError: image/jpeg: expected 400 to be 201 // Object.is equality
+
+- Expected
++ Received
+
+- 201
++ 400
+
+ ÔØ» tests/unit/api/jobs-contract.test.ts:107:44
+    105|         token,
+    106|       );
+    107|       expect(response.status, contentType).toBe(201);
+       |                                            ^
+    108|     }
+    109| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/7]ÔÄ»
+
+ FAIL  tests/unit/api/jobs-contract.test.ts > F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads } > valida fileName no vac├¡o sin separadores, NUL ni %xx (sin usarlo en la clave)
+AssertionError: expected 400 to be 201 // Object.is equality
+
+- Expected
++ Received
+
+- 201
++ 400
+
+ ÔØ» tests/unit/api/jobs-contract.test.ts:167:29
+    165|       token,
+    166|     );
+    167|     expect(response.status).toBe(201);
+       |                             ^
+    168|     const uploads = (await jsonOf(response)).uploads as JsonObject[];
+    169|     expect(new URL(uploads[0].uploadUrl as string).pathname).not.toConÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/7]ÔÄ»
+
+ FAIL  tests/unit/api/jobs-contract.test.ts > F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads } > rechaza preset inv├ílido, lote vac├¡o y lote que excede maxImagesPerBatch
+AssertionError: expected 400 to be 201 // Object.is equality
+
+- Expected
++ Received
+
+- 201
++ 400
+
+ ÔØ» tests/unit/api/jobs-contract.test.ts:196:23
+    194|       token,
+    195|     );
+    196|     expect(ok.status).toBe(201);
+       |                       ^
+    197|     expect(((await jsonOf(ok)).uploads as JsonObject[])).toHaveLength(ÔÇª
+    198|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/7]ÔÄ»
+
+ FAIL  tests/unit/api/jobs-contract.test.ts > F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads } > valida sizeBytes entero > 0 y dentro de maxFileSizeMb reutilizando JobMetrics
+AssertionError: expected 400 to be 201 // Object.is equality
+
+- Expected
++ Received
+
+- 201
++ 400
+
+ ÔØ» tests/unit/api/jobs-contract.test.ts:223:23
+    221|       token,
+    222|     );
+    223|     expect(ok.status).toBe(201);
+       |                       ^
+    224|   });
+    225| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[6/7]ÔÄ»
+
+ FAIL  tests/unit/api/jobs-contract.test.ts > F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads } > la suplantaci├│n de userId por cabeceras no afecta a la clave presignada
+AssertionError: expected 400 to be 201 // Object.is equality
+
+- Expected
++ Received
+
+- 201
++ 400
+
+ ÔØ» tests/unit/api/jobs-contract.test.ts:254:29
+    252|       { 'x-forwarded-for': '203.0.113.9', 'x-real-ip': 'victim' },
+    253|     );
+    254|     expect(response.status).toBe(201);
+       |                             ^
+    255|     expect(presign.uploads).toHaveLength(1);
+    256|     expect(presign.uploads[0].userId).toBe(userId);
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[7/7]ÔÄ»
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m7 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (9)[39m
+[2m   Start at [22m 05:31:25
+[2m   Duration [22m 2.96s[2m (transform 487ms, setup 0ms, collect 1.31s, tests 1.04s, environment 0ms, prepare 191ms)[22m
+

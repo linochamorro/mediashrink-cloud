@@ -1,0 +1,6 @@
+# F04-T04 - healthcheck
+UTC: 2026-11-18T12:34:02.0193139Z
+COMMAND: curl.exe --cacert ./.local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health
+--- OUTPUT ---
+okBODY: ok
+EXIT_CODE: 0

@@ -1,0 +1,6 @@
+# F04-T04 - fmt-correct
+UTC: 2026-11-18T12:41:20.0675691Z
+COMMAND: terraform -chdir=infra/terraform fmt (IAM/CORS final)
+--- OUTPUT ---
+iam.tf
+EXIT_CODE: 0

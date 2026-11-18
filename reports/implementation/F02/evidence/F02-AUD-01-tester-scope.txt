@@ -1,0 +1,62 @@
+### HEAD vs origin/main (sin push)
+HEAD=469888b745d37aa0237b9c4aed013ec46e8554f4 origin/main=469888b745d37aa0237b9c4aed013ec46e8554f4
+469888b feat(F01): contratos congelados, DynamoDB, auth JWT, reglas puras y seed (CA-01..CA-05 PASSED)
+ee0462d docs(F00): marcar O-02 resuelto tras sincronizacion con el remoto
+f9bab63 docs(F00): cerrar Fase 0 con CA-01..CA-06 PASSED y comandos comprobados
+### remote actual (publico)
+469888b745d37aa0237b9c4aed013ec46e8554f4	refs/heads/main
+### diff vs 469888b en contratos/types.generated/infra/.github (debe estar vacio)
+SIN CAMBIOS
+### header de hash congelado
+* Contratos v1.0.0 · hash SHA-256 del catálogo: 5d0082f8d97e0329862739123b7599c75ff7261834430039fa6e815bf68d626d
+### mtimes de archivos sensibles (aislamiento del addendum 18/11 05:31+)
+
+Name                  LastWriteTime
+----                  -------------
+STATE.md              18/11/2026 5:25:02
+tasks.md              18/11/2026 5:20:23
+App.tsx               17/11/2026 21:41:01
+jobs.ts               17/11/2026 21:22:05
+types.generated.ts    17/11/2026 17:27:38
+package-lock.json     17/11/2026 21:33:43
+package.json          17/11/2026 21:33:43
+jobs.ts               18/11/2026 5:34:20
+app.ts                18/11/2026 5:32:17
+jobs-contract.test.ts 18/11/2026 5:31:16
+jobs-contract.test.ts 18/11/2026 5:35:37
+
+
+### sonda temporal eliminada
+existe=False
+### git status --short
+ M STATE.md
+ M backend/package.json
+ M docs/sdd/spec.md
+ M docs/sdd/tasks.md
+ M frontend/index.html
+ M frontend/src/App.tsx
+ M package-lock.json
+?? backend/src/api/
+?? backend/src/db/user-store-adapter.ts
+?? backend/src/storage/
+?? backend/src/worker/
+?? docs/sdd/packages/P-02-api-and-worker.md
+?? docs/sdd/packages/P-03-frontend-spa.md
+?? docs/sdd/packages/P-04-terraform-and-ci.md
+?? frontend/src/api/auth.ts
+?? frontend/src/api/jobs.ts
+?? frontend/src/styles.css
+?? frontend/src/theme.ts
+?? frontend/src/upload/
+?? reports/audits/F02/
+?? reports/audits/F03/
+?? reports/implementation/F02/
+?? reports/implementation/F03/
+?? reports/verification/F02-architect.md
+?? reports/verification/F03-architect.md
+?? tests/e2e/
+?? tests/integration/api/
+?? tests/integration/worker/
+?? tests/unit/api/
+?? tests/unit/frontend/
+?? tests/unit/worker/

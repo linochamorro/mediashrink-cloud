@@ -1,0 +1,314 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [31mÔØ»[39m tests/integration/worker/metadata.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[90m 75[2mms[22m[39m
+[31m   [31m├ù[31m worker integraci├│n ÔÇö strip total de metadatos (PR-01 / IN-10 / FR-11)[2m > [22mWebP, AVIF y miniatura salen sin EXIF/GPS, XMP ni IPTC[90m 25[2mms[22m[31m[39m
+[31m     ÔåÆ expected false to be true // Object.is equality[39m
+[31m   [31m├ù[31m worker integraci├│n ÔÇö strip total de metadatos (PR-01 / IN-10 / FR-11)[2m > [22mno propaga metadatos aunque la entrada sea PNG con EXIF[90m 18[2mms[22m[31m[39m
+[31m     ÔåÆ expected false to be true // Object.is equality[39m
+ [31mÔØ»[39m tests/unit/worker/processImage.test.ts [2m([22m[2m4 tests[22m[2m | [22m[31m4 failed[39m[2m)[22m[90m 49[2mms[22m[39m
+[31m   [31m├ù[31m worker ÔÇö formatos y m├®tricas (CA-03 / IN-01 / FR-12)[2m > [22mproduce WebP, AVIF y miniatura WebP con bytes reales y dimensiones v├ílidas[90m 24[2mms[22m[31m[39m
+[31m     ÔåÆ expected false to be true // Object.is equality[39m
+[31m   [31m├ù[31m worker ÔÇö formatos y m├®tricas (CA-03 / IN-01 / FR-12)[2m > [22mcalcula m├®tricas con bytes reales y las coherencia con el contrato congelado[90m 5[2mms[22m[31m[39m
+[31m     ÔåÆ expected false to be true // Object.is equality[39m
+[31m   [31m├ù[31m worker ÔÇö formatos y m├®tricas (CA-03 / IN-01 / FR-12)[2m > [22mreporta ahorro negativo sin recortarlo cuando las salidas pesan m├ís que la entrada[90m 12[2mms[22m[31m[39m
+[31m     ÔåÆ expected false to be true // Object.is equality[39m
+[31m   [31m├ù[31m worker ÔÇö formatos y m├®tricas (CA-03 / IN-01 / FR-12)[2m > [22mgenera un imageId cuando no se aporta y respeta el preset solicitado[90m 6[2mms[22m[31m[39m
+[31m     ÔåÆ expected false to be true // Object.is equality[39m
+ [31mÔØ»[39m tests/integration/worker/pipeline.test.ts [2m([22m[2m4 tests[22m[2m | [22m[31m4 failed[39m[2m)[22m[90m 63[2mms[22m[39m
+[31m   [31m├ù[31m worker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset HIGH produce tres salidas v├ílidas y m├®tricas coherentes[90m 32[2mms[22m[31m[39m
+[31m     ÔåÆ expected false to be true // Object.is equality[39m
+[31m   [31m├ù[31m worker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset BALANCED produce tres salidas v├ílidas y m├®tricas coherentes[90m 12[2mms[22m[31m[39m
+[31m     ÔåÆ expected false to be true // Object.is equality[39m
+[31m   [31m├ù[31m worker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset MAX_COMPRESSION produce tres salidas v├ílidas y m├®tricas coherentes[90m 10[2mms[22m[31m[39m
+[31m     ÔåÆ expected false to be true // Object.is equality[39m
+[31m   [31m├ù[31m worker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mcompone estados con las reglas puras sin reimplementarlas[90m 8[2mms[22m[31m[39m
+[31m     ÔåÆ expected false to be true // Object.is equality[39m
+ [31mÔØ»[39m tests/unit/worker/antiBomb.test.ts [2m([22m[2m7 tests[22m[2m | [22m[31m7 failed[39m[2m)[22m[90m 62[2mms[22m[39m
+[31m   [31m├ù[31m worker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22mrechaza por tama├▒o ANTES de escanear la cabecera o decodificar (A-05)[90m 24[2mms[22m[31m[39m
+[31m     ÔåÆ expected 'RENDER_FAILED' to be 'FILE_TOO_LARGE' // Object.is equality[39m
+[31m   [31m├ù[31m worker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22musa MAX_FILE_SIZE_MB de loadConfig(), no un literal embebido[90m 4[2mms[22m[31m[39m
+[31m     ÔåÆ expected "spy" to be called 1 times, but got 0 times[39m
+[31m   [31m├ù[31m worker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22mrechaza bombas de p├¡xeles ANTES de invocar a sharp[90m 14[2mms[22m[31m[39m
+[31m     ÔåÆ expected 'RENDER_FAILED' to be 'TOO_MANY_PIXELS' // Object.is equality[39m
+[31m   [31m├ù[31m worker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22mcon MAX_PIXELS suficiente la imagen v├ílida llega al renderizador[90m 9[2mms[22m[31m[39m
+[31m     ÔåÆ expected false to be true // Object.is equality[39m
+[31m   [31m├ù[31m worker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22mrechaza SVG antes de decodificar[90m 2[2mms[22m[31m[39m
+[31m     ÔåÆ expected 'RENDER_FAILED' to be 'SVG_NOT_ALLOWED' // Object.is equality[39m
+[31m   [31m├ù[31m worker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22mrechaza GIF animado antes de decodificar[90m 2[2mms[22m[31m[39m
+[31m     ÔåÆ expected 'RENDER_FAILED' to be 'GIF_ANIMATED_NOT_ALLOWED' // Object.is equality[39m
+[31m   [31m├ù[31m worker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22mrechaza inconsistencia MIME/extensi├│n sin llegar a sharp[90m 5[2mms[22m[31m[39m
+[31m     ÔåÆ expected 'RENDER_FAILED' to be 'MIME_MISMATCH' // Object.is equality[39m
+
+[31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1m[7m Failed Tests 17 [27m[22mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/integration/worker/metadata.test.ts[2m > [22mworker integraci├│n ÔÇö strip total de metadatos (PR-01 / IN-10 / FR-11)[2m > [22mWebP, AVIF y miniatura salen sin EXIF/GPS, XMP ni IPTC
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2mÔØ»[22m tests/integration/worker/metadata.test.ts:[2m49:23[22m[39m
+    [90m 47| [39m      mimeType[33m:[39m [32m'image/jpeg'[39m[33m,[39m
+    [90m 48| [39m    })[33m;[39m
+    [90m 49| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m   | [39m                      [31m^[39m
+    [90m 50| [39m    [35mif[39m ([33m![39mresult[33m.[39mok) [35mthrow[39m [35mnew[39m [33mError[39m(result[33m.[39mfailureReason)[33m;[39m
+    [90m 51| [39m    [35mconst[39m success[33m:[39m [33mProcessedImageSuccess[39m [33m=[39m result[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/17]ÔÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/integration/worker/metadata.test.ts[2m > [22mworker integraci├│n ÔÇö strip total de metadatos (PR-01 / IN-10 / FR-11)[2m > [22mno propaga metadatos aunque la entrada sea PNG con EXIF
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2mÔØ»[22m tests/integration/worker/metadata.test.ts:[2m72:23[22m[39m
+    [90m 70| [39m      filename[33m:[39m [32m'privada.png'[39m[33m,[39m
+    [90m 71| [39m    })[33m;[39m
+    [90m 72| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m   | [39m                      [31m^[39m
+    [90m 73| [39m    [35mif[39m ([33m![39mresult[33m.[39mok) [35mthrow[39m [35mnew[39m [33mError[39m(result[33m.[39mfailureReason)[33m;[39m
+    [90m 74| [39m    [34mexpect[39m(result[33m.[39mmetrics[33m.[39mexifStripped)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/17]ÔÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset HIGH produce tres salidas v├ílidas y m├®tricas coherentes
+[31m[1m[7m FAIL [27m[22m[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset BALANCED produce tres salidas v├ílidas y m├®tricas coherentes
+[31m[1m[7m FAIL [27m[22m[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset MAX_COMPRESSION produce tres salidas v├ílidas y m├®tricas coherentes
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2mÔØ»[22m tests/integration/worker/pipeline.test.ts:[2m27:23[22m[39m
+    [90m 25| [39m    })[33m;[39m
+    [90m 26| [39m
+    [90m 27| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m   | [39m                      [31m^[39m
+    [90m 28| [39m    [35mif[39m ([33m![39mresult[33m.[39mok) [35mthrow[39m [35mnew[39m [33mError[39m(result[33m.[39mfailureReason)[33m;[39m
+    [90m 29| [39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/17]ÔÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mcompone estados con las reglas puras sin reimplementarlas
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2mÔØ»[22m tests/integration/worker/pipeline.test.ts:[2m61:19[22m[39m
+    [90m 59| [39m    })[33m;[39m
+    [90m 60| [39m
+    [90m 61| [39m    [34mexpect[39m(ok[33m.[39mok)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m   | [39m                  [31m^[39m
+    [90m 62| [39m    [34mexpect[39m(rejected[33m.[39mok)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m 63| [39m    [35mconst[39m summary [33m=[39m {
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/17]ÔÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/unit/worker/antiBomb.test.ts[2m > [22mworker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22mrechaza por tama├▒o ANTES de escanear la cabecera o decodificar (A-05)
+[31m[1mAssertionError[22m: expected 'RENDER_FAILED' to be 'FILE_TOO_LARGE' // Object.is equality[39m
+
+Expected: [32m"FILE_TOO_LARGE"[39m
+Received: [31m"RENDER_FAILED"[39m
+
+[36m [2mÔØ»[22m tests/unit/worker/antiBomb.test.ts:[2m50:31[22m[39m
+    [90m 48| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m 49| [39m    [35mif[39m (result[33m.[39mok) [35mthrow[39m [35mnew[39m [33mError[39m([32m'el buffer sobredimensionado fue ac[39mÔÇª
+    [90m 50| [39m    [34mexpect[39m(result[33m.[39mreasonCode)[33m.[39m[34mtoBe[39m([32m'FILE_TOO_LARGE'[39m)[33m;[39m
+    [90m   | [39m                              [31m^[39m
+    [90m 51| [39m    [34mexpect[39m(result[33m.[39mexifStripped)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m 52| [39m    [34mexpect[39m(scanHeader)[33m.[39mnot[33m.[39m[34mtoHaveBeenCalled[39m()[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/17]ÔÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/unit/worker/antiBomb.test.ts[2m > [22mworker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22musa MAX_FILE_SIZE_MB de loadConfig(), no un literal embebido
+[31m[1mAssertionError[22m: expected "spy" to be called 1 times, but got 0 times[39m
+[36m [2mÔØ»[22m tests/unit/worker/antiBomb.test.ts:[2m67:24[22m[39m
+    [90m 65| [39m    [90m// Con el l├¡mite m├ís alto pasa la guarda de tama├▒o y se intenta es[39mÔÇª
+    [90m 66| [39m    [90m// el contenido es relleno inv├ílido, por lo que la cabecera lo rec[39mÔÇª
+    [90m 67| [39m    [34mexpect[39m(scanHeader)[33m.[39m[34mtoHaveBeenCalledTimes[39m([34m1[39m)[33m;[39m
+    [90m   | [39m                       [31m^[39m
+    [90m 68| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m 69| [39m    [35mif[39m (result[33m.[39mok) [35mthrow[39m [35mnew[39m [33mError[39m([32m'relleno inv├ílido aceptado'[39m)[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[6/17]ÔÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/unit/worker/antiBomb.test.ts[2m > [22mworker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22mrechaza bombas de p├¡xeles ANTES de invocar a sharp
+[31m[1mAssertionError[22m: expected 'RENDER_FAILED' to be 'TOO_MANY_PIXELS' // Object.is equality[39m
+
+Expected: [32m"TOO_MANY_PIXELS"[39m
+Received: [31m"RENDER_FAILED"[39m
+
+[36m [2mÔØ»[22m tests/unit/worker/antiBomb.test.ts:[2m84:31[22m[39m
+    [90m 82| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m 83| [39m    [35mif[39m (result[33m.[39mok) [35mthrow[39m [35mnew[39m [33mError[39m([32m'la bomba de p├¡xeles fue aceptada'[39m)[33m;[39m
+    [90m 84| [39m    [34mexpect[39m(result[33m.[39mreasonCode)[33m.[39m[34mtoBe[39m([32m'TOO_MANY_PIXELS'[39m)[33m;[39m
+    [90m   | [39m                              [31m^[39m
+    [90m 85| [39m    [34mexpect[39m(render)[33m.[39mnot[33m.[39m[34mtoHaveBeenCalled[39m()[33m;[39m
+    [90m 86| [39m  })[33m;[39m
+[2m Test Files [22m [1m[31m4 failed[39m[22m[90m (4)[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[7/17]ÔÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/unit/worker/antiBomb.test.ts[2m > [22mworker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22mcon MAX_PIXELS suficiente la imagen v├ílida llega al renderizador
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2mÔØ»[22m tests/unit/worker/antiBomb.test.ts:[2m97:23[22m[39m
+    [90m 95| [39m    })[33m;[39m
+    [90m 96| [39m
+    [90m 97| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m   | [39m                      [31m^[39m
+    [90m 98| [39m    [34mexpect[39m(render)[33m.[39m[34mtoHaveBeenCalledTimes[39m([34m1[39m)[33m;[39m
+    [90m 99| [39m  })[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[8/17]ÔÄ»[22m[39m
+
+[2m      Tests [22m [1m[31m17 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (18)[39m
+[2m   Start at [22m 20:50:37
+[2m   Duration [22m 1.42s[2m (transform 1.06s, setup 0ms, collect 2.44s, tests 248ms, environment 1ms, prepare 845ms)[22m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/unit/worker/antiBomb.test.ts[2m > [22mworker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22mrechaza SVG antes de decodificar
+[31m[1mAssertionError[22m: expected 'RENDER_FAILED' to be 'SVG_NOT_ALLOWED' // Object.is equality[39m
+
+Expected: [32m"[7mSVG_NOT_ALLOW[27mED"[39m
+Received: [31m"[7mRENDER_FAIL[27mED"[39m
+
+[36m [2mÔØ»[22m tests/unit/worker/antiBomb.test.ts:[2m109:31[22m[39m
+    [90m107| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m108| [39m    [35mif[39m (result[33m.[39mok) [35mthrow[39m [35mnew[39m [33mError[39m([32m'formato peligroso aceptado'[39m)[33m;[39m
+    [90m109| [39m    [34mexpect[39m(result[33m.[39mreasonCode)[33m.[39m[34mtoBe[39m(reason)[33m;[39m
+    [90m   | [39m                              [31m^[39m
+    [90m110| [39m    [34mexpect[39m(render)[33m.[39mnot[33m.[39m[34mtoHaveBeenCalled[39m()[33m;[39m
+    [90m111| [39m  })[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[9/17]ÔÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/unit/worker/antiBomb.test.ts[2m > [22mworker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22mrechaza GIF animado antes de decodificar
+[31m[1mAssertionError[22m: expected 'RENDER_FAILED' to be 'GIF_ANIMATED_NOT_ALLOWED' // Object.is equality[39m
+
+Expected: [32m"[7mGIF_ANIMATED_NOT_ALLOW[27mED"[39m
+Received: [31m"[7mRENDER_FAIL[27mED"[39m
+
+[36m [2mÔØ»[22m tests/unit/worker/antiBomb.test.ts:[2m109:31[22m[39m
+    [90m107| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m108| [39m    [35mif[39m (result[33m.[39mok) [35mthrow[39m [35mnew[39m [33mError[39m([32m'formato peligroso aceptado'[39m)[33m;[39m
+    [90m109| [39m    [34mexpect[39m(result[33m.[39mreasonCode)[33m.[39m[34mtoBe[39m(reason)[33m;[39m
+    [90m   | [39m                              [31m^[39m
+    [90m110| [39m    [34mexpect[39m(render)[33m.[39mnot[33m.[39m[34mtoHaveBeenCalled[39m()[33m;[39m
+    [90m111| [39m  })[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[10/17]ÔÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/unit/worker/antiBomb.test.ts[2m > [22mworker ÔÇö orden de guardas y anti-bomba (A-05 / IN-10)[2m > [22mrechaza inconsistencia MIME/extensi├│n sin llegar a sharp
+[31m[1mAssertionError[22m: expected 'RENDER_FAILED' to be 'MIME_MISMATCH' // Object.is equality[39m
+
+Expected: [32m"MIME_MISMATCH"[39m
+Received: [31m"RENDER_FAILED"[39m
+
+[36m [2mÔØ»[22m tests/unit/worker/antiBomb.test.ts:[2m124:31[22m[39m
+    [90m122| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m123| [39m    [35mif[39m (result[33m.[39mok) [35mthrow[39m [35mnew[39m [33mError[39m([32m'inconsistencia aceptada'[39m)[33m;[39m
+    [90m124| [39m    [34mexpect[39m(result[33m.[39mreasonCode)[33m.[39m[34mtoBe[39m([32m'MIME_MISMATCH'[39m)[33m;[39m
+    [90m   | [39m                              [31m^[39m
+    [90m125| [39m    [34mexpect[39m(render)[33m.[39mnot[33m.[39m[34mtoHaveBeenCalled[39m()[33m;[39m
+    [90m126| [39m  })[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[11/17]ÔÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/unit/worker/processImage.test.ts[2m > [22mworker ÔÇö formatos y m├®tricas (CA-03 / IN-01 / FR-12)[2m > [22mproduce WebP, AVIF y miniatura WebP con bytes reales y dimensiones v├ílidas
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2mÔØ»[22m tests/unit/worker/processImage.test.ts:[2m26:23[22m[39m
+    [90m 24| [39m    })[33m;[39m
+    [90m 25| [39m
+    [90m 26| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m   | [39m                      [31m^[39m
+    [90m 27| [39m    [35mif[39m ([33m![39mresult[33m.[39mok) [35mthrow[39m [35mnew[39m [33mError[39m(result[33m.[39mfailureReason)[33m;[39m
+    [90m 28| [39m    [34mexpect[39m(result[33m.[39mstatus)[33m.[39m[34mtoBe[39m([32m'COMPLETED'[39m)[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[12/17]ÔÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/unit/worker/processImage.test.ts[2m > [22mworker ÔÇö formatos y m├®tricas (CA-03 / IN-01 / FR-12)[2m > [22mcalcula m├®tricas con bytes reales y las coherencia con el contrato congelado
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2mÔØ»[22m tests/unit/worker/processImage.test.ts:[2m55:23[22m[39m
+    [90m 53| [39m    [35mconst[39m bytes [33m=[39m [35mawait[39m [34mcreateJpeg[39m([34m100[39m[33m,[39m [34m100[39m)[33m;[39m
+    [90m 54| [39m    [35mconst[39m result [33m=[39m [35mawait[39m [34mprocessImage[39m(bytes[33m,[39m { config[33m:[39m [34mtestConfig[39m()[33m,[39m iÔÇª
+    [90m 55| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m   | [39m                      [31m^[39m
+    [90m 56| [39m    [35mif[39m ([33m![39mresult[33m.[39mok) [35mthrow[39m [35mnew[39m [33mError[39m(result[33m.[39mfailureReason)[33m;[39m
+    [90m 57| [39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[13/17]ÔÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/unit/worker/processImage.test.ts[2m > [22mworker ÔÇö formatos y m├®tricas (CA-03 / IN-01 / FR-12)[2m > [22mreporta ahorro negativo sin recortarlo cuando las salidas pesan m├ís que la entrada
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2mÔØ»[22m tests/unit/worker/processImage.test.ts:[2m81:23[22m[39m
+    [90m 79| [39m
+    [90m 80| [39m    [35mconst[39m result [33m=[39m [35mawait[39m [34mprocessImage[39m(bytes[33m,[39m { config[33m:[39m [34mtestConfig[39m()[33m,[39m hÔÇª
+    [90m 81| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m   | [39m                      [31m^[39m
+    [90m 82| [39m    [35mif[39m ([33m![39mresult[33m.[39mok) [35mthrow[39m [35mnew[39m [33mError[39m(result[33m.[39mfailureReason)[33m;[39m
+    [90m 83| [39m    [34mexpect[39m(render)[33m.[39m[34mtoHaveBeenCalledTimes[39m([34m1[39m)[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[14/17]ÔÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/unit/worker/processImage.test.ts[2m > [22mworker ÔÇö formatos y m├®tricas (CA-03 / IN-01 / FR-12)[2m > [22mgenera un imageId cuando no se aporta y respeta el preset solicitado
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2mÔØ»[22m tests/unit/worker/processImage.test.ts:[2m105:23[22m[39m
+    [90m103| [39m      hooks[33m:[39m { render }[33m,[39m
+    [90m104| [39m    })[33m;[39m
+    [90m105| [39m    [34mexpect[39m(result[33m.[39mok)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m   | [39m                      [31m^[39m
+    [90m106| [39m    [34mexpect[39m(result[33m.[39mimageId)[33m.[39m[34mtoMatch[39m([36m/^[0-9a-f-]{36}$/[39m)[33m;[39m
+    [90m107| [39m    [34mexpect[39m(render[33m.[39mmock[33m.[39mcalls[[34m0[39m][[34m0[39m][33m.[39mpreset)[33m.[39m[34mtoBe[39m([32m'MAX_COMPRESSION'[39m)[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[15/17]ÔÄ»[22m[39m
+

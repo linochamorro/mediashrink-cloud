@@ -1,0 +1,86 @@
+# F04-T03 (tester) - scope-after
+UTC: 2026-11-18T12:24:54.0730061Z
+COMMAND: Get-FileHash (HCL, docs, manifests) ; git status --short ; git diff --name-only
+--- OUTPUT ---
+warning: in the working copy of 'STATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/sdd/spec.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/sdd/tasks.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/App.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'infra/terraform/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'package-lock.json', LF will be replaced by CRLF the next time Git touches it
+SHA256 ./infra/terraform/.terraform.lock.hcl = 6C4D28A195E36FD3194EC9A9B4C1B7366E42AEE81A05AA01E296F34B2CAC9792
+SHA256 ./infra/terraform/data.tf = 666892D312185B11FF899C9C40FABD12ED70A264A99A323062023C45A826CCEA
+SHA256 ./infra/terraform/dynamodb.tf = 6106D0F178FD82EAD5F9BF9C7A4A6975BB2865C8E6CBB8EC06FF1DCFF0B8C682
+SHA256 ./infra/terraform/outputs.tf = 99CC09E7E09DB774621D8FAC1CC1B569C09366B63BA566C39C7525D97AF64FB5
+SHA256 ./infra/terraform/provider.tf = B376146ACC5CF1DD04184318A3AED313FCF4CD6CEF592D726315F6BAFD074FD9
+SHA256 ./infra/terraform/README.md = 274283A8D52696B35A37A64D40294F215BB85FF87964DA0E644A32E3F53AC4C8
+SHA256 ./infra/terraform/s3.tf = 152E8592FAE9B5CC212B821F7B92BCB6D7C7147D1BB8D321DE28EBEB0516D9CF
+SHA256 ./infra/terraform/sqs.tf = 2E1DE8A21F790DD25C4C72F1894FD3E00A67E9E2F2704E0B58863F52F95C5A87
+SHA256 ./infra/terraform/terraform.tfstate = 5D460CB1CA884F6CB3071D11F902BBDFF926DFC8098397ADC743661F43F84601
+SHA256 ./infra/terraform/terraform.tfstate.backup = D02B56915DD3771931F5C61789D606BBE4145C3ED30B3BE3B8E781DBD582F445
+SHA256 ./infra/terraform/variables.tf = F493F85C0527EE5EF1E7202E741E10F5380D8FE0B158F171455A6E3AA7A24F19
+SHA256 ./infra/terraform/versions.tf = ACAA2E34005C1B5CF9135A7000C176DC6FC782BB2780BFFFCF71A873B50BEBC8
+SHA256 STATE.md = D61CF633C3ECEA20C4A9202CC363023BF885F5A485505F3079D8288DF025F0FC
+SHA256 docs/sdd/tasks.md = FD92FC27947E65A89B127A537BDE72929F1CED2ADD9E5518BBF732114FB5F75F
+SHA256 docker-compose.yml = 4A35BC64F6DA57A141C15A179F0123EE2762132AE994F94B6DEF1E4AE926E090
+SHA256 package.json = 88FF70553412D6EFFEB6D5A0645BA203B5CAE2117723D6028BE99FE58D6FE45F
+SHA256 package-lock.json = 8C6BCE0A853E8C4C439D2A05CCA2D66C7F55D51B99CD49A7F35193D3668D84C4
+SHA256 backend/package.json = 806137924B91536DFA7A4ACF31DC20012F175BD6EAB062F5121B449BF321D94C
+SHA256 frontend/package.json = F9D024608CDFC7099D317C62C891C8EBF277D993858E62B2950CEEBD967CA73E
+SHA256 .env.example = 42DC2285380FA1D3633DB3C83008DF76262BA60503AFFAB1BF76ECC98A4265EE
+SHA256 docs/sdd/packages/P-04-terraform-and-ci.md = 95F725AC28981C4BF12A60FD870F92F49760B269AAA312FDD8A26A1C5888DDBC
+--- git status --short (own tester evidence excluded) ---
+ M STATE.md
+ M backend/package.json
+ M docs/sdd/spec.md
+ M docs/sdd/tasks.md
+ M frontend/index.html
+ M frontend/src/App.tsx
+ M infra/terraform/README.md
+ M package-lock.json
+?? backend/src/api/
+?? backend/src/db/user-store-adapter.ts
+?? backend/src/storage/
+?? backend/src/worker/
+?? docs/sdd/packages/P-02-api-and-worker.md
+?? docs/sdd/packages/P-03-frontend-spa.md
+?? docs/sdd/packages/P-04-terraform-and-ci.md
+?? frontend/src/api/auth.ts
+?? frontend/src/api/jobs.ts
+?? frontend/src/styles.css
+?? frontend/src/theme.ts
+?? frontend/src/upload/
+?? infra/terraform/dynamodb.tf
+?? infra/terraform/s3.tf
+?? infra/terraform/sqs.tf
+?? reports/audits/F02/
+?? reports/audits/F03/
+?? reports/audits/F04/
+?? reports/implementation/F02/
+?? reports/implementation/F03/
+?? reports/implementation/F04/
+?? reports/verification/F02-architect.md
+?? reports/verification/F03-architect.md
+?? reports/verification/F04-architect.md
+?? tests/e2e/
+?? tests/integration/api/
+?? tests/integration/worker/
+?? tests/unit/api/
+?? tests/unit/frontend/
+?? tests/unit/worker/
+--- git diff --name-only ---
+STATE.md
+backend/package.json
+docs/sdd/spec.md
+docs/sdd/tasks.md
+frontend/index.html
+frontend/src/App.tsx
+infra/terraform/README.md
+package-lock.json
+--- git diff --cached --name-only ---
+
+SCOPE_SNAPSHOT_IDENTICAL_TO_BEFORE: False
+SCOPE_DRIFT DETECTED
+EXIT_CODE: 0

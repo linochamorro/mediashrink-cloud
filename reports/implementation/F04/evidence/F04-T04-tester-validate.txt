@@ -1,0 +1,6 @@
+# F04-T04 - tester - validate
+UTC: 2026-11-18T12:52:44.9117767Z
+COMMAND: terraform -chdir=infra/terraform validate
+--- OUTPUT ---
+Success! The configuration is valid.
+EXIT_CODE: 0

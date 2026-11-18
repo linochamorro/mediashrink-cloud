@@ -74,8 +74,15 @@ describe('infra aplicada contra aws/aws-emulator', () => {
       const notifications = await s3.send(
         new GetBucketNotificationConfigurationCommand({ Bucket: bucket }),
       );
-      expect(Object.keys(notifications.EventConfigurations ?? {})).toHaveLength(0);
-      expect(notifications.LambdaConfigurations ?? []).toHaveLength(0);
+      // SDK 3.1171 tipa solo Queue/Topic en la salida; el emulador puede
+      // devolver además estas claves heredadas. Se leen con una vista
+      // estructural para conservar la aserción sin debilitarla.
+      const legacyNotifications = notifications as typeof notifications & {
+        EventConfigurations?: Record<string, unknown>;
+        LambdaConfigurations?: readonly unknown[];
+      };
+      expect(Object.keys(legacyNotifications.EventConfigurations ?? {})).toHaveLength(0);
+      expect(legacyNotifications.LambdaConfigurations ?? []).toHaveLength(0);
       expect(notifications.TopicConfigurations ?? []).toHaveLength(0);
       expect(notifications.QueueConfigurations ?? []).toHaveLength(0);
     }

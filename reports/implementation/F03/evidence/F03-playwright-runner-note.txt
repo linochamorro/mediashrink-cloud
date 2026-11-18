@@ -1,0 +1,4 @@
+Intento inicial: la configuración compartida fija 127.0.0.1:4181; Playwright abortó porque el puerto estaba ocupado. No se detuvo ningún proceso ajeno.
+Reintento: configuración temporal fuera del workspace en 127.0.0.1:4182, apuntando a la suite existente tests/e2e/frontend-flow.spec.ts y al servidor Vite local.
+Resultado del caso: `ok 1 ... autentica, carga, muestra métricas, descarga ZIP y elimina con API simulada (10.0s)`.
+El runner/PowerShell no cerró tras imprimir el PASS y se interrumpió manualmente. Se comprobó que no quedaba listener en 4182; la evidencia stdout es F03-playwright.txt. El caso pasó, pero el cierre limpio del runner requiere repetición por Tester.

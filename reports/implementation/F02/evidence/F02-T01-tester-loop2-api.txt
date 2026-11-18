@@ -1,0 +1,29 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/api/userstore.test.ts (6 tests) 1128ms
+   Ô£ô adaptador DynamoDB de UserStore (cierra T03-A-04) > AuthService registra y hace login sobre el adaptador DynamoDB 1105ms
+ Ô£ô tests/unit/api/confirm.test.ts (3 tests) 1648ms
+   Ô£ô confirmaci├│n de lotes bajo concurrencia y fallos (A-01/A-02) > dos confirms en paralelo publican una sola vez 863ms
+   Ô£ô confirmaci├│n de lotes bajo concurrencia y fallos (A-01/A-02) > si falla la publicaci├│n y la reversi├│n funciona, responde PUBLISH_FAILED y el reintento publica 511ms
+ Ô£ô tests/unit/api/authz.test.ts (5 tests) 2054ms
+   Ô£ô autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > un token manipulado y un refresh token no autorizan /jobs 818ms
+   Ô£ô autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > GET /jobs/:id de un lote ajeno devuelve 404 id├®ntico al inexistente 498ms
+   Ô£ô autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > POST /jobs/:id/confirm ajeno devuelve 404 y no publica 434ms
+ Ô£ô tests/unit/api/routes.test.ts (8 tests) 2173ms
+   Ô£ô rutas /jobs (F02-T01, CA-01) > POST /jobs crea un PENDING con userId del token, formatos congelados y TTL v├ílido 657ms
+   Ô£ô rutas /jobs (F02-T01, CA-01) > POST /jobs rechaza preset inv├ílido con 400 y no crea el lote 357ms
+   Ô£ô rutas /jobs (F02-T01, CA-01) > GET /jobs devuelve solo los lotes del usuario autenticado 407ms
+ Ô£ô tests/unit/api/rate-limit.test.ts (5 tests) 2259ms
+   Ô£ô rate limit no suplantable (cierra T03-A-01) > la clave de /jobs deriva del userId: agotar A no afecta a B 1087ms
+   Ô£ô rate limit no suplantable (cierra T03-A-01) > una cabecera con el userId ajeno no consume el cupo de ese usuario 374ms
+   Ô£ô rate limit no suplantable (cierra T03-A-01) > /auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 371ms
+ Ô£ô tests/integration/api/userstore.test.ts (3 tests) 6415ms
+ Ô£ô tests/integration/api/routes.test.ts (6 tests) 7581ms
+
+ Test Files  7 passed (7)
+      Tests  36 passed (36)
+   Start at  21:26:45
+   Duration  12.06s (transform 3.18s, setup 0ms, collect 23.48s, tests 23.26s, environment 3ms, prepare 2.56s)
+
+EXIT_CODE=0

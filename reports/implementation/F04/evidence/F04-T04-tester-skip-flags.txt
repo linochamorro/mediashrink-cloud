@@ -1,0 +1,45 @@
+# F04-T04 - tester - skip-flags
+UTC: 2026-11-18T12:59:19.6043254Z
+COMMAND: grep provider.tf/variables.tf + own provider-free mini-module (plan/show -json, is_emulator=true|false) + validate -var=is_emulator=false (no AWS)
+--- OUTPUT ---
+--- STATIC grep (real files) ---
+variables.tf L69: variable "is_emulator" {
+variables.tf L79: type        = bool
+variables.tf L80: default     = true
+provider.tf L18: shared_credentials_files = var.is_emulator ? [var.aws_shared_credentials_file] : []
+provider.tf L19: shared_config_files      = var.is_emulator ? [var.aws_config_file] : []
+provider.tf L27: for_each = var.is_emulator ? [1] : []
+provider.tf L40: skip_credentials_validation = var.is_emulator
+provider.tf L41: skip_requesting_account_id  = var.is_emulator
+provider.tf L42: skip_metadata_api_check     = var.is_emulator
+provider.tf L46: custom_ca_bundle = var.is_emulator ? var.ca_bundle_path : null
+SKIP_ASSIGN_EQUAL_VAR_IS_EMULATOR: 3 (expected 3)
+SKIP_ASSIGN_EQUAL_LITERAL_TRUE: 0 (expected 0)
+--- PROVIDER-FREE EVALUATION (own mini-module, no AWS, no product state) ---
+MODE is_emulator=true (plan exit 0, show exit 0):
+  skip_credentials_validation = True
+  skip_requesting_account_id  = True
+  skip_metadata_api_check     = True
+  forced_endpoint             = https://127.0.0.1:9297
+  credential_files_count      = 1
+  custom_ca_bundle            = ../../.local/aws-emulator/ca.pem
+  endpoints_block_count       = 1
+MODE is_emulator=false (plan exit 0, show exit 0):
+  skip_credentials_validation = False
+  skip_requesting_account_id  = False
+  skip_metadata_api_check     = False
+  forced_endpoint             = 
+  credential_files_count      = 0
+  custom_ca_bundle            = 
+  endpoints_block_count       = 0
+--- REAL CONFIG VALIDATE is_emulator=false (no network) ---
+Success! The configuration is valid.
+VALIDATE_REAL_FALSE_EXIT: 0
+--- REAL AWS PROCEDURE DOCUMENTED (NOT executed) ---
+README_TF_VAR_FALSE_DOCUMENTED: True
+README_G12_GATE_DOCUMENTED: True
+NO_REAL_PLAN_APPLY_EXECUTED: true (este Tester solo ejecuto validate -var=false; sin plan/apply en modo real)
+EVAL_TRUE_OK: True
+EVAL_FALSE_OK: True
+SKIP_FLAGS_VERDICT: OK
+EXIT_CODE: 0

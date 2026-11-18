@@ -1,0 +1,19 @@
+# F04-T03 - plan-post-apply
+UTC: 2026-11-18T12:17:21.9934406Z
+COMMAND: terraform -chdir=infra/terraform plan -input=false
+--- OUTPUT ---
+[0m[1mdata.aws_caller_identity.emulator: Reading...[0m[0m
+[0m[1maws_sqs_queue.dlq: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq][0m
+[0m[1maws_s3_bucket.optimized: Refreshing state... [id=mediashrink-optimized-local][0m
+[0m[1maws_s3_bucket.raw: Refreshing state... [id=mediashrink-raw-local][0m
+[0m[1maws_dynamodb_table.jobs: Refreshing state... [id=mediashrink-jobs][0m
+[0m[1mdata.aws_caller_identity.emulator: Read complete after 0s [id=000000000000][0m
+[0m[1maws_sqs_queue.jobs: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs][0m
+[0m[1maws_s3_bucket_lifecycle_configuration.raw: Refreshing state... [id=mediashrink-raw-local][0m
+[0m[1maws_s3_bucket_lifecycle_configuration.optimized: Refreshing state... [id=mediashrink-optimized-local][0m
+
+[0m[1m[32mNo changes.[0m[1m Your infrastructure matches the configuration.[0m
+
+[0mTerraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+EXIT_CODE: 0

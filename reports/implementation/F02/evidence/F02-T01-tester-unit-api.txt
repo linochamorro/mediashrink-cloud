@@ -1,0 +1,14 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/api/userstore.test.ts (6 tests) 258ms
+ Ô£ô tests/unit/api/authz.test.ts (5 tests) 773ms
+ Ô£ô tests/unit/api/rate-limit.test.ts (5 tests) 846ms
+ Ô£ô tests/unit/api/routes.test.ts (8 tests) 862ms
+
+ Test Files  4 passed (4)
+      Tests  24 passed (24)
+   Start at  21:06:03
+   Duration  2.30s (transform 785ms, setup 0ms, collect 3.10s, tests 2.74s, environment 1ms, prepare 900ms)
+
+EXIT_CODE=0

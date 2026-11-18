@@ -1,0 +1,14 @@
+COMMAND: npx vitest run tests/integration/worker/consumer.test.ts -t "reintentos agotados"
+EXIT=0
+
+
+ RUN  v2.1.9 <repo-root>
+
+ ✓ tests/integration/worker/consumer.test.ts (6 tests | 5 skipped) 6276ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > reintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta) 6275ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 5 skipped (6)
+   Start at  22:18:33
+   Duration  8.71s (transform 1.17s, setup 0ms, collect 1.82s, tests 6.28s, environment 0ms, prepare 196ms)
+

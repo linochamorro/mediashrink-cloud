@@ -1,0 +1,31 @@
+ARRANQUE PROPIO DEL EMULADOR PARA LA VERIFICACION (G-7)
+Ejecutado por Tester desde <repo-root>. Docker CLI antepuesto al PATH segun instruccion.
+
+COMMAND: docker compose up -d
+ Network mediashrink-cloud_default Created
+ Container mediashrink-aws-emulator Created
+ Container mediashrink-aws-emulator Started
+EXIT=0
+
+COMMAND: docker compose ps (tras arranque)
+ NAME mediashrink-aws-emulator   IMAGE ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+ STATUS Up (health: starting)   PORTS 127.0.0.1:9297->9297/tcp
+
+COMMAND: docker inspect --format 'memory={{.HostConfig.Memory}} nanoCpus={{.HostConfig.NanoCpus}}' mediashrink-aws-emulator
+ memory=2147483648 nanoCpus=2000000000
+RESULTADO: limites efectivos 2 GiB / 2.0 CPU. CUMPLE G-7.
+
+COMMAND: sondeo de healthcheck (docker inspect --format '{{.State.Health.Status}}')
+ healthy tras 0 sondeos adicionales (el contenedor ya habia alcanzado el estado en el arranque).
+COMMAND: docker compose ps
+ STATUS Up 16 seconds (healthy)   127.0.0.1:9297->9297/tcp
+
+COMMAND: docker cp .../9297/ca.pem | config | emulator_credentials  -> ./.local/aws-emulator/
+ (repetido en este arranque segun runbook §1.3, nota N-01: volumen named)
+ ca.pem  566 bytes
+
+COMMAND: curl.exe --silent --show-error --fail --cacert ./.local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health
+ cuerpo: ok   EXIT=0
+
+CONCLUSION: emulador en vivo, HTTPS con CA propio, credenciales efímeras exportadas,
+unico puerto expuesto 9297 (sin :9324). Listo para las pruebas de integracion propias.

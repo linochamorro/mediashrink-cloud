@@ -1,0 +1,15 @@
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed 
+DOWN_EXIT=0
+COMPOSE_PS:
+NAME      IMAGE     COMMAND   SERVICE   CREATED   STATUS    PORTS
+EMULATOR_CONTAINERS=Microsoft.PowerShell.Commands.TextMeasureInfo
+NETWORKS=Microsoft.PowerShell.Commands.TextMeasureInfo
+OTHER_CONTAINERS=dazzling_edison
+EMULATOR_CONTAINER_COUNT=0
+PROJECT_NETWORK_COUNT=0
+NOTE=Contenedor externo 'dazzling_edison' (GitHub MCP del harness) preexistente, no propiedad del proyecto

@@ -1,0 +1,8 @@
+[WebServer] (node:17596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:20408) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\frontend-flow.spec.ts:5:1 › autentica, carga, muestra métricas, descarga ZIP y elimina con API simulada (10.0s)

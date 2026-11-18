@@ -1,0 +1,20 @@
+
+[WebServer] (node:14176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+SyntaxError: D:\Projects\Bluemind_Lab\projects\portfolio\mediashrink-cloud\tests\e2e\frontend-flow.spec.ts: Identifier 'browser' has already been declared. (174:10)
+
+   at frontend-flow.spec.ts:174
+
+  172 |     transfer.items.add(new browser.File([new Uint8Array(15 * 1024 * 1024 + 1)], 'muy-grande.png', { type: 'image/png' }));
+  173 |     (element as unknown as { files: unknown }).files = transfer.files;
+> 174 |     const browser = globalThis as unknown as { Event: new (type: string, init: { bubbles: boolean }) => unknown };
+      |           ^
+  175 |     (element as unknown as { dispatchEvent(event: unknown): void }).dispatchEvent(new browser.Event('change', { bubbles: true }));
+  176 |   });
+  177 |   await expect(page.getByRole('alert')).toContainText('supera el límite de 15 MB');
+    at eval (<anonymous>:1:1)
+
+Error: No tests found
+
+
+PLAYWRIGHT_EXIT_CODE=1

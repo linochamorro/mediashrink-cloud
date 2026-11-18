@@ -1,0 +1,2 @@
+COMANDO: npx eslint backend/src/api backend/src/worker backend/src/storage tests/integration/api tests/integration/worker --ext .ts
+EXITCODE=0

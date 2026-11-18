@@ -1,0 +1,12 @@
+# F04-T01 tester - cp
+UTC: 2026-11-18T11:43:15.2800100Z
+COMMAND: $dk cp {ca.pem,config,emulator_credentials} ; curl.exe healthcheck
+--- OUTPUT ---
+docker cp ca.pem exit 0
+docker cp config exit 0
+docker cp emulator_credentials exit 0
+FILES: ca.pem, config, emulator_credentials
+HEALTHCHECK_BODY: ok
+HEALTHCHECK_EXIT: 0
+EXIT_CODE: 0
+

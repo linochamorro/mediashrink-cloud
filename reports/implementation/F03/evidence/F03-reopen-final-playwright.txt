@@ -1,0 +1,27 @@
+[WebServer] (node:17356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:18048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\frontend-flow.spec.ts:9:1 › tema claro inicial y selector oscuro persistente tras recargar (1.5s)
+  ok 2 tests\e2e\frontend-flow.spec.ts:20:1 › registro, error seguro, refresh, upload, polling, resultados, descargas y logout (25.9s)
+  ok 3 tests\e2e\frontend-flow.spec.ts:147:1 › validación de drag & drop, teclado y errores de archivos (1.1s)
+Error: F03 webServer rejected teardown (HTTP 404)
+
+   at global-teardown.mjs:22
+
+  20 |     res.once('end', () => {
+  21 |       if (res.statusCode === 204 && res.headers['x-f03-server-shutdown'] === 'accepted') resolve();
+> 22 |       else reject(new Error(`F03 webServer rejected teardown (HTTP ${res.statusCode ?? 'unknown'})`));
+     |                   ^
+  23 |     });
+  24 |   });
+  25 |   req.once('timeout', () => req.destroy(new Error('F03 webServer shutdown request timed out')));
+    at IncomingMessage.<anonymous> (D:\Projects\Bluemind_Lab\projects\portfolio\mediashrink-cloud\tests\e2e\global-teardown.mjs:22:19)
+POST-RUN CHECK
+LISTENER_AFTER=ABSENT (Get-NetTCPConnection, port 48585)
+ENDPOINT_AFTER=HTTP 404 (POST /__f03_internal/shutdown; no server listening)
+TEARDOWN_ERROR=F03 webServer rejected teardown (HTTP 404), thrown in global-teardown.mjs:22
+SESSION_END=Harness session interrupted after teardown error and no natural runner exit; harness EXIT_CODE=1 is not Playwright's natural EXIT_CODE.

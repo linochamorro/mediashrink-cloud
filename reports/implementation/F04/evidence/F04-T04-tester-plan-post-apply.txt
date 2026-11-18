@@ -1,0 +1,25 @@
+# F04-T04 - tester - plan-post-apply
+UTC: 2026-11-18T12:56:10.9345002Z
+COMMAND: terraform -chdir=infra/terraform plan -input=false (post-apply idempotency)
+--- OUTPUT ---
+data.aws_caller_identity.emulator: Reading...
+aws_iam_role.app: Refreshing state... [id=mediashrink-app-role]
+aws_sqs_queue.dlq: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq]
+aws_s3_bucket.raw: Refreshing state... [id=mediashrink-raw-local]
+aws_dynamodb_table.jobs: Refreshing state... [id=mediashrink-jobs]
+aws_s3_bucket.optimized: Refreshing state... [id=mediashrink-optimized-local]
+data.aws_caller_identity.emulator: Read complete after 0s [id=000000000000]
+aws_sqs_queue.jobs: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs]
+data.aws_iam_role.app: Reading...
+data.aws_iam_role.app: Read complete after 0s [id=mediashrink-app-role]
+aws_s3_bucket_cors_configuration.raw: Refreshing state... [id=mediashrink-raw-local]
+aws_s3_bucket_lifecycle_configuration.optimized: Refreshing state... [id=mediashrink-optimized-local]
+aws_s3_bucket_cors_configuration.optimized: Refreshing state... [id=mediashrink-optimized-local]
+aws_iam_role_policy.app: Refreshing state... [id=mediashrink-app-role:mediashrink-least-privilege]
+aws_s3_bucket_lifecycle_configuration.raw: Refreshing state... [id=mediashrink-raw-local]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+EXIT_CODE: 0

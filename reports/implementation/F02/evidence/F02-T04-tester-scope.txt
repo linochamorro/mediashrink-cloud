@@ -1,0 +1,49 @@
+VERIFICACION DE AMBITO Y AISLAMIENTO (F02-T04)
+Ejecutado por Tester desde <repo-root>. Comandos git en modo solo lectura. Sin push.
+
+== git status --short --branch ==
+## main...origin/main   (sin marcador 'ahead': no hay commits locales pendientes de publicar)
+Estado: cambios sin commitear de los harness paralelos F02 (OpenCode) y F03 (Codex):
+ M STATE.md
+ M backend/package.json
+ M docs/sdd/spec.md
+ M docs/sdd/tasks.md
+ M frontend/index.html
+ M frontend/src/App.tsx
+ M package-lock.json
+ ?? backend/src/api/ , backend/src/db/user-store-adapter.ts , backend/src/storage/ , backend/src/worker/
+ ?? docs/sdd/packages/P-02*, P-03*, P-04*
+ ?? frontend/src/{api,upload}/ , frontend/src/styles.css , frontend/src/theme.ts
+ ?? reports/audits/F02/ , reports/audits/F03/ , reports/implementation/F02/ , reports/implementation/F03/
+ ?? tests/e2e/ , tests/integration/api/ , tests/integration/worker/ , tests/unit/api/ , tests/unit/frontend/ , tests/unit/worker/
+
+== git log -3 --format='%h %ad %s' ==
+469888b 2026-11-17 feat(F01): contratos congelados, DynamoDB, auth JWT, reglas puras y seed (CA-01..CA-05 PASSED)
+ee0462d 2026-11-17 docs(F00): marcar O-02 resuelto tras sincronizacion con el remoto
+f9bab63 2026-11-17 docs(F00): cerrar Fase 0 con CA-01..CA-06 PASSED y comandos comprobados
+RESULTADO: el ultimo commit es de F01; F02/T04 no ha realizado commit ni push. CUMPLE.
+
+== git diff -- backend/package.json ==
+@@ dependencias @@
++ "@aws-sdk/client-s3": "^3.1171.0",
++ "@aws-sdk/client-sqs": "^3.1171.0",
++ "@aws-sdk/s3-request-presigner": "^3.1171.0",
+RESULTADO: las unicas adiciones son de T02 (S3/presign) y la dependencia SQS que task.md declara ya disponible. T04 no anadio ni modification manifiestos. package.json raiz sin diff. CUMPLE.
+
+== backend/src/index.ts ==
+No aparece en git status: intacto, fuera del ambito de T04. CUMPLE.
+
+== Archivos en el ambito autorizado ==
+backend/src/worker/**: sqs-client.ts, render.ts, publisher.ts, processImage.ts, preflight.ts, messages.ts, index.ts, consumer.ts (8).
+tests/integration/worker/**: sqs-fixture.ts, publisher.test.ts, pipeline.test.ts, metadata.test.ts, consumer.test.ts (5).
+backend/src/api/**: 8 archivos de T01/T02 (publisher.ts conserva solo el puerto JobQueuePublisher; 0 referencias a cliente SQS). CUMPLE.
+
+== Dependencias prohibidas ==
+grep -R 'temporary/' en backend/src/worker/**/*.ts: 0 coincidencias. CUMPLE.
+
+== Higiene de artefactos nuevos del Tester ==
+grep de patrones AKIA/ASIA/ghp_/JWT en reports/implementation/F02/**: 0 coincidencias.
+Los artefactos del Tester usan la marca <repo-root> en lugar de rutas absolutas; el encabezado 'RUN' de vitest se sanea antes de escribir. Los archivos de evidencia del Developer no se reproducen como propios.
+Sin frontend/, infra/terraform/, .github/, STATE.md ni docs/sdd/tasks.md escritos por este Tester. CUMPLE.
+
+CONCLUSION: ambito respetado, sin push, sin secretos ni rutas Windows absolutas en los artefactos propios.

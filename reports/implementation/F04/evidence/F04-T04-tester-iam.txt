@@ -1,0 +1,24 @@
+# F04-T04 - tester - iam
+UTC: 2026-11-18T12:57:02.9821408Z
+COMMAND: terraform -chdir=infra/terraform output -json + grep iam.tf + cross-check developer.md/README.md/support-probe.txt
+--- OUTPUT ---
+ROLE_NAME: mediashrink-app-role
+ROLE_NAME_EXACT: True
+STATEMENT_COUNT: 5
+STATEMENT_COUNT_EQ_5: True
+BROAD_ACTION_STAR_COUNT: 0 (expected 0)
+BROAD_RESOURCE_STAR_COUNT: 0 (expected 0)
+STATEMENT_SIDS: S3RawObjectsReadWrite,S3OptimizedObjectsReadWrite,S3ListOnlyNamedBuckets,SqsJobsAndDlqMessaging,DynamoDbJobsTableCrud
+DERIVED_ARN_COUNT: 7 / 7
+ALL_ARNS_DERIVED: True
+TRUST_PRINCIPAL_SERVICE: lambda.amazonaws.com
+TRUST_ONLY_LAMBDA: True
+GUARD_iam_no_broad_wildcards: True
+GUARD_iam_arns_derived_from_resources: True
+GUARD_iam_trust_no_wildcard_principal: True
+LIVE_READ_DATA_AWS_IAM_ROLE: True
+SIGV4_FAILURE_DOCUMENTED: True
+OFFICIAL_PROVIDER_ARBITER_DOCUMENTED: True
+DECLARATIVE_REPR_DOCUMENTED: True
+IAM_VERDICT: OK
+EXIT_CODE: 0

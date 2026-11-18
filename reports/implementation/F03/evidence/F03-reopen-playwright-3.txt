@@ -1,0 +1,16 @@
+COMMAND=npx playwright test --config=tests/e2e/playwright.config.ts --reporter=list --workers=1
+PORT=50820
+
+[WebServer] (node:14832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:16960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\frontend-flow.spec.ts:9:1 › tema claro inicial y selector oscuro persistente tras recargar (1.5s)
+  ok 2 tests\e2e\frontend-flow.spec.ts:20:1 › registro, error seguro, refresh, upload, polling, resultados, descargas y logout (25.3s)
+  ok 3 tests\e2e\frontend-flow.spec.ts:147:1 › validación de drag & drop, teclado y errores de archivos (1.0s)
+
+HARNESS_EXIT_CODE=1
+LIMITATION=Tester-owned session reached 180s after all 3 cases printed ok; interrupted only that session. This is not a final Playwright EXIT_CODE or summary. Test/webServer PIDs and port 50820 checked after interruption.

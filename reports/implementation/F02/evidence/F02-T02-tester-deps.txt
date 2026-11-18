@@ -1,0 +1,47 @@
+=== package.json raiz: hash e invariancia ===
+SHA256(package.json)=88FF70553412D6EFFEB6D5A0645BA203B5CAE2117723D6028BE99FE58D6FE45F
+git diff --exit-code -- package.json EXIT=0 (0 = sin cambios)
+=== backend/package.json: diff (solo 3 dependencias AWS) ===
+warning: in the working copy of 'backend/package.json', LF will be replaced by CRLF the next time Git touches it
+diff --git a/backend/package.json b/backend/package.json
+index 9a214a2..229446f 100644
+--- a/backend/package.json
++++ b/backend/package.json
+@@ -11,8 +11,11 @@
+   },
+   "dependencies": {
+     "@aws-sdk/client-dynamodb": "^3.1171.0",
++    "@aws-sdk/client-s3": "^3.1171.0",
++    "@aws-sdk/client-sqs": "^3.1171.0",
+     "@aws-sdk/credential-providers": "^3.1171.0",
+     "@aws-sdk/lib-dynamodb": "^3.1171.0",
++    "@aws-sdk/s3-request-presigner": "^3.1171.0",
+     "@smithy/node-http-handler": "^4.14.2",
+     "hono": "^4.6.0",
+     "sharp": "^0.33.5",
+=== lockfile: versiones resueltas + integridad de las 3 dependencias ===
+"node_modules/@aws-sdk/client-s3": {
+"version": "3.1171.0",
+"resolved": "https://registry.npmjs.org/@aws-sdk/client-s3/-/client-s3-3.1171.0.tgz",
+"integrity": "sha512-EIWM2ZuLBYqwM1W1PkNIWrQzFy6Y7WBwVpEDpnCrMtcQyIN3VOXbf0uy+0xG2dbv+PcvxIlEK8A1ohdbyMV72w==",
+"license": "Apache-2.0",
+"node_modules/@aws-sdk/client-sqs": {
+"version": "3.1171.0",
+"resolved": "https://registry.npmjs.org/@aws-sdk/client-sqs/-/client-sqs-3.1171.0.tgz",
+"integrity": "sha512-q6vhSOKZpDfPDcy3q3jtQo1sPZbXILRJ+yN8qb3xEltbAb0DGf2LzycwDqhIZo/GpkkNALUSAQlHLaZmGQAzxA==",
+"license": "Apache-2.0",
+"node_modules/@aws-sdk/s3-request-presigner": {
+"version": "3.1171.0",
+"resolved": "https://registry.npmjs.org/@aws-sdk/s3-request-presigner/-/s3-request-presigner-3.1171.0.tgz",
+"integrity": "sha512-WOntr6iXx3O99Cp3MBxurnTMMicuQ2DjQXt/AqJuGfseZhOcu9BuIBEdH5aRo9Ggvw1gyQRiAFttexU+zr5NGw==",
+"license": "Apache-2.0",
+=== scripts de install (no se aprobaron) ===
+scripts preinstall/install/postinstall/prepare en manifiestos=0
+=== npm ls (workspace backend, depth 0) ===
+mediashrink-cloud@0.0.0 <PROJECT_ROOT>
+`-- @mediashrink/backend@0.0.0 -> .\backend
+  +-- @aws-sdk/client-s3@3.1171.0
+  +-- @aws-sdk/client-sqs@3.1171.0
+  `-- @aws-sdk/s3-request-presigner@3.1171.0
+
+EXIT_CODE=0

@@ -1,0 +1,2 @@
+NAME                       IMAGE                                                                                                  COMMAND                  SERVICE        CREATED          STATUS                    PORTS
+mediashrink-aws-emulator   ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376   "aws-emulator -b 0.0ÔÇª"   aws-emulator   21 seconds ago   Up 19 seconds (healthy)   127.0.0.1:9297->9297/tcp

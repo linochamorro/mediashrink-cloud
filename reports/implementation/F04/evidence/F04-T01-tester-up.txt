@@ -1,0 +1,18 @@
+# F04-T01 tester - up
+UTC: 2026-11-18T11:42:42.8468781Z
+COMMAND: $dk compose up -d ; wait healthy ; $dk inspect
+--- OUTPUT ---
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Created 
+ Network mediashrink-cloud_default Created 
+ Container mediashrink-aws-emulator Creating 
+ Container mediashrink-aws-emulator Created 
+ Container mediashrink-aws-emulator Starting 
+ Container mediashrink-aws-emulator Started 
+COMPOSE_UP_EXIT: 0
+HEALTH_STATUS: healthy
+memory=2147483648 nanoCpus=2000000000
+user=1000:1000
+EXIT_CODE: 0
+

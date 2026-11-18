@@ -1,0 +1,14 @@
+FIXTURE exif=262 xmp=82 iptc=40
+FIXTURE gpsIfdPointer=false asciiMarkers=true
+MARKERS GPS-TEST,XMP-TEST,IPTC-TEST,PRIVATE-EXIF
+CONTROL withMetadata({}) exif=262 xmp=82 iptc=0 asciiMarkers=true
+PROCESS ok=true
+EXIF_STRIPPED=true
+OUTPUT webp exif=0 xmp=0 iptc=0 asciiMarkers=false
+OUTPUT avif exif=0 xmp=0 iptc=0 asciiMarkers=false
+OUTPUT thumbnail exif=0 xmp=0 iptc=0 asciiMarkers=false
+BYTES_AFTER metric=532 sum=532 match=true
+DIRECT webp exif=0 xmp=0 iptc=0
+DIRECT avif exif=0 xmp=0 iptc=0
+DIRECT thumbnail exif=0 xmp=0 iptc=0
+EXIT=0

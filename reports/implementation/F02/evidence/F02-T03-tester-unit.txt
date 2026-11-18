@@ -1,0 +1,50 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/frontend/core.test.ts (9 tests) 47ms
+ Ô£ô tests/unit/domain/imageHeader.test.ts (15 tests) 34ms
+ Ô£ô tests/unit/config.test.ts (35 tests) 166ms
+ Ô£ô tests/unit/contracts.test.ts (32 tests) 87ms
+ Ô£ô tests/unit/domain/stateMachine.test.ts (13 tests) 21ms
+ Ô£ô tests/unit/api/userstore.test.ts (6 tests) 987ms
+   Ô£ô adaptador DynamoDB de UserStore (cierra T03-A-04) > AuthService registra y hace login sobre el adaptador DynamoDB 956ms
+ Ô£ô tests/unit/auth/service.test.ts (10 tests) 2449ms
+   Ô£ô AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > registra un usuario hasheado y devuelve un par de tokens sin exponer el hash 373ms
+   Ô£ô AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > rechaza un registro duplicado con 409 y mensaje gen├®rico 307ms
+   Ô£ô AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > hace login con credenciales correctas 339ms
+   Ô£ô AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > devuelve el mismo error para correo desconocido y contrase├▒a incorrecta 880ms
+   Ô£ô AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > renueva la sesi├│n emitiendo un nuevo access token del mismo usuario 305ms
+ Ô£ô tests/unit/worker/antiBomb.test.ts (7 tests) 311ms
+ Ô£ô tests/unit/worker/processImage.test.ts (4 tests) 774ms
+   Ô£ô worker ÔÇö formatos y m├®tricas (CA-03 / IN-01 / FR-12) > produce WebP, AVIF y miniatura WebP con bytes reales y dimensiones v├ílidas 518ms
+ Ô£ô tests/unit/api/routes.test.ts (8 tests) 2195ms
+   Ô£ô rutas /jobs (F02-T01, CA-01) > POST /jobs crea un PENDING con userId del token, formatos congelados y TTL v├ílido 454ms
+   Ô£ô rutas /jobs (F02-T01, CA-01) > GET /jobs devuelve solo los lotes del usuario autenticado 595ms
+ Ô£ô tests/unit/domain/antiBomb.test.ts (6 tests) 19ms
+ Ô£ô tests/unit/auth/jwt.test.ts (7 tests) 183ms
+ Ô£ô tests/unit/domain/savings.test.ts (7 tests) 15ms
+ Ô£ô tests/unit/api/authz.test.ts (5 tests) 2024ms
+   Ô£ô autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > un token manipulado y un refresh token no autorizan /jobs 441ms
+   Ô£ô autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > GET /jobs/:id de un lote ajeno devuelve 404 id├®ntico al inexistente 612ms
+   Ô£ô autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > POST /jobs/:id/confirm ajeno devuelve 404 y no publica 536ms
+   Ô£ô autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > el userId del token no se puede suplantar con x-user-id ni con el path 396ms
+ Ô£ô tests/unit/auth/rate-limit.test.ts (5 tests) 15ms
+ Ô£ô tests/unit/domain/index.test.ts (1 test) 15ms
+ Ô£ô tests/unit/domain/guards.test.ts (5 tests) 12ms
+ Ô£ô tests/unit/frontend.test.ts (3 tests) 11ms
+ Ô£ô tests/unit/auth/middleware.test.ts (3 tests) 11ms
+ Ô£ô tests/unit/api/rate-limit.test.ts (5 tests) 2326ms
+   Ô£ô rate limit no suplantable (cierra T03-A-01) > la clave de /jobs deriva del userId: agotar A no afecta a B 884ms
+   Ô£ô rate limit no suplantable (cierra T03-A-01) > una cabecera con el userId ajeno no consume el cupo de ese usuario 436ms
+   Ô£ô rate limit no suplantable (cierra T03-A-01) > /auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 535ms
+ Ô£ô tests/unit/auth/password.test.ts (6 tests) 1568ms
+   Ô£ô hash de contrase├▒as ÔÇö scrypt (A-02, IN-05) > verifica la contrase├▒a correcta y rechaza una incorrecta 496ms
+   Ô£ô hash de contrase├▒as ÔÇö scrypt (A-02, IN-05) > rechaza un digest manipulado sin lanzar 394ms
+ Ô£ô tests/unit/health.test.ts (2 tests) 28ms
+
+ Test Files  22 passed (22)
+      Tests  194 passed (194)
+   Start at  21:00:58
+   Duration  9.75s (transform 5.52s, setup 0ms, collect 13.30s, tests 13.30s, environment 12ms, prepare 10.76s)
+
+EXIT=0

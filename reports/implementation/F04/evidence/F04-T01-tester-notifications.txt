@@ -1,0 +1,18 @@
+# F04-T01 tester - notifications
+UTC: 2026-11-18T11:45:55.1006368Z
+COMMAND: node SDK v3 GetBucketNotificationConfiguration on both buckets
+--- OUTPUT ---
+PROBE: GetBucketNotificationConfiguration(mediashrink-raw-local)
+RESULT: SUCCESS
+HTTP_STATUS: 200
+CONFIG_KEYS: NONE
+EVENT_CONFIG_KEYS: NONE
+NOTIFICATION_EVENTS_PRESENT: false
+PROBE: GetBucketNotificationConfiguration(mediashrink-optimized-local)
+RESULT: SUCCESS
+HTTP_STATUS: 200
+CONFIG_KEYS: NONE
+EVENT_CONFIG_KEYS: NONE
+NOTIFICATION_EVENTS_PRESENT: false
+EXIT_CODE: 0
+

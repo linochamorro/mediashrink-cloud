@@ -1,0 +1,9 @@
+EXITCODE=0
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Created 
+ Network mediashrink-cloud_default Created 
+ Container mediashrink-aws-emulator Creating 
+ Container mediashrink-aws-emulator Created 
+ Container mediashrink-aws-emulator Starting 
+ Container mediashrink-aws-emulator Started 

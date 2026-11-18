@@ -1,0 +1,11 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [32mÔ£ô[39m tests/integration/api/jobs-contract.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 9377[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-AUD-01 ÔÇö POST /jobs: URLs PUT firmadas y subida real a raw (aws-emulator)[2m > [22m201 con uploads; la PUT real deja cada objeto bajo raw/<userId>/<jobId>/<imageId> [33m685[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 05:37:07
+[2m   Duration [22m 11.49s[2m (transform 560ms, setup 0ms, collect 1.48s, tests 9.38s, environment 0ms, prepare 218ms)[22m
+

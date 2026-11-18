@@ -1,0 +1,17 @@
+== docker compose up -d ==
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Created 
+ Network mediashrink-cloud_default Created 
+ Container mediashrink-aws-emulator Creating 
+ Container mediashrink-aws-emulator Created 
+ Container mediashrink-aws-emulator Starting 
+ Container mediashrink-aws-emulator Started
+UP_EXIT=0
+HEALTHY=True POLLS=1 STATUS=healthy
+LIMITS=memory=2147483648 nanoCpus=2000000000
+CP_ca.pem_EXIT=0
+CP_config_EXIT=0
+CP_emulator_credentials_EXIT=0
+HEALTH_BODY=ok HEALTH_EXIT=0
+PUERTO_9324_PRESENTE=False

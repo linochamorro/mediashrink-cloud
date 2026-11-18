@@ -1,0 +1,46 @@
+=== Contraste del adaptador DynamoDB de UserStore (T03-A-04) — Tester F02-T01 ===
+
+Comandos propios:
+- npx vitest run tests/unit/api --no-color -> tests/unit/api/userstore.test.ts 6/6
+- npx vitest run tests/unit/api tests/integration/api --no-color ->
+  tests/integration/api/userstore.test.ts 3/3 contra DynamoDB real en aws/aws-emulator
+  (31/31 global, EXIT_CODE=0; detalle en F02-T01-tester-api.txt).
+
+Fuentes leídas (sin editar): backend/src/db/user-store-adapter.ts,
+tests/unit/api/userstore.test.ts, tests/integration/api/userstore.test.ts,
+tests/integration/api/fixtures.ts, backend/src/contracts/index.ts, backend/src/auth/{user-store,identity}.ts.
+
+1) TransactWriteCommand condicional (unicidad atómica del correo)
+   - user-store-adapter.ts ll. 94-126: un TransactWriteCommand con dos Put en la misma tabla:
+     perfil (userId real, jobId 'USER#PROFILE') e índice (userId = correo normalizado,
+     jobId 'USER#EMAIL'), ambos con ConditionExpression = 'attribute_not_exists(userId) AND
+     attribute_not_exists(jobId)' (const NO_CONDITION, l. 32). La cancelación de la transacción
+     se mapea a EmailAlreadyExistsError mediante isEmailConflict (ll. 57-67, 127-130), que
+     comprueba name === 'TransactionCanceledException' y CancellationReasons[].Code ===
+     'ConditionalCheckFailed'.
+   - Verificado: unit ll. 97-112 (perfil + índice) y ll. 127-137 (duplicado lanza
+     EmailAlreadyExistsError y no sobrescribe: items.size sin cambios, perfil ajeno ausente);
+     integración ll. 56-67 (duplicado rechazado de forma atómica contra DynamoDB real).
+   - Los prefijos USER#PROFILE / USER#EMAIL (ll. 27-28) no colisionan con IMAGE# ni con jobIds
+     opacos; el adaptador es un archivo NUEVO y no modifica otros módulos de backend/src/db/**.
+
+2) Validación con schemas.AuthenticatedUser, sin duplicar contratos
+   - create() valida schemas.AuthenticatedUser.parse({ userId, email: normalizeEmail(...),
+     createdAt }) (ll. 84-88); parseStoredUser valida el perfil leído con el mismo esquema
+     congelado (ll. 45-49) y exige passwordHash no vacío (ll. 50-53, 89-91).
+   - normalizeEmail se importa de auth/identity.ts (l. 18): se reutiliza la regla congelada,
+     no se redefine. findByEmail normaliza, sigue el índice y carga el perfil por ownerUserId
+     (ll. 135-152). schemas.AuthenticatedUser no incluye passwordHash: no se expone en respuestas.
+   - Verificado: unit ll. 114-125 (case-insensitive, findById = findByEmail), ll. 139-143
+     (desconocidos -> null), ll. 145-155 (perfil inválido rechazado) y ll. 157-172 (AuthService
+     registra y hace login sobre el adaptador); integración ll. 27-54 (índice y perfil reales).
+
+3) Cierre del seguimiento T03-A-04
+   - La app de integración cablea createDynamoUserStore sobre la tabla aislada
+     (tests/integration/api/fixtures.ts ll. 28-36): ya no se usa el UserStore en memoria para
+     la API real. Las 7 pruebas de integración (3 UserStore + 4 rutas) pasan contra el emulador.
+
+Veredicto: T03-A-04 cerrado con evidencia propia: transacción condicional, validación con el
+contrato congelado, sin duplicación de contratos y sin hallazgos críticos/altos en el adaptador.
+Matiz heredado no bloqueante (Auditoría A-04, LOW, pre-existente de F01): el 409 vs 201 del
+registro permite enumerar correos; no es una regresión introducida por F02-T01.

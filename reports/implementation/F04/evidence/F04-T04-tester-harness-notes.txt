@@ -1,0 +1,27 @@
+# F04-T04 - tester - harness-notes
+UTC: 2026-11-18T12:58:00.0000000Z
+COMMAND: notas de integridad del arnes de verificacion propio (no defectos del producto)
+--- OUTPUT ---
+Correcciones de MI PROPIO arnes durante esta verificacion (primera pasada, sin loops):
+1. fmt: `terraform fmt -check` exit 0 pero sin salida (HCL ya formateado); mi helper
+   rechazo el parametro Output vacio. Se ajusto el helper y se reemitio
+   `F04-T04-tester-fmt.txt` con nota explicita. Sin cambio en HCL.
+2. cors: la primera sonda propia devolvio `self-signed certificate` porque Node no
+   confiaba en el CA del emulador. Se fijo NODE_EXTRA_CA_CERTS al CA propio
+   exportado en esta sesion; la reejecucion devolvio GetBucketCors OK en ambos
+   buckets. Sin cambio en HCL ni en la aplicacion.
+3. skip-flags: el primer mini-modulo uso `-out=$planFile` sin comillar en
+   PowerShell, creando un archivo literal `$planFile`; ademas `show -json` no se
+   pudo parsear. Se comillaron los argumentos y se reejecuto: evaluacion true y
+   false correcta. Sin cambio en HCL.
+4. transport: un regex con `\"` dentro de una subexpresion `$()` provoco error de
+   parseo de PowerShell. Se sustituyo por un patron con comodin y se reemitio el
+   evidencial. Sin cambio en HCL.
+5. iam: el primer chequeo de documentacion usaba `representacion declarativa` sin
+   tilde y dio False; se corrigio la expresion al texto real del README. El
+   veredicto IAM no dependia de esa linea y se reemitio con el resultado correcto.
+
+Las evidencias `F04-T04-tester-{fmt,cors,skip-flags,transport,iam}.txt` finales son
+las que se citan en el reporte. Ninguna de estas correcciones modulo
+`infra/terraform/**`, `tests/`, manifiestos, `STATE.md` ni reportes ajenos.
+EXIT_CODE: 0

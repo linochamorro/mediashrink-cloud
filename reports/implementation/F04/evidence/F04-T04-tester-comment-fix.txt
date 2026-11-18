@@ -1,0 +1,36 @@
+# F04-T04 - tester - comment-fix
+UTC: 2026-11-18T12:59:34.8140772Z
+COMMAND: grep dynamodb.tf + backend/src/db/user-store-adapter.ts (read-only) + terraform output -json (TTL intacto)
+--- OUTPUT ---
+--- dynamodb.tf: comentario corregido + check + output ---
+L32: user_profile_items_carry_ttl = false
+L33: user_accounts_expire         = false
+L77: # Los perfiles de usuario (USER#PROFILE / USER#EMAIL) NO escriben `ttl` en el
+L79: # lo que las CUENTAS NO EXPIRAN. Corrige F04T03-A-04; la aseveracion
+L80: # documental explicita esta en `check "user_profiles_not_expiring"` y en el
+L81: # output `dynamodb_ttl_item_policy` (sin cambio de comportamiento).
+L109: check "user_profiles_not_expiring" {
+L111: condition     = local.ttl_item_policy.user_profile_items_carry_ttl == false && local.ttl_item_policy.user_accounts_expire == false
+L112: error_message = "Los items USER# no deben llevar 'ttl': las cuentas no expiran (F04T03-A-04)."
+L136: output "dynamodb_ttl_item_policy" {
+L137: description = "Aseveracion documental (F04T03-A-04): TTL solo para jobs/IMAGE#; los perfiles USER# no llevan ttl y las cuentas no expiran."
+OLD_FALSE_CLAIM_PRESENT: False (expected False)
+CHECK_user_profiles_not_expiring_PRESENT: True
+OUTPUT_dynamodb_ttl_item_policy_PRESENT: True
+--- comportamiento TTL intacto (HCL + outputs en vivo) ---
+HCL_ttl_attribute_name_ttl: True
+HCL_ttl_enabled_true: True
+LIVE_dynamodb_ttl_attribute: ttl
+LIVE_dynamodb_ttl_seconds: 2592000
+LIVE_user_profile_items_carry_ttl: False
+LIVE_user_accounts_expire: False
+--- adaptador (solo lectura): items USER# NO escriben ttl ---
+ADAPTER_TTL_OCCURRENCES: 0 (expected 0)
+L6: * - perfil:  SK `USER#PROFILE`, PK = userId real;
+L7: * - índice:  SK `USER#EMAIL`,   PK = correo normalizado, apunta al userId.
+L14: TransactWriteCommand,
+L27: export const USER_PROFILE_SK = 'USER#PROFILE';
+L28: export const USER_EMAIL_SK = 'USER#EMAIL';
+L96: new TransactWriteCommand({
+COMMENT_FIX_VERDICT: OK
+EXIT_CODE: 0

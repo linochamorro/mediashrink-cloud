@@ -1,0 +1,13 @@
+COMMAND=npx playwright test --config=tests/e2e/playwright.config.ts --reporter=list --workers=1
+PORT=50440
+LISTENER_BEFORE=NO
+[WebServer] (node:18136) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:20248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\frontend-flow.spec.ts:9:1 › tema claro inicial y selector oscuro persistente tras recargar (9.8s)
+  ok 2 tests\e2e\frontend-flow.spec.ts:20:1 › registro, error seguro, refresh, upload, polling, resultados, descargas y logout (25.7s)
+  ok 3 tests\e2e\frontend-flow.spec.ts:147:1 › validación de drag & drop, teclado y errores de archivos (961ms)

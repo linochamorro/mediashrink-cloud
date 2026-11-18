@@ -1,0 +1,15 @@
+COMANDO GLOBAL (según F02-T03-task.md §Encabezado): npm run typecheck
+EXIT_GLOBAL=0
+--- salida global (normalizada) ---
+
+> mediashrink-cloud@0.0.0 typecheck
+> tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json
+
+
+COMANDO AISLADO AL ALCANCE F02-T03 (sin archivos en curso de T01/F03):
+npx tsc --noEmit --target ES2022 --module ESNext --moduleResolution Bundler --strict --esModuleInterop --skipLibCheck --types node --lib ES2022 <archivos de backend/src/worker, tests/unit/worker, tests/integration/worker>
+EXIT_SCOPE=0
+--- salida aislada ---
+
+
+NOTA: en una ejecución intermedia (20:54) el comando global mostró diagnósticos transitorios en backend/src/api/**, backend/src/db/**, tests/unit/api/** y tests/unit/frontend/** (propiedad de T01/F03, en ejecución concurrente); sus propietarios los resolvieron antes de esta captura. EXIT_GLOBAL=0 y EXIT_SCOPE=0. Ningún diagnóstico señala backend/src/worker/** ni tests/{unit,integration}/worker/**.

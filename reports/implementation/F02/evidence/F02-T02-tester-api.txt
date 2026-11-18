@@ -1,0 +1,33 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/api/userstore.test.ts (6 tests) 607ms
+   Ô£ô adaptador DynamoDB de UserStore (cierra T03-A-04) > AuthService registra y hace login sobre el adaptador DynamoDB 581ms
+ Ô£ô tests/unit/api/routes.test.ts (8 tests) 1516ms
+   Ô£ô rutas /jobs (F02-T01, CA-01) > POST /jobs crea un PENDING con userId del token, formatos congelados y TTL v├ílido 315ms
+   Ô£ô rutas /jobs (F02-T01, CA-01) > GET /jobs devuelve solo los lotes del usuario autenticado 309ms
+ Ô£ô tests/unit/api/authz.test.ts (5 tests) 1418ms
+   Ô£ô autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > un token manipulado y un refresh token no autorizan /jobs 343ms
+   Ô£ô autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > GET /jobs/:id de un lote ajeno devuelve 404 id├®ntico al inexistente 329ms
+   Ô£ô autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > POST /jobs/:id/confirm ajeno devuelve 404 y no publica 306ms
+   Ô£ô autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > el userId del token no se puede suplantar con x-user-id ni con el path 403ms
+ Ô£ô tests/unit/api/rate-limit.test.ts (5 tests) 1440ms
+   Ô£ô rate limit no suplantable (cierra T03-A-01) > la clave de /jobs deriva del userId: agotar A no afecta a B 379ms
+   Ô£ô rate limit no suplantable (cierra T03-A-01) > una cabecera con el userId ajeno no consume el cupo de ese usuario 349ms
+   Ô£ô rate limit no suplantable (cierra T03-A-01) > /auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 427ms
+ Ô£ô tests/unit/api/presign-routes.test.ts (12 tests) 1698ms
+ Ô£ô tests/unit/api/presign-keys.test.ts (30 tests) 32ms
+ Ô£ô tests/unit/api/confirm.test.ts (3 tests) 406ms
+ Ô£ô tests/integration/api/presign.test.ts (5 tests) 7293ms
+ Ô£ô tests/integration/api/routes.test.ts (6 tests) 7461ms
+   Ô£ô rutas /jobs con DynamoDB real en aws-emulator (CA-01) > registro, creaci├│n, listado y detalle respetan el userId del JWT 346ms
+ Ô£ô tests/integration/api/userstore.test.ts (3 tests) 6342ms
+
+ Test Files  10 passed (10)
+      Tests  83 passed (83)
+   Start at  21:51:42
+   Duration  15.11s (transform 4.69s, setup 0ms, collect 26.43s, tests 28.21s, environment 4ms, prepare 8.37s)
+
+EXIT_CODE=0
+=== skip/only/todo en tests/unit/api y tests/integration/api ===
+NINGUNO

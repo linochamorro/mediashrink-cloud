@@ -62,7 +62,7 @@ Incluye los invariantes de `constitution.md`. Fuente: entrevista D-01…D-16 + A
 | `userId` | string (PK) | Dueño del lote; prefijo S3 |
 | `jobId` | string (SK) | Identificador del lote |
 | `status` | enum | `PENDING` / `PROCESSING` / `COMPLETED` / `FAILED` / `PARTIAL` |
-| `preset` | enum | `HIGH` / `BALANCED` / `MAX_COMPRESSION` `[PROPUESTA: nombres a confirmar en Fase 1]` |
+| `preset` | enum | `HIGH` / `BALANCED` / `MAX_COMPRESSION` (congelados en `F01-T01`) |
 | `formats` | string[] | `["webp","avif"]` |
 | `bytesBefore` | number | Suma de bytes originales |
 | `bytesAfter` | number | Suma de bytes optimizados |

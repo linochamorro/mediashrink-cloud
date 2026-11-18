@@ -1,0 +1,9 @@
+# F04-T04 - cp
+UTC: 2026-11-18T12:34:01.8748612Z
+COMMAND: $dk cp {ca.pem,config,emulator_credentials} -> ./.local/aws-emulator/
+--- OUTPUT ---
+docker cp ca.pem -> ./.local/aws-emulator/ca.pem (exit 0)
+docker cp config -> ./.local/aws-emulator/config (exit 0)
+docker cp emulator_credentials -> ./.local/aws-emulator/emulator_credentials (exit 0)
+FILES: ca.pem, config, emulator_credentials
+EXIT_CODE: 0

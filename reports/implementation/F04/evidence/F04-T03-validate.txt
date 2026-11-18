@@ -1,0 +1,7 @@
+# F04-T03 - validate
+UTC: 2026-11-18T12:14:16.1675605Z
+COMMAND: terraform -chdir=infra/terraform validate
+--- OUTPUT ---
+[32m[1mSuccess![0m The configuration is valid.
+[0m
+EXIT_CODE: 0

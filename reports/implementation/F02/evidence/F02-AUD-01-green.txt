@@ -1,0 +1,25 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [32mÔ£ô[39m tests/unit/api/userstore.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 327[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mAuthService registra y hace login sobre el adaptador DynamoDB [33m304[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 661[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 834[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/download.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 864[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/routes.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1025[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-routes.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1086[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-keys.test.ts [2m([22m[2m30 tests[22m[2m)[22m[90m 20[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/authz.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 991[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip-cap.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 456[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete-partial.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 336[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/confirm.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 337[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 951[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/jobs-contract.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 2803[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22macepta todos los MIME raster permitidos y rechaza SVG/GIF/no-raster [33m1081[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22mvalida fileName no vac├¡o sin separadores, NUL ni %xx (sin usarlo en la clave) [33m1059[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m13 passed[39m[22m[90m (13)[39m
+[2m      Tests [22m [1m[32m103 passed[39m[22m[90m (103)[39m
+[2m   Start at [22m 05:33:51
+[2m   Duration [22m 4.90s[2m (transform 1.60s, setup 0ms, collect 12.76s, tests 10.69s, environment 4ms, prepare 3.18s)[22m
+

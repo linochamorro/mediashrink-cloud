@@ -1,0 +1,26 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/api/confirm.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 539[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/userstore.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 563[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mAuthService registra y hace login sobre el adaptador DynamoDB [33m534[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/authz.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1344[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mun token manipulado y un refresh token no autorizan /jobs [33m400[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mGET /jobs/:id de un lote ajeno devuelve 404 id├®ntico al inexistente [33m304[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mPOST /jobs/:id/confirm ajeno devuelve 404 y no publica [33m346[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/routes.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1396[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1489[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22mla clave de /jobs deriva del userId: agotar A no afecta a B [33m456[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22muna cabecera con el userId ajeno no consume el cupo de ese usuario [33m305[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22m/auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 [33m369[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/userstore.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 9965[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m adaptador UserStore contra DynamoDB real (T03-A-04)[2m > [22mcreate/findByEmail/findById funcionan sobre la tabla aislada [33m1206[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/routes.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 10230[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rutas /jobs con DynamoDB real en aws-emulator (CA-01)[2m > [22mregistro, creaci├│n, listado y detalle respetan el userId del JWT [33m353[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m7 passed[39m[22m[90m (7)[39m
+[2m      Tests [22m [1m[32m36 passed[39m[22m[90m (36)[39m
+[2m   Start at [22m 21:21:58
+[2m   Duration [22m 14.38s[2m (transform 3.99s, setup 0ms, collect 19.20s, tests 25.53s, environment 6ms, prepare 3.63s)[22m
+
+EXIT_CODE=0

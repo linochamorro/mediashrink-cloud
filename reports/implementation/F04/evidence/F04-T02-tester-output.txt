@@ -1,0 +1,17 @@
+# F04-T02 (tester) - output
+UTC: 2026-11-18T12:05:39.1574774Z
+COMMAND: <TF_BIN> -chdir=infra/terraform output
+--- OUTPUT ---
+authenticated_account_id = "000000000000"
+emulator_endpoint = "https://127.0.0.1:9297"
+provider_region = "us-east-1"
+s3_bucket_optimized = "mediashrink-optimized-local"
+s3_bucket_raw = "mediashrink-raw-local"
+s3_lifecycle_expiration_days = 30
+sqs_dlq_arn = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq"
+sqs_dlq_url = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq"
+sqs_max_receive_count = 3
+sqs_queue_arn = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs"
+sqs_queue_url = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs"
+sqs_visibility_timeout_seconds = 120
+EXIT_CODE: 0

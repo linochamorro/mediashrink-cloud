@@ -1,0 +1,22 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 120[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 153[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 598[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 56340[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mmensaje v├ílido: procesa, marca COMPLETED con m├®tricas y elimina el mensaje de la cola [33m6355[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintento transitorio: 2 fallos y ├®xito en el 3┬║ intento, sin DLQ [33m6252[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta) [33m6196[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mfallo parcial: imagen fallida va a DLQ y FAILED; las dem├ís del lote se completan [33m6292[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mel mensaje v├ílido se consume y elimina; no hay bucle infinito ni duplicados [33m6252[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22msiempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado [33m6230[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-01 redelivery: un job terminal no se reabre y la DLQ no se duplica [33m6201[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-02 fallo de la DLQ: se a├¡sla, se registra y el resto del lote contin├║a [33m6222[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-03 precondici├│n: el consumidor materializa el ImageRecord si falta [33m6337[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[32m21 passed[39m[22m[90m (21)[39m
+[2m   Start at [22m 22:26:14
+[2m   Duration [22m 57.90s[2m (transform 849ms, setup 0ms, collect 3.08s, tests 57.21s, environment 1ms, prepare 957ms)[22m
+

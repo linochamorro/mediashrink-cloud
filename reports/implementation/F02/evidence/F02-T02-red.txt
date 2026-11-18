@@ -1,0 +1,426 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [31mÔØ»[39m tests/unit/api/presign-keys.test.ts [2m([22m[2m30 tests[22m[2m | [22m[31m24 failed[39m[2m)[22m[90m 59[2mms[22m[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mla clave raw empieza por el userId del JWT y separa jobId, raw e imageId[90m 14[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: rawImageKey[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mla clave optimized de webp termina en img_1.webp[90m 2[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: optimizedImageKey[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mla clave optimized de avif termina en img_1.avif[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: optimizedImageKey[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mla clave optimized de thumbnail termina en img_1_thumb.webp[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: optimizedImageKey[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mrechaza el segmento inseguro ".."[90m 5[2mms[22m[31m[39m
+[31m     ÔåÆ expected error to be instance of UnsafeObjectKeyError[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mrechaza el segmento inseguro "."[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ expected error to be instance of UnsafeObjectKeyError[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mrechaza el segmento inseguro ""[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ expected error to be instance of UnsafeObjectKeyError[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mrechaza el segmento inseguro "a/b"[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ expected error to be instance of UnsafeObjectKeyError[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mrechaza el segmento inseguro "/abs"[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ expected error to be instance of UnsafeObjectKeyError[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mrechaza el segmento inseguro "C:\\temp"[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ expected error to be instance of UnsafeObjectKeyError[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mrechaza el segmento inseguro "..%2fotro"[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ expected error to be instance of UnsafeObjectKeyError[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mrechaza el segmento inseguro "con espacio"[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ expected error to be instance of UnsafeObjectKeyError[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mrechaza el segmento inseguro "nul\u0000byte"[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ expected error to be instance of UnsafeObjectKeyError[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22macepta el segmento seguro "img_1"[90m 7[2mms[22m[31m[39m
+[31m     ÔåÆ expected [Function] to not throw an error but 'Error: NOT_IMPLEMENTED: assertSafeKeyÔÇª' was thrown[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22macepta el segmento seguro "11111111-1111-4111-8111-111111111111"[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ expected [Function] to not throw an error but 'Error: NOT_IMPLEMENTED: assertSafeKeyÔÇª' was thrown[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22macepta el segmento seguro "foto.jpg"[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ expected [Function] to not throw an error but 'Error: NOT_IMPLEMENTED: assertSafeKeyÔÇª' was thrown[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22macepta el segmento seguro "a-b_c.9"[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ expected [Function] to not throw an error but 'Error: NOT_IMPLEMENTED: assertSafeKeyÔÇª' was thrown[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mrechaza tipos no cadena como segmento[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ expected error to be instance of UnsafeObjectKeyError[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22mrechaza una clave construida que escapa del prefijo del usuario[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ expected error to be instance of UnsafeObjectKeyError[39m
+[31m   [31m├ù[31m claves S3 con prefijo por usuario (CA-02)[2m > [22macepta claves dentro del prefijo y delimitadas por el separador[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: rawImageKey[39m
+[31m   [31m├ù[31m expiraci├│n acotada de URLs firmadas[2m > [22musa un valor por defecto razonable[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: resolveExpiry[39m
+[31m   [31m├ù[31m expiraci├│n acotada de URLs firmadas[2m > [22macepta 60 segundos configurables[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: resolveExpiry[39m
+[31m   [31m├ù[31m expiraci├│n acotada de URLs firmadas[2m > [22macepta 120 segundos configurables[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: resolveExpiry[39m
+[31m   [31m├ù[31m expiraci├│n acotada de URLs firmadas[2m > [22macepta 3600 segundos configurables[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: resolveExpiry[39m
+ [31mÔØ»[39m tests/unit/api/presign-routes.test.ts [2m([22m[2m12 tests[22m[2m | [22m[31m12 failed[39m[2m)[22m[33m 714[2mms[22m[39m
+[31m   [31m├ù[31m rutas /presign con esquemas congelados y userId del JWT[2m > [22mambas rutas exigen autenticaci├│n antes que cualquier otra guarda[90m 26[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 401 // Object.is equality[39m
+[31m   [31m├ù[31m rutas /presign con esquemas congelados y userId del JWT[2m > [22mla URL de subida usa el userId del JWT y nunca incluye el binario[90m 118[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 200 // Object.is equality[39m
+[31m   [31m├ù[31m rutas /presign con esquemas congelados y userId del JWT[2m > [22mun userId en el cuerpo o en cabeceras no suplanta al del token[90m 105[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 400 // Object.is equality[39m
+[31m   [31m├ù[31m rutas /presign con esquemas congelados y userId del JWT[2m > [22mrechaza imageId inseguro "../escape" con 400[90m 6[2mms[22m[31m[39m
+[31m     ÔåÆ Cannot read properties of undefined (reading 'userId')[39m
+[31m   [31m├ù[31m rutas /presign con esquemas congelados y userId del JWT[2m > [22mrechaza imageId inseguro "a/b" con 400[90m 4[2mms[22m[31m[39m
+[31m     ÔåÆ Cannot read properties of undefined (reading 'userId')[39m
+[31m   [31m├ù[31m rutas /presign con esquemas congelados y userId del JWT[2m > [22mrechaza imageId inseguro "/abs" con 400[90m 5[2mms[22m[31m[39m
+[31m     ÔåÆ Cannot read properties of undefined (reading 'userId')[39m
+[31m   [31m├ù[31m rutas /presign con esquemas congelados y userId del JWT[2m > [22mrechaza imageId inseguro "" con 400[90m 144[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 400 // Object.is equality[39m
+[31m   [31m├ù[31m rutas /presign con esquemas congelados y userId del JWT[2m > [22mrechaza imageId inseguro ".." con 400[90m 3[2mms[22m[31m[39m
+[31m     ÔåÆ Cannot read properties of undefined (reading 'userId')[39m
+[31m   [31m├ù[31m rutas /presign con esquemas congelados y userId del JWT[2m > [22mrechaza jobId no cadena y expiraci├│n fuera de rango[90m 106[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 400 // Object.is equality[39m
+[31m   [31m├ù[31m rutas /presign con esquemas congelados y userId del JWT[2m > [22macepta expiresIn configurable dentro de los l├¡mites[90m 100[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 200 // Object.is equality[39m
+[31m   [31m├ù[31m rutas /presign con esquemas congelados y userId del JWT[2m > [22mla descarga valida el variant con el contrato congelado y acepta thumbnail[90m 92[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 400 // Object.is equality[39m
+[31m   [31m├ù[31m rutas /presign con esquemas congelados y userId del JWT[2m > [22mGET sin token tambi├®n queda protegido[90m 2[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 401 // Object.is equality[39m
+ [31mÔØ»[39m tests/integration/api/presign.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m[33m 6646[2mms[22m[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Suites 1 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/integration/api/presign.test.ts > Presigned URLs S3 reales en aws-emulator (CA-02)
+Error: NOT_IMPLEMENTED: createPresignServiceFromConfig
+ ÔØ» Module.createPresignServiceFromConfig backend/src/storage/presigner.ts:52:9
+     50| 
+     51| export function createPresignServiceFromConfig(_config: unknown): PresÔÇª
+     52|   throw new Error('NOT_IMPLEMENTED: createPresignServiceFromConfig');
+       |         ^
+     53| }
+     54| 
+ ÔØ» Module.createPresignIntegrationEnv tests/integration/api/presign-fixture.ts:152:21
+ ÔØ» tests/integration/api/presign.test.ts:30:11
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/37]ÔÄ»
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 36 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > la clave raw empieza por el userId del JWT y separa jobId, raw e imageId
+Error: NOT_IMPLEMENTED: rawImageKey
+ ÔØ» Module.rawImageKey backend/src/storage/keys.ts:24:9
+     22| 
+     23| export function rawImageKey(_identity: ObjectIdentity): string {
+     24|   throw new Error('NOT_IMPLEMENTED: rawImageKey');
+       |         ^
+     25| }
+     26| 
+ ÔØ» tests/unit/api/presign-keys.test.ts:30:12
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > la clave optimized de webp termina en img_1.webp
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > la clave optimized de avif termina en img_1.avif
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > la clave optimized de thumbnail termina en img_1_thumb.webp
+Error: NOT_IMPLEMENTED: optimizedImageKey
+ ÔØ» Module.optimizedImageKey backend/src/storage/keys.ts:28:9
+     26| 
+     27| export function optimizedImageKey(_identity: ObjectIdentity, _variant:ÔÇª
+     28|   throw new Error('NOT_IMPLEMENTED: optimizedImageKey');
+       |         ^
+     29| }
+     30| 
+ ÔØ» tests/unit/api/presign-keys.test.ts:40:12
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > rechaza el segmento inseguro ".."
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > rechaza el segmento inseguro "."
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > rechaza el segmento inseguro ""
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > rechaza el segmento inseguro "a/b"
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > rechaza el segmento inseguro "/abs"
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > rechaza el segmento inseguro "C:\\temp"
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > rechaza el segmento inseguro "..%2fotro"
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > rechaza el segmento inseguro "con espacio"
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > rechaza el segmento inseguro "nul\u0000byte"
+AssertionError: expected error to be instance of UnsafeObjectKeyError
+
+- Expected: 
+[Function UnsafeObjectKeyError]
+
++ Received: 
+[Error: NOT_IMPLEMENTED: assertSafeKeySegment]
+
+ ÔØ» tests/unit/api/presign-keys.test.ts:56:58
+     54|     'nul\u0000byte',
+     55|   ])('rechaza el segmento inseguro %j', (value) => {
+     56|     expect(() => assertSafeKeySegment(value, 'imageId')).toThrow(UnsafÔÇª
+       |                                                          ^
+     57|   });
+     58| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > acepta el segmento seguro "img_1"
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > acepta el segmento seguro "11111111-1111-4111-8111-111111111111"
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > acepta el segmento seguro "foto.jpg"
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > acepta el segmento seguro "a-b_c.9"
+AssertionError: expected [Function] to not throw an error but 'Error: NOT_IMPLEMENTED: assertSafeKeyÔÇª' was thrown
+
+- Expected: 
+undefined
+
++ Received: 
+"Error: NOT_IMPLEMENTED: assertSafeKeySegment"
+
+ ÔØ» tests/unit/api/presign-keys.test.ts:62:64
+     60|     'acepta el segmento seguro %j',
+     61|     (value) => {
+     62|       expect(() => assertSafeKeySegment(value, 'imageId')).not.toThrowÔÇª
+       |                                                                ^
+     63|     },
+     64|   );
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > rechaza tipos no cadena como segmento
+AssertionError: expected error to be instance of UnsafeObjectKeyError
+
+- Expected: 
+[Function UnsafeObjectKeyError]
+
++ Received: 
+[Error: NOT_IMPLEMENTED: assertSafeKeySegment]
+
+ ÔØ» tests/unit/api/presign-keys.test.ts:67:53
+     65| 
+     66|   it('rechaza tipos no cadena como segmento', () => {
+     67|     expect(() => assertSafeKeySegment(42, 'jobId')).toThrow(UnsafeObjeÔÇª
+       |                                                     ^
+     68|     expect(() => assertSafeKeySegment(null, 'userId')).toThrow(UnsafeOÔÇª
+     69|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[6/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > rechaza una clave construida que escapa del prefijo del usuario
+AssertionError: expected error to be instance of UnsafeObjectKeyError
+
+- Expected: 
+[Function UnsafeObjectKeyError]
+
++ Received: 
+[Error: NOT_IMPLEMENTED: assertKeyWithinPrefix]
+
+ ÔØ» tests/unit/api/presign-keys.test.ts:75:7
+     73|     expect(() =>
+     74|       assertKeyWithinPrefix(`${prefix}/../otro/raw/img_1`, prefix),
+     75|     ).toThrow(UnsafeObjectKeyError);
+       |       ^
+     76|     expect(() => assertKeyWithinPrefix(`/otro/${identity.jobId}/raw/imÔÇª
+     77|       UnsafeObjectKeyError,
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[7/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > acepta claves dentro del prefijo y delimitadas por el separador
+Error: NOT_IMPLEMENTED: rawImageKey
+ ÔØ» Module.rawImageKey backend/src/storage/keys.ts:24:9
+     22| 
+     23| export function rawImageKey(_identity: ObjectIdentity): string {
+     24|   throw new Error('NOT_IMPLEMENTED: rawImageKey');
+       |         ^
+     25| }
+     26| 
+ ÔØ» tests/unit/api/presign-keys.test.ts:85:17
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[8/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-keys.test.ts > expiraci├│n acotada de URLs firmadas > usa un valor por defecto razonable
+Error: NOT_IMPLEMENTED: resolveExpiry
+ ÔØ» Module.resolveExpiry backend/src/storage/presigner.ts:44:9
+     42| 
+     43| export function resolveExpiry(_requested: number | undefined): number {
+     44|   throw new Error('NOT_IMPLEMENTED: resolveExpiry');
+       |         ^
+     45| }
+     46| 
+ ÔØ» tests/unit/api/presign-keys.test.ts:93:12
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[9/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-keys.test.ts > expiraci├│n acotada de URLs firmadas > acepta 60 segundos configurables
+ FAIL  tests/unit/api/presign-keys.test.ts > expiraci├│n acotada de URLs firmadas > acepta 120 segundos configurables
+ FAIL  tests/unit/api/presign-keys.test.ts > expiraci├│n acotada de URLs firmadas > acepta 3600 segundos configurables
+Error: NOT_IMPLEMENTED: resolveExpiry
+ ÔØ» Module.resolveExpiry backend/src/storage/presigner.ts:44:9
+     42| 
+     43| export function resolveExpiry(_requested: number | undefined): number {
+     44|   throw new Error('NOT_IMPLEMENTED: resolveExpiry');
+       |         ^
+     45| }
+     46| 
+ ÔØ» tests/unit/api/presign-keys.test.ts:101:14
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[10/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-routes.test.ts > rutas /presign con esquemas congelados y userId del JWT > ambas rutas exigen autenticaci├│n antes que cualquier otra guarda
+AssertionError: expected 404 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 404
+
+ ÔØ» tests/unit/api/presign-routes.test.ts:21:27
+     19|     });
+     20| 
+     21|     expect(upload.status).toBe(401);
+       |                           ^
+     22|     expect(download.status).toBe(401);
+     23|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[11/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-routes.test.ts > rutas /presign con esquemas congelados y userId del JWT > la URL de subida usa el userId del JWT y nunca incluye el binario
+AssertionError: expected 404 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 404
+
+ ÔØ» tests/unit/api/presign-routes.test.ts:35:29
+     33|       token,
+     34|     );
+     35|     expect(response.status).toBe(200);
+       |                             ^
+     36|     const body = await jsonOf(response);
+     37|     expect(body.key).toBe(`${userId}/job_1/raw/img_1`);
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[12/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-routes.test.ts > rutas /presign con esquemas congelados y userId del JWT > un userId en el cuerpo o en cabeceras no suplanta al del token
+AssertionError: expected 404 to be 400 // Object.is equality
+
+- Expected
++ Received
+
+- 400
++ 404
+
+ ÔØ» tests/unit/api/presign-routes.test.ts:57:28
+     55|       token,
+     56|     );
+     57|     expect(spoofed.status).toBe(400);
+       |                            ^
+     58|     expect(presign.uploads).toHaveLength(0);
+     59| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[13/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-routes.test.ts > rutas /presign con esquemas congelados y userId del JWT > rechaza imageId inseguro "../escape" con 400
+ FAIL  tests/unit/api/presign-routes.test.ts > rutas /presign con esquemas congelados y userId del JWT > rechaza imageId inseguro "a/b" con 400
+ FAIL  tests/unit/api/presign-routes.test.ts > rutas /presign con esquemas congelados y userId del JWT > rechaza imageId inseguro "/abs" con 400
+ FAIL  tests/unit/api/presign-routes.test.ts > rutas /presign con esquemas congelados y userId del JWT > rechaza imageId inseguro ".." con 400
+TypeError: Cannot read properties of undefined (reading 'userId')
+ ÔØ» register tests/unit/api/presign-fixtures.ts:91:59
+     89|         user: { userId: string };
+     90|       };
+     91|       return { token: body.accessToken, userId: body.user.userId };
+       |                                                           ^
+     92|     },
+     93|   };
+ ÔØ» tests/unit/api/presign-routes.test.ts:75:25
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[14/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-routes.test.ts > rutas /presign con esquemas congelados y userId del JWT > rechaza imageId inseguro "" con 400
+AssertionError: expected 404 to be 400 // Object.is equality
+
+- Expected
++ Received
+
+- 400
++ 404
+
+ ÔØ» tests/unit/api/presign-routes.test.ts:83:31
+     81|       );
+     82| 
+     83|       expect(response.status).toBe(400);
+       |                               ^
+     84|       expect(presign.uploads).toHaveLength(0);
+     85|     },
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[15/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-routes.test.ts > rutas /presign con esquemas congelados y userId del JWT > rechaza jobId no cadena y expiraci├│n fuera de rango
+AssertionError: expected 404 to be 400 // Object.is equality
+
+- Expected
++ Received
+
+- 400
++ 404
+
+ ÔØ» tests/unit/api/presign-routes.test.ts:104:27
+    102|       token,
+    103|     );
+    104|     expect(badJob.status).toBe(400);
+       |                           ^
+    105|     expect(badExpiry.status).toBe(400);
+    106|     expect(presign.uploads).toHaveLength(0);
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[16/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-routes.test.ts > rutas /presign con esquemas congelados y userId del JWT > acepta expiresIn configurable dentro de los l├¡mites
+AssertionError: expected 404 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 404
+
+ ÔØ» tests/unit/api/presign-routes.test.ts:119:29
+    117|     );
+    118| 
+    119|     expect(response.status).toBe(200);
+       |                             ^
+    120|     expect(presign.uploads[0].expiresIn).toBe(120);
+    121|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[17/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-routes.test.ts > rutas /presign con esquemas congelados y userId del JWT > la descarga valida el variant con el contrato congelado y acepta thumbnail
+AssertionError: expected 404 to be 400 // Object.is equality
+
+- Expected
++ Received
+
+- 400
++ 404
+
+ ÔØ» tests/unit/api/presign-routes.test.ts:133:24
+    131|       token,
+    132|     );
+    133|     expect(bad.status).toBe(400);
+       |                        ^
+    134| 
+    135|     const good = await postJson(
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[18/37]ÔÄ»
+
+ FAIL  tests/unit/api/presign-routes.test.ts > rutas /presign con esquemas congelados y userId del JWT > GET sin token tambi├®n queda protegido
+AssertionError: expected 404 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 404
+
+ ÔØ» tests/unit/api/presign-routes.test.ts:151:29
+    149|     const { app } = createPresignTestApp();
+    150|     const response = await getJson(app, '/presign/download');
+    151|     expect(response.status).toBe(401);
+       |                             ^
+    152|   });
+    153| });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[19/37]ÔÄ»
+
+[2m Test Files [22m [1m[31m3 failed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[31m36 failed[39m[22m[2m | [22m[1m[32m6 passed[39m[22m[2m | [22m[33m5 skipped[39m[90m (47)[39m
+[2m   Start at [22m 21:37:07
+[2m   Duration [22m 13.11s[2m (transform 2.31s, setup 0ms, collect 9.62s, tests 7.42s, environment 1ms, prepare 2.56s)[22m
+

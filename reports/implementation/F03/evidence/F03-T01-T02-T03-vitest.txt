@@ -1,0 +1,10 @@
+
+ RUN  v2.1.9 D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud
+
+ ✓ tests/unit/frontend/core.test.ts (9 tests) 48ms
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  21:13:25
+   Duration  1.47s (transform 231ms, setup 0ms, collect 286ms, tests 48ms, environment 0ms, prepare 393ms)
+

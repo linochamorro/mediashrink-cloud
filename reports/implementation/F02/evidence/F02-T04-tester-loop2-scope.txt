@@ -1,0 +1,52 @@
+VERIFICACION DE AMBITO DEL LOOP 2/3 (A-01/A-02/A-03)
+Ejecutado por Tester desde <repo-root>. Solo lectura: Get-ChildItem (LastWriteTime), git status/diff/log.
+
+== Archivos modificados en el loop 2 (fechas locales 2026-11-17) ==
+22:25:35  backend/src/worker/consumer.ts          <- correccion A-01/A-02/A-03
+22:21:55  tests/integration/worker/consumer.test.ts <- 3 pruebas nuevas (A-01/A-02/A-03)
+22:05:07  backend/src/worker/messages.ts          (anterior al loop 2)
+22:03:18  backend/src/worker/publisher.ts         (anterior al loop 2)
+22:02:58  backend/src/worker/sqs-client.ts        (anterior al loop 2)
+
+== backend/src/db/** — integro ==
+Fechas maximas: user-store-adapter.ts 20:54:24, job-store.ts 18:19:28,
+index.ts 18:16:14, client.ts 18:16:07, keys.ts 18:15:07, types.ts 18:11:41,
+errors.ts 18:11:35. Ninguno posterior a las 22:21 del loop 2.
+El consumidor usa solo getImage/putImage/updateJob/updateImage (API publica F01);
+ensureImageRecord no introduce acceso directo a la capa de datos. CUMPLE.
+
+== backend/src/api/** — intacto ==
+Fechas maximas: presign.ts 21:43:11, index.ts 21:39:02, app.ts 21:38:57,
+jobs.ts 21:16:45, job-transition.ts 21:16:29, job-list-store.ts 21:16:20,
+rate-limit.ts 20:49:53, publisher.ts 20:46:29. Ninguno posterior a las 22:21.
+publisher.ts sigue exponiendo solo el puerto JobQueuePublisher de T01. CUMPLE.
+
+== Manifiestos — no tocados ==
+18:59:24  backend/package.json
+21:33:43  package.json
+21:33:43  package-lock.json
+git diff -- backend/package.json package.json conserva EXACTAMENTE el diff de v1:
+ + @aws-sdk/client-s3 ^3.1171.0
+ + @aws-sdk/client-sqs ^3.1171.0
+ + @aws-sdk/s3-request-presigner ^3.1171.0
+ (adiciones de T02; la dependencia SQS ya estaba declarada antes de T04).
+Ninguna adicion nueva en el loop 2. CUMPLE.
+
+== backend/src/index.ts == 10:43:57 (intacto, fuera de ambito). CUMPLE.
+
+== Pruebas sin modificadores de seleccion ==
+grep -R 'it.skip|it.only|describe.only|it.todo|describe.todo|xit(|xdescribe(' tests/integration/worker/**: 0 coincidencias.
+Nota: la coincidencia plana '.skip' del v1 correspondia a la asercion 'skippedAsDuplicate', no a un modificador.
+
+== Git / push ==
+git status --short --branch -> ## main...origin/main (sin 'ahead': ningun commit local nuevo).
+git log -1 -> 469888b (feat(F01)...). El unico commit sigue siendo de F01. Sin push. CUMPLE.
+
+== Nota metodologica ==
+Las fechas de modificacion son un indicador de soporte, no una prueba criptografica;
+se complementan con el git diff de manifiestos (identico al de v1) y la inspeccion
+directa de las firmas publicas usadas por el consumidor. Sin secretos ni rutas Windows
+absolutas en estos artefactos (rutas relativas y marcas <repo-root>).
+
+CONCLUSION: el loop 2 se limito a backend/src/worker/consumer.ts y
+tests/integration/worker/consumer.test.ts. db/**, api/**, manifiestos e index.ts intactos.

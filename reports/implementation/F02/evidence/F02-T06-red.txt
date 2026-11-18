@@ -1,0 +1,73 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [31mÔØ»[39m tests/integration/api/e2e-metrics.test.ts [2m([22m[2m4 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[33m 26901[2mms[22m[39m
+[31m   [31m├ù[31m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mflujo completo: los bytes persistidos son los reales de S3, con savingsPct exacto y exifStripped real[33m 7445[2mms[22m[31m[39m
+[31m     ÔåÆ expected +0 to be 1 // Object.is equality[39m
+[31m   [31m├ù[31m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mestados coherentes: una imagen FAILED produce PARTIAL y todas FAILED producen FAILED[33m 6581[2mms[22m[31m[39m
+[31m     ÔåÆ expected 'FAILED' to be 'PARTIAL' // Object.is equality[39m
+[31m   [31m├ù[31m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mobservabilidad: dlqFailures y dlqDeliveryFailed se a├¡slan y skippedAsDuplicate se reporta[33m 6587[2mms[22m[31m[39m
+[31m     ÔåÆ expected +0 to be 1 // Object.is equality[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mCONFIRM_INCONSISTENT: pol├¡tica at-most-once, sin reparaci├│n autom├ítica [33m6287[2mms[22m[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 3 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/integration/api/e2e-metrics.test.ts > F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06) > flujo completo: los bytes persistidos son los reales de S3, con savingsPct exacto y exifStripped real
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ÔØ» tests/integration/api/e2e-metrics.test.ts:83:35
+     81|     const results = await drainQueue(consumeDeps(), { maxRounds: 1, waÔÇª
+     82|     expect(results).toHaveLength(1);
+     83|     expect(results[0]?.completed).toBe(1);
+       |                                   ^
+     84|     expect(results[0]?.failed).toBe(0);
+     85|     expect(results[0]?.batchStatus).toBe('COMPLETED');
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 23:16:14
+[2m   Duration [22m 29.37s[2m (transform 625ms, setup 0ms, collect 1.80s, tests 26.90s, environment 0ms, prepare 221ms)[22m
+
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/3]ÔÄ»
+
+ FAIL  tests/integration/api/e2e-metrics.test.ts > F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06) > estados coherentes: una imagen FAILED produce PARTIAL y todas FAILED producen FAILED
+AssertionError: expected 'FAILED' to be 'PARTIAL' // Object.is equality
+
+Expected: "PARTIAL"
+Received: "FAILED"
+
+ ÔØ» tests/integration/api/e2e-metrics.test.ts:149:37
+    147|     );
+    148|     expect(partial).toHaveLength(1);
+    149|     expect(partial[0]?.batchStatus).toBe('PARTIAL');
+       |                                     ^
+    150|     expect(partial[0]?.completed).toBe(1);
+    151|     expect(partial[0]?.failed).toBe(1);
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/3]ÔÄ»
+
+ FAIL  tests/integration/api/e2e-metrics.test.ts > F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06) > observabilidad: dlqFailures y dlqDeliveryFailed se a├¡slan y skippedAsDuplicate se reporta
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ÔØ» tests/integration/api/e2e-metrics.test.ts:213:34
+    211|     expect(result).toHaveLength(1);
+    212|     const snapshot = result[0] as ConsumeResult;
+    213|     expect(snapshot.dlqFailures).toBe(1);
+       |                                  ^
+    214|     expect(snapshot.skippedAsDuplicate).toBe(false);
+    215|     const bad = snapshot.outcomes.find((outcome) => outcome.imageId ==ÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/3]ÔÄ»
+

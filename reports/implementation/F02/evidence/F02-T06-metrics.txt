@@ -1,0 +1,14 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [32mÔ£ô[39m tests/integration/api/e2e-metrics.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m[33m 6789[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mflujo completo: los bytes persistidos son los reales de S3, con savingsPct exacto y exifStripped real [33m6788[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/metrics-coherence.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 12314[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m m├®tricas reales y coherentes en DynamoDB (PR-12)[2m > [22m0 %: bytesBefore = bytesAfter se persiste como 0, sin redondeos ni recorte [33m6254[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m m├®tricas reales y coherentes en DynamoDB (PR-12)[2m > [22mnegativo: bytesAfter > bytesBefore se persiste tal cual (-50 %), nunca se oculta [33m6058[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m3 passed[39m[22m[2m | [22m[33m4 skipped[39m[90m (7)[39m
+[2m   Start at [22m 23:21:32
+[2m   Duration [22m 13.68s[2m (transform 744ms, setup 0ms, collect 2.29s, tests 19.10s, environment 1ms, prepare 441ms)[22m
+

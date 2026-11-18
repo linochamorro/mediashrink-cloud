@@ -1,0 +1,19 @@
+# F04-T01 tester - static
+UTC: 2026-11-18T11:46:43.0655146Z
+COMMAND: Select-String over infra/terraform/*.tf (comment lines ignored)
+--- OUTPUT ---
+--- STATIC CHECK (infra/terraform/*.tf, comments ignored) ---
+PATTERN aws_s3_bucket_notification HITS: 0
+PATTERN notification HITS: 0
+PATTERN queue_arn HITS: 0
+PATTERN lambda_function_arn HITS: 0
+PATTERN topic_arn HITS: 0
+PATTERN eventbridge HITS: 0
+PATTERN aws_sqs_queue HITS: 0
+PATTERN aws_dynamodb_table HITS: 0
+LIFECYCLE_RESOURCE_COUNT: 2
+EXPIRATION_VAR_REF_COUNT: 2
+FILTER_EMPTY_RULE_COUNT: 2
+RESULT: NO aws_s3_bucket_notification / notification / queue_arn / lambda_function_arn / topic_arn declaration
+EXIT_CODE: 0
+

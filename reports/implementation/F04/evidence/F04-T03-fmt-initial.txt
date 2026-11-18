@@ -1,0 +1,6 @@
+# F04-T03 - fmt
+UTC: 2026-11-18T12:12:34.2228138Z
+COMMAND: terraform -chdir=infra/terraform fmt -check
+--- OUTPUT ---
+dynamodb.tf
+EXIT_CODE: 3

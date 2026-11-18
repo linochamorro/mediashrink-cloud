@@ -1,0 +1,433 @@
+# F04-T04 - output
+UTC: 2026-11-18T12:41:46.3716299Z
+COMMAND: terraform -chdir=infra/terraform output -json
+--- OUTPUT ---
+{
+  "authenticated_account_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "000000000000"
+  },
+  "dynamodb_table_jobs": {
+    "sensitive": false,
+    "type": "string",
+    "value": "mediashrink-jobs"
+  },
+  "dynamodb_table_jobs_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs"
+  },
+  "dynamodb_ttl_attribute": {
+    "sensitive": false,
+    "type": "string",
+    "value": "ttl"
+  },
+  "dynamodb_ttl_item_policy": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "image_items_carry_ttl": "bool",
+        "job_items_carry_ttl": "bool",
+        "user_accounts_expire": "bool",
+        "user_profile_items_carry_ttl": "bool"
+      }
+    ],
+    "value": {
+      "image_items_carry_ttl": true,
+      "job_items_carry_ttl": true,
+      "user_accounts_expire": false,
+      "user_profile_items_carry_ttl": false
+    }
+  },
+  "dynamodb_ttl_seconds": {
+    "sensitive": false,
+    "type": "number",
+    "value": 2592000
+  },
+  "emulator_endpoint": {
+    "sensitive": false,
+    "type": "string",
+    "value": "https://127.0.0.1:9297"
+  },
+  "iam_inline_policy": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "Statement": [
+          "tuple",
+          [
+            [
+              "object",
+              {
+                "Action": [
+                  "tuple",
+                  [
+                    "string",
+                    "string",
+                    "string"
+                  ]
+                ],
+                "Effect": "string",
+                "Resource": [
+                  "tuple",
+                  [
+                    "string"
+                  ]
+                ],
+                "Sid": "string"
+              }
+            ],
+            [
+              "object",
+              {
+                "Action": [
+                  "tuple",
+                  [
+                    "string",
+                    "string",
+                    "string"
+                  ]
+                ],
+                "Effect": "string",
+                "Resource": [
+                  "tuple",
+                  [
+                    "string"
+                  ]
+                ],
+                "Sid": "string"
+              }
+            ],
+            [
+              "object",
+              {
+                "Action": [
+                  "tuple",
+                  [
+                    "string"
+                  ]
+                ],
+                "Effect": "string",
+                "Resource": [
+                  "tuple",
+                  [
+                    "string",
+                    "string"
+                  ]
+                ],
+                "Sid": "string"
+              }
+            ],
+            [
+              "object",
+              {
+                "Action": [
+                  "tuple",
+                  [
+                    "string",
+                    "string",
+                    "string",
+                    "string",
+                    "string",
+                    "string"
+                  ]
+                ],
+                "Effect": "string",
+                "Resource": [
+                  "tuple",
+                  [
+                    "string",
+                    "string"
+                  ]
+                ],
+                "Sid": "string"
+              }
+            ],
+            [
+              "object",
+              {
+                "Action": [
+                  "tuple",
+                  [
+                    "string",
+                    "string",
+                    "string",
+                    "string",
+                    "string",
+                    "string",
+                    "string",
+                    "string"
+                  ]
+                ],
+                "Effect": "string",
+                "Resource": [
+                  "tuple",
+                  [
+                    "string"
+                  ]
+                ],
+                "Sid": "string"
+              }
+            ]
+          ]
+        ],
+        "Version": "string"
+      }
+    ],
+    "value": {
+      "Statement": [
+        {
+          "Action": [
+            "s3:GetObject",
+            "s3:PutObject",
+            "s3:DeleteObject"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:s3:::mediashrink-raw-local/*"
+          ],
+          "Sid": "S3RawObjectsReadWrite"
+        },
+        {
+          "Action": [
+            "s3:GetObject",
+            "s3:PutObject",
+            "s3:DeleteObject"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:s3:::mediashrink-optimized-local/*"
+          ],
+          "Sid": "S3OptimizedObjectsReadWrite"
+        },
+        {
+          "Action": [
+            "s3:ListBucket"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:s3:::mediashrink-raw-local",
+            "arn:aws:s3:::mediashrink-optimized-local"
+          ],
+          "Sid": "S3ListOnlyNamedBuckets"
+        },
+        {
+          "Action": [
+            "sqs:SendMessage",
+            "sqs:ReceiveMessage",
+            "sqs:DeleteMessage",
+            "sqs:ChangeMessageVisibility",
+            "sqs:GetQueueAttributes",
+            "sqs:GetQueueUrl"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs",
+            "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq"
+          ],
+          "Sid": "SqsJobsAndDlqMessaging"
+        },
+        {
+          "Action": [
+            "dynamodb:GetItem",
+            "dynamodb:PutItem",
+            "dynamodb:UpdateItem",
+            "dynamodb:DeleteItem",
+            "dynamodb:Query",
+            "dynamodb:BatchGetItem",
+            "dynamodb:BatchWriteItem",
+            "dynamodb:DescribeTable"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs"
+          ],
+          "Sid": "DynamoDbJobsTableCrud"
+        }
+      ],
+      "Version": "2012-10-17"
+    }
+  },
+  "iam_role_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:iam::000000000000:role/mediashrink-app-role"
+  },
+  "iam_role_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "mediashrink-app-role"
+  },
+  "iam_trust_policy": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "Statement": [
+          "tuple",
+          [
+            [
+              "object",
+              {
+                "Action": "string",
+                "Effect": "string",
+                "Principal": [
+                  "object",
+                  {
+                    "Service": "string"
+                  }
+                ],
+                "Sid": "string"
+              }
+            ]
+          ]
+        ],
+        "Version": "string"
+      }
+    ],
+    "value": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "lambda.amazonaws.com"
+          },
+          "Sid": "LambdaAssumeRoleOnly"
+        }
+      ],
+      "Version": "2012-10-17"
+    }
+  },
+  "provider_region": {
+    "sensitive": false,
+    "type": "string",
+    "value": "us-east-1"
+  },
+  "s3_bucket_optimized": {
+    "sensitive": false,
+    "type": "string",
+    "value": "mediashrink-optimized-local"
+  },
+  "s3_bucket_raw": {
+    "sensitive": false,
+    "type": "string",
+    "value": "mediashrink-raw-local"
+  },
+  "s3_cors_configuration": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        [
+          "object",
+          {
+            "allowed_headers": [
+              "tuple",
+              [
+                "string",
+                "string",
+                "string",
+                "string",
+                "string",
+                "string",
+                "string",
+                "string"
+              ]
+            ],
+            "allowed_methods": [
+              "tuple",
+              [
+                "string",
+                "string"
+              ]
+            ],
+            "allowed_origins": [
+              "tuple",
+              [
+                "string"
+              ]
+            ],
+            "expose_headers": [
+              "tuple",
+              [
+                "string",
+                "string",
+                "string",
+                "string"
+              ]
+            ],
+            "max_age_seconds": "number"
+          }
+        ]
+      ]
+    ],
+    "value": [
+      {
+        "allowed_headers": [
+          "authorization",
+          "content-type",
+          "content-md5",
+          "etag",
+          "x-amz-content-sha256",
+          "x-amz-date",
+          "x-amz-security-token",
+          "x-amz-server-side-encryption"
+        ],
+        "allowed_methods": [
+          "GET",
+          "PUT"
+        ],
+        "allowed_origins": [
+          "http://localhost:5173"
+        ],
+        "expose_headers": [
+          "content-type",
+          "etag",
+          "x-amz-id-2",
+          "x-amz-request-id"
+        ],
+        "max_age_seconds": 3000
+      }
+    ]
+  },
+  "s3_lifecycle_expiration_days": {
+    "sensitive": false,
+    "type": "number",
+    "value": 30
+  },
+  "sqs_dlq_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq"
+  },
+  "sqs_dlq_url": {
+    "sensitive": false,
+    "type": "string",
+    "value": "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq"
+  },
+  "sqs_max_receive_count": {
+    "sensitive": false,
+    "type": "number",
+    "value": 3
+  },
+  "sqs_queue_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs"
+  },
+  "sqs_queue_url": {
+    "sensitive": false,
+    "type": "string",
+    "value": "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs"
+  },
+  "sqs_visibility_timeout_seconds": {
+    "sensitive": false,
+    "type": "number",
+    "value": 120
+  }
+}
+EXIT_CODE: 0

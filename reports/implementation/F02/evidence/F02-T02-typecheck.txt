@@ -1,0 +1,6 @@
+
+> mediashrink-cloud@0.0.0 typecheck
+> tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json
+
+tests/e2e/frontend-flow.spec.ts(139,22): error TS2552: Cannot find name 'DataTransfer'. Did you mean 'transfer'?
+tests/e2e/frontend-flow.spec.ts(156,64): error TS2584: Cannot find name 'document'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.

@@ -1,0 +1,18 @@
+# F04-T04 - tester - transport
+UTC: 2026-11-18T13:00:48.6353837Z
+COMMAND: grep :9324 activo / secretos / rutas Windows en infra/terraform/*.tf + README + evidencias F04-T04-tester-*.txt
+--- OUTPUT ---
+TARGETS: 10 tf+README + 15 evidencias tester-*
+HITS_9324_TOTAL_EN_CONFIG: 8 (comentarios/validacion que LO RECHAZA)
+HITS_9324_ASIGNACION_ACTIVA: 0 (expected 0)
+HITS_9324_EN_EVIDENCIAS_TESTER: 0 (expected 0)
+HITS_RUTA_WINDOWS_ABSOLUTA: 0 (expected 0)
+HITS_PATRON_CLAVE_AWS: 0 (expected 0)
+HITS_CREDENCIAL_FIJA: 0 (expected 0)
+ENDPOINT_DEFAULT_9297: True
+VALIDATION_RECHAZA_9324: True
+CA_PROPIO: True
+CREDENCIALES_POR_ARCHIVO: True
+SIN_ACCESS_KEY_SECRET_KEY_FIJOS: True
+TRANSPORT_SECRETS_VERDICT: OK
+EXIT_CODE: 0

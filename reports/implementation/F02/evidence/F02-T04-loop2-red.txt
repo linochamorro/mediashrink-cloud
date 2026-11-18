@@ -1,0 +1,101 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset HIGH produce tres salidas v├ílidas y m├®tricas coherentes
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts[2m > [22mworker integraci├│n ÔÇö strip total de metadatos (PR-01 / IN-10 / FR-11)[2m > [22mla fixture contiene EXIF/GPS, XMP e IPTC y sharp podr├¡a conservarlos
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset BALANCED produce tres salidas v├ílidas y m├®tricas coherentes
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts[2m > [22mworker integraci├│n ÔÇö strip total de metadatos (PR-01 / IN-10 / FR-11)[2m > [22mWebP, AVIF y miniatura salen sin EXIF/GPS, XMP ni IPTC
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset MAX_COMPRESSION produce tres salidas v├ílidas y m├®tricas coherentes
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts[2m > [22mworker integraci├│n ÔÇö strip total de metadatos (PR-01 / IN-10 / FR-11)[2m > [22mno propaga metadatos aunque la entrada sea PNG con EXIF
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mcompone estados con las reglas puras sin reimplementarlas
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mcreateSqsClient habla con el emulador usando QueueUrl can├│nica y fromIni
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mcreateSqsClient habla con el emulador usando QueueUrl can├│nica y fromIni
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mcreateSqsClientFromConfig usa la configuraci├│n validada y url can├│nica
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mcreateSqsClientFromConfig usa la configuraci├│n validada y url can├│nica
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mpublish() env├¡a el mensaje m├¡nimo { userId, jobId } del puerto de T01
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mpublishJob() env├¡a el sobre enriquecido que consume el worker
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mpublishToDeadLetter() y createJobQueuePublisherFromConfig() usan la DLQ can├│nica
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mmensaje v├ílido: procesa, marca COMPLETED con m├®tricas y elimina el mensaje de la cola
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mmensaje v├ílido: procesa, marca COMPLETED con m├®tricas y elimina el mensaje de la cola[33m 6359[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintento transitorio: 2 fallos y ├®xito en el 3┬║ intento, sin DLQ
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintento transitorio: 2 fallos y ├®xito en el 3┬║ intento, sin DLQ[33m 6185[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta)
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta)[33m 6177[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mfallo parcial: imagen fallida va a DLQ y FAILED; las dem├ís del lote se completan
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mfallo parcial: imagen fallida va a DLQ y FAILED; las dem├ís del lote se completan[33m 6280[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mel mensaje v├ílido se consume y elimina; no hay bucle infinito ni duplicados
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mel mensaje v├ílido se consume y elimina; no hay bucle infinito ni duplicados[33m 6281[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22msiempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22msiempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado[33m 6371[2mms[22m[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-01 redelivery: un job terminal no se reabre y la DLQ no se duplica
+[31m   ÔåÆ expected undefined to be true // Object.is equality[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-01 redelivery: un job terminal no se reabre y la DLQ no se duplica[33m 6355[2mms[22m[39m
+[31m   ÔåÆ expected undefined to be true // Object.is equality[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-02 fallo de la DLQ: se a├¡sla, se registra y el resto del lote contin├║a
+[31m   ÔåÆ expected undefined to be 1 // Object.is equality[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-02 fallo de la DLQ: se a├¡sla, se registra y el resto del lote contin├║a[33m 6345[2mms[22m[39m
+[31m   ÔåÆ expected undefined to be 1 // Object.is equality[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-03 precondici├│n: el consumidor materializa el ImageRecord si falta
+[31m   ÔåÆ Imagen no encontrada para userId=user-0-1794972200827 jobId=job-1794972200827-dfy9b7 imageId=img-sin-record[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-03 precondici├│n: el consumidor materializa el ImageRecord si falta[33m 6175[2mms[22m[39m
+[31m   ÔåÆ Imagen no encontrada para userId=user-0-1794972200827 jobId=job-1794972200827-dfy9b7 imageId=img-sin-record[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 3 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/integration/worker/consumer.test.ts > consumidor SQS ÔÇö reintentos y DLQ (CA-04) > A-01 redelivery: un job terminal no se reabre y la DLQ no se duplica
+AssertionError: expected undefined to be true // Object.is equality
+
+- Expected: 
+true
+
++ Received: 
+undefined
+
+ ÔØ» tests/integration/worker/consumer.test.ts:350:39
+    348|     expect(first.batchStatus).toBe('FAILED');
+    349|     expect(first.deadLettered).toBe(1);
+    350|     expect(second.skippedAsDuplicate).toBe(true);
+       |                                       ^
+    351|     expect(second.outcomes).toHaveLength(0);
+    352|     expect(second.batchStatus).toBe('FAILED');
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/3]ÔÄ»
+
+ FAIL  tests/integration/worker/consumer.test.ts > consumidor SQS ÔÇö reintentos y DLQ (CA-04) > A-02 fallo de la DLQ: se a├¡sla, se registra y el resto del lote contin├║a
+AssertionError: expected undefined to be 1 // Object.is equality
+
+- Expected: 
+1
+
++ Received: 
+undefined
+
+ ÔØ» tests/integration/worker/consumer.test.ts:387:32
+    385|     expect(result.completed).toBe(1);
+    386|     expect(result.failed).toBe(1);
+    387|     expect(result.dlqFailures).toBe(1);
+       |                                ^
+    388|     const bad = result.outcomes.find((outcome) => outcome.imageId === ÔÇª
+    389|     expect(bad?.status).toBe('FAILED');
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/3]ÔÄ»
+
+ FAIL  tests/integration/worker/consumer.test.ts > consumidor SQS ÔÇö reintentos y DLQ (CA-04) > A-03 precondici├│n: el consumidor materializa el ImageRecord si falta
+ImageNotFoundError: Imagen no encontrada para userId=user-0-1794972200827 jobId=job-1794972200827-dfy9b7 imageId=img-sin-record
+ ÔØ» Object.updateImage backend/src/db/job-store.ts:293:35
+    291|       if (parent === null) throw new JobNotFoundError(userId, jobId);
+    292|       const current = await getImage(userId, jobId, imageId);
+    293|       if (current === null) throw new ImageNotFoundError(userId, jobIdÔÇª
+       |                                   ^
+    294|       const parsed = schemas.ImageRecord.parse({ ...current, ...withouÔÇª
+    295| 
+ ÔØ» Module.handleJobMessage backend/src/worker/consumer.ts:117:7
+ ÔØ» tests/integration/worker/consumer.test.ts:408:20
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/3]ÔÄ»
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m18 passed[39m[22m[90m (21)[39m
+[2m   Start at [22m 22:22:22
+[2m   Duration [22m 58.12s[2m (transform 926ms, setup 0ms, collect 3.08s, tests 57.45s, environment 2ms, prepare 956ms)[22m
+

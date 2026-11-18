@@ -1,0 +1,23 @@
+# F04-T02 (tester) - scope
+UTC: 2026-11-18T12:05:39.7574476Z
+COMMAND: git status --short -- infra/terraform reports/implementation/F04
+--- OUTPUT ---
+ M infra/terraform/README.md
+?? infra/terraform/s3.tf
+?? infra/terraform/sqs.tf
+?? reports/implementation/F04/
+--- own evidence files ---
+?? reports/implementation/F04/evidence/F04-T02-tester-apply.txt
+?? reports/implementation/F04/evidence/F04-T02-tester-compose-config.txt
+?? reports/implementation/F04/evidence/F04-T02-tester-cp.txt
+?? reports/implementation/F04/evidence/F04-T02-tester-fmt.txt
+?? reports/implementation/F04/evidence/F04-T02-tester-init.txt
+?? reports/implementation/F04/evidence/F04-T02-tester-output.txt
+?? reports/implementation/F04/evidence/F04-T02-tester-plan-post-apply.txt
+?? reports/implementation/F04/evidence/F04-T02-tester-plan.txt
+?? reports/implementation/F04/evidence/F04-T02-tester-pre-docker-state.txt
+?? reports/implementation/F04/evidence/F04-T02-tester-probe.txt
+?? reports/implementation/F04/evidence/F04-T02-tester-transport.txt
+?? reports/implementation/F04/evidence/F04-T02-tester-up.txt
+?? reports/implementation/F04/evidence/F04-T02-tester-validate.txt
+EXIT_CODE: 0

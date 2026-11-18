@@ -1,0 +1,27 @@
+# F04-T01 tester - scope and secret hygiene (independent)
+UTC: 2026-11-18T11:47:18.2420104Z
+COMMAND: git status --short (focused) ; Select-String secret patterns over tester evidence
+--- OUTPUT ---
+--- git status --short -- infra/terraform/ reports/implementation/F04/ ---
+ M infra/terraform/README.md
+?? infra/terraform/s3.tf
+?? reports/implementation/F04/
+--- tester evidence files ---
+  F04-T01-tester-apply.txt
+  F04-T01-tester-buckets.txt
+  F04-T01-tester-cp.txt
+  F04-T01-tester-emulator-down.txt
+  F04-T01-tester-fmt.txt
+  F04-T01-tester-init.txt
+  F04-T01-tester-lifecycle.txt
+  F04-T01-tester-no-event-loop.txt
+  F04-T01-tester-notifications.txt
+  F04-T01-tester-plan-final.txt
+  F04-T01-tester-plan.txt
+  F04-T01-tester-provider.txt
+  F04-T01-tester-static.txt
+  F04-T01-tester-up.txt
+  F04-T01-tester-validate.txt
+--- secret / absolute-path pattern scan over tester evidence ---
+SECRET_OR_ABSOLUTE_PATH_HITS: 0
+EXIT_CODE: 0

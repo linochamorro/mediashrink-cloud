@@ -60,7 +60,7 @@ Fase Final: Integración, E2E, auditoría de seguridad, pruebas de Lino,
 
 ## Fase 2 — API y worker de procesamiento (`F02`) — Harness 1
 
-- **Estado:** `PENDIENTE DE APROBACIÓN (depende de F01 congelada y G-2)`
+- **Estado:** `CERRADA — FASE_COMPLETA` (`reports/verification/F02-architect.md`, revisada por CTO el 2026-11-18)
 - **Ámbito exclusivo:** `backend/`, `tests/unit/`, `tests/integration/`. Sin escritura en `frontend/` ni `infra/terraform/`.
 - **Riesgo:** 3 (privacidad + DLQ) → Auditor obligatorio.
 
@@ -77,13 +77,13 @@ Fase Final: Integración, E2E, auditoría de seguridad, pruebas de Lino,
 
 ## Fase 3 — SPA / UI (`F03`) — Harness 2
 
-- **Estado:** `PENDIENTE DE APROBACIÓN (depende de F01 congelada y G-2)`
+- **Estado:** `CERRADA — PASSED` (`reports/verification/F03-architect.md` addendum final; revisada por CTO el 2026-11-18)
 - **Ámbito exclusivo:** `frontend/`, `tests/e2e/` (preparación). Sin escritura en `backend/` ni `infra/terraform/`.
 - **Riesgo:** 2 → Auditor en el cierre.
 
 | ID | Tarea | Depende de | Rol | Criterio verificable |
 |---|---|---|---|---|
-| `F03-T01` | Estructura SPA, router y tema Claro/Dark | `F01-T01` | Designer | Selector de tema persistente `[PROPUESTA A-01]`; español |
+| `F03-T01` | Estructura SPA, router y tema Claro/Dark | `F01-T01` | Designer | Selector de tema persistente (Claro por defecto, `A-01`); español |
 | `F03-T02` | Registro/login/refresh en UI | `F03-T01` | Designer | Flujo completo con JWT; errores claros |
 | `F03-T03` | Drag & drop y selección de preset | `F03-T01` | Designer | Tres presets; validación visible antes de subir |
 | `F03-T04` | Polling `GET /jobs/:id` y barra de progreso | `F03-T02` | Designer | Actualización ~2 s; estados `PENDING/PROCESSING/COMPLETED/PARTIAL/FAILED` |
@@ -94,7 +94,7 @@ Fase Final: Integración, E2E, auditoría de seguridad, pruebas de Lino,
 
 ## Fase 4 — Infraestructura completa y CI de integración (`F04`) — Harness 3
 
-- **Estado:** `PENDIENTE DE APROBACIÓN (depende de F01 congelada y G-2)`
+- **Estado:** `CERRADA — FASE_COMPLETA` (`reports/verification/F04-architect.md`; run `44312560558` `success`; revisada por CTO el 2026-11-18)
 - **Ámbito exclusivo:** `infra/terraform/`, `.github/`. Sin escritura en `frontend/` ni `backend/`.
 - **Riesgo:** 2–3 → Auditor según resultados.
 
@@ -110,7 +110,7 @@ Fase Final: Integración, E2E, auditoría de seguridad, pruebas de Lino,
 
 ## Fase Final — Integración, verificación y entrega (`F05`)
 
-- **Estado:** `PENDIENTE DE APROBACIÓN (depende de F02, F03, F04 cerradas y G-2)`
+- **Estado:** `EN EJECUCIÓN (P-05 en OpenCode)` (`docs/sdd/packages/P-05-final-integration-and-delivery.md`; `G-2` autorizado por Lino el 2026-11-18)
 - **Riesgo:** 3 (auditoría final de seguridad) → Auditor obligatorio.
 
 | ID | Tarea | Depende de | Rol | Criterio verificable |

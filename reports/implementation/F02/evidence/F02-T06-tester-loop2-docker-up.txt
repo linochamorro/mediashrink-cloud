@@ -1,0 +1,7 @@
+compose_config EXIT=0
+compose_up EXIT=0
+HEALTHY=True status=healthy
+INSPECT=memory=2147483648 nanoCpus=2000000000 user=1000:1000 host_ip=127.0.0.1
+
+docker cp ca/config/credentials EXIT=0/0/0
+healthcheck EXIT=0 body=ok

@@ -1,0 +1,13 @@
+COMMAND: npx vitest run tests/integration/worker/publisher.test.ts
+EXIT=0
+
+
+ RUN  v2.1.9 <repo-root>
+
+ ✓ tests/integration/worker/publisher.test.ts (5 tests) 548ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  22:19:29
+   Duration  2.00s (transform 344ms, setup 0ms, collect 824ms, tests 548ms, environment 0ms, prepare 193ms)
+

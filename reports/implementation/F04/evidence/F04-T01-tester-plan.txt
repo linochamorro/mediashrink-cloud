@@ -1,0 +1,194 @@
+# F04-T01 tester - plan
+UTC: 2026-11-18T11:44:11.7115069Z
+COMMAND: $tf -chdir=infra/terraform plan -input=false
+--- OUTPUT ---
+aws_s3_bucket.optimized: Refreshing state... [id=mediashrink-optimized-local]
+data.aws_caller_identity.emulator: Reading...
+aws_s3_bucket.raw: Refreshing state... [id=mediashrink-raw-local]
+data.aws_caller_identity.emulator: Read complete after 0s [id=000000000000]
+aws_s3_bucket_lifecycle_configuration.optimized: Refreshing state... [id=mediashrink-optimized-local]
+aws_s3_bucket_lifecycle_configuration.raw: Refreshing state... [id=mediashrink-raw-local]
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the
+last "terraform apply" which may have affected this plan:
+
+  # aws_s3_bucket.optimized has been deleted
+  - resource "aws_s3_bucket" "optimized" {
+      - id                          = "mediashrink-optimized-local" -> null
+        tags                        = {}
+        # (13 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+  # aws_s3_bucket.raw has been deleted
+  - resource "aws_s3_bucket" "raw" {
+      - id                          = "mediashrink-raw-local" -> null
+        tags                        = {}
+        # (13 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the
+relevant attributes using ignore_changes, the following plan may include
+actions to undo or respond to these changes.
+
+???????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_s3_bucket.optimized will be created
+  + resource "aws_s3_bucket" "optimized" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "mediashrink-optimized-local"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = (known after apply)
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_bucket.raw will be created
+  + resource "aws_s3_bucket" "raw" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "mediashrink-raw-local"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = (known after apply)
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_bucket_lifecycle_configuration.optimized will be created
+  + resource "aws_s3_bucket_lifecycle_configuration" "optimized" {
+      + bucket                                 = (known after apply)
+      + expected_bucket_owner                  = (known after apply)
+      + id                                     = (known after apply)
+      + transition_default_minimum_object_size = "all_storage_classes_128K"
+
+      + rule {
+          + id     = "expire-after-retention-days"
+          + status = "Enabled"
+            # (1 unchanged attribute hidden)
+
+          + expiration {
+              + days                         = 30
+              + expired_object_delete_marker = false
+            }
+
+          + filter {
+                # (1 unchanged attribute hidden)
+            }
+        }
+    }
+
+  # aws_s3_bucket_lifecycle_configuration.raw will be created
+  + resource "aws_s3_bucket_lifecycle_configuration" "raw" {
+      + bucket                                 = (known after apply)
+      + expected_bucket_owner                  = (known after apply)
+      + id                                     = (known after apply)
+      + transition_default_minimum_object_size = "all_storage_classes_128K"
+
+      + rule {
+          + id     = "expire-after-retention-days"
+          + status = "Enabled"
+            # (1 unchanged attribute hidden)
+
+          + expiration {
+              + days                         = 30
+              + expired_object_delete_marker = false
+            }
+
+          + filter {
+                # (1 unchanged attribute hidden)
+            }
+        }
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  ~ s3_bucket_optimized          = "mediashrink-optimized-local" -> (known after apply)
+  ~ s3_bucket_raw                = "mediashrink-raw-local" -> (known after apply)
+
+Warning: AWS resource not found during refresh
+
+  with aws_s3_bucket_lifecycle_configuration.raw,
+  on s3.tf line 54, in resource "aws_s3_bucket_lifecycle_configuration" "raw":
+  54: resource "aws_s3_bucket_lifecycle_configuration" "raw" {
+
+Automatically removing from Terraform State instead of returning the error,
+which may trigger resource recreation. Original error: couldn't find resource
+
+(and one more similar warning elsewhere)
+
+???????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
+EXIT_CODE: 0
+

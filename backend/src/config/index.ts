@@ -4,9 +4,22 @@
  * Responsabilidad: validar variables de entorno, aplicar valores por defecto
  * seguros, convertir tipos y rechazar secretos con aspecto real (G-3).
  * No contiene esquemas Zod de dominio: esos se congelan en Fase 1.
+ *
+ * F05-T01 (F04T03-A-03): el default de retención NO se redefine aquí. Se importa
+ * del catálogo congelado (`RETENTION_DAYS`) para que configuración, Terraform,
+ * `.env.example` y TTL compartan una única fuente verificable. Los segundos se
+ * derivan como `RETENTION_DAYS * 86400`; no se duplica el literal del TTL.
  */
 
+import { RETENTION_DAYS } from '../contracts/catalog';
+
 export type NodeEnv = 'development' | 'test' | 'production';
+
+/** Segundos por día: constante de conversión de unidades (no un valor de retención). */
+export const SECONDS_PER_DAY = 86_400;
+
+/** TTL derivado de la única fuente de retención (catálogo congelado). */
+export const RETENTION_TTL_SECONDS = RETENTION_DAYS * SECONDS_PER_DAY;
 
 /** Tipos primitivos de la configuración tipada que consume el resto del backend. */
 export interface AppConfig {
@@ -327,7 +340,7 @@ export function loadConfig(env: EnvSource = process.env): AppConfig {
       dynamodbTableJobs,
     },
     worker: {
-      retentionDays: readPositiveInt(env, 'RETENTION_DAYS', 30),
+      retentionDays: readPositiveInt(env, 'RETENTION_DAYS', RETENTION_DAYS),
       sqsMaxRetries: readPositiveInt(env, 'SQS_MAX_RETRIES', 3),
       pollIntervalMs: readPositiveInt(env, 'POLL_INTERVAL_MS', 2000),
     },

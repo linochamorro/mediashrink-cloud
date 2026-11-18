@@ -1,0 +1,13 @@
+
+> @mediashrink/frontend@0.0.0 build
+> vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 35 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.60 kB │ gzip:  0.38 kB
+dist/assets/index-C9cUjp7x.css   11.09 kB │ gzip:  3.06 kB
+dist/assets/index-BDxPro9d.js   161.10 kB │ gzip: 52.03 kB
+✓ built in 2.42s

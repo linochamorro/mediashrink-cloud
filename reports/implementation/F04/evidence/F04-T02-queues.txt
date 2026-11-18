@@ -1,0 +1,19 @@
+# F04-T02 - queues
+UTC: 2026-11-18T11:57:31.6042296Z
+COMMAND: node temporary\F04-T02-probe.mjs queues
+--- OUTPUT ---
+PROBE: ListQueues
+RESULT: SUCCESS
+QUEUE_URLS: https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs | https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq
+COUNT: 2
+JOBS_PRESENT: true
+DLQ_PRESENT: true
+CANONICAL_HOST_ONLY: true
+NO_9324: true
+PROBE: GetQueueAttributes(mediashrink-jobs, QueueArn)
+RESULT: SUCCESS
+QUEUE_ARN: arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs
+PROBE: GetQueueAttributes(mediashrink-jobs-dlq, QueueArn)
+RESULT: SUCCESS
+QUEUE_ARN: arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq
+EXIT_CODE: 0

@@ -1,0 +1,13 @@
+# F04-T04 - tester - healthcheck
+UTC: 2026-11-18T12:52:23.5513460Z
+COMMAND: curl.exe --cacert ./.local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health
+--- OUTPUT ---
+BODY: % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100      2 100      2   0      0     26      0                              0
+100      2 100      2   0      0     26      0                              0
+100      2 100      2   0      0     25      0                              0
+ok
+EXIT_CODE: 0

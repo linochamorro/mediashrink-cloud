@@ -1,0 +1,5 @@
+COMMAND: npx eslint backend/src/worker tests/integration/worker/{consumer.test,publisher.test,sqs-fixture}.ts --ext .ts
+EXIT=0
+OUTPUT_START
+
+OUTPUT_END

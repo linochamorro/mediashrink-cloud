@@ -1,0 +1,14 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/integration/api/presign.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m[33m 6619[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[2m | [22m[33m4 skipped[39m[90m (5)[39m
+[2m   Start at [22m 21:42:23
+[2m   Duration [22m 12.01s[2m (transform 1.23s, setup 0ms, collect 3.89s, tests 6.62s, environment 0ms, prepare 324ms)[22m
+
+Notas (sin URL completa ni firma, G-3):
+- Objeto de prueba en optimized con clave optimizedImageKey(variant='webp'); POST /presign/download devuelve GET firmado con X-Amz-Expires=900.
+- Descarga HTTPS con CA del emulador: status 200 y bytes identicos.
+- variant invalido rechazado con 400 por esquema congelado OutputFormat; 'thumbnail' aceptado.

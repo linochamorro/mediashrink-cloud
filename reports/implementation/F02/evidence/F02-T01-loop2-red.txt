@@ -1,0 +1,55 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [31mÔØ»[39m tests/unit/api/confirm.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[90m 259[2mms[22m[39m
+[31m   [31m├ù[31m confirmaci├│n de lotes bajo concurrencia y fallos (A-01/A-02)[2m > [22mdos confirms en paralelo publican una sola vez[90m 119[2mms[22m[31m[39m
+[31m     ÔåÆ expected [ { ÔÇª(2) }, { ÔÇª(2) } ] to have a length of 1 but got 2[39m
+[31m   [31m├ù[31m confirmaci├│n de lotes bajo concurrencia y fallos (A-01/A-02)[2m > [22msi fallan publicaci├│n y reversi├│n, responde 503 CONFIRM_INCONSISTENT sin confirmed true[90m 69[2mms[22m[31m[39m
+[31m     ÔåÆ expected 500 to be 503 // Object.is equality[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 2 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/unit/api/confirm.test.ts > confirmaci├│n de lotes bajo concurrencia y fallos (A-01/A-02) > dos confirms en paralelo publican una sola vez
+AssertionError: expected [ { ÔÇª(2) }, { ÔÇª(2) } ] to have a length of 1 but got 2
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ÔØ» tests/unit/api/confirm.test.ts:28:32
+     26|     expect(first.status).toBe(200);
+     27|     expect(second.status).toBe(200);
+     28|     expect(publisher.messages).toHaveLength(1);
+       |                                ^
+     29|     expect(publisher.messages[0]).toEqual({ userId: expect.any(String)ÔÇª
+     30|     expect(((await jsonOf(first)).job as JsonObject).status).toBe('PROÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/2]ÔÄ»
+
+ FAIL  tests/unit/api/confirm.test.ts > confirmaci├│n de lotes bajo concurrencia y fallos (A-01/A-02) > si fallan publicaci├│n y reversi├│n, responde 503 CONFIRM_INCONSISTENT sin confirmed true
+AssertionError: expected 500 to be 503 // Object.is equality
+
+- Expected
++ Received
+
+- 503
++ 500
+
+ ÔØ» tests/unit/api/confirm.test.ts:59:29
+     57|     const body = await jsonOf(response);
+     58| 
+     59|     expect(response.status).toBe(503);
+       |                             ^
+     60|     expect((body.error as JsonObject).code).toBe('CONFIRM_INCONSISTENTÔÇª
+     61|     expect(body).not.toHaveProperty('confirmed');
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/2]ÔÄ»
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 21:16:08
+[2m   Duration [22m 1.89s[2m (transform 353ms, setup 0ms, collect 933ms, tests 259ms, environment 0ms, prepare 227ms)[22m
+
+EXIT_CODE=1

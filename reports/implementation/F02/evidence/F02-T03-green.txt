@@ -1,0 +1,13 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/worker/antiBomb.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 50[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/processImage.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 90[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 110[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 152[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[32m18 passed[39m[22m[90m (18)[39m
+[2m   Start at [22m 20:52:43
+[2m   Duration [22m 1.44s[2m (transform 729ms, setup 0ms, collect 2.17s, tests 402ms, environment 1ms, prepare 1.05s)[22m
+

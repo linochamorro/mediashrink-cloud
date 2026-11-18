@@ -1,0 +1,11 @@
+# F04-T03 (tester) - scope-corrected-v2
+UTC: 2026-11-18T12:27:10.2157545Z
+COMMAND: Compare SHA256 (excluding tfstate) and git lists from tester scope-before/after
+--- OUTPUT ---
+SOURCE_HASHES_COMPARED: 19
+SOURCE_HASH_MISMATCHES: 0
+RUNTIME_STATE_EXCLUDED_FROM_COMPARISON: terraform.tfstate, terraform.tfstate.backup (mutated by my own apply; not versioned)
+GIT_STATUS_LISTS_IDENTICAL: True
+GIT_DIFF_LISTS_IDENTICAL: False
+HCL_FILES_UNCHANGED_BY_TESTER: True
+EXIT_CODE: 0

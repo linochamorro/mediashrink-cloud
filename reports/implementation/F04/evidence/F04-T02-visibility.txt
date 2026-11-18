@@ -1,0 +1,17 @@
+# F04-T02 - visibility
+UTC: 2026-11-18T11:57:32.3247902Z
+COMMAND: node temporary\F04-T02-probe.mjs visibility
+--- OUTPUT ---
+PROBE: GetQueueAttributes(mediashrink-jobs, VisibilityTimeout)
+RESULT: SUCCESS
+QUEUE_ARN: arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs
+VISIBILITY_TIMEOUT_SECONDS: 120
+VISIBILITY_DEFINED: true
+VISIBILITY_EQ_120: true
+PROBE: GetQueueAttributes(mediashrink-jobs-dlq, VisibilityTimeout)
+RESULT: SUCCESS
+QUEUE_ARN: arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq
+VISIBILITY_TIMEOUT_SECONDS: 120
+VISIBILITY_DEFINED: true
+VISIBILITY_EQ_120: true
+EXIT_CODE: 0

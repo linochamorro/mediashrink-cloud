@@ -1,0 +1,68 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/domain/imageHeader.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 39[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/config.test.ts [2m([22m[2m35 tests[22m[2m)[22m[90m 140[2mms[22m[39m
+ [31mÔØ»[39m tests/unit/frontend/core.test.ts [2m([22m[2m10 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[90m 77[2mms[22m[39m
+[31m   [31m├ù[31m cliente de jobs con contrato operativo propuesto[2m > [22msolicita la creaci├│n con metadatos, PUT binario, confirma y descarga la URL firmada[90m 28[2mms[22m[31m[39m
+[31m     ÔåÆ expected 'https://download.test/' to be 'https://download.test' // Object.is equality[39m
+ [32mÔ£ô[39m tests/unit/contracts.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 91[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/stateMachine.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 22[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/userstore.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 679[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mAuthService registra y hace login sobre el adaptador DynamoDB [33m649[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/antiBomb.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 153[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/processImage.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 441[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/service.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 2198[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mregistra un usuario hasheado y devuelve un par de tokens sin exponer el hash [33m351[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mrechaza un registro duplicado con 409 y mensaje gen├®rico [33m308[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mhace login con credenciales correctas [33m355[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mdevuelve el mismo error para correo desconocido y contrase├▒a incorrecta [33m750[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/jwt.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 159[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/antiBomb.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 19[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/routes.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 2287[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rutas /jobs (F02-T01, CA-01)[2m > [22mPOST /jobs crea un PENDING con userId del token, formatos congelados y TTL v├ílido [33m403[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rutas /jobs (F02-T01, CA-01)[2m > [22mGET /jobs devuelve solo los lotes del usuario autenticado [33m501[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/authz.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1969[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mun token manipulado y un refresh token no autorizan /jobs [33m402[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mGET /jobs/:id de un lote ajeno devuelve 404 id├®ntico al inexistente [33m550[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mPOST /jobs/:id/confirm ajeno devuelve 404 y no publica [33m411[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mel userId del token no se puede suplantar con x-user-id ni con el path [33m565[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/savings.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 17[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/confirm.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 631[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/guards.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/frontend.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/middleware.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1586[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22mla clave de /jobs deriva del userId: agotar A no afecta a B [33m520[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22muna cabecera con el userId ajeno no consume el cupo de ese usuario [33m329[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22m/auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 [33m427[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/health.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 25[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/password.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1325[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m hash de contrase├▒as ÔÇö scrypt (A-02, IN-05)[2m > [22mverifica la contrase├▒a correcta y rechaza una incorrecta [33m468[2mms[22m[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 1 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/unit/frontend/core.test.ts > cliente de jobs con contrato operativo propuesto > solicita la creaci├│n con metadatos, PUT binario, confirma y descarga la URL firmada
+AssertionError: expected 'https://download.test/' to be 'https://download.test' // Object.is equality
+
+Expected: "https://download.test"
+Received: "https://download.test/"
+
+ ÔØ» tests/unit/frontend/core.test.ts:79:30
+     77|     expect((await client.list('jwt')).jobs).toHaveLength(1);
+     78|     const link = await client.download('jwt', 'j1', 'i1', 'original');
+     79|     expect(link.downloadUrl).toBe('https://download.test');
+       |                              ^
+     80|     expect(JSON.parse(fetcher.mock.calls[0][1].body as string)).toEquaÔÇª
+     81|     expect(fetcher.mock.calls[2][1].method).toBe('POST');
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m22 passed[39m[22m[90m (23)[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/1]ÔÄ»
+
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m197 passed[39m[22m[90m (198)[39m
+[2m   Start at [22m 21:24:15
+[2m   Duration [22m 8.43s[2m (transform 4.49s, setup 0ms, collect 12.98s, tests 11.92s, environment 12ms, prepare 9.51s)[22m
+
+EXIT_CODE=1

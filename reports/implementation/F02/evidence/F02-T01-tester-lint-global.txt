@@ -1,0 +1,19 @@
+Comando: npm run lint  (ejecución propia, Tester F02-T01)
+
+> mediashrink-cloud@0.0.0 lint
+> eslint . --ext .ts,.tsx
+
+<PROJECT_ROOT>/frontend/src/App.tsx
+  153:18  error  'downloadZip' is defined but never used  @typescript-eslint/no-unused-vars
+  163:18  error  'deleteJob' is defined but never used    @typescript-eslint/no-unused-vars
+
+<PROJECT_ROOT>/tests/unit/frontend/core.test.ts
+  6:37  error  'Theme' is defined but never used  @typescript-eslint/no-unused-vars
+
+3 problems (3 errors, 0 warnings)
+
+EXIT_CODE=1
+
+Nota: los 3 hallazgos pertenecen a archivos de F03 (frontend/ y tests/unit/frontend/),
+fuera del ámbito exclusivo de F02-T01. El lint acotado a F02
+(F02-T01-tester-lint.txt) termina con EXIT_CODE=0.

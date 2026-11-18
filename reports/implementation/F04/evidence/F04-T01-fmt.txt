@@ -1,0 +1,6 @@
+# F04-T01 - fmt
+UTC: 2026-11-18T11:34:11.9150744Z
+COMMAND: & $TF -chdir=infra/terraform fmt -check
+--- OUTPUT ---
+(no output)
+EXIT_CODE: 0

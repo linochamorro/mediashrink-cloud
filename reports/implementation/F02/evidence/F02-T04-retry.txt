@@ -1,0 +1,11 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts [2m([22m[2m6 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m[33m 6418[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintento transitorio: 2 fallos y ├®xito en el 3┬║ intento, sin DLQ [33m6416[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[2m | [22m[33m5 skipped[39m[90m (6)[39m
+[2m   Start at [22m 22:06:36
+[2m   Duration [22m 9.32s[2m (transform 889ms, setup 0ms, collect 1.85s, tests 6.42s, environment 0ms, prepare 264ms)[22m
+

@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |---|---|
-| **Última actualización** | `2026-11-17 (P-01 CERRADA — FASE_COMPLETA)` |
+| **Última actualización** | `2026-11-18 09:03 (P-05 G-2 autorizada en OpenCode)` |
 | **Estructura del proyecto** | `Canónica completa` (`frontend/` + `backend/` + `infra/terraform/`) |
-| **Fase actual** | `Fase 1 CERRADA — docs/sdd/packages/P-01-critical-foundations.md` |
-| **Estado de retorno** | **`FASE_COMPLETA` — retorno a CTO; fases 2/3/4 NO iniciadas** |
-| **Única tarea o bloque autorizado** | `Ninguna. Siguiente: revisión CTO y autorización expresa de F02/F03/F04` |
-| **Último dictamen verificado** | `F01-T04 PASSED por Tester (idempotente, dry-run, 6/6 integración, 188/188 suite). CA-01…CA-05 PASSED; auditorías READY_WITH_CONCERNS sin bloqueantes; sin G-9/G-10` |
+| **Fase actual** | `Fase Final EN EJECUCIÓN — docs/sdd/packages/P-05-final-integration-and-delivery.md` |
+| **Estado de retorno** | **`G-2 AUTORIZADO POR LINO` — `P-05` (`F05-T01`/`F05-T02`/`F05-T04`) en ejecución en OpenCode** |
+| **Única tarea o bloque autorizado** | `F05-T01, F05-T02, F05-T04 hasta retorno para pruebas exploratorias de Lino (F05-T03) y gates G-11/G-12` |
+| **Último dictamen verificado** | `F04-architect.md: CA-01..CA-05 PASSED (6/6 infra, CI run 44312560558 success 14/14 pasos), 0 CRITICAL/HIGH, sin G-9/G-10` |
 | **Harness en curso** | `OpenCode → CTO (Atenea)` |
 | **Gate Git (G-6) y archivos IA en GitHub (G-6b)** | `Git: Autorizado desde Fase 0 (repo público 'mediashrink-cloud') · Archivos agentes/IA en GitHub: Permitidos (G-6b abierto)` |
 | **Otros gates abiertos** | `G-2 (F00 autorizada) · G-3 (.env.example) · G-4 (BD en emulador para F01) · G-8 (dependencias F00) · G-11 (borrado temporary/ en F05) · G-12 (publicación final) · G-7 Docker: Autorizado con límite --memory=2g --cpus="2.0"` |

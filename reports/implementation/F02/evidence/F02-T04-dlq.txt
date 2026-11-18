@@ -1,0 +1,11 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts [2m([22m[2m6 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m[33m 6451[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta) [33m6449[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[2m | [22m[33m5 skipped[39m[90m (6)[39m
+[2m   Start at [22m 22:06:48
+[2m   Duration [22m 8.55s[2m (transform 413ms, setup 0ms, collect 1.17s, tests 6.45s, environment 0ms, prepare 244ms)[22m
+

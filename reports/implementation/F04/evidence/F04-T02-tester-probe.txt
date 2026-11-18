@@ -1,0 +1,47 @@
+# F04-T02 (tester) - probe
+UTC: 2026-11-18T12:05:39.5266062Z
+COMMAND: node temporary/F04-T02-tester-probe.mjs all
+--- OUTPUT ---
+TRANSPORT_ENDPOINT: https://127.0.0.1:9297
+CANONICAL_PREFIX: https://sqs.us-east-1.amazonaws.com/000000000000/
+CREDENTIALS_FROM_FILE: true
+CONFIG_FROM_FILE: true
+CA_BUNDLE_FROM_FILE: true
+PROBE: ListQueues
+RESULT: SUCCESS
+QUEUE_URLS: https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs | https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq
+COUNT: 2
+COUNT_EQ_2: true
+JOBS_PRESENT: true
+DLQ_PRESENT: true
+CANONICAL_HOST_ONLY: true
+NO_9324_IN_QUEUE_URLS: true
+PROBE: GetQueueAttributes(mediashrink-jobs-dlq, QueueArn, VisibilityTimeout)
+RESULT: SUCCESS
+DLQ_ARN: arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq
+DLQ_VISIBILITY_TIMEOUT: 120
+DLQ_EXISTS: true
+PROBE: GetQueueAttributes(mediashrink-jobs, RedrivePolicy)
+RESULT: SUCCESS
+JOBS_ARN: arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs
+REDRIVE_POLICY_RAW: {"deadLetterTargetArn":"arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq","maxReceiveCount":3}
+PARSED_DEAD_LETTER_TARGET_ARN: arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq
+PARSED_MAX_RECEIVE_COUNT: 3
+MAX_RECEIVE_COUNT_JS_TYPE: number
+DLQ_ARN_IN_POLICY_MATCHES_DLQ: true
+MAX_RECEIVE_COUNT_IS_NUMBER: true
+MAX_RECEIVE_COUNT_EQ_3: true
+PROBE: GetQueueAttributes(mediashrink-jobs, VisibilityTimeout)
+RESULT: SUCCESS
+QUEUE_ARN: arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs
+VISIBILITY_TIMEOUT_SECONDS: 120
+VISIBILITY_DEFINED_mediashrink-jobs: true
+VISIBILITY_EQ_120_mediashrink-jobs: true
+PROBE: GetQueueAttributes(mediashrink-jobs-dlq, VisibilityTimeout)
+RESULT: SUCCESS
+QUEUE_ARN: arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq
+VISIBILITY_TIMEOUT_SECONDS: 120
+VISIBILITY_DEFINED_mediashrink-jobs-dlq: true
+VISIBILITY_EQ_120_mediashrink-jobs-dlq: true
+ALL_CHECKS_PASSED: true
+EXIT_CODE: 0

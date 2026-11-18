@@ -1,0 +1,15 @@
+# F04-T04 - comment-fix
+UTC: 2026-11-18T12:48:26.1014448Z
+COMMAND: static grep dynamodb.tf + ttl-occurrence count in backend/src/db/user-store-adapter.ts (read-only)
+--- OUTPUT ---
+STATIC ASSERTION F04T03-A-04 (no behavior change):
+ADAPTER_TTL_OCCURRENCES: 0 (expected 0 -> USER# items do not write ttl)
+
+dynamodb.tf corrected comment + check + output:
+L77: # Los perfiles de usuario (USER#PROFILE / USER#EMAIL) NO escriben `ttl` en el L79: # lo que las CUENTAS NO EXPIRAN. Corrige F04T03-A-04; la aseveracion L80: # documental explicita esta en `check "user_profiles_not_expiring"` y en el L81: # output `dynamodb_ttl_item_policy` (sin cambio de comportamiento). L109: check "user_profiles_not_expiring" { L112: error_message = "Los items USER# no deben llevar 'ttl': las cuentas no expiran (F04T03-A-04)." L136: output "dynamodb_ttl_item_policy" { L137: description = "Aseveracion documental (F04T03-A-04): TTL solo para jobs/IMAGE#; los perfiles USER# no llevan ttl y las cuentas no expiran."
+
+Adapter USER# item writes (read-only, no ttl among them):
+L9: * La unicidad del correo se garantiza con un TransactWrite condicional. L14: TransactWriteCommand, L27: export const USER_PROFILE_SK = 'USER#PROFILE'; L28: export const USER_EMAIL_SK = 'USER#EMAIL'; L76: Key: { userId, jobId: USER_PROFILE_SK }, L96: new TransactWriteCommand({ L103: jobId: USER_PROFILE_SK, L116: jobId: USER_EMAIL_SK, L140: Key: { userId: normalized, jobId: USER_EMAIL_SK },
+
+TTL configuration unchanged (from F04-T04-output.txt): ttl attribute = ttl, ttl_seconds = 2592000, ENABLED (F04-T03-ttl.txt)
+EXIT_CODE: 0

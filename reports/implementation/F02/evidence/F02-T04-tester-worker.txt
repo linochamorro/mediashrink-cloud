@@ -1,0 +1,25 @@
+COMMAND: npx vitest run tests/integration/worker
+EXIT=0
+
+
+ RUN  v2.1.9 <repo-root>
+
+ ✓ tests/integration/worker/pipeline.test.ts (4 tests) 526ms
+   ✓ worker integración — pipeline real sobre buffers (CA-03 / CA-06) > el preset MAX_COMPRESSION produce tres salidas válidas y métricas coherentes 324ms
+ ✓ tests/integration/worker/metadata.test.ts (3 tests) 635ms
+   ✓ worker integración — strip total de metadatos (PR-01 / IN-10 / FR-11) > la fixture contiene EXIF/GPS, XMP e IPTC y sharp podría conservarlos 493ms
+ ✓ tests/integration/worker/publisher.test.ts (5 tests) 1153ms
+   ✓ publicador SQS y cliente del consumidor (F02-T04) > createSqsClient habla con el emulador usando QueueUrl canónica y fromIni 744ms
+ ✓ tests/integration/worker/consumer.test.ts (6 tests) 38245ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > mensaje válido: procesa, marca COMPLETED con métricas y elimina el mensaje de la cola 6746ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > reintento transitorio: 2 fallos y éxito en el 3º intento, sin DLQ 6265ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > reintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta) 6195ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > fallo parcial: imagen fallida va a DLQ y FAILED; las demás del lote se completan 6343ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > el mensaje válido se consume y elimina; no hay bucle infinito ni duplicados 6401ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > siempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado 6291ms
+
+ Test Files  4 passed (4)
+      Tests  18 passed (18)
+   Start at  22:17:20
+   Duration  40.14s (transform 1.32s, setup 0ms, collect 3.89s, tests 40.56s, environment 1ms, prepare 1.12s)
+

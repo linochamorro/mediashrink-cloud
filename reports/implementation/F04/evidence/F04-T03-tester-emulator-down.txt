@@ -1,0 +1,17 @@
+# F04-T03 (tester) - emulator-down
+UTC: 2026-11-18T12:24:57.0734746Z
+COMMAND: <DOCKER_CLI_DIR>\docker.exe compose down ; ps -a ; network ls
+--- OUTPUT ---
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed 
+--- docker ps -a ---
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+DOCKER_PSA_EXIT: 0
+--- docker network ls ---
+NETWORK ID   NAME      DRIVER    SCOPE
+DOCKER_NETWORK_EXIT: 0
+EXIT_CODE: 0

@@ -1,0 +1,45 @@
+evidence/F02-T02-tester-api.txt
+evidence/F02-T02-tester-deps.txt
+evidence/F02-T02-tester-keys.txt
+evidence/F02-T02-tester-regression.txt
+evidence/F02-T02-tester-roundtrip.txt
+evidence/F02-T02-tester-scope.txt
+evidence/F02-T02-tester-transport.txt
+reports/implementation/F02/F02-T02-tester.md (dictamen)
+=== Sondas temporales propias: CREADAS Y ELIMINADAS ===
+temporary/F02-T02-tester-{roundtrip,keys,transport}-probe.ts -> eliminadas tras ejecucion
+=== git status --short (arbol con trabajo paralelo F02/F03, no editado por este Tester) ===
+ M STATE.md
+ M backend/package.json
+ M docs/sdd/spec.md
+ M docs/sdd/tasks.md
+ M frontend/index.html
+ M frontend/src/App.tsx
+ M package-lock.json
+?? backend/src/api/
+?? backend/src/db/user-store-adapter.ts
+?? backend/src/storage/
+?? backend/src/worker/
+?? docs/sdd/packages/P-02-api-and-worker.md
+?? docs/sdd/packages/P-03-frontend-spa.md
+?? docs/sdd/packages/P-04-terraform-and-ci.md
+?? frontend/src/api/auth.ts
+?? frontend/src/api/jobs.ts
+?? frontend/src/styles.css
+?? frontend/src/theme.ts
+?? frontend/src/upload/
+?? reports/audits/F02/
+?? reports/audits/F03/
+?? reports/implementation/F02/
+?? reports/implementation/F03/
+?? tests/e2e/
+?? tests/integration/api/
+?? tests/integration/worker/
+?? tests/unit/api/
+?? tests/unit/frontend/
+?? tests/unit/worker/
+=== Verificacion de no-edicion propias ===
+Codigo de producto (backend/src/**), tests/**, manifiestos, frontend/, infra/, .github/: SIN edicion de este Tester
+STATE.md, docs/sdd/tasks.md, reportes ajenos: SIN edicion de este Tester
+Sin push a main. Sin AWS real: solo aws/aws-emulator. Sin activation de loops ni G-9/G-10.
+Sin secretos ni rutas Windows absolutas en evidencias propias (verificacion previa: 0 hallazgos).

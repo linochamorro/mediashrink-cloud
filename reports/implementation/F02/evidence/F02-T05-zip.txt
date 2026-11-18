@@ -1,0 +1,23 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 548[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 22:47:19
+[2m   Duration [22m 2.52s[2m (transform 497ms, setup 0ms, collect 1.35s, tests 548ms, environment 0ms, prepare 205ms)[22m
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/integration/api/download.test.ts[2m > [22mDescarga/ZIP/borrado reales en aws-emulator (CA-05)[2m > [22mZIP: contiene WebP + AVIF + miniaturas reales del lote
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[2m | [22m[33m3 skipped[39m[90m (4)[39m
+[2m   Start at [22m 22:47:24
+[2m   Duration [22m 8.53s[2m (transform 465ms, setup 0ms, collect 1.35s, tests 6.59s, environment 0ms, prepare 193ms)[22m
+
+UNIT_EXIT=0
+INTEGRATION_EXIT=0
+

@@ -1,0 +1,14 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/integration/api/userstore.test.ts (3 tests) 7931ms
+   Ô£ô adaptador UserStore contra DynamoDB real (T03-A-04) > create/findByEmail/findById funcionan sobre la tabla aislada 1673ms
+ Ô£ô tests/integration/api/routes.test.ts (4 tests) 8210ms
+   Ô£ô rutas /jobs con DynamoDB real en aws-emulator (CA-01) > registro, creaci├│n, listado y detalle respetan el userId del JWT 353ms
+
+ Test Files  2 passed (2)
+      Tests  7 passed (7)
+   Start at  21:09:10
+   Duration  9.95s (transform 661ms, setup 0ms, collect 1.65s, tests 16.14s, environment 1ms, prepare 480ms)
+
+EXIT_CODE=0

@@ -1,0 +1,10 @@
+== Busqueda de temporales .zip / .tmp en arbol del proyecto ==
+NINGUNO
+== Contenido de temporary/ ==
+<PROJECT_ROOT>\temporary\F00-T01-secrets-audit.ps1
+<PROJECT_ROOT>\temporary\f01-t02-coverage.txt
+<PROJECT_ROOT>\temporary\f01-t02-npmci.txt
+<PROJECT_ROOT>\temporary\f01-t02-orphan-check.mjs
+<PROJECT_ROOT>\temporary\f01-t02-typecheck-global.txt
+<PROJECT_ROOT>\temporary\tsconfig.f01-t02.json
+<PROJECT_ROOT>\temporary\tsconfig.f02-t02.json

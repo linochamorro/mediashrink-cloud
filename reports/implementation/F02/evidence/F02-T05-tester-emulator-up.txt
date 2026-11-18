@@ -1,0 +1,32 @@
+== docker compose up -d ==
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Created 
+ Network mediashrink-cloud_default Created 
+ Container mediashrink-aws-emulator Creating 
+ Container mediashrink-aws-emulator Created 
+ Container mediashrink-aws-emulator Starting 
+ Container mediashrink-aws-emulator Started
+UP_EXIT=0
+== wait healthy ==
+HEALTHY=True POLLS=1 STATUS=healthy
+== docker inspect limits ==
+memory=2147483648 nanoCpus=2000000000
+== docker compose ps ==
+NAME                       IMAGE                                                                                                  COMMAND                  SERVICE        CREATED         STATUS                   PORTS
+mediashrink-aws-emulator   ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376   "aws-emulator -b 0.0ÔÇª"   aws-emulator   8 seconds ago   Up 6 seconds (healthy)   127.0.0.1:9297->9297/tcp
+== docker cp x3 ==
+CP_CA_EXIT=0
+CP_CONFIG_EXIT=0
+CP_CREDS_EXIT=0
+== healthcheck HTTPS con CA ==
+HEALTH_BODY=ok
+HEALTH_EXIT=0
+== healthcheck sin CA (debe fallar exit 60) ==
+NO_CA_BODY=curl: (60) schannel: SEC_E_UNTRUSTED_ROOT (0x80090325) - La cadena de certificaci¾n fue emitida por una entidad en la que no se confÝa.
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the webpage mentioned above.
+NO_CA_EXIT=60

@@ -1,0 +1,12 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/api/confirm.test.ts (3 tests | 2 skipped) 112ms
+ Ô£ô tests/integration/api/routes.test.ts (6 tests | 5 skipped) 6332ms
+
+ Test Files  2 passed (2)
+      Tests  2 passed | 7 skipped (9)
+   Start at  21:27:27
+   Duration  8.40s (transform 791ms, setup 0ms, collect 2.59s, tests 6.44s, environment 1ms, prepare 489ms)
+
+EXIT_CODE=0

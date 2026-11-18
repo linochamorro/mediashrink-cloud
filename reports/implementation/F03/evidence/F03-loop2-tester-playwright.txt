@@ -1,0 +1,50 @@
+F03 Tester Loop 2 — Playwright independiente
+Fecha: 2026-11-17T22:06:03.8082937-05:00
+Puerto: 127.0.0.1:43991 (sin listener en comprobación previa)
+Parámetros por ejecución: --timeout=20000 --global-timeout=45000 --workers=1
+
+
+===== CASO: tema claro inicial y selector oscuro persistente tras recargar =====
+COMANDO: npx playwright test --config=tests/e2e/playwright.config.ts --grep "tema claro inicial y selector oscuro persistente tras recargar" --reporter=line --timeout=20000 --global-timeout=45000 --workers=1
+
+[WebServer] (node:19720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:17052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] tests\e2e\frontend-flow.spec.ts:9:1 › tema claro inicial y selector oscuro persistente tras recargar
+Timed out waiting 45s for the teardown for plugin setup to run
+
+  1 passed (45.0s)
+  1 error was not a part of any test, see above for details
+EXIT CODE: 1
+
+===== CASO: registro, error seguro, refresh, upload, polling, resultados, descargas y logout =====
+COMANDO: npx playwright test --config=tests/e2e/playwright.config.ts --grep "registro, error seguro, refresh, upload, polling, resultados, descargas y logout" --reporter=line --timeout=20000 --global-timeout=45000 --workers=1
+Error: http://127.0.0.1:43991 is already used, make sure that nothing is running on the port/url or set reuseExistingServer:true in config.webServer.
+
+EXIT CODE: 1
+
+===== CASO: validación de drag & drop, teclado y errores de archivos =====
+COMANDO: npx playwright test --config=tests/e2e/playwright.config.ts --grep "validación de drag & drop, teclado y errores de archivos" --reporter=line --timeout=20000 --global-timeout=45000 --workers=1
+Error: http://127.0.0.1:43991 is already used, make sure that nothing is running on the port/url or set reuseExistingServer:true in config.webServer.
+
+EXIT CODE: 1
+
+===== SUITE COMPLETA =====
+COMANDO: npx playwright test --config=tests/e2e/playwright.config.ts --reporter=line --timeout=20000 --global-timeout=45000 --workers=1
+Error: http://127.0.0.1:43991 is already used, make sure that nothing is running on the port/url or set reuseExistingServer:true in config.webServer.
+
+EXIT CODE: 1
+Cleanup: stopping only PID 19720 (node), identified from Playwright [WebServer] node:19720 at 22:06:06 and confirmed listening on 127.0.0.1:43991. Process inspection via CIM was denied. Action: Stop-Process -Id 19720 -Force.
+
+Cierre de ejecución / dictamen Loop 2
+- Caso 1 (tema claro inicial y selector oscuro persistente tras recargar): aserciones funcionales PASSED (Playwright indicó `1 passed`); el comando global terminó NO-PASSED (exit 1) porque el teardown de plugin setup agotó 45 s. La ejecución no es limpia.
+- Casos 2 y 3: no iniciaron. La primera corrida dejó el webServer iniciado por esta ejecución escuchando en 43991; los intentos posteriores reportaron `already used` y exit 1 antes de ejecutar tests.
+- Suite completa: tampoco inició; exit 1 por la misma colisión. No se repitieron pruebas.
+- Se identificó el listener residual como PID 19720 (línea Playwright `[WebServer] (node:19720)`, proceso node iniciado a las 22:06:06 y puerto 43991); se detuvo únicamente ese PID con `Stop-Process -Id 19720 -Force`. Ningún otro PID fue terminado. Verificación posterior: listener 43991 ausente y PID 19720 ausente.
+- Dictamen global T01-T06: NO-PASSED en este loop. Solo queda evidencia funcional del caso 1; los otros dos casos y la suite no produjeron resultado de test. Se requiere corrección del teardown/webServer por Designer antes de una nueva ejecución.
+- Typecheck, build y unitarias: no repetidos, conforme a instrucción; evidencias previas reportan exit 0. Interoperabilidad F02 permanece pendiente por decisión de Lino y no se certificó.

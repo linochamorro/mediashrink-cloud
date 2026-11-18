@@ -1,0 +1,4 @@
+Error: http://127.0.0.1:43817 is already used, make sure that nothing is running on the port/url or set reuseExistingServer:true in config.webServer.
+
+
+PLAYWRIGHT_EXIT_CODE=1

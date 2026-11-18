@@ -1,0 +1,11 @@
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed 
+DOWN_EXIT=0
+COMPOSE_PS=
+NAME      IMAGE     COMMAND   SERVICE   CREATED   STATUS    PORTS
+DOCKER_PS_A=
+

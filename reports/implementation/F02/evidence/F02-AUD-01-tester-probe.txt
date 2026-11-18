@@ -1,0 +1,36 @@
+PASS POST /jobs responde 201
+PASS respuesta tiene exactamente job y uploads
+PASS job.userId es el del JWT
+PASS job queda PENDING con m├®tricas 0/0/0
+PASS uploads tiene una entrada por archivo
+PASS imageId son UUID v4 y distintos
+PASS cada upload expone solo imageId/uploadUrl/method
+PASS method es PUT en todos
+PASS URLs son HTTPS
+PASS ning├║n upload filtra bucket/key/expires
+PASS URL apunta a 46cb5704-7714-4243-be15-c9c50b3884a6/a93aff8a-5216-4cf9-8c57-967b049c2f62/raw/31dc841d-efb0-4eb1-b1de-0117578f5856
+PASS PUT real devuelve 200 (31dc841d)
+PASS HeadObject ContentLength exacto (31dc841d)
+PASS URL apunta a 46cb5704-7714-4243-be15-c9c50b3884a6/a93aff8a-5216-4cf9-8c57-967b049c2f62/raw/88834e27-aaf9-481a-a6d2-e71261bd67ef
+PASS PUT real devuelve 200 (88834e27)
+PASS HeadObject ContentLength exacto (88834e27)
+PASS rechaza preset inv├ílido (400)
+PASS rechaza lote vac├¡o (400)
+PASS rechaza lote excedido (400)
+PASS rechaza sizeBytes 0 (400)
+PASS rechaza sizeBytes negativo (400)
+PASS rechaza sizeBytes no entero (400)
+PASS rechaza sizeBytes excedido (400)
+PASS rechaza MIME SVG (400)
+PASS rechaza MIME GIF (400)
+PASS rechaza fileName traversal (400)
+PASS rechaza fileName backslash (400)
+PASS rechaza fileName NUL (400)
+PASS rechaza fileName %xx (400)
+PASS rechaza clave desconocida userId en cuerpo (400)
+PASS rechaza clave desconocida en archivo (400)
+PASS sin token rechaza (401)
+PASS suplantaci├│n por cabeceras no altera la clave
+PASS clave firmada sigue bajo el userId del JWT
+SUMMARY sonda-tester: 34 comprobaciones propias superadas
+EXIT_CODE=0

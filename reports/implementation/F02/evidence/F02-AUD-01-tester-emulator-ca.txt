@@ -1,0 +1,14 @@
+### docker cp CA/config/credentials (cada arranque)
+### health con CA
+body=ok exit=0
+### health sin CA (debe fallar)
+exit=60 detail=curl: (60) schannel: SEC_E_UNTRUSTED_ROOT (0x80090325) - La cadena de certificaci¾n fue emitida por una entidad en la que no se confÝa. More details here: https://curl.se/docs/sslcerts.html  curl failed to verify the legitimacy of the server and therefore could not establish a secure connection to it. To learn more about this situation and how to fix it, please visit the webpage mentioned above.
+### archivos exportados
+
+Name                 Length
+----                 ------
+ca.pem                  566
+config                  152
+emulator_credentials    116
+
+

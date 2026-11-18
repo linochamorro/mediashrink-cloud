@@ -1,0 +1,29 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22mdevuelve una URL HTTPS presignada para la variante webp del usuario
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts[2m > [22mDELETE /jobs/:id (CA-05)[2m > [22melimina objetos raw y optimized y la fila del lote
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts[2m > [22mGET /jobs/:id/download.zip (CA-05)[2m > [22mdevuelve un ZIP con WebP, AVIF y miniatura de cada imagen del lote
+ [32mÔ£ô[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22mgenera URLs distintas para avif, thumbnail y original
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts[2m > [22mGET /jobs/:id/download.zip (CA-05)[2m > [22momite variantes ausentes de un lote parcial sin fallar
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts[2m > [22mDELETE /jobs/:id (CA-05)[2m > [22m404 indistinto para lote ajeno e inexistente, sin borrar nada
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts[2m > [22mDELETE /jobs/:id (CA-05)[2m > [22msegunda llamada es segura: 404 sin efecto y sin borrar otros lotes
+ [32mÔ£ô[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22mdevuelve 404 indistinto para lote ajeno y lote inexistente
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts[2m > [22mGET /jobs/:id/download.zip (CA-05)[2m > [22mno incluye binarios de otro usuario ni de otro lote
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts[2m > [22mDELETE /jobs/:id (CA-05)[2m > [22msi falla el borrado S3, conserva la fila para poder reintentar
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts[2m > [22mGET /jobs/:id/download.zip (CA-05)[2m > [22macota la lectura al lote propio aunque exista otro lote del mismo usuario
+ [32mÔ£ô[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22mdevuelve 404 para una imagen que no pertenece al lote propio
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts[2m > [22mDELETE /jobs/:id (CA-05)[2m > [22msin JWT responde 401
+ [32mÔ£ô[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22mtoma el userId del JWT aunque el cliente env├¡e cabeceras de suplantaci├│n
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts[2m > [22mGET /jobs/:id/download.zip (CA-05)[2m > [22m404 indistinto para lote ajeno e inexistente
+ [32mÔ£ô[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22mrechaza variantes no permitidas e IDs inseguros con 400
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts[2m > [22mGET /jobs/:id/download.zip (CA-05)[2m > [22msin JWT responde 401
+ [32mÔ£ô[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22msin autenticaci├│n responde 401 y no firma nada
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m18 passed[39m[22m[90m (18)[39m
+[2m   Start at [22m 22:42:36
+[2m   Duration [22m 3.08s[2m (transform 2.08s, setup 0ms, collect 5.30s, tests 1.83s, environment 1ms, prepare 603ms)[22m
+
+EXIT=0
+

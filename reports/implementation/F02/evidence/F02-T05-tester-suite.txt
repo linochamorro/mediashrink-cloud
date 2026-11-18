@@ -1,0 +1,27 @@
+== COMANDO: npx vitest run tests/unit/api tests/integration/api ==
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/api/userstore.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 355[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mAuthService registra y hace login sobre el adaptador DynamoDB [33m331[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 707[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 889[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/download.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 919[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/routes.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1062[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-keys.test.ts [2m([22m[2m30 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-routes.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1081[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/authz.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 824[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 916[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/confirm.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 343[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/download.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 7436[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Descarga/ZIP/borrado reales en aws-emulator (CA-05)[2m > [22mdescarga individual: la URL firmada devuelve los bytes reales de cada variante [33m477[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/presign.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 7013[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Presigned URLs S3 reales en aws-emulator (CA-02)[2m > [22mPUT presignado sube un fixture 100x100 a raw y el objeto es verificable [33m346[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/routes.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 7065[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/userstore.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 6315[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m14 passed[39m[22m[90m (14)[39m
+[2m      Tests [22m [1m[32m105 passed[39m[22m[90m (105)[39m
+[2m   Start at [22m 22:53:43
+[2m   Duration [22m 11.80s[2m (transform 1.88s, setup 0ms, collect 14.38s, tests 34.94s, environment 5ms, prepare 3.26s)[22m
+SUITE_EXIT=0

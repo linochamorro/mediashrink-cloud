@@ -1,0 +1,15 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/integration/api/presign.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m[33m 6443[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[2m | [22m[33m4 skipped[39m[90m (5)[39m
+[2m   Start at [22m 21:42:03
+[2m   Duration [22m 8.76s[2m (transform 561ms, setup 0ms, collect 1.55s, tests 6.44s, environment 0ms, prepare 289ms)[22m
+
+Notas (sin URL completa ni firma, G-3):
+- URL firmada https, host 127.0.0.1:9297, sin :9324; X-Amz-Expires=900 y X-Amz-Signature presente.
+- Clave <userId>/<jobId>/raw/<imageId>: primer segmento = userId del JWT.
+- Respuesta API solo JSON de metadatos (url,key,method,bucket,expiresIn,expiresAt); sin binario.
+- Fixture 100x100 JPEG subido directamente con la URL PUT; HeadObject/GetObject en raw confirman ContentLength y bytes identicos.

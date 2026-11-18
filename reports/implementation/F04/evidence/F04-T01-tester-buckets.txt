@@ -1,0 +1,12 @@
+# F04-T01 tester - buckets
+UTC: 2026-11-18T11:45:54.2444902Z
+COMMAND: node SDK v3 ListBuckets (endpoint :9297, creds from emulator files)
+--- OUTPUT ---
+PROBE: ListBuckets
+RESULT: SUCCESS
+BUCKETS: mediashrink-optimized-local | mediashrink-raw-local
+COUNT: 2
+RAW_PRESENT: true
+OPTIMIZED_PRESENT: true
+EXIT_CODE: 0
+

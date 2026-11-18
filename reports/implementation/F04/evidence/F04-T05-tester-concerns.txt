@@ -1,0 +1,79 @@
+﻿# F04-T05 - concerns P-2/P-4 y alcance (Tester)
+UTC: 2026-11-18T13:36:14.7395540Z
+--- P-2: blob hashes de los .tf en 94f7b43 / HEAD / working tree ---
+data.tf commit94f7b43=6e58dcc7a1 HEAD=6e58dcc7a1 worktree=6e58dcc7a1 MATCH=True
+dynamodb.tf commit94f7b43=5aa6319cbe HEAD=5aa6319cbe worktree=5aa6319cbe MATCH=True
+iam.tf commit94f7b43=aea07b3881 HEAD=aea07b3881 worktree=aea07b3881 MATCH=True
+outputs.tf commit94f7b43=2e0f4695c8 HEAD=2e0f4695c8 worktree=2e0f4695c8 MATCH=True
+provider.tf commit94f7b43=b1fb66c1b3 HEAD=b1fb66c1b3 worktree=b1fb66c1b3 MATCH=True
+s3.tf commit94f7b43=2eb3756984 HEAD=2eb3756984 worktree=2eb3756984 MATCH=True
+sqs.tf commit94f7b43=beaee4abd6 HEAD=beaee4abd6 worktree=beaee4abd6 MATCH=True
+variables.tf commit94f7b43=765f684886 HEAD=765f684886 worktree=765f684886 MATCH=True
+versions.tf commit94f7b43=5b556298b8 HEAD=5b556298b8 worktree=5b556298b8 MATCH=True
+TF_BLOB_MISMATCHES: 0
+--- diff de .tf entre commit de integracion y HEAD / worktree ---
+$ git diff --name-only 94f7b43 HEAD -- infra/terraform/*.tf
+$ git diff --name-only HEAD -- infra/terraform/*.tf
+--- archivos tocados por los 4 commits de F04-T05 ---
+### 94f7b43
+$ git show --stat --format='%h %s' 94f7b43
+94f7b43 ci(F04-T05): workflow de integracion vs aws-emulator + tests de infra (CA-05)
+ .github/workflows/infra-integration.yml            | 107 ++++
+ infra/terraform/dynamodb.tf                        | 139 ++++
+ infra/terraform/iam.tf                             | 169 +++++
+ infra/terraform/provider.tf                        |  59 +-
+ infra/terraform/s3.tf                              | 184 ++++++
+ infra/terraform/sqs.tf                             | 121 ++++
+ infra/terraform/variables.tf                       |  29 +
+ reports/implementation/F04/F04-T05-developer.md    |  99 +++
+ .../implementation/F04/evidence/F04-T05-apply.txt  | 702 +++++++++++++++++++++
+ reports/implementation/F04/evidence/F04-T05-cp.txt |  14 +
+ .../F04/evidence/F04-T05-emulator-down.txt         |  15 +
+ .../F04/evidence/F04-T05-fmt-init-validate.txt     |  25 +
+ .../F04/evidence/F04-T05-gsi-probe.txt             |  18 +
+ .../F04/evidence/F04-T05-healthcheck.txt           |   6 +
+ .../F04/evidence/F04-T05-infra-tests.txt           |  25 +
+ .../F04/evidence/F04-T05-retention-guard.txt       |  19 +
+ .../implementation/F04/evidence/F04-T05-steps.txt  |  30 +
+ reports/implementation/F04/evidence/F04-T05-up.txt |  19 +
+ .../F04/evidence/F04-T05-workflow.txt              | 131 ++++
+ tests/integration/infra/emulator.ts                | 143 +++++
+ tests/integration/infra/gsi.test.ts                |  30 +
+ tests/integration/infra/resources.test.ts          | 186 ++++++
+ tests/integration/infra/retention-guard.test.ts    |  80 +++
+ 23 files changed, 2328 insertions(+), 22 deletions(-)
+### 8f1de0b
+$ git show --stat --format='%h %s' 8f1de0b
+8f1de0b fix(F04-T05): instalar SDKs S3/SQS sin tocar manifiestos y documentar run 44311817714
+ .github/workflows/infra-integration.yml            |  7 +++++
+ reports/implementation/F04/F04-T05-developer.md    | 22 +++++++++++++--
+ .../implementation/F04/evidence/F04-T05-steps.txt  | 33 ++++++++++++++++++++++
+ .../F04/evidence/F04-T05-workflow.txt              | 22 +++++++++++++++
+ 4 files changed, 81 insertions(+), 3 deletions(-)
+### d01b2dc
+$ git show --stat --format='%h %s' d01b2dc
+d01b2dc docs(F04-T05): addendum con run 44312560558 success (14/14 pasos, 6/6 tests)
+ reports/implementation/F04/F04-T05-developer.md | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+### 8f65a7f
+$ git show --stat --format='%h %s' 8f65a7f
+8f65a7f evidence(F04-T05): run-list/run-view y pasos del run 44312560558
+ .../F04/evidence/F04-T05-run-list.txt              |  9 +++
+ .../F04/evidence/F04-T05-run-view.txt              | 65 +++++++++++++++++
+ .../implementation/F04/evidence/F04-T05-steps.txt  | 83 ++++++++++++++++++++++
+ 3 files changed, 157 insertions(+)
+--- P-4: paso no-save y manifiestos intactos en commits T05 ---
+$ git log --format="%h %s" -6 origin/main
+8f65a7f evidence(F04-T05): run-list/run-view y pasos del run 44312560558
+d01b2dc docs(F04-T05): addendum con run 44312560558 success (14/14 pasos, 6/6 tests)
+8f1de0b fix(F04-T05): instalar SDKs S3/SQS sin tocar manifiestos y documentar run 44311817714
+94f7b43 ci(F04-T05): workflow de integracion vs aws-emulator + tests de infra (CA-05)
+469888b feat(F01): contratos congelados, DynamoDB, auth JWT, reglas puras y seed (CA-01..CA-05 PASSED)
+ee0462d docs(F00): marcar O-02 resuelto tras sincronizacion con el remoto
+MANIFEST_FILES_IN_T05_COMMITS: 0
+--- sin push forzado / fast-forward ---
+HEAD: 8f65a7f94a5043f7b0be383f51eccf60fc3888ea
+origin/main: 8f65a7f94a5043f7b0be383f51eccf60fc3888ea
+HEAD_IS_ANCESTOR_OF_ORIGIN_MAIN_EXIT: 0  (0 = fast-forward, sin reescritura)
+git status --short (solo rutas de mi alcance):
+?? reports/implementation/F04/evidence/F04-T05-tester-session.txt

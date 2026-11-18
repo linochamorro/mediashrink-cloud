@@ -1,0 +1,347 @@
+# F04-T04 - plan
+UTC: 2026-11-18T12:41:33.0272411Z
+COMMAND: terraform -chdir=infra/terraform plan -input=false
+--- OUTPUT ---
+[0m[1mdata.aws_caller_identity.emulator: Reading...[0m[0m
+[0m[1maws_sqs_queue.dlq: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq][0m
+[0m[1maws_dynamodb_table.jobs: Refreshing state... [id=mediashrink-jobs][0m
+[0m[1maws_s3_bucket.raw: Refreshing state... [id=mediashrink-raw-local][0m
+[0m[1maws_s3_bucket.optimized: Refreshing state... [id=mediashrink-optimized-local][0m
+[0m[1mdata.aws_caller_identity.emulator: Read complete after 0s [id=000000000000][0m
+[0m[1maws_sqs_queue.jobs: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs][0m
+[0m[1maws_s3_bucket_lifecycle_configuration.raw: Refreshing state... [id=mediashrink-raw-local][0m
+[0m[1maws_s3_bucket_lifecycle_configuration.optimized: Refreshing state... [id=mediashrink-optimized-local][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create[0m
+ [36m<=[0m read (data resources)[0m
+
+Terraform will perform the following actions:
+
+[1m  # data.aws_iam_role.app[0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "aws_iam_role" "app" {
+      [32m+[0m[0m arn                  = (known after apply)
+      [32m+[0m[0m assume_role_policy   = (known after apply)
+      [32m+[0m[0m create_date          = (known after apply)
+      [32m+[0m[0m description          = (known after apply)
+      [32m+[0m[0m id                   = (known after apply)
+      [32m+[0m[0m max_session_duration = (known after apply)
+      [32m+[0m[0m name                 = "mediashrink-app-role"
+      [32m+[0m[0m path                 = (known after apply)
+      [32m+[0m[0m permissions_boundary = (known after apply)
+      [32m+[0m[0m role_last_used       = (known after apply)
+      [32m+[0m[0m tags                 = (known after apply)
+      [32m+[0m[0m unique_id            = (known after apply)
+    }
+
+[1m  # aws_iam_role.app[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role" "app" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m assume_role_policy    = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "sts:AssumeRole"
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Principal = {
+                          [32m+[0m[0m Service = "lambda.amazonaws.com"
+                        }
+                      [32m+[0m[0m Sid       = "LambdaAssumeRoleOnly"
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m create_date           = (known after apply)
+      [32m+[0m[0m description           = "MediaShrink Cloud API + worker: permisos minimos sobre S3, SQS+DLQ y DynamoDB (F04-T04)."
+      [32m+[0m[0m force_detach_policies = false
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m managed_policy_arns   = (known after apply)
+      [32m+[0m[0m max_session_duration  = 3600
+      [32m+[0m[0m name                  = "mediashrink-app-role"
+      [32m+[0m[0m name_prefix           = (known after apply)
+      [32m+[0m[0m path                  = "/"
+      [32m+[0m[0m tags_all              = (known after apply)
+      [32m+[0m[0m unique_id             = (known after apply)
+
+      [32m+[0m[0m inline_policy (known after apply)
+    }
+
+[1m  # aws_iam_role_policy.app[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy" "app" {
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m name        = "mediashrink-least-privilege"
+      [32m+[0m[0m name_prefix = (known after apply)
+      [32m+[0m[0m policy      = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "s3:GetObject",
+                          [32m+[0m[0m "s3:PutObject",
+                          [32m+[0m[0m "s3:DeleteObject",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = [
+                          [32m+[0m[0m "arn:aws:s3:::mediashrink-raw-local/*",
+                        ]
+                      [32m+[0m[0m Sid      = "S3RawObjectsReadWrite"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "s3:GetObject",
+                          [32m+[0m[0m "s3:PutObject",
+                          [32m+[0m[0m "s3:DeleteObject",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = [
+                          [32m+[0m[0m "arn:aws:s3:::mediashrink-optimized-local/*",
+                        ]
+                      [32m+[0m[0m Sid      = "S3OptimizedObjectsReadWrite"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "s3:ListBucket",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = [
+                          [32m+[0m[0m "arn:aws:s3:::mediashrink-raw-local",
+                          [32m+[0m[0m "arn:aws:s3:::mediashrink-optimized-local",
+                        ]
+                      [32m+[0m[0m Sid      = "S3ListOnlyNamedBuckets"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "sqs:SendMessage",
+                          [32m+[0m[0m "sqs:ReceiveMessage",
+                          [32m+[0m[0m "sqs:DeleteMessage",
+                          [32m+[0m[0m "sqs:ChangeMessageVisibility",
+                          [32m+[0m[0m "sqs:GetQueueAttributes",
+                          [32m+[0m[0m "sqs:GetQueueUrl",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = [
+                          [32m+[0m[0m "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs",
+                          [32m+[0m[0m "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq",
+                        ]
+                      [32m+[0m[0m Sid      = "SqsJobsAndDlqMessaging"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "dynamodb:GetItem",
+                          [32m+[0m[0m "dynamodb:PutItem",
+                          [32m+[0m[0m "dynamodb:UpdateItem",
+                          [32m+[0m[0m "dynamodb:DeleteItem",
+                          [32m+[0m[0m "dynamodb:Query",
+                          [32m+[0m[0m "dynamodb:BatchGetItem",
+                          [32m+[0m[0m "dynamodb:BatchWriteItem",
+                          [32m+[0m[0m "dynamodb:DescribeTable",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = [
+                          [32m+[0m[0m "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs",
+                        ]
+                      [32m+[0m[0m Sid      = "DynamoDbJobsTableCrud"
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m role        = (known after apply)
+    }
+
+[1m  # aws_s3_bucket_cors_configuration.optimized[0m will be created
+[0m  [32m+[0m[0m resource "aws_s3_bucket_cors_configuration" "optimized" {
+      [32m+[0m[0m bucket = "mediashrink-optimized-local"
+      [32m+[0m[0m id     = (known after apply)
+
+      [32m+[0m[0m cors_rule {
+          [32m+[0m[0m allowed_headers = [
+              [32m+[0m[0m "authorization",
+              [32m+[0m[0m "content-md5",
+              [32m+[0m[0m "content-type",
+              [32m+[0m[0m "etag",
+              [32m+[0m[0m "x-amz-content-sha256",
+              [32m+[0m[0m "x-amz-date",
+              [32m+[0m[0m "x-amz-security-token",
+              [32m+[0m[0m "x-amz-server-side-encryption",
+            ]
+          [32m+[0m[0m allowed_methods = [
+              [32m+[0m[0m "GET",
+              [32m+[0m[0m "PUT",
+            ]
+          [32m+[0m[0m allowed_origins = [
+              [32m+[0m[0m "http://localhost:5173",
+            ]
+          [32m+[0m[0m expose_headers  = [
+              [32m+[0m[0m "content-type",
+              [32m+[0m[0m "etag",
+              [32m+[0m[0m "x-amz-id-2",
+              [32m+[0m[0m "x-amz-request-id",
+            ]
+            id              = [90mnull[0m[0m
+          [32m+[0m[0m max_age_seconds = 3000
+        }
+    }
+
+[1m  # aws_s3_bucket_cors_configuration.raw[0m will be created
+[0m  [32m+[0m[0m resource "aws_s3_bucket_cors_configuration" "raw" {
+      [32m+[0m[0m bucket = "mediashrink-raw-local"
+      [32m+[0m[0m id     = (known after apply)
+
+      [32m+[0m[0m cors_rule {
+          [32m+[0m[0m allowed_headers = [
+              [32m+[0m[0m "authorization",
+              [32m+[0m[0m "content-md5",
+              [32m+[0m[0m "content-type",
+              [32m+[0m[0m "etag",
+              [32m+[0m[0m "x-amz-content-sha256",
+              [32m+[0m[0m "x-amz-date",
+              [32m+[0m[0m "x-amz-security-token",
+              [32m+[0m[0m "x-amz-server-side-encryption",
+            ]
+          [32m+[0m[0m allowed_methods = [
+              [32m+[0m[0m "GET",
+              [32m+[0m[0m "PUT",
+            ]
+          [32m+[0m[0m allowed_origins = [
+              [32m+[0m[0m "http://localhost:5173",
+            ]
+          [32m+[0m[0m expose_headers  = [
+              [32m+[0m[0m "content-type",
+              [32m+[0m[0m "etag",
+              [32m+[0m[0m "x-amz-id-2",
+              [32m+[0m[0m "x-amz-request-id",
+            ]
+            id              = [90mnull[0m[0m
+          [32m+[0m[0m max_age_seconds = 3000
+        }
+    }
+
+[1mPlan:[0m [0m4 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  [32m+[0m[0m iam_inline_policy              = {
+      [32m+[0m[0m Statement = [
+          [32m+[0m[0m {
+              [32m+[0m[0m Action   = [
+                  [32m+[0m[0m "s3:GetObject",
+                  [32m+[0m[0m "s3:PutObject",
+                  [32m+[0m[0m "s3:DeleteObject",
+                ]
+              [32m+[0m[0m Effect   = "Allow"
+              [32m+[0m[0m Resource = [
+                  [32m+[0m[0m "arn:aws:s3:::mediashrink-raw-local/*",
+                ]
+              [32m+[0m[0m Sid      = "S3RawObjectsReadWrite"
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m Action   = [
+                  [32m+[0m[0m "s3:GetObject",
+                  [32m+[0m[0m "s3:PutObject",
+                  [32m+[0m[0m "s3:DeleteObject",
+                ]
+              [32m+[0m[0m Effect   = "Allow"
+              [32m+[0m[0m Resource = [
+                  [32m+[0m[0m "arn:aws:s3:::mediashrink-optimized-local/*",
+                ]
+              [32m+[0m[0m Sid      = "S3OptimizedObjectsReadWrite"
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m Action   = [
+                  [32m+[0m[0m "s3:ListBucket",
+                ]
+              [32m+[0m[0m Effect   = "Allow"
+              [32m+[0m[0m Resource = [
+                  [32m+[0m[0m "arn:aws:s3:::mediashrink-raw-local",
+                  [32m+[0m[0m "arn:aws:s3:::mediashrink-optimized-local",
+                ]
+              [32m+[0m[0m Sid      = "S3ListOnlyNamedBuckets"
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m Action   = [
+                  [32m+[0m[0m "sqs:SendMessage",
+                  [32m+[0m[0m "sqs:ReceiveMessage",
+                  [32m+[0m[0m "sqs:DeleteMessage",
+                  [32m+[0m[0m "sqs:ChangeMessageVisibility",
+                  [32m+[0m[0m "sqs:GetQueueAttributes",
+                  [32m+[0m[0m "sqs:GetQueueUrl",
+                ]
+              [32m+[0m[0m Effect   = "Allow"
+              [32m+[0m[0m Resource = [
+                  [32m+[0m[0m "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs",
+                  [32m+[0m[0m "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq",
+                ]
+              [32m+[0m[0m Sid      = "SqsJobsAndDlqMessaging"
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m Action   = [
+                  [32m+[0m[0m "dynamodb:GetItem",
+                  [32m+[0m[0m "dynamodb:PutItem",
+                  [32m+[0m[0m "dynamodb:UpdateItem",
+                  [32m+[0m[0m "dynamodb:DeleteItem",
+                  [32m+[0m[0m "dynamodb:Query",
+                  [32m+[0m[0m "dynamodb:BatchGetItem",
+                  [32m+[0m[0m "dynamodb:BatchWriteItem",
+                  [32m+[0m[0m "dynamodb:DescribeTable",
+                ]
+              [32m+[0m[0m Effect   = "Allow"
+              [32m+[0m[0m Resource = [
+                  [32m+[0m[0m "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs",
+                ]
+              [32m+[0m[0m Sid      = "DynamoDbJobsTableCrud"
+            },
+        ]
+      [32m+[0m[0m Version   = "2012-10-17"
+    }
+  [32m+[0m[0m iam_role_arn                   = (known after apply)
+  [32m+[0m[0m iam_role_name                  = "mediashrink-app-role"
+  [32m+[0m[0m iam_trust_policy               = {
+      [32m+[0m[0m Statement = [
+          [32m+[0m[0m {
+              [32m+[0m[0m Action    = "sts:AssumeRole"
+              [32m+[0m[0m Effect    = "Allow"
+              [32m+[0m[0m Principal = {
+                  [32m+[0m[0m Service = "lambda.amazonaws.com"
+                }
+              [32m+[0m[0m Sid       = "LambdaAssumeRoleOnly"
+            },
+        ]
+      [32m+[0m[0m Version   = "2012-10-17"
+    }
+  [32m+[0m[0m s3_cors_configuration          = [
+      [32m+[0m[0m {
+          [32m+[0m[0m allowed_headers = [
+              [32m+[0m[0m "authorization",
+              [32m+[0m[0m "content-type",
+              [32m+[0m[0m "content-md5",
+              [32m+[0m[0m "etag",
+              [32m+[0m[0m "x-amz-content-sha256",
+              [32m+[0m[0m "x-amz-date",
+              [32m+[0m[0m "x-amz-security-token",
+              [32m+[0m[0m "x-amz-server-side-encryption",
+            ]
+          [32m+[0m[0m allowed_methods = [
+              [32m+[0m[0m "GET",
+              [32m+[0m[0m "PUT",
+            ]
+          [32m+[0m[0m allowed_origins = [
+              [32m+[0m[0m "http://localhost:5173",
+            ]
+          [32m+[0m[0m expose_headers  = [
+              [32m+[0m[0m "content-type",
+              [32m+[0m[0m "etag",
+              [32m+[0m[0m "x-amz-id-2",
+              [32m+[0m[0m "x-amz-request-id",
+            ]
+          [32m+[0m[0m max_age_seconds = 3000
+        },
+    ]
+[90m
+ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ[0m
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
+EXIT_CODE: 0

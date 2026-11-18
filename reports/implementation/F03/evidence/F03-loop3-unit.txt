@@ -1,0 +1,60 @@
+COMMAND=npm run test:unit
+npm error Missing script: "unit"
+npm error
+npm error Did you mean this?
+npm error   npm init # Create a package.json file
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error Log files were not written due to an error writing to the directory: D:\Programs\DevApps\Cache\npm\_logs
+npm error You can rerun the command with `--loglevel=verbose` to see the logs in your terminal
+EXIT_CODE=1
+
+CORRECTION: intended script is test:unit; initial invocation used missing script unit.
+COMMAND=npm run test:unit
+
+> mediashrink-cloud@0.0.0 test:unit
+> vitest run tests/unit
+
+
+ RUN  v2.1.9 D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud
+
+ ✓ tests/unit/config.test.ts (35 tests) 91ms
+ ✓ tests/unit/frontend/core.test.ts (11 tests) 42ms
+ ✓ tests/unit/domain/imageHeader.test.ts (15 tests) 28ms
+ ✓ tests/unit/contracts.test.ts (32 tests) 63ms
+ ✓ tests/unit/domain/stateMachine.test.ts (13 tests) 20ms
+ ✓ tests/unit/worker/antiBomb.test.ts (7 tests) 68ms
+ ✓ tests/unit/auth/service.test.ts (10 tests) 1237ms
+   ✓ AuthService — registro, login y refresh (FR-01/FR-02/FR-03) > devuelve el mismo error para correo desconocido y contraseña incorrecta 369ms
+ ✓ tests/unit/worker/processImage.test.ts (4 tests) 116ms
+ ✓ tests/unit/api/userstore.test.ts (6 tests) 387ms
+   ✓ adaptador DynamoDB de UserStore (cierra T03-A-04) > AuthService registra y hace login sobre el adaptador DynamoDB 367ms
+ ✓ tests/unit/auth/jwt.test.ts (7 tests) 53ms
+ ✓ tests/unit/domain/antiBomb.test.ts (6 tests) 14ms
+ ✓ tests/unit/api/presign-routes.test.ts (12 tests) 1266ms
+ ✓ tests/unit/api/presign-keys.test.ts (30 tests) 23ms
+ ✓ tests/unit/api/routes.test.ts (8 tests) 1575ms
+   ✓ rutas /jobs (F02-T01, CA-01) > GET /jobs devuelve solo los lotes del usuario autenticado 304ms
+ ✓ tests/unit/api/authz.test.ts (5 tests) 1144ms
+   ✓ autorización y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > un token manipulado y un refresh token no autorizan /jobs 382ms
+ ✓ tests/unit/domain/savings.test.ts (7 tests) 11ms
+ ✓ tests/unit/domain/index.test.ts (1 test) 12ms
+ ✓ tests/unit/auth/rate-limit.test.ts (5 tests) 11ms
+ ✓ tests/unit/domain/guards.test.ts (5 tests) 10ms
+ ✓ tests/unit/frontend.test.ts (3 tests) 8ms
+ ✓ tests/unit/api/rate-limit.test.ts (5 tests) 1153ms
+   ✓ rate limit no suplantable (cierra T03-A-01) > la clave de /jobs deriva del userId: agotar A no afecta a B 368ms
+   ✓ rate limit no suplantable (cierra T03-A-01) > /auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 321ms
+ ✓ tests/unit/api/confirm.test.ts (3 tests) 408ms
+ ✓ tests/unit/auth/middleware.test.ts (3 tests) 10ms
+ ✓ tests/unit/health.test.ts (2 tests) 21ms
+ ✓ tests/unit/auth/password.test.ts (6 tests) 912ms
+   ✓ hash de contraseñas — scrypt (A-02, IN-05) > verifica la contraseña correcta y rechaza una incorrecta 301ms
+
+ Test Files  25 passed (25)
+      Tests  241 passed (241)
+   Start at  22:24:45
+   Duration  5.97s (transform 2.47s, setup 0ms, collect 11.55s, tests 8.69s, environment 10ms, prepare 6.31s)
+
+EXIT_CODE=0

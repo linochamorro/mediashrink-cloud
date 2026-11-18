@@ -1,0 +1,16 @@
+# F04-T02 - redrive
+UTC: 2026-11-18T11:57:31.9255254Z
+COMMAND: node temporary\F04-T02-probe.mjs redrive
+--- OUTPUT ---
+PROBE: GetQueueAttributes(mediashrink-jobs-dlq, QueueArn)
+RESULT: SUCCESS
+DLQ_ARN: arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq
+PROBE: GetQueueAttributes(mediashrink-jobs, RedrivePolicy)
+RESULT: SUCCESS
+JOBS_ARN: arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs
+REDRIVE_POLICY: {"deadLetterTargetArn":"arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq","maxReceiveCount":3}
+PARSED_DEAD_LETTER_TARGET_ARN: arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq
+PARSED_MAX_RECEIVE_COUNT: 3
+DLQ_ARN_PRESENT_IN_POLICY: true
+MAX_RECEIVE_COUNT_EQ_3: true
+EXIT_CODE: 0

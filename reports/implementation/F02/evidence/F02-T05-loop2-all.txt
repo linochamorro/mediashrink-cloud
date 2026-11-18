@@ -1,0 +1,31 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/api/userstore.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 315[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 671[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/download.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 850[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 859[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/routes.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 970[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-keys.test.ts [2m([22m[2m30 tests[22m[2m)[22m[90m 20[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-routes.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1062[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/authz.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 845[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 909[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip-cap.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 380[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete-partial.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 270[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/confirm.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 265[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/presign.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 9903[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Presigned URLs S3 reales en aws-emulator (CA-02)[2m > [22mPUT presignado sube un fixture 100x100 a raw y el objeto es verificable [33m744[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/routes.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 8143[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rutas /jobs con DynamoDB real en aws-emulator (CA-01)[2m > [22mregistro, creaci├│n, listado y detalle respetan el userId del JWT [33m313[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/userstore.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 6337[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/download.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 10422[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Descarga/ZIP/borrado reales en aws-emulator (CA-05)[2m > [22mdescarga individual: la URL firmada devuelve los bytes reales de cada variante [33m579[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Descarga/ZIP/borrado reales en aws-emulator (CA-05)[2m > [22mZIP: contiene WebP + AVIF + miniaturas reales del lote [33m318[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m16 passed[39m[22m[90m (16)[39m
+[2m      Tests [22m [1m[32m112 passed[39m[22m[90m (112)[39m
+[2m   Start at [22m 23:05:00
+[2m   Duration [22m 12.63s[2m (transform 1.98s, setup 0ms, collect 14.21s, tests 42.22s, environment 6ms, prepare 3.64s)[22m
+
+EXIT=0
+

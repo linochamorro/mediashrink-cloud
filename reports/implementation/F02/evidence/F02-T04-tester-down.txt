@@ -1,0 +1,22 @@
+APAGADO DEL EMULADOR TRAS LA VERIFICACION (G-7)
+Ejecutado por Tester desde <repo-root>, una vez finalizadas todas las ejecuciones de integracion.
+
+COMMAND: docker compose down
+ Container mediashrink-aws-emulator Stopping
+ Container mediashrink-aws-emulator Stopped
+ Container mediashrink-aws-emulator Removing
+ Container mediashrink-aws-emulator Removed
+ Network mediashrink-cloud_default Removing
+ Network mediashrink-cloud_default Removed
+EXIT=0
+
+COMMAND: docker compose ps
+ NAME   IMAGE   COMMAND   SERVICE   CREATED   STATUS   PORTS
+ (sin filas: contenedor y red eliminados)
+
+COMMAND: docker ps -a
+ CONTAINER ID   IMAGE   COMMAND   CREATED   STATUS   PORTS   NAMES
+ (sin filas: ningun contenedor, ni siquiera detenido)
+
+CONCLUSION: G-7 conforme. El volumen named aws-emulator-data no se elimina
+(según runbook §1.4 no es contenedor ni red; no rompe el apagado limpio).

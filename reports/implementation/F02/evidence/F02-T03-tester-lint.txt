@@ -1,0 +1,19 @@
+=== LINT GLOBAL (npm run lint) ===
+
+> mediashrink-cloud@0.0.0 lint
+> eslint . --ext .ts,.tsx
+
+
+<PROJECT_ROOT>\frontend\src\App.tsx
+  153:18  error  'downloadZip' is defined but never used  @typescript-eslint/no-unused-vars
+  163:18  error  'deleteJob' is defined but never used    @typescript-eslint/no-unused-vars
+
+<PROJECT_ROOT>\tests\unit\frontend\core.test.ts
+  6:37  error  'Theme' is defined but never used  @typescript-eslint/no-unused-vars
+
+Ô£û 3 problems (3 errors, 0 warnings)
+
+EXIT_GLOBAL=1
+
+=== LINT ACOTADO (npx eslint backend/src/worker tests/unit/worker tests/integration/worker --ext .ts) ===
+EXIT_SCOPE=0

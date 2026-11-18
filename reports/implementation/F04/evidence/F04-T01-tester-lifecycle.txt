@@ -1,0 +1,20 @@
+# F04-T01 tester - lifecycle
+UTC: 2026-11-18T11:45:54.6902625Z
+COMMAND: node SDK v3 GetBucketLifecycleConfiguration on both buckets
+--- OUTPUT ---
+PROBE: GetBucketLifecycleConfiguration(mediashrink-raw-local)
+RESULT: SUCCESS
+RULES_JSON: [{"Status":"Enabled","Expiration":{"Days":30},"ID":"expire-after-retention-days","Filter":{"Prefix":""}}]
+RULE_COUNT: 1
+STATUS: Enabled
+EXPIRATION_DAYS: 30
+LIFECYCLE_OK_30D_ENABLED: true
+PROBE: GetBucketLifecycleConfiguration(mediashrink-optimized-local)
+RESULT: SUCCESS
+RULES_JSON: [{"Status":"Enabled","Expiration":{"Days":30},"ID":"expire-after-retention-days","Filter":{"Prefix":""}}]
+RULE_COUNT: 1
+STATUS: Enabled
+EXPIRATION_DAYS: 30
+LIFECYCLE_OK_30D_ENABLED: true
+EXIT_CODE: 0
+

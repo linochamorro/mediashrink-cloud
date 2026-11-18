@@ -1,0 +1,21 @@
+COMANDO GLOBAL (según F02-T03-task.md §Encabezado): npm run lint
+EXIT_GLOBAL=1
+--- salida global (normalizada) ---
+
+> mediashrink-cloud@0.0.0 lint
+> eslint . --ext .ts,.tsx
+
+
+<PROJECT_ROOT>\tests\unit\frontend\core.test.ts
+  6:37  error  'Theme' is defined but never used  @typescript-eslint/no-unused-vars
+
+Ô£û 1 problem (1 error, 0 warnings)
+
+
+COMANDO AISLADO AL ALCANCE F02-T03:
+npx eslint backend/src/worker tests/unit/worker tests/integration/worker --ext .ts
+EXIT_SCOPE=0
+--- salida aislada ---
+
+
+NOTA: el único hallazgo global está en tests/unit/frontend/core.test.ts (propiedad de F03, en ejecución concurrente). Ningún hallazgo señala backend/src/worker/** ni tests/{unit,integration}/worker/**. El alcance de F02-T03 está limpio (exit 0).

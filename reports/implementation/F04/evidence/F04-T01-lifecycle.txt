@@ -1,0 +1,11 @@
+# F04-T01 - lifecycle
+UTC: 2026-11-18T11:38:35.9725217Z
+COMMAND: node temporary/F04-T01-probe.mjs lifecycle
+--- OUTPUT ---
+PROBE: GetBucketLifecycleConfiguration(mediashrink-raw-local)
+RESULT: SUCCESS
+RULES_JSON: [{"Status":"Enabled","Expiration":{"Days":30},"ID":"expire-after-retention-days","Filter":{"Prefix":""}}]
+PROBE: GetBucketLifecycleConfiguration(mediashrink-optimized-local)
+RESULT: SUCCESS
+RULES_JSON: [{"Status":"Enabled","Expiration":{"Days":30},"ID":"expire-after-retention-days","Filter":{"Prefix":""}}]
+EXIT_CODE: 0

@@ -1,0 +1,26 @@
+== COMANDO: npm run test:unit ==
+[2m Test Files [22m [1m[32m28 passed[39m[22m[90m (28)[39m
+[2m      Tests [22m [1m[32m259 passed[39m[22m[90m (259)[39m
+[2m   Duration [22m 7.11s[2m (transform 2.69s, setup 0ms, collect 13.72s, tests 11.91s, environment 10ms, prepare 7.30s)[22m
+UNIT_ALL_EXIT=0
+== COMANDO: npm run typecheck (global) ==
+
+> mediashrink-cloud@0.0.0 typecheck
+> tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json
+TYPECHECK_GLOBAL_EXIT=0
+== COMANDO: npx eslint backend/src/api backend/src/storage tests/unit/api tests/integration/api --ext .ts (F02 acotado) ==
+
+LINT_SCOPED_EXIT=0
+== COMANDO: npm run lint (global, referencia) ==
+
+> mediashrink-cloud@0.0.0 lint
+> eslint . --ext .ts,.tsx
+
+
+  6:37  error  'Theme' is defined but never used  @typescript-eslint/no-unused-vars
+
+Ô£û 1 problem (1 error, 0 warnings)
+
+
+LINT_GLOBAL_EXIT=1
+DETALLE_LINT_GLOBAL=<PROJECT_ROOT>/tests/unit/frontend/core.test.ts:6:37 'Theme' is defined but never used (F03 paralelo, ajeno a F02-T05)

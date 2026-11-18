@@ -1,0 +1,39 @@
+# F04-T04 - IAM support probe (real output observed during F04-T04 session)
+UTC: 2026-11-18 (emulator session, after `docker cp`)
+COMMAND: terraform -chdir=infra/terraform plan -input=false && terraform -chdir=infra/terraform apply -input=false -auto-approve
+PROBE FILE: infra/terraform/_probe_iam.tf (aws_iam_role.probe + aws_iam_role_policy.probe + data.aws_iam_role.probe), removed after capture.
+
+--- OBSERVED APPLY OUTPUT (excerpt, ANSI stripped) ---
+  # aws_iam_role.probe will be created
+  + resource "aws_iam_role" "probe" {
+      + arn  = (known after apply)
+      + id   = (known after apply)
+      + name = "mediashrink-iam-support-probe"
+      + ...
+    }
+aws_iam_role.probe: Creating...
+aws_iam_role.probe: Creation complete after 1s [id=mediashrink-iam-support-probe]
+aws_iam_role.probe: Refreshing state... [id=mediashrink-iam-support-probe]
+data.aws_iam_role.probe: Reading...
+data.aws_iam_role.probe: Read complete after 0s [id=mediashrink-iam-support-probe]
+  # aws_iam_role_policy.probe will be created
+  + resource "aws_iam_role_policy" "probe" {
+      + id     = (known after apply)
+      + name   = "mediashrink-iam-probe-policy"
+      + policy = (sensitive value)
+      + role   = "mediashrink-iam-support-probe"
+    }
+aws_iam_role_policy.probe: Creating...
+aws_iam_role_policy.probe: Creation complete after 0s [id=mediashrink-iam-support-probe:mediashrink-iam-probe-policy]
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+--- END EXCERPT ---
+
+RESULT: SUPPORTED. The emulator accepts `aws_iam_role`, `aws_iam_role_policy`
+(PutRolePolicy) and the read-only `data "aws_iam_role"` against :9297 with
+file-based credentials and its own CA. No real AWS account was used.
+
+CLEANUP: the probe file was removed and a follow-up apply destroyed exactly the
+2 probe resources (`F04-T04-iam-support-plan.txt` / `F04-T04-iam-support-apply.txt`
+current content: `0 to add, 0 to change, 2 to destroy` / `0 added, 0 changed,
+2 destroyed`). No product resource was destroyed.
+EXIT_CODE: 0

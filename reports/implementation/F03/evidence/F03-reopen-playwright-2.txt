@@ -1,0 +1,29 @@
+COMMAND=npx playwright test --config=tests/e2e/playwright.config.ts --reporter=list --workers=1
+PORT=50704
+
+[WebServer] (node:5992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:6592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\e2e\frontend-flow.spec.ts:9:1 › tema claro inicial y selector oscuro persistente tras recargar (3ms)
+(node:17884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 tests\e2e\frontend-flow.spec.ts:20:1 › registro, error seguro, refresh, upload, polling, resultados, descargas y logout (3ms)
+(node:18184) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 tests\e2e\frontend-flow.spec.ts:147:1 › validación de drag & drop, teclado y errores de archivos (3ms)
+
+HARNESS_EXIT_CODE=1
+LIMITATION=Interrupted this Tester-owned session after >120s without final reporter summary; this is not a final Playwright EXIT_CODE.
+REOPEN PLAYWRIGHT ATTEMPT 2 — 2026-11-18
+Config read before run: browserName=chromium; channel=msedge; gracefulShutdown SIGTERM/8000ms; outputDir reports/implementation/F03/evidence/playwright-results.
+Lint evidence read before run: evidence/F03-reopen-lint-2.txt; npm run lint; EXIT_CODE=0.
+Command: npx playwright test --config=tests/e2e/playwright.config.ts --reporter=list --workers=1
+Dynamic port: 50929 (selected from an ephemeral loopback port; no prior listener).
+Observed: 3 tests / 1 worker; all 3 cases reported ok (theme 1.4s; full auth/upload/polling/results/download flow 28.4s; drag-drop/keyboard/errors 1.0s).
+After case 3, no summary, process completion, or Playwright exit code appeared within 120 seconds. The shell session was interrupted after that limit; shell EXIT_CODE=1 is the interruption result, NOT a final Playwright exit code or test summary.
+At inspection, webServer PID 20396 still LISTENED on 127.0.0.1:50929. The 7-second fallback had NOT fired: it starts only after a shutdown signal and no shutdown signal had reached the wrapper. Process command-line inspection was denied by Windows, so the specific remaining Playwright handle/wait is undetermined. After interrupting only this run's shell session, PID 20396 remained on the unique run port; it was stopped as the webServer identified from this run. Follow-up netstat showed no listener on 50929.
+Conclusion: NO-PASSED for clean Playwright termination. Evidence does not establish why Playwright failed to request webServer shutdown; possible runner/child-handle wait remains a hypothesis, not a confirmed cause.

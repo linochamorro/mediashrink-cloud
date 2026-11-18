@@ -1,0 +1,20 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/api/userstore.test.ts (6 tests) 408ms
+   Ô£ô adaptador DynamoDB de UserStore (cierra T03-A-04) > AuthService registra y hace login sobre el adaptador DynamoDB 384ms
+ Ô£ô tests/unit/api/authz.test.ts (5 tests) 999ms
+ Ô£ô tests/unit/api/rate-limit.test.ts (5 tests) 1083ms
+   Ô£ô rate limit no suplantable (cierra T03-A-01) > la clave de /jobs deriva del userId: agotar A no afecta a B 335ms
+ Ô£ô tests/unit/api/routes.test.ts (8 tests) 1101ms
+ Ô£ô tests/integration/api/userstore.test.ts (3 tests) 6392ms
+ Ô£ô tests/integration/api/routes.test.ts (4 tests) 7110ms
+   Ô£ô rutas /jobs con DynamoDB real en aws-emulator (CA-01) > registro, creaci├│n, listado y detalle respetan el userId del JWT 350ms
+   Ô£ô rutas /jobs con DynamoDB real en aws-emulator (CA-01) > un lote ajeno devuelve 404 id├®ntico al inexistente 327ms
+
+ Test Files  6 passed (6)
+      Tests  31 passed (31)
+   Start at  21:09:30
+   Duration  9.26s (transform 1.88s, setup 0ms, collect 6.51s, tests 17.09s, environment 3ms, prepare 1.82s)
+
+EXIT_CODE=0

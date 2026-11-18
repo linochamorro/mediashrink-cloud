@@ -1,0 +1,28 @@
+# F04-T03 (tester) - static
+UTC: 2026-11-18T12:21:39.3144272Z
+COMMAND: Select-String over infra/terraform/*.tf (retention literals, checks, outputs)
+--- OUTPUT ---
+--- code lines containing retention literals (comments excluded) ---
+CODE_RETENTION_LITERALS_data: 0
+CODE_RETENTION_LITERALS_dynamodb: 0
+CODE_RETENTION_LITERALS_outputs: 0
+CODE_RETENTION_LITERALS_provider: 0
+LITERAL s3.tf: RETENTION_DAYS=30 de .env.example y se alinea con el TTL de DynamoDB
+LITERAL s3.tf: default     = 30
+CODE_RETENTION_LITERALS_s3: 2
+CODE_RETENTION_LITERALS_sqs: 0
+CODE_RETENTION_LITERALS_variables: 0
+CODE_RETENTION_LITERALS_versions: 0
+--- dynamodb.tf structural checks ---
+DYNAMODB_TF_HAS [ttl_seconds = var.retention_days]: False
+DYNAMODB_TF_HAS [check "]: False
+DYNAMODB_TF_HAS [output "]: False
+DYNAMODB_TF_HAS [hash_key  = "userId"]: False
+DYNAMODB_TF_HAS [range_key = "jobId"]: False
+DYNAMODB_TF_HAS [attribute_name = "ttl"]: False
+DYNAMODB_TF_HAS [enabled        = true]: False
+--- s3.tf lifecycle source ---
+S3_TF_HAS [default     = 30]: False
+S3_TF_HAS [days = var.retention_days]: False
+S3_TF_HAS [status = "Enabled"]: False
+EXIT_CODE: 0

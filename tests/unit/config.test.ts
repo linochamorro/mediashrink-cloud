@@ -10,7 +10,9 @@ import {
   findRealSecretPattern,
   loadConfig,
   parseEnvFile,
+  RETENTION_TTL_SECONDS,
 } from '../../backend/src/config/index';
+import { RETENTION_DAYS, TTL_SECONDS } from '../../backend/src/contracts/catalog';
 
 const PROJECT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const ENV_EXAMPLE_PATH = join(PROJECT_ROOT, '.env.example');
@@ -300,5 +302,34 @@ describe('parseEnvFile y .env.example', () => {
   it('el propio .env.example pasa la validación completa del loader', () => {
     const parsed = readExample();
     expect(() => loadConfig(parsed)).not.toThrow();
+  });
+});
+
+/**
+ * F05-T01 / F04T03-A-03 (MEDIUM): una sola fuente de retención en runtime.
+ * Falla si el default de `loadConfig()` divergiera del catálogo congelado, si el
+ * TTL dejara de derivarse de días × 86400 o si se reintrodujera un literal
+ * duplicado 30/2592000 en el loader.
+ */
+describe('retención en runtime — fuente única (F04T03-A-03)', () => {
+  it('el default de RETENTION_DAYS procede del catálogo y el TTL se deriva', () => {
+    const config = loadConfig(without('RETENTION_DAYS'));
+
+    expect(config.worker.retentionDays).toBe(RETENTION_DAYS);
+    expect(RETENTION_TTL_SECONDS).toBe(RETENTION_DAYS * 86_400);
+    expect(TTL_SECONDS).toBe(RETENTION_TTL_SECONDS);
+    expect(TTL_SECONDS).toBe(2_592_000);
+    expect(RETENTION_DAYS).toBe(30);
+  });
+
+  it('el loader no duplica los literales 30 ni 2592000', () => {
+    const source = readFileSync(join(PROJECT_ROOT, 'backend/src/config/index.ts'), 'utf8');
+    const defaultLine = source.match(/readPositiveInt\(env,\s*'RETENTION_DAYS',\s*([^)]*)\)/)?.[1];
+
+    expect(defaultLine?.trim()).toBe('RETENTION_DAYS');
+    expect(source).toContain('RETENTION_DAYS * SECONDS_PER_DAY');
+    expect(source).not.toMatch(/readPositiveInt\(env,\s*'RETENTION_DAYS',\s*30\s*\)/);
+    expect(source).not.toContain('2592000');
+    expect(source).not.toContain('2_592_000');
   });
 });

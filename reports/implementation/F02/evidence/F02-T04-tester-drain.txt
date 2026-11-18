@@ -1,0 +1,14 @@
+COMMAND: npx vitest run tests/integration/worker/consumer.test.ts -t "el mensaje válido se consume y elimina"
+EXIT=0
+
+
+ RUN  v2.1.9 <repo-root>
+
+ ✓ tests/integration/worker/consumer.test.ts (6 tests | 5 skipped) 6350ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > el mensaje válido se consume y elimina; no hay bucle infinito ni duplicados 6349ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 5 skipped (6)
+   Start at  22:19:12
+   Duration  7.98s (transform 383ms, setup 0ms, collect 1.01s, tests 6.35s, environment 0ms, prepare 191ms)
+

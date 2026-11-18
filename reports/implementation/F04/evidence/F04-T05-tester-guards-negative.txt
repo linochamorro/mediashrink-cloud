@@ -1,0 +1,24 @@
+# F04-T05 - no-vacuidad de guardias (Tester)
+UTC: 2026-11-18T13:37:06.0180828Z
+---
+STATIC_GSI_ASSERT_IS_TO_BE_0: true
+STATIC_RETENTION_ASSERT_COUNT: 3
+STATIC_RETENTION_TTL_ARITHMETIC: true
+--- valores reales (deben pasar) ---
+REAL_RETENTION_FAILURES: 0  []
+REAL_GSI_ASSERT: count=0 -> toBe(0) OK
+--- divergencias inyectadas (deben fallar) ---
+DIVERGENCE envDays=31 -> DETECTED=true (RETENTION_DAYS en .env.example: 31 != 30)
+DIVERGENCE catalogDays=31 -> DETECTED=true (RETENTION_DAYS en el catalogo: 31 != 30)
+DIVERGENCE catalogTtl=2592001 -> DETECTED=true (TTL_SECONDS del catalogo: 2592001 != 2592000)
+DIVERGENCE tfDefaultDays=31 -> DETECTED=true (default de var.retention_days en s3.tf: 31 != 30)
+DIVERGENCE appliedDays=31 -> DETECTED=true (s3_lifecycle_expiration_days aplicado: 31 != 30 | TTL != retention_days*86400: 2592000 != 2678400)
+DIVERGENCE appliedTtl=2592001 -> DETECTED=true (dynamodb_ttl_seconds aplicado: 2592001 != 2592000 | TTL != retention_days*86400: 2592001 != 2592000)
+DIVERGENCE TTL!=days*86400 -> DETECTED=true (dynamodb_ttl_seconds aplicado: 2591999 != 2592000 | TTL != retention_days*86400: 2591999 != 2592000)
+--- sonda GSI: toBe(0) ---
+GSI count=0 -> asercion PASA
+GSI count=1 -> asercion FALLA (detectado)
+GSI count=2 -> asercion FALLA (detectado)
+RESULT: RETENTION_DIVERGENCES_DETECTED=7/7 GSI_DIVERGENCES_DETECTED=2/2
+
+GUARDS_NEGATIVE_EXIT: 0

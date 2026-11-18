@@ -1,0 +1,14 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/integration/api/userstore.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 7164[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/routes.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 7122[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rutas /jobs con DynamoDB real en aws-emulator (CA-01)[2m > [22mregistro, creaci├│n, listado y detalle respetan el userId del JWT [33m386[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rutas /jobs con DynamoDB real en aws-emulator (CA-01)[2m > [22mun lote ajeno devuelve 404 id├®ntico al inexistente [33m339[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m7 passed[39m[22m[90m (7)[39m
+[2m   Start at [22m 20:59:18
+[2m   Duration [22m 22.75s[2m (transform 5.85s, setup 0ms, collect 16.62s, tests 14.29s, environment 1ms, prepare 7.87s)[22m
+
+EXIT_CODE=0

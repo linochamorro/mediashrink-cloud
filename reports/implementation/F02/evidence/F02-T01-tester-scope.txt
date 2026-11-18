@@ -1,0 +1,39 @@
+=== Verificación de ámbito (Tester F02-T01) ===
+Comando: git status --short (relevante a F02-T01)
+ M STATE.md
+ M docs/sdd/spec.md
+ M docs/sdd/tasks.md
+ M frontend/index.html
+ M frontend/src/App.tsx
+?? backend/src/api/
+?? backend/src/db/user-store-adapter.ts
+?? backend/src/worker/
+?? docs/sdd/packages/P-02-api-and-worker.md
+?? docs/sdd/packages/P-03-frontend-spa.md
+?? docs/sdd/packages/P-04-terraform-and-ci.md
+?? frontend/src/api/auth.ts
+?? frontend/src/api/jobs.ts
+?? frontend/src/styles.css
+?? frontend/src/theme.ts
+?? frontend/src/upload/
+?? reports/audits/F02/
+?? reports/implementation/F02/
+?? reports/implementation/F03/
+?? tests/e2e/
+?? tests/integration/api/
+?? tests/integration/worker/
+?? tests/unit/api/
+?? tests/unit/frontend/
+?? tests/unit/worker/
+
+Comando: git status --short -- backend/src/index.ts package.json package-lock.json STATE.md docs/sdd/tasks.md
+ M STATE.md
+ M docs/sdd/tasks.md
+
+Comando: git diff --name-only -- backend/src/index.ts package.json package-lock.json STATE.md docs/sdd/tasks.md infra/terraform
+STATE.md
+docs/sdd/tasks.md
+
+Comando: docker ps -a (tras docker compose down)
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+DOCKER_PS_EXIT_CODE=0

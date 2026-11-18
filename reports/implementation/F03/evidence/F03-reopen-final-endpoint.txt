@@ -1,0 +1,10 @@
+Diagnóstico aislado de endpoint (wrapper tests/e2e/vite-webserver.mjs; proceso hijo propio):
+DIAGNOSTIC_PORT=47923
+POST /__f03_internal/shutdown con token por-run correcto
+RESPONSE_STATUS=404
+RESPONSE_HEADERS={"vary":"Origin","date":"Wed, 18 Nov 2026 11:24:32 GMT","connection":"keep-alive","keep-alive":"timeout=5","content-length":"0"}
+RESPONSE_BODY=""
+SERVER_NATURAL_EXIT=TIMEOUT (10 s tras respuesta)
+DIAGNOSTIC_CHILD_SIGTERM_SENT=true (solo proceso hijo iniciado por este diagnóstico)
+LISTENER_AFTER=ABSENT
+Interpretación: la ruta de shutdown retorna 404 incluso con token correcto y el servidor permanece vivo; el endpoint no alcanza la respuesta 204 de aceptación. La fecha/header corresponden a la comprobación aislada, no a la petición original de Playwright. El 404 del run Playwright se conserva por separado como error de global-teardown.

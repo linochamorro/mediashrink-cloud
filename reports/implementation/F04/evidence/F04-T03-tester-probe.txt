@@ -1,0 +1,53 @@
+# F04-T03 (tester) - probe
+UTC: 2026-11-18T12:24:53.7553290Z
+COMMAND: node temporary/F04-T03-tester-probe.mjs all
+--- OUTPUT ---
+TP_PROBE: DescribeTable(mediashrink-jobs)
+TP_TABLE_NAME: mediashrink-jobs
+TP_TABLE_STATUS: ACTIVE
+TP_KEY_SCHEMA: jobId:RANGE | userId:HASH
+TP_ATTRIBUTE_DEFINITIONS: jobId:S | userId:S
+TP_READ_CAPACITY: 5
+TP_WRITE_CAPACITY: 5
+TP_TABLE_EXISTS: true
+TP_TABLE_ACTIVE: true
+TP_PROBE: ListTables
+TP_TABLE_NAMES: mediashrink-jobs
+TP_JOBS_PRESENT: true
+TP_USERS_TABLE_ABSENT: true
+TP_PROBE: DescribeTimeToLive(mediashrink-jobs)
+TP_TTL_ATTRIBUTE: ttl
+TP_TTL_STATUS: ENABLED
+TP_TTL_ATTRIBUTE_IS_TTL: true
+TP_TTL_IS_ENABLED: true
+TP_PROBE: DescribeTable(KeySchema)
+TP_KEY_COUNT: 2
+TP_HASH_KEY: userId
+TP_RANGE_KEY: jobId
+TP_USERID_TYPE: S
+TP_JOBID_TYPE: S
+TP_KEYS_MATCH_CONTRACT: true
+TP_PROBE: Terraform outputs (single source of retention)
+TP_TF_TTL_SECONDS: 2592000
+TP_TF_S3_DAYS: 30
+TP_TF_TTL_EQ_2592000: true
+TP_TF_DAYS_EQ_30: true
+TP_TF_DERIVED_FROM_DAYS: true
+TP_PROBE: GetBucketLifecycleConfiguration(mediashrink-raw-local)
+TP_RULE_COUNT: 1
+TP_RULE_ID: expire-after-retention-days
+TP_RULE_STATUS: Enabled
+TP_RULE_EXPIRATION_DAYS: 30
+TP_RULE_EQ_30_ENABLED: true
+TP_PROBE: GetBucketLifecycleConfiguration(mediashrink-optimized-local)
+TP_RULE_COUNT: 1
+TP_RULE_ID: expire-after-retention-days
+TP_RULE_STATUS: Enabled
+TP_RULE_EXPIRATION_DAYS: 30
+TP_RULE_EQ_30_ENABLED: true
+TP_PROBE: DescribeTimeToLive(alignment)
+TP_TTL_ATTRIBUTE: ttl
+TP_TTL_STATUS: ENABLED
+TP_T02_A_01_CLOSED: true
+TP_ALL_CHECKS_PASSED: true
+EXIT_CODE: 0

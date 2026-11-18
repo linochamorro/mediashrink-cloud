@@ -1,0 +1,24 @@
+[sonda Tester] clave raw=user-123/job-1/raw/img_1
+[sonda Tester] clave raw empieza por userId/=true
+[sonda Tester] clave optimized=user-123/job-1/optimized/img_1.webp
+[sonda Tester] clave optimized empieza por userId/=true
+[sonda Tester] segmento ".." rechazado=true
+[sonda Tester] segmento "." rechazado=true
+[sonda Tester] segmento "" rechazado=true
+[sonda Tester] segmento "a/b" rechazado=true
+[sonda Tester] segmento "/abs" rechazado=true
+[sonda Tester] segmento "C:\\temp" rechazado=true
+[sonda Tester] segmento "..%2fotro" rechazado=true
+[sonda Tester] segmento "con espacio" rechazado=true
+[sonda Tester] segmento "nul\u0000byte" rechazado=true
+[sonda Tester] prefijo de otro userId rechazado=true
+[sonda Tester] clave absoluta rechazada=true
+[sonda Tester] clave con prefijo extendido rechazada=true
+[sonda Tester] limites configurados min=60 max=3600
+[sonda Tester] expiresIn=59 -> rechazado
+[sonda Tester] expiresIn=60 -> aceptado(60)
+[sonda Tester] expiresIn=120 -> aceptado(120)
+[sonda Tester] expiresIn=3600 -> aceptado(3600)
+[sonda Tester] expiresIn=3601 -> rechazado
+EXIT_CODE=0
+NOTA: la sonda de verificacion fue un archivo temporal en temporary/ con alcance exclusivo de diagnostico; se ejecuto con npx tsx y se elimino tras la ejecucion. No se modifico codigo de producto, tests ni manifiestos.

@@ -1,0 +1,9 @@
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed 
+NAME      IMAGE     COMMAND   SERVICE   CREATED   STATUS    PORTS
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+curl: (7) Failed to connect to 127.0.0.1:9297 after 1 ms: Could not connect to server

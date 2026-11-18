@@ -1,0 +1,21 @@
+APAGADO DEL EMULADOR TRAS LA RE-VERIFICACION DEL LOOP 2/3 (G-7)
+Ejecutado por Tester desde <repo-root>, finalizadas todas las ejecuciones.
+
+COMMAND: docker compose down
+ Container mediashrink-aws-emulator Stopping
+ Container mediashrink-aws-emulator Stopped
+ Container mediashrink-aws-emulator Removing
+ Container mediashrink-aws-emulator Removed
+ Network mediashrink-cloud_default Removing
+ Network mediashrink-cloud_default Removed
+EXIT=0
+
+COMMAND: docker compose ps
+ NAME   IMAGE   COMMAND   SERVICE   CREATED   STATUS   PORTS
+ (sin filas)
+
+COMMAND: docker ps -a
+ CONTAINER ID   IMAGE   COMMAND   CREATED   STATUS   PORTS   NAMES
+ (sin filas: ningun contenedor, ni detenido)
+
+CONCLUSION: G-7 conforme. Volumen named no eliminado (según runbook §1.4).

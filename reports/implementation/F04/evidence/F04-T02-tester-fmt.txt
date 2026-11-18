@@ -1,0 +1,6 @@
+# F04-T02 (tester) - fmt
+UTC: 2026-11-18T12:02:36.5658671Z
+COMMAND: <TF_BIN> -chdir=infra/terraform fmt -check
+--- OUTPUT ---
+
+EXIT_CODE: 0

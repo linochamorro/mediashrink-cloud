@@ -1,0 +1,34 @@
+=== Verificación de ámbito y saneamiento — Tester F02-T01, loop 2/3 ===
+
+1) NO se tocaron módulos de F01
+   Comando: git diff --name-only -- backend/src/db backend/src/auth backend/src/contracts backend/src/config backend/src/domain backend/src/index.ts
+   Salida: (vacía) -> ningún archivo trackado de F01 modificado.
+   En particular, backend/src/db/job-store.ts NO aparece ni en diff ni en status.
+   Comando: git status --short -- backend/src/db
+   Salida: ?? backend/src/db/user-store-adapter.ts  (archivo nuevo de F02-T01, ya presente en v1)
+   Comando: git status --short -- backend/src/index.ts package.json package-lock.json infra/terraform
+   Salida: (vacía) -> sin cambios.
+   Comando: git status --short -- STATE.md docs/sdd/tasks.md
+   Salida: M STATE.md / M docs/sdd/tasks.md -> consolidación del CTO ya presente al iniciar
+   este loop (registrada en el addendum v1 del Tester); no es obra de F02-T01 ni de este Tester.
+
+2) Fábrica de cliente importada desde la puerta pública de F01
+   backend/src/api/app.ts:15 -> import { createDynamoDbDocumentClientFromConfig } from '../db/index';
+   backend/src/api/app.ts:53,55 -> cliente perezoso creado con esa fábrica; inyectable en tests.
+   backend/src/db/index.ts:8 -> export * from './client'; (client.ts define la fábrica).
+   No se importa directamente desde backend/src/db/client.ts en la capa API.
+
+3) Transición atómica confinada a backend/src/api/**
+   backend/src/api/job-transition.ts: UpdateCommand con ConditionExpression '#status = :from'
+   (l. 75), ExpressionAttributeValues ':from'/':to' (l. 77), ReturnValues ALL_NEW (l. 78).
+   confirmPending: PENDING -> PROCESSING (l. 90) y ConditionalCheckFailedException ->
+   JobAlreadyConfirmedError (ll. 42-48, 82-84).
+   revertToPending: PROCESSING -> PENDING (l. 92) y conflicto -> JobStateConflictError.
+
+4) Sin secretos ni rutas Windows absolutas
+   Búsqueda sobre reports/implementation/F02/evidence/F02-T01-tester-loop2-*.txt:
+   0 coincidencias de rutas Windows absolutas (unidad seguida de barra), de claves de
+   acceso AWS de 20 caracteres, de cabeceras de clave privada ni de marcadores de
+   reemplazo de secretos. Las rutas internas usan rutas relativas o <PROJECT_ROOT>.
+   No se editó código, tests, manifiestos ni reportes ajenos: solo los archivos
+   F02-T01-tester.md (addendum append-only) y F02-T01-tester-loop2-*.txt.

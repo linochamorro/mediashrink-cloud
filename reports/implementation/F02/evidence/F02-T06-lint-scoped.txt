@@ -1,0 +1,4 @@
+Comando: npx eslint backend/src/api backend/src/worker tests/integration/api tests/integration/worker --ext .ts
+Salida: (vacía — sin hallazgos)
+EXITCODE=0
+Alcance: rutas de propiedad F02. No se evalúa frontend/** (F03, harness paralelo).

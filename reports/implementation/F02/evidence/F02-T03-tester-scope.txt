@@ -1,0 +1,54 @@
+=== Verificación de ámbito — Tester F02-T03 (ejecución propia) ===
+Ventana de verificación propia: 2026-11-17 ~21:00–21:03 (hora local del harness).
+
+1) ÚNICOS ARCHIVOS ESCRITOS POR ESTE TESTER
+   - reports/implementation/F02/F02-T03-tester.md (dictamen)
+   - reports/implementation/F02/evidence/F02-T03-tester-worker.txt
+   - reports/implementation/F02/evidence/F02-T03-tester-formats.txt
+   - reports/implementation/F02/evidence/F02-T03-tester-metadata.txt
+   - reports/implementation/F02/evidence/F02-T03-tester-anti-bomb.txt
+   - reports/implementation/F02/evidence/F02-T03-tester-unit.txt
+   - reports/implementation/F02/evidence/F02-T03-tester-typecheck.txt
+   - reports/implementation/F02/evidence/F02-T03-tester-lint.txt
+   - reports/implementation/F02/evidence/F02-T03-tester-privacy-probe.txt
+   - reports/implementation/F02/evidence/F02-T03-tester-scope.txt (este archivo)
+   No se editó código de producto, tests, snapshots, manifiestos ni reportes ajenos.
+
+2) SONDAS EFÍMERAS
+   - Se crearon dos sondas de diagnóstico de solo lectura en temporary/
+     (F02-T03-tester-privacy-probe.ts y F02-T03-tester-exif-probe.ts).
+   - Ambas se eliminaron físicamente tras ejecutarse. Comprobación final:
+     temporary/ sin archivos 'F02-T03-tester-*' → NINGUNA.
+   - Ningún archivo de producto ni de tests depende de temporary/.
+
+3) RUTAS AJENAS — mtime anterior a la ventana del Tester (no tocadas por mí)
+   STATE.md                         | 2026-11-17 20:30:01
+   docs/sdd/tasks.md                | 2026-11-17 20:30:25
+   package.json                     | 2026-11-17 18:59:24
+   backend/package.json             | 2026-11-17 18:22:53
+   AGENTS.md                        | 2026-11-17 16:56:55
+   backend/src/api/ (app.ts)        | 2026-11-17 20:54:17
+   backend/src/storage/             | no existe aún (propiedad de F02-T02)
+   Todas las marcas de tiempo son PREVIAS al inicio de mi verificación (~21:00);
+   por tanto no fueron modificadas durante mi ejecución.
+
+4) COMANDOS EJECUTADOS
+   - npx vitest run tests/unit/worker tests/integration/worker
+   - npx vitest run tests/unit/worker/processImage.test.ts
+   - npx vitest run tests/integration/worker/metadata.test.ts
+   - npx vitest run tests/unit/worker/antiBomb.test.ts
+   - npx vitest run tests/unit
+   - npm run typecheck
+   - npm run lint  (solo lectura; hallazgos ajenos a F02)
+   - npx eslint backend/src/worker tests/unit/worker tests/integration/worker --ext .ts
+   - npx tsx <sondas efímeras en temporary/> (eliminadas)
+   NO se ejecutó ningún comando de Git/GitHub, Docker ni AWS.
+   NO se levantó ningún contenedor: la tarea es una función pura sobre buffers y
+   no requiere emulador. Estado Docker: no iniciado por este Tester.
+
+5) CONFINAMIENTO DE CONTENIDO
+   - Sin secretos reales: las sondas reutilizan testEnv() del repo, que usa
+     valores de marcador de posición y endpoints ficticios del emulador.
+   - Sin rutas Windows absolutas en artefactos: salidas normalizadas a
+     <PROJECT_ROOT> (P4 / G-6b).
+   - Sin dependencias hacia temporary/ en producto ni en tests.

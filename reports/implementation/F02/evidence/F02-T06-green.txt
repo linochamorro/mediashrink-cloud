@@ -1,0 +1,14 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [32mÔ£ô[39m tests/integration/api/e2e-metrics.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 27045[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mflujo completo: los bytes persistidos son los reales de S3, con savingsPct exacto y exifStripped real [33m6754[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mestados coherentes: una imagen FAILED produce PARTIAL y todas FAILED producen FAILED [33m7110[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mobservabilidad: dlqFailures y dlqDeliveryFailed se a├¡slan y skippedAsDuplicate se reporta [33m6765[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mCONFIRM_INCONSISTENT: pol├¡tica at-most-once, sin reparaci├│n autom├ítica [33m6415[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 23:18:00
+[2m   Duration [22m 29.56s[2m (transform 630ms, setup 0ms, collect 1.86s, tests 27.04s, environment 0ms, prepare 211ms)[22m
+

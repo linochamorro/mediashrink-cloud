@@ -1,0 +1,11 @@
+
+> mediashrink-cloud@0.0.0 lint
+> eslint . --ext .ts,.tsx
+
+
+<PROJECT_ROOT>\tests\unit\frontend\core.test.ts
+  6:37  error  'Theme' is defined but never used  @typescript-eslint/no-unused-vars
+
+Ô£û 1 problem (1 error, 0 warnings)
+
+EXIT_CODE=1

@@ -45,12 +45,9 @@ jobs:
       - name: Install
         run: npm ci --no-audit --no-fund
 
-      - name: Install infra test SDKs (pending manifest sync)
-        # backend/package.json y package-lock.json ya declaran client-s3/client-sqs
-        # en el árbol de trabajo del harness F02, pero aún no están en `main`.
-        # `--no-save` instala las versiones verificadas sin tocar manifiestos
-        # (ámbito prohibido de F04-T05). Retirar este paso cuando se publicen.
-        run: npm install --no-save --no-audit --no-fund @aws-sdk/client-s3@3.1171.0 @aws-sdk/client-sqs@3.1171.0
+      # F05-T01: retirado el paso temporal `npm install --no-save`. Los SDK
+      # S3/SQS están declarados en backend/package.json y en package-lock.json;
+      # `npm ci` (paso anterior) los instala sin mutar manifiestos (P4 cerrado).
 
       - name: "Start aws-emulator (G-7: 2 GiB / 2.0 CPUs)"
         run: |

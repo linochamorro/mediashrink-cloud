@@ -1,0 +1,30 @@
+# F04-T04 - tester - cors
+UTC: 2026-11-18T12:57:35.6394006Z
+COMMAND: node temporary/F04-T04-tester-cors.mjs (GetBucketCors on raw + optimized, own probe, NODE_EXTRA_CA_CERTS set to own CA)
+--- OUTPUT ---
+BUCKET: mediashrink-raw-local
+CORS_RULE_COUNT: 1
+ALLOWED_ORIGINS: ["http://localhost:5173"]
+ALLOWED_METHODS: ["GET","PUT"]
+ALLOWED_HEADERS: ["x-amz-security-token","authorization","x-amz-date","content-type","etag","x-amz-content-sha256","x-amz-server-side-encryption","content-md5"]
+EXPOSE_HEADERS: ["content-type","etag","x-amz-request-id","x-amz-id-2"]
+MAX_AGE_SECONDS: 3000
+ORIGIN_EXACT: true
+METHODS_EXACT: true
+HEADERS_NO_WILDCARD: true
+ONE_RULE_ONLY: true
+BUCKET_VERDICT: OK
+BUCKET: mediashrink-optimized-local
+CORS_RULE_COUNT: 1
+ALLOWED_ORIGINS: ["http://localhost:5173"]
+ALLOWED_METHODS: ["GET","PUT"]
+ALLOWED_HEADERS: ["x-amz-security-token","authorization","x-amz-date","content-type","etag","x-amz-content-sha256","x-amz-server-side-encryption","content-md5"]
+EXPOSE_HEADERS: ["content-type","etag","x-amz-request-id","x-amz-id-2"]
+MAX_AGE_SECONDS: 3000
+ORIGIN_EXACT: true
+METHODS_EXACT: true
+HEADERS_NO_WILDCARD: true
+ONE_RULE_ONLY: true
+BUCKET_VERDICT: OK
+ALL_BUCKETS_OK: true
+EXIT_CODE: 0

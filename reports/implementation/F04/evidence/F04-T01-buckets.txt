@@ -1,0 +1,11 @@
+# F04-T01 - buckets
+UTC: 2026-11-18T11:38:35.9699600Z
+COMMAND: node temporary/F04-T01-probe.mjs buckets
+--- OUTPUT ---
+PROBE: ListBuckets
+RESULT: SUCCESS
+BUCKETS: mediashrink-optimized-local | mediashrink-raw-local
+COUNT: 2
+RAW_PRESENT: true
+OPTIMIZED_PRESENT: true
+EXIT_CODE: 0

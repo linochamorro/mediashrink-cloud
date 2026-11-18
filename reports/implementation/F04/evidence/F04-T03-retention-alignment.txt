@@ -1,0 +1,31 @@
+# F04-T03 - retention-alignment
+UTC: 2026-11-18T12:17:35.6150724Z
+COMMAND: node temporary\F04-T03-probe.mjs retention-alignment
+--- OUTPUT ---
+PROBE: Terraform outputs (single source of retention)
+RESULT: SUCCESS
+TF_DYNAMODB_TTL_SECONDS: 2592000
+TF_S3_LIFECYCLE_EXPIRATION_DAYS: 30
+TF_TTL_EQ_2592000: true
+TF_RETENTION_EQ_30: true
+TF_DERIVATION_CONSISTENT: true
+PROBE: S3 GetBucketLifecycleConfiguration(mediashrink-raw-local)
+RESULT: SUCCESS
+LIFECYCLE_RULE_COUNT: 1
+LIFECYCLE_RULE_ID: expire-after-retention-days
+LIFECYCLE_STATUS: Enabled
+LIFECYCLE_EXPIRATION_DAYS: 30
+LIFECYCLE_EQ_30: true
+PROBE: S3 GetBucketLifecycleConfiguration(mediashrink-optimized-local)
+RESULT: SUCCESS
+LIFECYCLE_RULE_COUNT: 1
+LIFECYCLE_RULE_ID: expire-after-retention-days
+LIFECYCLE_STATUS: Enabled
+LIFECYCLE_EXPIRATION_DAYS: 30
+LIFECYCLE_EQ_30: true
+PROBE: DynamoDB DescribeTimeToLive (alignment)
+RESULT: SUCCESS
+TTL_ATTRIBUTE_NAME: ttl
+TTL_STATUS: ENABLED
+T02_A_01_CLOSED: true
+EXIT_CODE: 0

@@ -1,0 +1,34 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts[2m > [22mworker integraci├│n ÔÇö strip total de metadatos (PR-01 / IN-10 / FR-11)[2m > [22mla fixture contiene EXIF/GPS, XMP e IPTC y sharp podr├¡a conservarlos
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset HIGH produce tres salidas v├ílidas y m├®tricas coherentes
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts[2m > [22mworker integraci├│n ÔÇö strip total de metadatos (PR-01 / IN-10 / FR-11)[2m > [22mWebP, AVIF y miniatura salen sin EXIF/GPS, XMP ni IPTC
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset BALANCED produce tres salidas v├ílidas y m├®tricas coherentes
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset MAX_COMPRESSION produce tres salidas v├ílidas y m├®tricas coherentes
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts[2m > [22mworker integraci├│n ÔÇö strip total de metadatos (PR-01 / IN-10 / FR-11)[2m > [22mno propaga metadatos aunque la entrada sea PNG con EXIF
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mcompone estados con las reglas puras sin reimplementarlas
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mcreateSqsClient habla con el emulador usando QueueUrl can├│nica y fromIni
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mcreateSqsClient habla con el emulador usando QueueUrl can├│nica y fromIni
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mcreateSqsClientFromConfig usa la configuraci├│n validada y url can├│nica
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mpublish() env├¡a el mensaje m├¡nimo { userId, jobId } del puerto de T01
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mpublishJob() env├¡a el sobre enriquecido que consume el worker
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mpublishToDeadLetter() y createJobQueuePublisherFromConfig() usan la DLQ can├│nica
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mmensaje v├ílido: procesa, marca COMPLETED con m├®tricas y elimina el mensaje de la cola
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mmensaje v├ílido: procesa, marca COMPLETED con m├®tricas y elimina el mensaje de la cola[33m 6403[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintento transitorio: 2 fallos y ├®xito en el 3┬║ intento, sin DLQ
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintento transitorio: 2 fallos y ├®xito en el 3┬║ intento, sin DLQ[33m 6256[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta)
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta)[33m 6199[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mfallo parcial: imagen fallida va a DLQ y FAILED; las dem├ís del lote se completan
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mfallo parcial: imagen fallida va a DLQ y FAILED; las dem├ís del lote se completan[33m 6296[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mel mensaje v├ílido se consume y elimina; no hay bucle infinito ni duplicados
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mel mensaje v├ílido se consume y elimina; no hay bucle infinito ni duplicados[33m 6289[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22msiempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22msiempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado[33m 6255[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[32m18 passed[39m[22m[90m (18)[39m
+[2m   Start at [22m 22:04:18
+[2m   Duration [22m 39.46s[2m (transform 885ms, setup 0ms, collect 3.31s, tests 38.60s, environment 2ms, prepare 1.16s)[22m
+

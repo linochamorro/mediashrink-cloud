@@ -1,0 +1,4 @@
+RED — npx vitest run tests/unit/frontend/core.test.ts
+Resultado inicial: FAIL al recolectar porque no existía frontend/src/api/auth.ts, importado por la prueba recién creada.
+Error reportado por Vitest: Failed to load url ../../../frontend/src/api/auth (resolved id: ../../../frontend/src/api/auth).
+Interpretación: prueba roja antes de implementar los clientes UI/API.

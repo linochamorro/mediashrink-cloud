@@ -1,0 +1,23 @@
+ARRANQUE PROPIO DEL EMULADOR — LOOP 2/3 (G-7)
+Ejecutado por Tester desde <repo-root>. Docker CLI antepuesto al PATH.
+
+COMMAND: docker compose up -d
+ Network mediashrink-cloud_default Created
+ Container mediashrink-aws-emulator Created
+ Container mediashrink-aws-emulator Started
+EXIT=0
+
+COMMAND: docker inspect --format 'memory={{.HostConfig.Memory}} nanoCpus={{.HostConfig.NanoCpus}}' mediashrink-aws-emulator
+ memory=2147483648 nanoCpus=2000000000
+ (2 GiB / 2.0 CPU — G-7 conforme)
+
+COMMAND: docker inspect --format '{{.State.Health.Status}}' mediashrink-aws-emulator
+ healthy tras 0 sondeos adicionales.
+
+COMMAND: docker cp .../9297/{ca.pem,config,emulator_credentials} -> ./.local/aws-emulator/
+EXIT=0 (repetido en este arranque segun runbook, nota N-01)
+
+COMMAND: curl.exe --silent --show-error --fail --cacert ./.local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health
+ cuerpo: ok   EXIT=0
+
+Puerto expuesto: 127.0.0.1:9297/tcp (unico). Listo para la re-verificacion.

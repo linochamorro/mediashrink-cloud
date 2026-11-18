@@ -1,0 +1,27 @@
+# F04-T01 tester - provider
+UTC: 2026-11-18T11:45:52.5053182Z
+COMMAND: Select-String infra/terraform/{provider,variables,s3}.tf + git diff bootstrap
+--- OUTPUT ---
+PROVIDER_PATTERN shared_credentials_files HITS: 1
+  shared_credentials_files = [var.aws_shared_credentials_file]
+PROVIDER_PATTERN shared_config_files HITS: 1
+  shared_config_files      = [var.aws_config_file]
+PROVIDER_PATTERN endpoints HITS: 1
+  endpoints {
+PROVIDER_PATTERN skip_credentials_validation HITS: 1
+  skip_credentials_validation = true
+PROVIDER_PATTERN skip_requesting_account_id HITS: 1
+  skip_requesting_account_id  = true
+PROVIDER_PATTERN skip_metadata_api_check HITS: 1
+  skip_metadata_api_check     = true
+PROVIDER_PATTERN custom_ca_bundle HITS: 1
+  custom_ca_bundle = var.ca_bundle_path
+PROVIDER_PATTERN access_key HITS: 0
+PROVIDER_PATTERN secret_key HITS: 0
+ENDPOINT_DEFAULT:   default     = "https://127.0.0.1:9297"
+PORT_9324_REJECTION_GUARD:     y STS). Equivale a AWS_ENDPOINT_URL en .env.example. NUNCA debe contener :9324: |     condition     = !can(regex(":9324", var.aws_endpoint_url)) |     error_message = "aws_endpoint_url no debe contener :9324; el emulador solo expone 127.0.0.1:9297 (A-03)."
+S3_EVENT_DECLARATIONS: 0
+BOOTSTRAP_TF_GIT_DIFF_LINES: 0
+CHANGED_IN_TERRAFORM_DIR: M infra/terraform/README.md | ?? infra/terraform/s3.tf
+EXIT_CODE: 0
+

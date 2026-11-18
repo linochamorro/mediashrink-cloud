@@ -1,0 +1,146 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset HIGH produce tres salidas v├ílidas y m├®tricas coherentes
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset BALANCED produce tres salidas v├ílidas y m├®tricas coherentes
+ [31m├ù[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mcreateSqsClient habla con el emulador usando QueueUrl can├│nica y fromIni
+[31m   ÔåÆ NOT_IMPLEMENTED:F02-T04:createSqsClient[39m
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mel preset MAX_COMPRESSION produce tres salidas v├ílidas y m├®tricas coherentes
+ [31m├ù[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mcreateSqsClient habla con el emulador usando QueueUrl can├│nica y fromIni
+[31m   ÔåÆ NOT_IMPLEMENTED:F02-T04:createSqsClient[39m
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts[2m > [22mworker integraci├│n ÔÇö pipeline real sobre buffers (CA-03 / CA-06)[2m > [22mcompone estados con las reglas puras sin reimplementarlas
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts[2m > [22mworker integraci├│n ÔÇö strip total de metadatos (PR-01 / IN-10 / FR-11)[2m > [22mla fixture contiene EXIF/GPS, XMP e IPTC y sharp podr├¡a conservarlos
+ [31m├ù[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mcreateSqsClientFromConfig usa la configuraci├│n validada y url can├│nica
+[31m   ÔåÆ NOT_IMPLEMENTED:F02-T04:createSqsClientFromConfig[39m
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts[2m > [22mworker integraci├│n ÔÇö strip total de metadatos (PR-01 / IN-10 / FR-11)[2m > [22mWebP, AVIF y miniatura salen sin EXIF/GPS, XMP ni IPTC
+ [31m├ù[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mcreateSqsClientFromConfig usa la configuraci├│n validada y url can├│nica
+[31m   ÔåÆ NOT_IMPLEMENTED:F02-T04:createSqsClientFromConfig[39m
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts[2m > [22mworker integraci├│n ÔÇö strip total de metadatos (PR-01 / IN-10 / FR-11)[2m > [22mno propaga metadatos aunque la entrada sea PNG con EXIF
+ [31m├ù[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mpublish() env├¡a el mensaje m├¡nimo { userId, jobId } del puerto de T01
+[31m   ÔåÆ NOT_IMPLEMENTED:F02-T04:SqsJobQueuePublisher[39m
+ [31m├ù[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mpublish() env├¡a el mensaje m├¡nimo { userId, jobId } del puerto de T01
+[31m   ÔåÆ NOT_IMPLEMENTED:F02-T04:SqsJobQueuePublisher[39m
+ [31m├ù[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mpublishJob() env├¡a el sobre enriquecido que consume el worker
+[31m   ÔåÆ NOT_IMPLEMENTED:F02-T04:SqsJobQueuePublisher[39m
+ [31m├ù[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mpublishJob() env├¡a el sobre enriquecido que consume el worker
+[31m   ÔåÆ NOT_IMPLEMENTED:F02-T04:SqsJobQueuePublisher[39m
+ [31m├ù[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mpublishToDeadLetter() y createJobQueuePublisherFromConfig() usan la DLQ can├│nica
+[31m   ÔåÆ NOT_IMPLEMENTED:F02-T04:createJobQueuePublisherFromConfig[39m
+ [31m├ù[39m tests/integration/worker/publisher.test.ts[2m > [22mpublicador SQS y cliente del consumidor (F02-T04)[2m > [22mpublishToDeadLetter() y createJobQueuePublisherFromConfig() usan la DLQ can├│nica
+[31m   ÔåÆ NOT_IMPLEMENTED:F02-T04:createJobQueuePublisherFromConfig[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mmensaje v├ílido: procesa, marca COMPLETED con m├®tricas y elimina el mensaje de la cola[33m 5031[2mms[22m[39m
+[31m   ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintento transitorio: 2 fallos y ├®xito en el 3┬║ intento, sin DLQ
+[31m   ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintento transitorio: 2 fallos y ├®xito en el 3┬║ intento, sin DLQ[33m 5035[2mms[22m[39m
+[31m   ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta)
+[31m   ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta)[33m 5026[2mms[22m[39m
+[31m   ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mfallo parcial: imagen fallida va a DLQ y FAILED; las dem├ís del lote se completan
+[31m   ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mfallo parcial: imagen fallida va a DLQ y FAILED; las dem├ís del lote se completan[33m 5028[2mms[22m[39m
+[31m   ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mel mensaje v├ílido se consume y elimina; no hay bucle infinito ni duplicados
+[31m   ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mel mensaje v├ílido se consume y elimina; no hay bucle infinito ni duplicados[33m 5022[2mms[22m[39m
+[31m   ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22msiempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado
+[31m   ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [31m├ù[39m tests/integration/worker/consumer.test.ts[2m > [22mconsumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22msiempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado[33m 5030[2mms[22m[39m
+[31m   ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 11 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/integration/worker/consumer.test.ts > consumidor SQS ÔÇö reintentos y DLQ (CA-04) > mensaje v├ílido: procesa, marca COMPLETED con m├®tricas y elimina el mensaje de la cola
+ FAIL  tests/integration/worker/consumer.test.ts > consumidor SQS ÔÇö reintentos y DLQ (CA-04) > reintento transitorio: 2 fallos y ├®xito en el 3┬║ intento, sin DLQ
+ FAIL  tests/integration/worker/consumer.test.ts > consumidor SQS ÔÇö reintentos y DLQ (CA-04) > reintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta)
+ FAIL  tests/integration/worker/consumer.test.ts > consumidor SQS ÔÇö reintentos y DLQ (CA-04) > fallo parcial: imagen fallida va a DLQ y FAILED; las dem├ís del lote se completan
+ FAIL  tests/integration/worker/consumer.test.ts > consumidor SQS ÔÇö reintentos y DLQ (CA-04) > el mensaje v├ílido se consume y elimina; no hay bucle infinito ni duplicados
+ FAIL  tests/integration/worker/consumer.test.ts > consumidor SQS ÔÇö reintentos y DLQ (CA-04) > siempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/11]ÔÄ»
+
+ FAIL  tests/integration/worker/publisher.test.ts > publicador SQS y cliente del consumidor (F02-T04) > createSqsClient habla con el emulador usando QueueUrl can├│nica y fromIni
+Error: NOT_IMPLEMENTED:F02-T04:createSqsClient
+ ÔØ» Module.createSqsClient backend/src/worker/sqs-client.ts:33:9
+     31| 
+     32| export function createSqsClient(_options: SqsClientOptions): SQSClientÔÇª
+     33|   throw new Error('NOT_IMPLEMENTED:F02-T04:createSqsClient');
+       |         ^
+     34| }
+     35| 
+ ÔØ» tests/integration/worker/publisher.test.ts:50:17
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/11]ÔÄ»
+
+ FAIL  tests/integration/worker/publisher.test.ts > publicador SQS y cliente del consumidor (F02-T04) > createSqsClientFromConfig usa la configuraci├│n validada y url can├│nica
+Error: NOT_IMPLEMENTED:F02-T04:createSqsClientFromConfig
+ ÔØ» Module.createSqsClientFromConfig backend/src/worker/sqs-client.ts:37:9
+     35| 
+     36| export function createSqsClientFromConfig(_config: AppConfig): SQSClieÔÇª
+     37|   throw new Error('NOT_IMPLEMENTED:F02-T04:createSqsClientFromConfig');
+       |         ^
+     38| }
+     39| 
+ ÔØ» tests/integration/worker/publisher.test.ts:69:17
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/11]ÔÄ»
+
+ FAIL  tests/integration/worker/publisher.test.ts > publicador SQS y cliente del consumidor (F02-T04) > publish() env├¡a el mensaje m├¡nimo { userId, jobId } del puerto de T01
+Error: NOT_IMPLEMENTED:F02-T04:SqsJobQueuePublisher
+ ÔØ» new SqsJobQueuePublisher backend/src/worker/publisher.ts:24:11
+     22| export class SqsJobQueuePublisher implements JobQueuePublisher {
+     23|   constructor(_options: SqsPublisherOptions) {
+     24|     throw new Error('NOT_IMPLEMENTED:F02-T04:SqsJobQueuePublisher');
+       |           ^
+     25|   }
+     26| 
+ ÔØ» tests/integration/worker/publisher.test.ts:87:42
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/11]ÔÄ»
+
+ FAIL  tests/integration/worker/publisher.test.ts > publicador SQS y cliente del consumidor (F02-T04) > publishJob() env├¡a el sobre enriquecido que consume el worker
+Error: NOT_IMPLEMENTED:F02-T04:SqsJobQueuePublisher
+ ÔØ» new SqsJobQueuePublisher backend/src/worker/publisher.ts:24:11
+     22| export class SqsJobQueuePublisher implements JobQueuePublisher {
+     23|   constructor(_options: SqsPublisherOptions) {
+     24|     throw new Error('NOT_IMPLEMENTED:F02-T04:SqsJobQueuePublisher');
+       |           ^
+     25|   }
+     26| 
+ ÔØ» tests/integration/worker/publisher.test.ts:98:23
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/11]ÔÄ»
+
+ FAIL  tests/integration/worker/publisher.test.ts > publicador SQS y cliente del consumidor (F02-T04) > publishToDeadLetter() y createJobQueuePublisherFromConfig() usan la DLQ can├│nica
+Error: NOT_IMPLEMENTED:F02-T04:createJobQueuePublisherFromConfig
+ ÔØ» Module.createJobQueuePublisherFromConfig backend/src/worker/publisher.ts:41:9
+     39| 
+     40| export function createJobQueuePublisherFromConfig(_config: AppConfig):ÔÇª
+     41|   throw new Error('NOT_IMPLEMENTED:F02-T04:createJobQueuePublisherFromÔÇª
+       |         ^
+     42| }
+     43| 
+ ÔØ» tests/integration/worker/publisher.test.ts:122:23
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[6/11]ÔÄ»
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[31m11 failed[39m[22m[2m | [22m[1m[32m7 passed[39m[22m[90m (18)[39m
+[2m   Start at [22m 22:01:14
+[2m   Duration [22m 32.18s[2m (transform 1.08s, setup 0ms, collect 3.58s, tests 31.38s, environment 2ms, prepare 1.25s)[22m
+

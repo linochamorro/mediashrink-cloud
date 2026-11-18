@@ -1,0 +1,25 @@
+COMMAND: npx vitest run tests/integration/worker
+EXIT=0
+
+
+ RUN  v2.1.9 <repo-root>
+
+ ✓ tests/integration/worker/metadata.test.ts (3 tests) 103ms
+ ✓ tests/integration/worker/pipeline.test.ts (4 tests) 144ms
+ ✓ tests/integration/worker/publisher.test.ts (5 tests) 612ms
+ ✓ tests/integration/worker/consumer.test.ts (9 tests) 56505ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > mensaje válido: procesa, marca COMPLETED con métricas y elimina el mensaje de la cola 6342ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > reintento transitorio: 2 fallos y éxito en el 3º intento, sin DLQ 6223ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > reintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta) 6316ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > fallo parcial: imagen fallida va a DLQ y FAILED; las demás del lote se completan 6294ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > el mensaje válido se consume y elimina; no hay bucle infinito ni duplicados 6225ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > siempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado 6361ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > A-01 redelivery: un job terminal no se reabre y la DLQ no se duplica 6327ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > A-02 fallo de la DLQ: se aísla, se registra y el resto del lote continúa 6220ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > A-03 precondición: el consumidor materializa el ImageRecord si falta 6193ms
+
+ Test Files  4 passed (4)
+      Tests  21 passed (21)
+   Start at  22:29:53
+   Duration  57.96s (transform 909ms, setup 0ms, collect 3.16s, tests 57.36s, environment 1ms, prepare 864ms)
+

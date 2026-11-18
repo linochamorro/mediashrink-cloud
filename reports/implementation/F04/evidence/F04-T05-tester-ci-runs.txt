@@ -1,0 +1,51 @@
+﻿# F04-T05 - runs reales de GitHub (Tester)
+UTC: 2026-11-18T13:36:18.5044884Z
+--- gh run list --workflow infra-integration.yml --limit 5 ---
+[{"conclusion":"success","createdAt":"2026-11-18T13:23:36Z","databaseId":44313244490,"displayTitle":"evidence(F04-T05): run-list/run-view y pasos del run 44312560558","event":"push","headBranch":"main"},{"conclusion":"success","createdAt":"2026-11-18T13:22:44Z","databaseId":44313098601,"displayTitle":"docs(F04-T05): addendum con run 44312560558 success (14/14 pasos, 6/6…","event":"push","headBranch":"main"},{"conclusion":"success","createdAt":"2026-11-18T13:19:36Z","databaseId":44312560558,"displayTitle":"fix(F04-T05): instalar SDKs S3/SQS sin tocar manifiestos y documentar…","event":"push","headBranch":"main"},{"conclusion":"failure","createdAt":"2026-11-18T13:15:09Z","databaseId":44311817714,"displayTitle":"ci(F04-T05): workflow de integracion vs aws-emulator + tests de infra…","event":"push","headBranch":"main"}]
+
+RUN_LIST_EXIT: 0
+--- gh run view 44312560558 ---
+conclusion=success status=completed event=push branch=main url=https://github.com/linochamorro/mediashrink-cloud/actions/runs/44312560558
+job=emulator / terraform apply / tests/integration/infra conclusion=success started=2026-11-18T13:19:38Z completed=2026-11-18T13:21:46Z
+paso  1: Set up job                                 success
+paso  2: Checkout                                   success
+paso  3: Setup Node.js                              success
+paso  4: Setup Terraform                            success
+paso  5: Install                                    success
+paso  6: Install infra test SDKs (pending manifest sync) success
+paso  7: Start aws-emulator (G-7: 2 GiB / 2.0 CPUs) success
+paso  8: Wait for emulator healthy                  success
+paso  9: Export CA and credentials (runbook §1.3)   success
+paso 10: Terraform fmt                              success
+paso 11: Terraform init                             success
+paso 12: Terraform validate                         success
+paso 13: Terraform apply (emulator only)            success
+paso 14: Integration tests (infra)                  success
+paso 15: Stop aws-emulator (always)                 success
+paso 29: Post Setup Node.js                         success
+paso 30: Post Checkout                              success
+paso 31: Complete job                               success
+STEP_COUNT: 18  SUCCESS_STEPS: 18
+GH_VIEW_44312560558_EXIT: 0
+--- gh run view 44311817714 ---
+conclusion=failure status=completed event=push branch=main url=https://github.com/linochamorro/mediashrink-cloud/actions/runs/44311817714
+job=emulator / terraform apply / tests/integration/infra conclusion=failure started=2026-11-18T13:15:12Z completed=2026-11-18T13:17:05Z
+paso  1: Set up job                                 success
+paso  2: Checkout                                   success
+paso  3: Setup Node.js                              success
+paso  4: Setup Terraform                            success
+paso  5: Install                                    success
+paso  6: Start aws-emulator (G-7: 2 GiB / 2.0 CPUs) success
+paso  7: Wait for emulator healthy                  success
+paso  8: Export CA and credentials (runbook §1.3)   success
+paso  9: Terraform fmt                              success
+paso 10: Terraform init                             success
+paso 11: Terraform validate                         success
+paso 12: Terraform apply (emulator only)            success
+paso 13: Integration tests (infra)                  failure
+paso 14: Stop aws-emulator (always)                 success
+paso 27: Post Setup Node.js                         skipped
+paso 28: Post Checkout                              success
+paso 29: Complete job                               success
+STEP_COUNT: 17  SUCCESS_STEPS: 15
+GH_VIEW_44311817714_EXIT: 0

@@ -1,0 +1,41 @@
+
+[WebServer] (node:12356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:5328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/3] tests\e2e\frontend-flow.spec.ts:9:1 › tema claro inicial y selector oscuro persistente tras recargar
+[2/3] tests\e2e\frontend-flow.spec.ts:20:1 › registro, error seguro, refresh, upload, polling, resultados, descargas y logout
+  1) tests\e2e\frontend-flow.spec.ts:20:1 › registro, error seguro, refresh, upload, polling, resultados, descargas y logout 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByAltText('Imagen original image-demo')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByAltText('Imagen original image-demo') with timeout 5000ms
+      - waiting for getByAltText('Imagen original image-demo')
+
+
+      94 |   await expect(page.getByText('0.00%', { exact: true })).toBeVisible();
+      95 |   await expect(page.getByText('EXIF pendiente')).toBeVisible();
+    > 96 |   await expect(page.getByAltText('Imagen original image-demo')).toBeVisible();
+         |                                                                 ^
+      97 |   await expect(page.getByAltText('Imagen optimizada image-demo en WEBP')).toBeVisible();
+      98 |   await expect.poll(() => refreshCalls).toBeGreaterThan(0);
+      99 |   const individualDownload = page.waitForEvent('popup');
+        at D:\Projects\Bluemind_Lab\projects\portfolio\mediashrink-cloud\tests\e2e\frontend-flow.spec.ts:96:65
+
+    Error Context: reports\implementation\F03\evidence\playwright-results\frontend-flow-registro-err-0672b-sultados-descargas-y-logout\error-context.md
+
+
+(node:22168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/3] tests\e2e\frontend-flow.spec.ts:135:1 › validación de drag & drop, teclado y errores de archivos

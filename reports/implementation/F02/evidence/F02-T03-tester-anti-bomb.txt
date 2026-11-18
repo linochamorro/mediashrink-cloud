@@ -1,0 +1,11 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/worker/antiBomb.test.ts (7 tests) 115ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  21:00:51
+   Duration  2.49s (transform 434ms, setup 0ms, collect 853ms, tests 115ms, environment 1ms, prepare 376ms)
+
+EXIT=0

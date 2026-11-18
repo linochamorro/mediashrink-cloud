@@ -1,0 +1,49 @@
+COMMAND=npm run test:unit
+START=2026-11-17T22:37:37.5573502-05:00
+
+> mediashrink-cloud@0.0.0 test:unit
+> vitest run tests/unit
+
+
+ RUN  v2.1.9 D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud
+
+ ✓ tests/unit/config.test.ts (35 tests) 59ms
+ ✓ tests/unit/domain/imageHeader.test.ts (15 tests) 30ms
+ ✓ tests/unit/frontend/core.test.ts (11 tests) 42ms
+ ✓ tests/unit/contracts.test.ts (32 tests) 130ms
+ ✓ tests/unit/domain/stateMachine.test.ts (13 tests) 19ms
+ ✓ tests/unit/auth/service.test.ts (10 tests) 1398ms
+   ✓ AuthService — registro, login y refresh (FR-01/FR-02/FR-03) > devuelve el mismo error para correo desconocido y contraseña incorrecta 432ms
+ ✓ tests/unit/api/userstore.test.ts (6 tests) 396ms
+   ✓ adaptador DynamoDB de UserStore (cierra T03-A-04) > AuthService registra y hace login sobre el adaptador DynamoDB 371ms
+ ✓ tests/unit/worker/antiBomb.test.ts (7 tests) 138ms
+ ✓ tests/unit/worker/processImage.test.ts (4 tests) 203ms
+ ✓ tests/unit/api/routes.test.ts (8 tests) 1116ms
+ ✓ tests/unit/auth/jwt.test.ts (7 tests) 80ms
+ ✓ tests/unit/domain/antiBomb.test.ts (6 tests) 15ms
+ ✓ tests/unit/api/presign-routes.test.ts (12 tests) 1259ms
+ ✓ tests/unit/api/presign-keys.test.ts (30 tests) 21ms
+ ✓ tests/unit/domain/savings.test.ts (7 tests) 14ms
+ ✓ tests/unit/auth/rate-limit.test.ts (5 tests) 11ms
+ ✓ tests/unit/domain/index.test.ts (1 test) 11ms
+ ✓ tests/unit/api/authz.test.ts (5 tests) 1193ms
+   ✓ autorización y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > GET /jobs/:id de un lote ajeno devuelve 404 idéntico al inexistente 316ms
+   ✓ autorización y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > POST /jobs/:id/confirm ajeno devuelve 404 y no publica 338ms
+ ✓ tests/unit/domain/guards.test.ts (5 tests) 10ms
+ ✓ tests/unit/frontend.test.ts (3 tests) 7ms
+ ✓ tests/unit/api/confirm.test.ts (3 tests) 436ms
+ ✓ tests/unit/auth/middleware.test.ts (3 tests) 10ms
+ ✓ tests/unit/health.test.ts (2 tests) 18ms
+ ✓ tests/unit/api/rate-limit.test.ts (5 tests) 1128ms
+   ✓ rate limit no suplantable (cierra T03-A-01) > la clave de /jobs deriva del userId: agotar A no afecta a B 372ms
+   ✓ rate limit no suplantable (cierra T03-A-01) > /auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 309ms
+ ✓ tests/unit/auth/password.test.ts (6 tests) 821ms
+   ✓ hash de contraseñas — scrypt (A-02, IN-05) > verifica la contraseña correcta y rechaza una incorrecta 307ms
+
+ Test Files  25 passed (25)
+      Tests  241 passed (241)
+   Start at  22:37:39
+   Duration  6.42s (transform 3.43s, setup 0ms, collect 12.56s, tests 8.57s, environment 10ms, prepare 6.67s)
+
+EXIT_CODE=0
+END=2026-11-17T22:37:45.6368070-05:00

@@ -1,0 +1,14 @@
+== Sonda propia: ZIP via API real del emulador + lector externo python.zipfile ==
+API_STATUS=200
+API_CONTENT_TYPE=application/zip
+API_BYTES=407
+
+READER=python.zipfile (externo, independiente del producto)
+CRC_TEST=None
+NAMES=img_ext.webp,img_ext.avif,img_ext_thumb.webp
+COUNT=3
+EXPECTED_SET_OK=True
+BYTES_OK[img_ext.webp]=True len=24
+BYTES_OK[img_ext.avif]=True len=24
+BYTES_OK[img_ext_thumb.webp]=True len=25
+TEMP_FILES_WRITTEN=NINGUNO (bytes en memoria; sin ficheros .zip en disco)

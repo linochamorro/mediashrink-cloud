@@ -1,0 +1,32 @@
+# F04-T04 - Emulator API support probe (IAM + S3 CORS)
+UTC: 2026-11-18 (F04-T04 emulator session)
+COMMAND: node temporary/F04-T04-probe.mjs all (SigV4 raw IAM Query API + @aws-sdk/client-s3 CORS)
+
+--- OBSERVED OUTPUT ---
+=== IAM SUPPORT PROBE ===
+IAM ListRoles: HTTP 403
+IAM ListRoles BODY: <?xml version="1.0"?><ErrorResponse><Error><Type>Sender</Type><Code>SignatureDoesNotMatch</Code><Message>The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method. Consult the service documentation for details.</Message><ErrorResponse>
+IAM GetRole: HTTP 403
+IAM GetRole BODY: (Code SignatureDoesNotMatch, same message)
+=== S3 CORS SUPPORT PROBE ===
+PUT_BUCKET_CORS: OK (200)
+GET_BUCKET_CORS: OK (200)
+CORS_RULES: [{"AllowedMethods":["GET","PUT"],"AllowedOrigins":["http://localhost:5173"],"AllowedHeaders":["content-type","authorization","x-amz-date","x-amz-content-sha256","x-amz-security-token"],"ExposeHeaders":["etag","content-type"],"MaxAgeSeconds":3000}]
+DELETE_BUCKET_CORS: OK (probe cleanup)
+EXIT_CODE: 0
+
+--- EXTRA IAM RAW-SIGNING DIAGNOSIS (temporary/F04-T04-iamread.mjs) ---
+Variants A/D/E/I/J/L (service "iam", body params, several header/escape settings):
+  HTTP 403 SignatureDoesNotMatch.
+Variants B/C/F (params in URL query instead of body):
+  HTTP 400 InvalidAction "request is missing the `Action` field" -> emulator reads params ONLY from body.
+Variant G (service "sts"): signature ACCEPTED, routed to STS handler -> HTTP 400 InvalidAction "unknown action: GetRole".
+
+--- CONCLUSION ---
+The emulator DOES implement IAM: the official Terraform AWS provider successfully
+created `aws_iam_role`, `aws_iam_role_policy` and read `data "aws_iam_role"` over
+:9297 with file-based credentials and its own CA (see F04-T04-iam-support.txt and
+F04-T04-apply.txt). The hand-rolled SigV4 client signs with service "iam" but the
+emulator's raw verifier did not accept that signature; this is a limitation of the
+artesanal probe, NOT of the provider path. S3 CORS is fully supported (live
+Put/Get/Delete). No real AWS was used. No PASSED is simulated here.

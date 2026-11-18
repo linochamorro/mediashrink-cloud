@@ -1,0 +1,19 @@
+# F04-T03 (tester) - final-check
+UTC: 2026-11-18T12:28:36.5684550Z
+COMMAND: docker ps -a ; docker network ls ; scan all F04-T03-tester-*.txt ; read corrected verdicts
+--- OUTPUT ---
+--- docker ps -a ---
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+--- docker network ls (mediashrink-cloud_default) ---
+NETWORK ID   NAME      DRIVER    SCOPE
+--- secrets / absolute-path scan over ALL tester evidence ---
+EVIDENCE_FILES_SCANNED: 24
+SENSITIVE_OR_ABSOLUTE_PATH_HITS: 0
+--- corrected static/scope verdicts ---
+static-corrected-v3: TOTAL_CODE_RETENTION_LITERALS: 1
+static-corrected-v3: STATIC_CHECKS_CONSISTENT: True
+scope-corrected-v3: SOURCE_HASH_MISMATCHES: 0
+scope-corrected-v3: GIT_STATUS_LISTS_IDENTICAL: True
+scope-corrected-v3: GIT_DIFF_LISTS_IDENTICAL: True
+scope-corrected-v3: HCL_FILES_UNCHANGED_BY_TESTER: True
+EXIT_CODE: 0

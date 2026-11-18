@@ -1,0 +1,7 @@
+entries=3 bytes=374
+TSX_EXIT=0
+EXPAND_ARCHIVE=OK
+img_alpha.avif=alpha-avif
+img_alpha.webp=alpha-webp
+img_beta_thumb.webp=beta-thumb
+

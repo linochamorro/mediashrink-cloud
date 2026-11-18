@@ -1,0 +1,2 @@
+EXITCODE=0
+PERSIST={"confirmStatus":200,"completed":1,"batchStatus":"COMPLETED","headSizes":{"webp":98,"avif":304,"thumbnail":98},"headSum":500,"jobBytesAfter":500,"sumEqualsBytesAfter":true,"savingsOk":true,"download":{"webp":{"routeStatus":200,"http":200,"identical":true},"avif":{"routeStatus":200,"http":200,"identical":true},"thumbnail":{"routeStatus":200,"http":200,"identical":true}},"zipStatus":200,"zipEntries":["img-persist.avif","img-persist.webp","img-persist_thumb.webp"],"zipMatch":{"webp":true,"avif":true,"thumbnail":true}}

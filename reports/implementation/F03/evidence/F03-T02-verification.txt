@@ -1,0 +1,7 @@
+F03-T02 — verificación determinista
+Comando focal: npx vitest run tests/unit/frontend/core.test.ts
+Resultado: PASS · 1 archivo · 9 tests. Abarca registro, refresh enviando únicamente refreshToken, parseo de error HTTP anidado y uso de mocks fetch deterministas.
+
+Typecheck frontend: npm run typecheck --workspace=@mediashrink/frontend — PASS.
+Build frontend: npm run build --workspace=@mediashrink/frontend — PASS · Vite 5.4.21.
+No se ejecutó contra servicios reales ni Docker.

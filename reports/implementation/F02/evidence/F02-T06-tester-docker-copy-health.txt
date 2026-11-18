@@ -1,0 +1,16 @@
+docker cp ca.pem EXIT=0
+
+docker cp config EXIT=0
+
+docker cp emulator_credentials EXIT=0
+
+healthcheck EXIT=0 body=ok
+
+files:
+
+Name                 Length
+----                 ------
+ca.pem                  570
+config                  152
+emulator_credentials    116
+

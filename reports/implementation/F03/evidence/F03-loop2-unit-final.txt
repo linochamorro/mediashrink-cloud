@@ -1,0 +1,48 @@
+
+> mediashrink-cloud@0.0.0 test:unit
+> vitest run tests/unit
+
+
+ RUN  v2.1.9 D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud
+
+ ✓ tests/unit/config.test.ts (35 tests) 78ms
+ ✓ tests/unit/frontend/core.test.ts (11 tests) 48ms
+ ✓ tests/unit/domain/imageHeader.test.ts (15 tests) 28ms
+ ✓ tests/unit/contracts.test.ts (32 tests) 220ms
+ ✓ tests/unit/domain/stateMachine.test.ts (13 tests) 18ms
+ ✓ tests/unit/auth/service.test.ts (10 tests) 1537ms
+   ✓ AuthService — registro, login y refresh (FR-01/FR-02/FR-03) > devuelve el mismo error para correo desconocido y contraseña incorrecta 495ms
+ ✓ tests/unit/auth/jwt.test.ts (7 tests) 96ms
+ ✓ tests/unit/api/userstore.test.ts (6 tests) 454ms
+   ✓ adaptador DynamoDB de UserStore (cierra T03-A-04) > AuthService registra y hace login sobre el adaptador DynamoDB 431ms
+ ✓ tests/unit/domain/antiBomb.test.ts (6 tests) 16ms
+ ✓ tests/unit/api/authz.test.ts (5 tests) 1194ms
+   ✓ autorización y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > GET /jobs/:id de un lote ajeno devuelve 404 idéntico al inexistente 327ms
+ ✓ tests/unit/api/routes.test.ts (8 tests) 1424ms
+ ✓ tests/unit/api/presign-routes.test.ts (12 tests) 1422ms
+ ✓ tests/unit/domain/savings.test.ts (7 tests) 13ms
+ ✓ tests/unit/api/presign-keys.test.ts (30 tests) 34ms
+ ✓ tests/unit/domain/index.test.ts (1 test) 13ms
+ ✓ tests/unit/api/rate-limit.test.ts (5 tests) 1328ms
+   ✓ rate limit no suplantable (cierra T03-A-01) > la clave de /jobs deriva del userId: agotar A no afecta a B 457ms
+   ✓ rate limit no suplantable (cierra T03-A-01) > /auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 338ms
+ ✓ tests/unit/worker/antiBomb.test.ts (7 tests) 503ms
+   ✓ worker — orden de guardas y anti-bomba (A-05 / IN-10) > rechaza bombas de píxeles ANTES de invocar a sharp 440ms
+ ✓ tests/unit/api/confirm.test.ts (3 tests) 488ms
+ ✓ tests/unit/auth/rate-limit.test.ts (5 tests) 12ms
+ ✓ tests/unit/domain/guards.test.ts (5 tests) 11ms
+ ✓ tests/unit/frontend.test.ts (3 tests) 10ms
+ ✓ tests/unit/auth/middleware.test.ts (3 tests) 11ms
+ ✓ tests/unit/worker/processImage.test.ts (4 tests) 1820ms
+   ✓ worker — formatos y métricas (CA-03 / IN-01 / FR-12) > produce WebP, AVIF y miniatura WebP con bytes reales y dimensiones válidas 1690ms
+ ✓ tests/unit/auth/password.test.ts (6 tests) 1172ms
+   ✓ hash de contraseñas — scrypt (A-02, IN-05) > verifica la contraseña correcta y rechaza una incorrecta 384ms
+ ✓ tests/unit/health.test.ts (2 tests) 25ms
+
+ Test Files  25 passed (25)
+      Tests  241 passed (241)
+   Start at  22:00:55
+   Duration  9.69s (transform 4.20s, setup 0ms, collect 25.56s, tests 11.97s, environment 11ms, prepare 9.37s)
+
+
+EXIT_CODE=0

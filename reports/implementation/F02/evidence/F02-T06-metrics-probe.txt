@@ -1,0 +1,31 @@
+{
+  "declaredBytes": 1,
+  "s3ContentLength": 768,
+  "sourceBytes": 768,
+  "confirmStatus": 200,
+  "consume": [
+    {
+      "batchStatus": "COMPLETED",
+      "completed": 1,
+      "dlqFailures": 0,
+      "dlqDeliveryFailed": false,
+      "skippedAsDuplicate": false
+    }
+  ],
+  "job": {
+    "status": "COMPLETED",
+    "bytesBefore": 768,
+    "bytesAfter": 508,
+    "savingsPct": 33.85416666666667,
+    "exifStripped": true
+  },
+  "images": [
+    {
+      "imageId": "img-probe",
+      "status": "COMPLETED",
+      "bytesBefore": 768,
+      "bytesAfter": 508,
+      "exifStripped": true
+    }
+  ]
+}

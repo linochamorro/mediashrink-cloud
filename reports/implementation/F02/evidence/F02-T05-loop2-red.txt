@@ -1,0 +1,332 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [31m├ù[39m tests/unit/api/delete-partial.test.ts[2m > [22mA-02 ÔÇö errores parciales de DeleteObjects (loop 2)[2m > [22mfallo parcial permanente: conserva fila y objeto fallido, responde error acotado
+[31m   ÔåÆ expected 204 to be greater than or equal to 500[39m
+ [31m├ù[39m tests/unit/api/zip-cap.test.ts[2m > [22mA-01 ÔÇö tope expl├¡cito del ZIP (loop 2)[2m > [22mrechaza 413 por bytes sumados antes de materializar ning├║n objeto
+[31m   ÔåÆ promise resolved "[ { name: 'img_big.webp', ÔÇª(1) } ]" instead of rejecting[39m
+ [32mÔ£ô[39m tests/unit/api/delete-partial.test.ts[2m > [22mA-02 ÔÇö errores parciales de DeleteObjects (loop 2)[2m > [22mfallo parcial transitorio: reintenta, borra todo y devuelve 204
+ [31m├ù[39m tests/unit/api/zip-cap.test.ts[2m > [22mA-01 ÔÇö tope expl├¡cito del ZIP (loop 2)[2m > [22mrechaza 413 por n├║mero de entradas antes de materializar
+[31m   ÔåÆ promise resolved "[ { name: 'img_big.webp', ÔÇª(1) }, ÔÇª(1) ]" instead of rejecting[39m
+ [31m├ù[39m tests/unit/api/delete-partial.test.ts[2m > [22mA-02 ÔÇö errores parciales de DeleteObjects (loop 2)[2m > [22msolo contabiliza claves confirmadas como borradas
+[31m   ÔåÆ promise resolved "1" instead of rejecting[39m
+ [31m├ù[39m tests/unit/api/zip-cap.test.ts[2m > [22mA-01 ÔÇö tope expl├¡cito del ZIP (loop 2)[2m > [22mse fija en ContentLength declarado, no solo en los bytes ya le├¡dos
+[31m   ÔåÆ expected 200 to be 413 // Object.is equality[39m
+ [32mÔ£ô[39m tests/unit/api/zip-cap.test.ts[2m > [22mA-01 ÔÇö tope expl├¡cito del ZIP (loop 2)[2m > [22mun lote dentro del tope sigue generando el ZIP completo
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 5 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/unit/api/delete-partial.test.ts > A-02 ÔÇö errores parciales de DeleteObjects (loop 2) > fallo parcial permanente: conserva fila y objeto fallido, responde error acotado
+AssertionError: expected 204 to be greater than or equal to 500
+ ÔØ» tests/unit/api/delete-partial.test.ts:32:29
+     30| 
+     31|     const response = await deleteRequest(env.app, token);
+     32|     expect(response.status).toBeGreaterThanOrEqual(500);
+       |                             ^
+     33|     const body = (await response.json()) as { error: { code: string; mÔÇª
+     34|     expect(body.error.code).toBe('PARTIAL_DELETE_FAILED');
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/5]ÔÄ»
+
+ FAIL  tests/unit/api/delete-partial.test.ts > A-02 ÔÇö errores parciales de DeleteObjects (loop 2) > solo contabiliza claves confirmadas como borradas
+AssertionError: promise resolved "1" instead of rejecting
+
+- Expected: 
+[Error: rejected promise]
+
++ Received: 
+1
+
+ ÔØ» tests/unit/api/delete-partial.test.ts:69:70
+     67|     env.s3.seed(failedKey, Buffer.from('raw'));
+     68| 
+     69|     await expect(env.objectAccess.deleteJobObjects({ userId, jobId }))ÔÇª
+       |                                                                      ^
+     70|     expect(env.s3.objects.has(failedKey)).toBe(true);
+     71|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/5]ÔÄ»
+
+ FAIL  tests/unit/api/zip-cap.test.ts > A-01 ÔÇö tope expl├¡cito del ZIP (loop 2) > rechaza 413 por bytes sumados antes de materializar ning├║n objeto
+AssertionError: promise resolved "[ { name: 'img_big.webp', ÔÇª(1) } ]" instead of rejecting
+
+- Expected: 
+[Error: rejected promise]
+
++ Received: 
+Array [
+  Object {
+    "bytes": Buffer [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+    ],
+    "name": "img_big.webp",
+  },
+]
+
+ ÔØ» tests/unit/api/zip-cap.test.ts:32:5
+     30|     await expect(
+     31|       env.objectAccess.readOptimizedObjects({ userId, jobId }, [imageIÔÇª
+     32|     ).rejects.toThrow();
+       |     ^
+     33|     expect(env.s3.materializations).toHaveLength(0);
+     34| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/5]ÔÄ»
+
+ FAIL  tests/unit/api/zip-cap.test.ts > A-01 ÔÇö tope expl├¡cito del ZIP (loop 2) > rechaza 413 por n├║mero de entradas antes de materializar
+AssertionError: promise resolved "[ { name: 'img_big.webp', ÔÇª(1) }, ÔÇª(1) ]" instead of rejecting
+
+- Expected: 
+[Error: rejected promise]
+
++ Received: 
+Array [
+  Object {
+    "bytes": Buffer [
+      97,
+    ],
+    "name": "img_big.webp",
+  },
+  Object {
+    "bytes": Buffer [
+      98,
+    ],
+    "name": "img_big.avif",
+  },
+]
+
+ ÔØ» tests/unit/api/zip-cap.test.ts:52:5
+     50|     await expect(
+     51|       env.objectAccess.readOptimizedObjects({ userId, jobId }, [imageIÔÇª
+     52|     ).rejects.toThrow();
+       |     ^
+     53|     expect(env.s3.materializations).toHaveLength(0);
+     54|     expect((await zipRequest(env, token)).status).toBe(413);
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/5]ÔÄ»
+
+ FAIL  tests/unit/api/zip-cap.test.ts > A-01 ÔÇö tope expl├¡cito del ZIP (loop 2) > se fija en ContentLength declarado, no solo en los bytes ya le├¡dos
+AssertionError: expected 200 to be 413 // Object.is equality
+
+- Expected
++ Received
+
+- 413
++ 200
+
+ ÔØ» tests/unit/api/zip-cap.test.ts:63:51
+     61|     env.s3.seed(`${userId}/${jobId}/optimized/${imageId}.webp`, BufferÔÇª
+     62| 
+     63|     expect((await zipRequest(env, token)).status).toBe(413);
+       |                                                   ^
+     64|     expect(env.s3.materializations).toHaveLength(0);
+     65|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/5]ÔÄ»
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[31m5 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (7)[39m
+[2m   Start at [22m 23:01:18
+[2m   Duration [22m 2.25s[2m (transform 554ms, setup 0ms, collect 2.58s, tests 578ms, environment 0ms, prepare 439ms)[22m
+
+EXIT=1
+

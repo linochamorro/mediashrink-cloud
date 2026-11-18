@@ -1,0 +1,74 @@
+COMMAND=npx playwright test --config=tests/e2e/playwright.config.ts --reporter=list --workers=1
+BROWSER=Microsoft Edge (msedge)
+PORT=51744
+LISTENER_BEFORE=none
+STARTED=2026-11-18T06:26:34.2006048-05:00
+[WebServer] (node:13056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:7368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\frontend-flow.spec.ts:9:1 › tema claro inicial y selector oscuro persistente tras recargar (1.4s)
+  ok 2 tests\e2e\frontend-flow.spec.ts:20:1 › registro, error seguro, refresh, upload, polling, resultados, descargas y logout (24.4s)
+  ok 3 tests\e2e\frontend-flow.spec.ts:147:1 › validación de drag & drop, teclado y errores de archivos (982ms)
+Error: tests\e2e\global-teardown.mjs: file must export a single function.
+[WebServer] 6:27:12 a. m. [vite] Internal server error: Cannot set headers after they are sent to the client
+[WebServer]       at ServerResponse.setHeader (node:_http_outgoing:808:11)
+[WebServer]       at vary (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41645:9)
+[WebServer]       at applyHeaders (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41799:11)
+[WebServer]       at applyHeaders (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41797:11)
+[WebServer]       at applyHeaders (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41797:11)
+[WebServer]       at cors (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41835:7)
+[WebServer]       at file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41872:17
+[WebServer]       at originCallback (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41862:15)
+[WebServer]       at file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41867:13
+[WebServer]       at optionsCallback (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41847:9)
+[WebServer]       at corsMiddleware (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41852:7)
+[WebServer]       at call (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41364:7)
+[WebServer]       at next (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41308:5)
+[WebServer]       at viteRejectInvalidRequestMiddleware (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:63007:12)
+[WebServer]       at call (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41364:7)
+[WebServer]       at next (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41308:5)
+[WebServer]       at app.handle (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41311:3)
+[WebServer]       at Server.app (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41176:37)
+[WebServer]       at Server.emit (node:events:526:24)
+[WebServer]       at parserOnIncoming (node:_http_server:1464:12)
+[WebServer]       at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)
+[WebServer] node:events:505
+[WebServer]     throw er; // Unhandled 'error' event
+[WebServer]     ^
+[WebServer] 
+[WebServer] Error [ERR_STREAM_WRITE_AFTER_END]: write after end
+[WebServer]     at ServerResponse.end (node:_http_outgoing:1293:15)
+[WebServer]     at viteErrorMiddleware (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:48806:11)
+[WebServer]     at call (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41360:7)
+[WebServer]     at next (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41308:5)
+[WebServer]     at call (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41373:3)
+[WebServer]     ... collapsed 14 duplicate lines matching above 2 lines 7 times...
+[WebServer]     at next (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41308:5)
+[WebServer]     at next (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41286:14)
+[WebServer]     at call (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41373:3)
+[WebServer]     at next (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41308:5)
+[WebServer]     ... collapsed 4 duplicate lines matching above 2 lines 2 times...
+[WebServer]     at viteRejectInvalidRequestMiddleware (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:63007:12)
+[WebServer]     at call (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41364:7)
+[WebServer]     at next (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41308:5)
+[WebServer]     at app.handle (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41311:3)
+[WebServer]     at Server.app (file:///D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:41176:37)
+[WebServer]     at Server.emit (node:events:526:24)
+[WebServer]     at parserOnIncoming (node:_http_server:1464:12)
+[WebServer]     at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)
+[WebServer] Emitted 'error' event on ServerResponse instance at:
+[WebServer]     at emitErrorNt (node:_http_outgoing:1049:9)
+[WebServer]     at process.processTicksAndRejections (node:internal/process/task_queues:91:21) {
+[WebServer]   code: 'ERR_STREAM_WRITE_AFTER_END'
+[WebServer] }
+[WebServer] 
+[WebServer] Node.js v26.13.0
+
+  3 passed (36.7s)
+  1 error was not a part of any test, see above for details
+EXIT_CODE=1
+FINISHED=2026-11-18T06:27:13.1249559-05:00

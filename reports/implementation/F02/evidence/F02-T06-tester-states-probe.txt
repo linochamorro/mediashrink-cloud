@@ -1,0 +1,3 @@
+EXITCODE=0
+STATE_A={"batchStatus":"PARTIAL","jobStatus":"PARTIAL","completed":1,"failed":1,"images":[{"imageId":"img-bad","status":"FAILED"},{"imageId":"img-good","status":"COMPLETED"}],"observability":{"dlqFailures":1,"dlqDeliveryFailed":true,"skippedAsDuplicate":false},"redelivery":{"skippedAsDuplicate":true,"outcomes":0,"dlqFailures":0}}
+STATE_B={"batchStatus":"FAILED","jobStatus":"FAILED","failed":1}

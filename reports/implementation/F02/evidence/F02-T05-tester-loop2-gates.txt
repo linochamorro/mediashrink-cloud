@@ -1,0 +1,11 @@
+== COMANDO: npm run typecheck ==
+
+> mediashrink-cloud@0.0.0 typecheck
+> tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json
+TYPECHECK_EXIT=0
+== COMANDO: npx eslint backend/src/api backend/src/storage tests/unit/api tests/integration/api --ext .ts ==
+
+LINT_SCOPED_EXIT=0
+== COMANDO: npm run lint (global, referencia F03) ==
+<PROJECT_ROOT>\tests\unit\frontend\core.test.ts:6:37: 'Theme' is defined but never used. [Error/@typescript-eslint/no-unused-vars]
+LINT_GLOBAL_EXIT=1

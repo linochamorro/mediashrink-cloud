@@ -1,0 +1,40 @@
+# F04-T04 - skip-flags (is_emulator)
+UTC: 2026-11-18 (F04-T04 session, emulator up)
+COMMAND: static grep infra/terraform/provider.tf + provider-free Terraform evaluation (temporary/F04-T04-skip-eval) + terraform validate -var='is_emulator=false'
+
+--- STATIC CHECK (real grep) ---
+skip_*_EQUAL_VAR_IS_EMULATOR: 3 (expected 3)
+  skip_credentials_validation = var.is_emulator
+  skip_requesting_account_id  = var.is_emulator
+  skip_metadata_api_check     = var.is_emulator
+skip_*_EQUAL_LITERAL_TRUE: 0 (expected 0)
+variables.tf: variable "is_emulator" { type = bool; default = true }
+provider.tf additionally conditions: shared_credentials_files, shared_config_files,
+dynamic "endpoints" (for_each = var.is_emulator ? [1] : []) and custom_ca_bundle.
+No real AWS call was made for any of these checks.
+
+--- PROVIDER-FREE EVALUATION OF THE SAME EXPRESSIONS (no AWS, no state) ---
+Observed `terraform -chdir=temporary/F04-T04-skip-eval plan` output, is_emulator = true (default):
+  + credential_files            = [ "../../.local/aws-emulator/emulator_credentials" ]
+  + custom_ca_bundle            = "../../.local/aws-emulator/ca.pem"
+  + forced_endpoint             = "https://127.0.0.1:9297"
+  + skip_credentials_validation = true
+  + skip_metadata_api_check     = true
+  + skip_requesting_account_id  = true
+
+Observed output, is_emulator = false (documented for real AWS; NOT applied):
+  + credential_files            = []
+  + skip_credentials_validation = false
+  + skip_metadata_api_check     = false
+  + skip_requesting_account_id  = false
+  (forced_endpoint = null, custom_ca_bundle = null: no emulator endpoint or CA is forced)
+
+--- CONFIG VALIDATION FOR REAL-AWS MODE (no credentials, no network) ---
+terraform -chdir=infra/terraform validate -var='is_emulator=false' -no-color
+Success! The configuration is valid.
+EXIT_CODE: 0
+
+NOTE: NO `terraform plan`/`apply` with is_emulator=false was run against the
+product configuration: connecting to real AWS is prohibited. The real-AWS
+procedure is documented in README.md §"AWS real (no ejecutar en esta fase)".
+EXIT_CODE: 0

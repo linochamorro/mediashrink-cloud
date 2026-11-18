@@ -1,0 +1,60 @@
+=== Contraste de autorización / aislamiento — Tester F02-T01 (ejecución propia) ===
+
+Comandos propios ejecutados (NO_COLOR=1):
+- npx vitest run tests/unit/api --no-color            -> 4 archivos, 24/24, EXIT_CODE=0
+- npx vitest run tests/unit/api tests/integration/api --no-color -> 6 archivos, 31/31, EXIT_CODE=0
+  (detalle en F02-T01-tester-api.txt y F02-T01-tester-unit-api.txt)
+
+Fuentes leídas (sin editar): backend/src/api/{app,jobs,job-list-store}.ts,
+backend/src/auth/{middleware,errors}.ts, tests/unit/api/{authz,routes}.test.ts,
+tests/integration/api/routes.test.ts, docs/sdd/spec.md §5/§6 y FR-21.
+
+1) 401 sin token, antes que cualquier otra guarda
+   - jobs.ts: el middleware requireAuth se monta en la línea 103 y el limitador en la 104-112:
+     la autenticación corre primero. requireAuth (auth/middleware.ts 47-67) exige
+     'Authorization: Bearer <access>', verifica el JWT y confirma el usuario con findById;
+     cualquier fallo se serializa con authErrorResponse -> 401 UNAUTHORIZED.
+   - Verificado por mis ejecuciones: tests/unit/api/authz.test.ts 5/5 (caso ll. 11-23) y
+     tests/integration/api/routes.test.ts 4/4 (caso ll. 66-74): las cuatro rutas devuelven 401.
+   - Token manipulado y refresh token usado como access -> 401 (authz.test.ts ll. 25-43).
+
+2) 404 idéntico para lote ajeno e inexistente (sin oracle de existencia)
+   - jobs.ts: notFound() = authErrorResponse(resourceNotFound()) (ll. 95-97), invocado en
+     GET /jobs/:id (l. 165) y POST /jobs/:id/confirm (l. 178). getJob(userId, jobId) recibe
+     siempre el userId del token: devuelve null tanto para ajeno como para inexistente.
+   - Verificado: authz.test.ts ll. 45-60 compara JSON.stringify de ambos cuerpos e igualdad
+     de código RESOURCE_NOT_FOUND; integración routes.test.ts ll. 39-48 compara .text() de
+     ambas respuestas. Resultado: 404 / 404 con cuerpo idéntico.
+   - El confirm ajeno devuelve 404 y NO publica (publisher.messages sin cambios):
+     authz.test.ts ll. 62-75.
+
+3) userId del token no suplantable
+   - Las cuatro rutas leen c.get('userId') (jobs.ts ll. 125, 154, 163, 174), fijado por
+     requireAuth tras verifyToken. No existe parámetro userId en path/query/body/headers.
+   - GET /jobs usa QueryCommand con 'userId = :u' alimentado por c.get('userId')
+     (job-list-store.ts ll. 42-54): imposible listar lotes ajenos.
+   - Verificado: authz.test.ts ll. 77-91 (cabecera x-user-id con userId ajeno -> 404);
+     routes.test.ts ll. 66-80 (listado solo del usuario); integración ll. 23-37 (listA=1, listB=0).
+
+4) POST /jobs: preset validado con esquemas congelados y métricas 0/0/0
+   - jobs.ts: schemas.Preset (l. 57) rechaza 'ULTRA' con 400 VALIDATION_ERROR (ll. 35-48 del test)
+     y no crea el lote (jobs.jobs.size === 0). Imágenes validadas con schemas.ImageRecord y
+     schemas.JobMetrics (ll. 72-83); lote vacío, imageId inválido y bytes no enteros -> 400.
+   - El job PENDING se persiste con bytesBefore=bytesAfter=savingsPct=0 (ll. 133-139) -
+     "sin medición" coherente con PR-12 - y se valida con schemas.Job.parse (l. 145);
+     ttl = computeTtl(createdAt); formatos ['webp','avif']; sin passwordHash en la respuesta.
+   - Verificado: routes.test.ts ll. 11-64 (8/8), integración routes.test.ts ll. 23-37.
+
+5) confirm idempotente con transición PENDING -> PROCESSING y rollback
+   - jobs.ts ll. 177-198: getJob -> si status !== 'PENDING' responde {confirmed:true} sin publicar
+     (l. 180); si PENDING, updateJob(..., PROCESSING) y DESPUÉS publisher.publish(...) (ll. 182-184);
+     si publish falla, revierte a PENDING y responde 503 PUBLISH_FAILED (ll. 185-197).
+   - Verificado (secuencia): routes.test.ts ll. 101-141 (publicación única, segunda llamada sin
+     republicar, rollback y reintento exitoso); integración routes.test.ts ll. 50-64 (con DynamoDB
+     real: 1 mensaje, mensaje {userId, jobId}). Resultado: 8/8 unit y 4/4 integración.
+   - Límite de cobertura: la idempotencia se verificó en secuencia, no bajo dos confirm
+     concurrentes (registrado por Auditoría A-01, MEDIUM, no bloqueante para F02-T01).
+
+Veredicto del contraste: conforme con FR-21/spec §6/CA-01 en todo lo ejecutable en esta tarea;
+sin suplantación de userId y sin hallazgos críticos/altos propios. No se presentan como propias
+las ejecuciones del Developer: toda ejecución citada arriba corresponde a los comandos del Tester.

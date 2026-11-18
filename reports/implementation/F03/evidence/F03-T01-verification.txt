@@ -1,0 +1,11 @@
+GREEN / REFACTOR — 2026-11-17, workspace Windows
+Comando: npx vitest run tests/unit/frontend/core.test.ts
+Resultado: PASS · 1 archivo · 9 tests.
+
+Comando: npm run typecheck --workspace=@mediashrink/frontend
+Resultado: PASS · tsc --noEmit -p tsconfig.json.
+
+Comando: npm run build --workspace=@mediashrink/frontend
+Resultado: PASS · Vite 5.4.21 · 35 módulos · build completado.
+
+El conteo incluye pruebas de tema, auth, validación y cliente API determinista; ver salida compartida también en F03-T02-verification.txt y F03-T03-verification.txt.

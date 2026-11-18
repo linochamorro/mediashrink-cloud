@@ -1,0 +1,17 @@
+# F04-T01 tester - plan-final
+UTC: 2026-11-18T11:46:03.9845360Z
+COMMAND: $tf -chdir=infra/terraform plan -input=false -detailed-exitcode
+--- OUTPUT ---
+data.aws_caller_identity.emulator: Reading...
+aws_s3_bucket.raw: Refreshing state... [id=mediashrink-raw-local]
+aws_s3_bucket.optimized: Refreshing state... [id=mediashrink-optimized-local]
+data.aws_caller_identity.emulator: Read complete after 0s [id=000000000000]
+aws_s3_bucket_lifecycle_configuration.raw: Refreshing state... [id=mediashrink-raw-local]
+aws_s3_bucket_lifecycle_configuration.optimized: Refreshing state... [id=mediashrink-optimized-local]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+EXIT_CODE: 0
+

@@ -1,0 +1,44 @@
+== Estado git (idéntico al inicio de este loop) ==
+ M STATE.md
+ M backend/package.json
+ M docs/sdd/spec.md
+ M docs/sdd/tasks.md
+ M frontend/index.html
+ M frontend/src/App.tsx
+ M package-lock.json
+?? backend/src/api/
+?? backend/src/db/user-store-adapter.ts
+?? backend/src/storage/
+?? backend/src/worker/
+?? docs/sdd/packages/P-02-api-and-worker.md
+?? docs/sdd/packages/P-03-frontend-spa.md
+?? docs/sdd/packages/P-04-terraform-and-ci.md
+?? frontend/src/api/auth.ts
+?? frontend/src/api/jobs.ts
+?? frontend/src/styles.css
+?? frontend/src/theme.ts
+?? frontend/src/upload/
+?? reports/audits/F02/
+?? reports/audits/F03/
+?? reports/implementation/F02/
+?? reports/implementation/F03/
+?? reports/verification/F03-architect.md
+?? tests/e2e/
+?? tests/integration/api/
+?? tests/integration/worker/
+?? tests/unit/api/
+?? tests/unit/frontend/
+?? tests/unit/worker/
+== Ultimo commit (sin push) ==
+469888b feat(F01): contratos congelados, DynamoDB, auth JWT, reglas puras y seed (CA-01..CA-05 PASSED)
+== skip/only/todo en tests/unit/api y tests/integration/api ==
+NINGUNO
+== Archivos escritos por este Tester en loop 2 ==
+F02-T05-tester-loop2-delete.txt
+F02-T05-tester-loop2-docker-up.txt
+F02-T05-tester-loop2-focused.txt
+F02-T05-tester-loop2-gates.txt
+F02-T05-tester-loop2-suite.txt
+F02-T05-tester-loop2-zip.txt
+F02-T05-tester.md (addendum append-only al final)
+SCAN_CLEAN=True

@@ -1,0 +1,14 @@
+COMMAND: npx vitest run tests/integration/worker/consumer.test.ts -t "fallo parcial"
+EXIT=0
+
+
+ RUN  v2.1.9 <repo-root>
+
+ ✓ tests/integration/worker/consumer.test.ts (6 tests | 5 skipped) 6401ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > fallo parcial: imagen fallida va a DLQ y FAILED; las demás del lote se completan 6400ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 5 skipped (6)
+   Start at  22:18:54
+   Duration  8.04s (transform 361ms, setup 0ms, collect 998ms, tests 6.40s, environment 0ms, prepare 205ms)
+

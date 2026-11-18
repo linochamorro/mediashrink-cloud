@@ -1,0 +1,7 @@
+# F04-T04 - tester - up
+UTC: 2026-11-18T12:52:22.7689921Z
+COMMAND: $dk compose up -d ; wait healthy ; $dk inspect
+--- OUTPUT ---
+HEALTHY: True
+memory=2147483648 nanoCpus=2000000000 user=1000:1000 health=healthy
+EXIT_CODE: 0

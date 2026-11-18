@@ -1,0 +1,1767 @@
+﻿# F04-T05 - sesion unica de verificacion independiente (Tester)
+UTC_START: 2026-11-18T13:32:19.5974071Z
+SCOPE: up -> docker cp -> healthcheck -> fmt/init/validate/plan/apply -> tests infra -> down
+--- 0) estado previo ---
+docker ps -a (PRE): 
+docker compose ps (PRE): 
+--- 1) docker compose config / up ---
+COMPOSE_CONFIG_EXIT: 0
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Created 
+ Network mediashrink-cloud_default Created 
+ Container mediashrink-aws-emulator Creating 
+ Container mediashrink-aws-emulator Created 
+ Container mediashrink-aws-emulator Starting 
+ Container mediashrink-aws-emulator Started 
+COMPOSE_UP_EXIT: 0
+--- 2) espera healthy ---
+HEALTHY: True (checks=3, status=healthy)
+--- 3) limites efectivos G-7 ---
+memory=2147483648 nanoCpus=2000000000 user=1000:1000
+G7_MEMORY_OK: True  G7_CPUS_OK: True
+--- 4) docker cp CA/config/credentials ---
+CP_CA_EXIT: 0
+CP_CONFIG_EXIT: 0
+CP_CREDS_EXIT: 0
+--- 5) healthcheck HTTPS con CA ---
+ok
+HEALTHCHECK_EXIT: 0
+--- 6) terraform fmt/init/validate/plan/apply ---
+TF_FMT_EXIT: 0
+Initializing the backend...
+
+Initializing provider plugins...
+- Reusing version 5.100.0 of hashicorp/aws from the dependency lock file
+- Using previously-installed hashicorp/aws v5.100.0
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+TF_INIT_EXIT: 0
+Success! The configuration is valid.
+
+TF_VALIDATE_EXIT: 0
+data.aws_caller_identity.emulator: Reading...
+aws_iam_role.app: Refreshing state... [id=mediashrink-app-role]
+aws_sqs_queue.dlq: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq]
+aws_s3_bucket.optimized: Refreshing state... [id=mediashrink-optimized-local]
+aws_s3_bucket.raw: Refreshing state... [id=mediashrink-raw-local]
+aws_dynamodb_table.jobs: Refreshing state... [id=mediashrink-jobs]
+data.aws_caller_identity.emulator: Read complete after 0s [id=000000000000]
+aws_s3_bucket_lifecycle_configuration.optimized: Refreshing state... [id=mediashrink-optimized-local]
+aws_s3_bucket_cors_configuration.raw: Refreshing state... [id=mediashrink-raw-local]
+aws_s3_bucket_lifecycle_configuration.raw: Refreshing state... [id=mediashrink-raw-local]
+aws_s3_bucket_cors_configuration.optimized: Refreshing state... [id=mediashrink-optimized-local]
+aws_sqs_queue.jobs: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs]
+aws_iam_role_policy.app: Refreshing state... [id=mediashrink-app-role:mediashrink-least-privilege]
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the
+last "terraform apply" which may have affected this plan:
+
+  # aws_dynamodb_table.jobs has been deleted
+  - resource "aws_dynamodb_table" "jobs" {
+      - arn                         = "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs" -> null
+      - id                          = "mediashrink-jobs" -> null
+        name                        = "mediashrink-jobs"
+        # (12 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+  # aws_iam_role.app has been deleted
+  - resource "aws_iam_role" "app" {
+      - arn                   = "arn:aws:iam::000000000000:role/mediashrink-app-role" -> null
+      - id                    = "mediashrink-app-role" -> null
+      - name                  = "mediashrink-app-role" -> null
+        # (11 unchanged attributes hidden)
+    }
+
+  # aws_s3_bucket.optimized has been deleted
+  - resource "aws_s3_bucket" "optimized" {
+      - arn                         = "arn:aws:s3:::mediashrink-optimized-local" -> null
+      - id                          = "mediashrink-optimized-local" -> null
+        # (12 unchanged attributes hidden)
+
+        # (3 unchanged blocks hidden)
+    }
+
+  # aws_s3_bucket.raw has been deleted
+  - resource "aws_s3_bucket" "raw" {
+      - arn                         = "arn:aws:s3:::mediashrink-raw-local" -> null
+      - id                          = "mediashrink-raw-local" -> null
+        # (12 unchanged attributes hidden)
+
+        # (3 unchanged blocks hidden)
+    }
+
+  # aws_sqs_queue.dlq has been deleted
+  - resource "aws_sqs_queue" "dlq" {
+      - arn                               = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq" -> null
+      - id                                = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq" -> null
+        name                              = "mediashrink-jobs-dlq"
+        # (18 unchanged attributes hidden)
+    }
+
+  # aws_sqs_queue.jobs has been deleted
+  - resource "aws_sqs_queue" "jobs" {
+      - arn                               = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs" -> null
+      - id                                = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs" -> null
+        name                              = "mediashrink-jobs"
+        # (18 unchanged attributes hidden)
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the
+relevant attributes using ignore_changes, the following plan may include
+actions to undo or respond to these changes.
+
+ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # data.aws_iam_role.app will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_iam_role" "app" {
+      + arn                  = (known after apply)
+      + assume_role_policy   = (known after apply)
+      + create_date          = (known after apply)
+      + description          = (known after apply)
+      + id                   = (known after apply)
+      + max_session_duration = (known after apply)
+      + name                 = "mediashrink-app-role"
+      + path                 = (known after apply)
+      + permissions_boundary = (known after apply)
+      + role_last_used       = (known after apply)
+      + tags                 = (known after apply)
+      + unique_id            = (known after apply)
+    }
+
+  # aws_dynamodb_table.jobs will be created
+  + resource "aws_dynamodb_table" "jobs" {
+      + arn              = (known after apply)
+      + billing_mode     = "PROVISIONED"
+      + hash_key         = "userId"
+      + id               = (known after apply)
+      + name             = "mediashrink-jobs"
+      + range_key        = "jobId"
+      + read_capacity    = 5
+      + stream_arn       = (known after apply)
+      + stream_label     = (known after apply)
+      + stream_view_type = (known after apply)
+      + tags_all         = (known after apply)
+      + write_capacity   = 5
+
+      + attribute {
+          + name = "jobId"
+          + type = "S"
+        }
+      + attribute {
+          + name = "userId"
+          + type = "S"
+        }
+
+      + point_in_time_recovery (known after apply)
+
+      + server_side_encryption (known after apply)
+
+      + ttl {
+          + attribute_name = "ttl"
+          + enabled        = true
+        }
+    }
+
+  # aws_iam_role.app will be created
+  + resource "aws_iam_role" "app" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "lambda.amazonaws.com"
+                        }
+                      + Sid       = "LambdaAssumeRoleOnly"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + description           = "MediaShrink Cloud API + worker: permisos minimos sobre S3, SQS+DLQ y DynamoDB (F04-T04)."
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "mediashrink-app-role"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags_all              = (known after apply)
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # aws_iam_role_policy.app will be created
+  + resource "aws_iam_role_policy" "app" {
+      + id          = (known after apply)
+      + name        = "mediashrink-least-privilege"
+      + name_prefix = (known after apply)
+      + policy      = (known after apply)
+      + role        = (known after apply)
+    }
+
+  # aws_s3_bucket.optimized will be created
+  + resource "aws_s3_bucket" "optimized" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "mediashrink-optimized-local"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = (known after apply)
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_bucket.raw will be created
+  + resource "aws_s3_bucket" "raw" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "mediashrink-raw-local"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = (known after apply)
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_bucket_cors_configuration.optimized will be created
+  + resource "aws_s3_bucket_cors_configuration" "optimized" {
+      + bucket = (known after apply)
+      + id     = (known after apply)
+
+      + cors_rule {
+          + allowed_headers = [
+              + "authorization",
+              + "content-md5",
+              + "content-type",
+              + "etag",
+              + "x-amz-content-sha256",
+              + "x-amz-date",
+              + "x-amz-security-token",
+              + "x-amz-server-side-encryption",
+            ]
+          + allowed_methods = [
+              + "GET",
+              + "PUT",
+            ]
+          + allowed_origins = [
+              + "http://localhost:5173",
+            ]
+          + expose_headers  = [
+              + "content-type",
+              + "etag",
+              + "x-amz-id-2",
+              + "x-amz-request-id",
+            ]
+            id              = null
+          + max_age_seconds = 3000
+        }
+    }
+
+  # aws_s3_bucket_cors_configuration.raw will be created
+  + resource "aws_s3_bucket_cors_configuration" "raw" {
+      + bucket = (known after apply)
+      + id     = (known after apply)
+
+      + cors_rule {
+          + allowed_headers = [
+              + "authorization",
+              + "content-md5",
+              + "content-type",
+              + "etag",
+              + "x-amz-content-sha256",
+              + "x-amz-date",
+              + "x-amz-security-token",
+              + "x-amz-server-side-encryption",
+            ]
+          + allowed_methods = [
+              + "GET",
+              + "PUT",
+            ]
+          + allowed_origins = [
+              + "http://localhost:5173",
+            ]
+          + expose_headers  = [
+              + "content-type",
+              + "etag",
+              + "x-amz-id-2",
+              + "x-amz-request-id",
+            ]
+            id              = null
+          + max_age_seconds = 3000
+        }
+    }
+
+  # aws_s3_bucket_lifecycle_configuration.optimized will be created
+  + resource "aws_s3_bucket_lifecycle_configuration" "optimized" {
+      + bucket                                 = (known after apply)
+      + expected_bucket_owner                  = (known after apply)
+      + id                                     = (known after apply)
+      + transition_default_minimum_object_size = "all_storage_classes_128K"
+
+      + rule {
+          + id     = "expire-after-retention-days"
+          + status = "Enabled"
+            # (1 unchanged attribute hidden)
+
+          + expiration {
+              + days                         = 30
+              + expired_object_delete_marker = false
+            }
+
+          + filter {
+                # (1 unchanged attribute hidden)
+            }
+        }
+    }
+
+  # aws_s3_bucket_lifecycle_configuration.raw will be created
+  + resource "aws_s3_bucket_lifecycle_configuration" "raw" {
+      + bucket                                 = (known after apply)
+      + expected_bucket_owner                  = (known after apply)
+      + id                                     = (known after apply)
+      + transition_default_minimum_object_size = "all_storage_classes_128K"
+
+      + rule {
+          + id     = "expire-after-retention-days"
+          + status = "Enabled"
+            # (1 unchanged attribute hidden)
+
+          + expiration {
+              + days                         = 30
+              + expired_object_delete_marker = false
+            }
+
+          + filter {
+                # (1 unchanged attribute hidden)
+            }
+        }
+    }
+
+  # aws_sqs_queue.dlq will be created
+  + resource "aws_sqs_queue" "dlq" {
+      + arn                               = (known after apply)
+      + content_based_deduplication       = false
+      + deduplication_scope               = (known after apply)
+      + delay_seconds                     = 0
+      + fifo_queue                        = false
+      + fifo_throughput_limit             = (known after apply)
+      + id                                = (known after apply)
+      + kms_data_key_reuse_period_seconds = (known after apply)
+      + max_message_size                  = 262144
+      + message_retention_seconds         = 345600
+      + name                              = "mediashrink-jobs-dlq"
+      + name_prefix                       = (known after apply)
+      + policy                            = (known after apply)
+      + receive_wait_time_seconds         = 0
+      + redrive_allow_policy              = (known after apply)
+      + redrive_policy                    = (known after apply)
+      + sqs_managed_sse_enabled           = (known after apply)
+      + tags_all                          = (known after apply)
+      + url                               = (known after apply)
+      + visibility_timeout_seconds        = 120
+    }
+
+  # aws_sqs_queue.jobs will be created
+  + resource "aws_sqs_queue" "jobs" {
+      + arn                               = (known after apply)
+      + content_based_deduplication       = false
+      + deduplication_scope               = (known after apply)
+      + delay_seconds                     = 0
+      + fifo_queue                        = false
+      + fifo_throughput_limit             = (known after apply)
+      + id                                = (known after apply)
+      + kms_data_key_reuse_period_seconds = (known after apply)
+      + max_message_size                  = 262144
+      + message_retention_seconds         = 345600
+      + name                              = "mediashrink-jobs"
+      + name_prefix                       = (known after apply)
+      + policy                            = (known after apply)
+      + receive_wait_time_seconds         = 0
+      + redrive_allow_policy              = (known after apply)
+      + redrive_policy                    = (known after apply)
+      + sqs_managed_sse_enabled           = (known after apply)
+      + tags_all                          = (known after apply)
+      + url                               = (known after apply)
+      + visibility_timeout_seconds        = 120
+    }
+
+Plan: 11 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  ~ dynamodb_table_jobs            = "mediashrink-jobs" -> (known after apply)
+  ~ dynamodb_table_jobs_arn        = "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs" -> (known after apply)
+  ~ iam_inline_policy              = {
+      - Statement = [
+          - {
+              - Action   = [
+                  - "s3:GetObject",
+                  - "s3:PutObject",
+                  - "s3:DeleteObject",
+                ]
+              - Effect   = "Allow"
+              - Resource = [
+                  - "arn:aws:s3:::mediashrink-raw-local/*",
+                ]
+              - Sid      = "S3RawObjectsReadWrite"
+            },
+          - {
+              - Action   = [
+                  - "s3:GetObject",
+                  - "s3:PutObject",
+                  - "s3:DeleteObject",
+                ]
+              - Effect   = "Allow"
+              - Resource = [
+                  - "arn:aws:s3:::mediashrink-optimized-local/*",
+                ]
+              - Sid      = "S3OptimizedObjectsReadWrite"
+            },
+          - {
+              - Action   = [
+                  - "s3:ListBucket",
+                ]
+              - Effect   = "Allow"
+              - Resource = [
+                  - "arn:aws:s3:::mediashrink-raw-local",
+                  - "arn:aws:s3:::mediashrink-optimized-local",
+                ]
+              - Sid      = "S3ListOnlyNamedBuckets"
+            },
+          - {
+              - Action   = [
+                  - "sqs:SendMessage",
+                  - "sqs:ReceiveMessage",
+                  - "sqs:DeleteMessage",
+                  - "sqs:ChangeMessageVisibility",
+                  - "sqs:GetQueueAttributes",
+                  - "sqs:GetQueueUrl",
+                ]
+              - Effect   = "Allow"
+              - Resource = [
+                  - "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs",
+                  - "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq",
+                ]
+              - Sid      = "SqsJobsAndDlqMessaging"
+            },
+          - {
+              - Action   = [
+                  - "dynamodb:GetItem",
+                  - "dynamodb:PutItem",
+                  - "dynamodb:UpdateItem",
+                  - "dynamodb:DeleteItem",
+                  - "dynamodb:Query",
+                  - "dynamodb:BatchGetItem",
+                  - "dynamodb:BatchWriteItem",
+                  - "dynamodb:DescribeTable",
+                ]
+              - Effect   = "Allow"
+              - Resource = [
+                  - "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs",
+                ]
+              - Sid      = "DynamoDbJobsTableCrud"
+            },
+        ]
+      - Version   = "2012-10-17"
+    } -> (known after apply)
+  ~ iam_role_arn                   = "arn:aws:iam::000000000000:role/mediashrink-app-role" -> (known after apply)
+  ~ s3_bucket_optimized            = "mediashrink-optimized-local" -> (known after apply)
+  ~ s3_bucket_raw                  = "mediashrink-raw-local" -> (known after apply)
+  ~ sqs_dlq_arn                    = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq" -> (known after apply)
+  ~ sqs_dlq_url                    = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq" -> (known after apply)
+  ~ sqs_queue_arn                  = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs" -> (known after apply)
+  ~ sqs_queue_url                  = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs" -> (known after apply)
+
+Warning: Check block assertion known after apply
+
+  on iam.tf line 118, in check "iam_no_broad_wildcards":
+ 118:     condition = alltrue([
+ 119:       for stmt in local.iam_permissions.Statement : (
+ 120:         alltrue([for a in flatten([stmt.Action]) : a != "*"]) &&
+ 121:         alltrue([for r in flatten([stmt.Resource]) : r != "*"])
+ 122:       )
+ 123:     ])
+    Ôö£ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    Ôöé local.iam_permissions.Statement is tuple with 5 elements
+
+The condition could not be evaluated at this time, a result will be known
+when this plan is applied.
+
+Warning: Check block assertion known after apply
+
+  on iam.tf line 130, in check "iam_arns_derived_from_resources":
+ 130:     condition = alltrue([
+ 131:       for stmt in local.iam_permissions.Statement :
+ 132:       alltrue([for r in flatten([stmt.Resource]) : (
+ 133:         strcontains(r, aws_s3_bucket.raw.arn) ||
+ 134:         strcontains(r, aws_s3_bucket.optimized.arn) ||
+ 135:         strcontains(r, aws_sqs_queue.jobs.arn) ||
+ 136:         strcontains(r, aws_sqs_queue.dlq.arn) ||
+ 137:         strcontains(r, aws_dynamodb_table.jobs.arn)
+ 138:       )])
+ 139:     ])
+    Ôö£ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    Ôöé aws_dynamodb_table.jobs.arn is a string
+    Ôöé aws_s3_bucket.optimized.arn is a string
+    Ôöé aws_s3_bucket.raw.arn is a string
+    Ôöé aws_sqs_queue.dlq.arn is a string
+    Ôöé aws_sqs_queue.jobs.arn is a string
+    Ôöé local.iam_permissions.Statement is tuple with 5 elements
+
+The condition could not be evaluated at this time, a result will be known
+when this plan is applied.
+
+Warning: AWS resource not found during refresh
+
+  with aws_s3_bucket_lifecycle_configuration.raw,
+  on s3.tf line 133, in resource "aws_s3_bucket_lifecycle_configuration" "raw":
+ 133: resource "aws_s3_bucket_lifecycle_configuration" "raw" {
+
+Automatically removing from Terraform State instead of returning the error,
+which may trigger resource recreation. Original error: couldn't find resource
+
+(and one more similar warning elsewhere)
+
+ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
+TF_PLAN_EXIT: 0
+data.aws_caller_identity.emulator: Reading...
+aws_iam_role.app: Refreshing state... [id=mediashrink-app-role]
+aws_sqs_queue.dlq: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq]
+aws_dynamodb_table.jobs: Refreshing state... [id=mediashrink-jobs]
+aws_s3_bucket.raw: Refreshing state... [id=mediashrink-raw-local]
+aws_s3_bucket.optimized: Refreshing state... [id=mediashrink-optimized-local]
+data.aws_caller_identity.emulator: Read complete after 0s [id=000000000000]
+aws_s3_bucket_cors_configuration.optimized: Refreshing state... [id=mediashrink-optimized-local]
+aws_s3_bucket_lifecycle_configuration.optimized: Refreshing state... [id=mediashrink-optimized-local]
+aws_s3_bucket_cors_configuration.raw: Refreshing state... [id=mediashrink-raw-local]
+aws_s3_bucket_lifecycle_configuration.raw: Refreshing state... [id=mediashrink-raw-local]
+aws_sqs_queue.jobs: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs]
+aws_iam_role_policy.app: Refreshing state... [id=mediashrink-app-role:mediashrink-least-privilege]
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the
+last "terraform apply" which may have affected this plan:
+
+  # aws_dynamodb_table.jobs has been deleted
+  - resource "aws_dynamodb_table" "jobs" {
+      - arn                         = "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs" -> null
+      - id                          = "mediashrink-jobs" -> null
+        name                        = "mediashrink-jobs"
+        # (12 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+  # aws_iam_role.app has been deleted
+  - resource "aws_iam_role" "app" {
+      - arn                   = "arn:aws:iam::000000000000:role/mediashrink-app-role" -> null
+      - id                    = "mediashrink-app-role" -> null
+      - name                  = "mediashrink-app-role" -> null
+        # (11 unchanged attributes hidden)
+    }
+
+  # aws_s3_bucket.optimized has been deleted
+  - resource "aws_s3_bucket" "optimized" {
+      - arn                         = "arn:aws:s3:::mediashrink-optimized-local" -> null
+      - id                          = "mediashrink-optimized-local" -> null
+        # (12 unchanged attributes hidden)
+
+        # (3 unchanged blocks hidden)
+    }
+
+  # aws_s3_bucket.raw has been deleted
+  - resource "aws_s3_bucket" "raw" {
+      - arn                         = "arn:aws:s3:::mediashrink-raw-local" -> null
+      - id                          = "mediashrink-raw-local" -> null
+        # (12 unchanged attributes hidden)
+
+        # (3 unchanged blocks hidden)
+    }
+
+  # aws_sqs_queue.dlq has been deleted
+  - resource "aws_sqs_queue" "dlq" {
+      - arn                               = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq" -> null
+      - id                                = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq" -> null
+        name                              = "mediashrink-jobs-dlq"
+        # (18 unchanged attributes hidden)
+    }
+
+  # aws_sqs_queue.jobs has been deleted
+  - resource "aws_sqs_queue" "jobs" {
+      - arn                               = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs" -> null
+      - id                                = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs" -> null
+        name                              = "mediashrink-jobs"
+        # (18 unchanged attributes hidden)
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the
+relevant attributes using ignore_changes, the following plan may include
+actions to undo or respond to these changes.
+
+ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # data.aws_iam_role.app will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_iam_role" "app" {
+      + arn                  = (known after apply)
+      + assume_role_policy   = (known after apply)
+      + create_date          = (known after apply)
+      + description          = (known after apply)
+      + id                   = (known after apply)
+      + max_session_duration = (known after apply)
+      + name                 = "mediashrink-app-role"
+      + path                 = (known after apply)
+      + permissions_boundary = (known after apply)
+      + role_last_used       = (known after apply)
+      + tags                 = (known after apply)
+      + unique_id            = (known after apply)
+    }
+
+  # aws_dynamodb_table.jobs will be created
+  + resource "aws_dynamodb_table" "jobs" {
+      + arn              = (known after apply)
+      + billing_mode     = "PROVISIONED"
+      + hash_key         = "userId"
+      + id               = (known after apply)
+      + name             = "mediashrink-jobs"
+      + range_key        = "jobId"
+      + read_capacity    = 5
+      + stream_arn       = (known after apply)
+      + stream_label     = (known after apply)
+      + stream_view_type = (known after apply)
+      + tags_all         = (known after apply)
+      + write_capacity   = 5
+
+      + attribute {
+          + name = "jobId"
+          + type = "S"
+        }
+      + attribute {
+          + name = "userId"
+          + type = "S"
+        }
+
+      + point_in_time_recovery (known after apply)
+
+      + server_side_encryption (known after apply)
+
+      + ttl {
+          + attribute_name = "ttl"
+          + enabled        = true
+        }
+    }
+
+  # aws_iam_role.app will be created
+  + resource "aws_iam_role" "app" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "lambda.amazonaws.com"
+                        }
+                      + Sid       = "LambdaAssumeRoleOnly"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + description           = "MediaShrink Cloud API + worker: permisos minimos sobre S3, SQS+DLQ y DynamoDB (F04-T04)."
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "mediashrink-app-role"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags_all              = (known after apply)
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # aws_iam_role_policy.app will be created
+  + resource "aws_iam_role_policy" "app" {
+      + id          = (known after apply)
+      + name        = "mediashrink-least-privilege"
+      + name_prefix = (known after apply)
+      + policy      = (known after apply)
+      + role        = (known after apply)
+    }
+
+  # aws_s3_bucket.optimized will be created
+  + resource "aws_s3_bucket" "optimized" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "mediashrink-optimized-local"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = (known after apply)
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_bucket.raw will be created
+  + resource "aws_s3_bucket" "raw" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "mediashrink-raw-local"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = (known after apply)
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_bucket_cors_configuration.optimized will be created
+  + resource "aws_s3_bucket_cors_configuration" "optimized" {
+      + bucket = (known after apply)
+      + id     = (known after apply)
+
+      + cors_rule {
+          + allowed_headers = [
+              + "authorization",
+              + "content-md5",
+              + "content-type",
+              + "etag",
+              + "x-amz-content-sha256",
+              + "x-amz-date",
+              + "x-amz-security-token",
+              + "x-amz-server-side-encryption",
+            ]
+          + allowed_methods = [
+              + "GET",
+              + "PUT",
+            ]
+          + allowed_origins = [
+              + "http://localhost:5173",
+            ]
+          + expose_headers  = [
+              + "content-type",
+              + "etag",
+              + "x-amz-id-2",
+              + "x-amz-request-id",
+            ]
+            id              = null
+          + max_age_seconds = 3000
+        }
+    }
+
+  # aws_s3_bucket_cors_configuration.raw will be created
+  + resource "aws_s3_bucket_cors_configuration" "raw" {
+      + bucket = (known after apply)
+      + id     = (known after apply)
+
+      + cors_rule {
+          + allowed_headers = [
+              + "authorization",
+              + "content-md5",
+              + "content-type",
+              + "etag",
+              + "x-amz-content-sha256",
+              + "x-amz-date",
+              + "x-amz-security-token",
+              + "x-amz-server-side-encryption",
+            ]
+          + allowed_methods = [
+              + "GET",
+              + "PUT",
+            ]
+          + allowed_origins = [
+              + "http://localhost:5173",
+            ]
+          + expose_headers  = [
+              + "content-type",
+              + "etag",
+              + "x-amz-id-2",
+              + "x-amz-request-id",
+            ]
+            id              = null
+          + max_age_seconds = 3000
+        }
+    }
+
+  # aws_s3_bucket_lifecycle_configuration.optimized will be created
+  + resource "aws_s3_bucket_lifecycle_configuration" "optimized" {
+      + bucket                                 = (known after apply)
+      + expected_bucket_owner                  = (known after apply)
+      + id                                     = (known after apply)
+      + transition_default_minimum_object_size = "all_storage_classes_128K"
+
+      + rule {
+          + id     = "expire-after-retention-days"
+          + status = "Enabled"
+            # (1 unchanged attribute hidden)
+
+          + expiration {
+              + days                         = 30
+              + expired_object_delete_marker = false
+            }
+
+          + filter {
+                # (1 unchanged attribute hidden)
+            }
+        }
+    }
+
+  # aws_s3_bucket_lifecycle_configuration.raw will be created
+  + resource "aws_s3_bucket_lifecycle_configuration" "raw" {
+      + bucket                                 = (known after apply)
+      + expected_bucket_owner                  = (known after apply)
+      + id                                     = (known after apply)
+      + transition_default_minimum_object_size = "all_storage_classes_128K"
+
+      + rule {
+          + id     = "expire-after-retention-days"
+          + status = "Enabled"
+            # (1 unchanged attribute hidden)
+
+          + expiration {
+              + days                         = 30
+              + expired_object_delete_marker = false
+            }
+
+          + filter {
+                # (1 unchanged attribute hidden)
+            }
+        }
+    }
+
+  # aws_sqs_queue.dlq will be created
+  + resource "aws_sqs_queue" "dlq" {
+      + arn                               = (known after apply)
+      + content_based_deduplication       = false
+      + deduplication_scope               = (known after apply)
+      + delay_seconds                     = 0
+      + fifo_queue                        = false
+      + fifo_throughput_limit             = (known after apply)
+      + id                                = (known after apply)
+      + kms_data_key_reuse_period_seconds = (known after apply)
+      + max_message_size                  = 262144
+      + message_retention_seconds         = 345600
+      + name                              = "mediashrink-jobs-dlq"
+      + name_prefix                       = (known after apply)
+      + policy                            = (known after apply)
+      + receive_wait_time_seconds         = 0
+      + redrive_allow_policy              = (known after apply)
+      + redrive_policy                    = (known after apply)
+      + sqs_managed_sse_enabled           = (known after apply)
+      + tags_all                          = (known after apply)
+      + url                               = (known after apply)
+      + visibility_timeout_seconds        = 120
+    }
+
+  # aws_sqs_queue.jobs will be created
+  + resource "aws_sqs_queue" "jobs" {
+      + arn                               = (known after apply)
+      + content_based_deduplication       = false
+      + deduplication_scope               = (known after apply)
+      + delay_seconds                     = 0
+      + fifo_queue                        = false
+      + fifo_throughput_limit             = (known after apply)
+      + id                                = (known after apply)
+      + kms_data_key_reuse_period_seconds = (known after apply)
+      + max_message_size                  = 262144
+      + message_retention_seconds         = 345600
+      + name                              = "mediashrink-jobs"
+      + name_prefix                       = (known after apply)
+      + policy                            = (known after apply)
+      + receive_wait_time_seconds         = 0
+      + redrive_allow_policy              = (known after apply)
+      + redrive_policy                    = (known after apply)
+      + sqs_managed_sse_enabled           = (known after apply)
+      + tags_all                          = (known after apply)
+      + url                               = (known after apply)
+      + visibility_timeout_seconds        = 120
+    }
+
+Plan: 11 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  ~ dynamodb_table_jobs            = "mediashrink-jobs" -> (known after apply)
+  ~ dynamodb_table_jobs_arn        = "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs" -> (known after apply)
+  ~ iam_inline_policy              = {
+      - Statement = [
+          - {
+              - Action   = [
+                  - "s3:GetObject",
+                  - "s3:PutObject",
+                  - "s3:DeleteObject",
+                ]
+              - Effect   = "Allow"
+              - Resource = [
+                  - "arn:aws:s3:::mediashrink-raw-local/*",
+                ]
+              - Sid      = "S3RawObjectsReadWrite"
+            },
+          - {
+              - Action   = [
+                  - "s3:GetObject",
+                  - "s3:PutObject",
+                  - "s3:DeleteObject",
+                ]
+              - Effect   = "Allow"
+              - Resource = [
+                  - "arn:aws:s3:::mediashrink-optimized-local/*",
+                ]
+              - Sid      = "S3OptimizedObjectsReadWrite"
+            },
+          - {
+              - Action   = [
+                  - "s3:ListBucket",
+                ]
+              - Effect   = "Allow"
+              - Resource = [
+                  - "arn:aws:s3:::mediashrink-raw-local",
+                  - "arn:aws:s3:::mediashrink-optimized-local",
+                ]
+              - Sid      = "S3ListOnlyNamedBuckets"
+            },
+          - {
+              - Action   = [
+                  - "sqs:SendMessage",
+                  - "sqs:ReceiveMessage",
+                  - "sqs:DeleteMessage",
+                  - "sqs:ChangeMessageVisibility",
+                  - "sqs:GetQueueAttributes",
+                  - "sqs:GetQueueUrl",
+                ]
+              - Effect   = "Allow"
+              - Resource = [
+                  - "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs",
+                  - "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq",
+                ]
+              - Sid      = "SqsJobsAndDlqMessaging"
+            },
+          - {
+              - Action   = [
+                  - "dynamodb:GetItem",
+                  - "dynamodb:PutItem",
+                  - "dynamodb:UpdateItem",
+                  - "dynamodb:DeleteItem",
+                  - "dynamodb:Query",
+                  - "dynamodb:BatchGetItem",
+                  - "dynamodb:BatchWriteItem",
+                  - "dynamodb:DescribeTable",
+                ]
+              - Effect   = "Allow"
+              - Resource = [
+                  - "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs",
+                ]
+              - Sid      = "DynamoDbJobsTableCrud"
+            },
+        ]
+      - Version   = "2012-10-17"
+    } -> (known after apply)
+  ~ iam_role_arn                   = "arn:aws:iam::000000000000:role/mediashrink-app-role" -> (known after apply)
+  ~ s3_bucket_optimized            = "mediashrink-optimized-local" -> (known after apply)
+  ~ s3_bucket_raw                  = "mediashrink-raw-local" -> (known after apply)
+  ~ sqs_dlq_arn                    = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq" -> (known after apply)
+  ~ sqs_dlq_url                    = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq" -> (known after apply)
+  ~ sqs_queue_arn                  = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs" -> (known after apply)
+  ~ sqs_queue_url                  = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs" -> (known after apply)
+aws_sqs_queue.dlq: Creating...
+aws_iam_role.app: Creating...
+aws_dynamodb_table.jobs: Creating...
+aws_s3_bucket.optimized: Creating...
+aws_s3_bucket.raw: Creating...
+aws_iam_role.app: Creation complete after 1s [id=mediashrink-app-role]
+aws_s3_bucket.raw: Creation complete after 0s [id=mediashrink-raw-local]
+aws_s3_bucket.optimized: Creation complete after 0s [id=mediashrink-optimized-local]
+data.aws_iam_role.app: Reading...
+data.aws_iam_role.app: Read complete after 0s [id=mediashrink-app-role]
+aws_s3_bucket_cors_configuration.raw: Creating...
+aws_s3_bucket_cors_configuration.optimized: Creating...
+aws_s3_bucket_cors_configuration.raw: Creation complete after 0s [id=mediashrink-raw-local]
+aws_s3_bucket_lifecycle_configuration.raw: Creating...
+aws_s3_bucket_lifecycle_configuration.optimized: Creating...
+aws_s3_bucket_cors_configuration.optimized: Creation complete after 0s [id=mediashrink-optimized-local]
+aws_dynamodb_table.jobs: Creation complete after 7s [id=mediashrink-jobs]
+aws_sqs_queue.dlq: Still creating... [00m10s elapsed]
+aws_s3_bucket_lifecycle_configuration.raw: Still creating... [00m10s elapsed]
+aws_s3_bucket_lifecycle_configuration.optimized: Still creating... [00m10s elapsed]
+aws_sqs_queue.dlq: Still creating... [00m20s elapsed]
+aws_s3_bucket_lifecycle_configuration.raw: Still creating... [00m20s elapsed]
+aws_s3_bucket_lifecycle_configuration.optimized: Still creating... [00m20s elapsed]
+aws_sqs_queue.dlq: Creation complete after 26s [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq]
+aws_sqs_queue.jobs: Creating...
+aws_s3_bucket_lifecycle_configuration.optimized: Still creating... [00m30s elapsed]
+aws_s3_bucket_lifecycle_configuration.raw: Still creating... [00m30s elapsed]
+aws_sqs_queue.jobs: Still creating... [00m10s elapsed]
+aws_s3_bucket_lifecycle_configuration.optimized: Still creating... [00m40s elapsed]
+aws_s3_bucket_lifecycle_configuration.raw: Still creating... [00m40s elapsed]
+aws_sqs_queue.jobs: Still creating... [00m20s elapsed]
+aws_sqs_queue.jobs: Creation complete after 25s [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs]
+aws_s3_bucket_lifecycle_configuration.raw: Still creating... [00m50s elapsed]
+aws_s3_bucket_lifecycle_configuration.optimized: Still creating... [00m50s elapsed]
+aws_iam_role_policy.app: Creating...
+aws_iam_role_policy.app: Creation complete after 0s [id=mediashrink-app-role:mediashrink-least-privilege]
+aws_s3_bucket_lifecycle_configuration.raw: Creation complete after 55s [id=mediashrink-raw-local]
+aws_s3_bucket_lifecycle_configuration.optimized: Creation complete after 55s [id=mediashrink-optimized-local]
+
+Warning: AWS resource not found during refresh
+
+  with aws_s3_bucket_lifecycle_configuration.raw,
+  on s3.tf line 133, in resource "aws_s3_bucket_lifecycle_configuration" "raw":
+ 133: resource "aws_s3_bucket_lifecycle_configuration" "raw" {
+
+Automatically removing from Terraform State instead of returning the error,
+which may trigger resource recreation. Original error: couldn't find resource
+
+(and one more similar warning elsewhere)
+
+Apply complete! Resources: 11 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+authenticated_account_id = "000000000000"
+dynamodb_table_jobs = "mediashrink-jobs"
+dynamodb_table_jobs_arn = "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs"
+dynamodb_ttl_attribute = "ttl"
+dynamodb_ttl_item_policy = {
+  "image_items_carry_ttl" = true
+  "job_items_carry_ttl" = true
+  "user_accounts_expire" = false
+  "user_profile_items_carry_ttl" = false
+}
+dynamodb_ttl_seconds = 2592000
+emulator_endpoint = "https://127.0.0.1:9297"
+iam_inline_policy = {
+  "Statement" = [
+    {
+      "Action" = [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject",
+      ]
+      "Effect" = "Allow"
+      "Resource" = [
+        "arn:aws:s3:::mediashrink-raw-local/*",
+      ]
+      "Sid" = "S3RawObjectsReadWrite"
+    },
+    {
+      "Action" = [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject",
+      ]
+      "Effect" = "Allow"
+      "Resource" = [
+        "arn:aws:s3:::mediashrink-optimized-local/*",
+      ]
+      "Sid" = "S3OptimizedObjectsReadWrite"
+    },
+    {
+      "Action" = [
+        "s3:ListBucket",
+      ]
+      "Effect" = "Allow"
+      "Resource" = [
+        "arn:aws:s3:::mediashrink-raw-local",
+        "arn:aws:s3:::mediashrink-optimized-local",
+      ]
+      "Sid" = "S3ListOnlyNamedBuckets"
+    },
+    {
+      "Action" = [
+        "sqs:SendMessage",
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage",
+        "sqs:ChangeMessageVisibility",
+        "sqs:GetQueueAttributes",
+        "sqs:GetQueueUrl",
+      ]
+      "Effect" = "Allow"
+      "Resource" = [
+        "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs",
+        "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq",
+      ]
+      "Sid" = "SqsJobsAndDlqMessaging"
+    },
+    {
+      "Action" = [
+        "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:Query",
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:DescribeTable",
+      ]
+      "Effect" = "Allow"
+      "Resource" = [
+        "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs",
+      ]
+      "Sid" = "DynamoDbJobsTableCrud"
+    },
+  ]
+  "Version" = "2012-10-17"
+}
+iam_role_arn = "arn:aws:iam::000000000000:role/mediashrink-app-role"
+iam_role_name = "mediashrink-app-role"
+iam_trust_policy = {
+  "Statement" = [
+    {
+      "Action" = "sts:AssumeRole"
+      "Effect" = "Allow"
+      "Principal" = {
+        "Service" = "lambda.amazonaws.com"
+      }
+      "Sid" = "LambdaAssumeRoleOnly"
+    },
+  ]
+  "Version" = "2012-10-17"
+}
+provider_region = "us-east-1"
+s3_bucket_optimized = "mediashrink-optimized-local"
+s3_bucket_raw = "mediashrink-raw-local"
+s3_cors_configuration = [
+  {
+    "allowed_headers" = [
+      "authorization",
+      "content-type",
+      "content-md5",
+      "etag",
+      "x-amz-content-sha256",
+      "x-amz-date",
+      "x-amz-security-token",
+      "x-amz-server-side-encryption",
+    ]
+    "allowed_methods" = [
+      "GET",
+      "PUT",
+    ]
+    "allowed_origins" = [
+      "http://localhost:5173",
+    ]
+    "expose_headers" = [
+      "content-type",
+      "etag",
+      "x-amz-id-2",
+      "x-amz-request-id",
+    ]
+    "max_age_seconds" = 3000
+  },
+]
+s3_lifecycle_expiration_days = 30
+sqs_dlq_arn = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq"
+sqs_dlq_url = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq"
+sqs_max_receive_count = 3
+sqs_queue_arn = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs"
+sqs_queue_url = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs"
+sqs_visibility_timeout_seconds = 120
+TF_APPLY_EXIT: 0
+{
+  "authenticated_account_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "000000000000"
+  },
+  "dynamodb_table_jobs": {
+    "sensitive": false,
+    "type": "string",
+    "value": "mediashrink-jobs"
+  },
+  "dynamodb_table_jobs_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs"
+  },
+  "dynamodb_ttl_attribute": {
+    "sensitive": false,
+    "type": "string",
+    "value": "ttl"
+  },
+  "dynamodb_ttl_item_policy": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "image_items_carry_ttl": "bool",
+        "job_items_carry_ttl": "bool",
+        "user_accounts_expire": "bool",
+        "user_profile_items_carry_ttl": "bool"
+      }
+    ],
+    "value": {
+      "image_items_carry_ttl": true,
+      "job_items_carry_ttl": true,
+      "user_accounts_expire": false,
+      "user_profile_items_carry_ttl": false
+    }
+  },
+  "dynamodb_ttl_seconds": {
+    "sensitive": false,
+    "type": "number",
+    "value": 2592000
+  },
+  "emulator_endpoint": {
+    "sensitive": false,
+    "type": "string",
+    "value": "https://127.0.0.1:9297"
+  },
+  "iam_inline_policy": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "Statement": [
+          "tuple",
+          [
+            [
+              "object",
+              {
+                "Action": [
+                  "tuple",
+                  [
+                    "string",
+                    "string",
+                    "string"
+                  ]
+                ],
+                "Effect": "string",
+                "Resource": [
+                  "tuple",
+                  [
+                    "string"
+                  ]
+                ],
+                "Sid": "string"
+              }
+            ],
+            [
+              "object",
+              {
+                "Action": [
+                  "tuple",
+                  [
+                    "string",
+                    "string",
+                    "string"
+                  ]
+                ],
+                "Effect": "string",
+                "Resource": [
+                  "tuple",
+                  [
+                    "string"
+                  ]
+                ],
+                "Sid": "string"
+              }
+            ],
+            [
+              "object",
+              {
+                "Action": [
+                  "tuple",
+                  [
+                    "string"
+                  ]
+                ],
+                "Effect": "string",
+                "Resource": [
+                  "tuple",
+                  [
+                    "string",
+                    "string"
+                  ]
+                ],
+                "Sid": "string"
+              }
+            ],
+            [
+              "object",
+              {
+                "Action": [
+                  "tuple",
+                  [
+                    "string",
+                    "string",
+                    "string",
+                    "string",
+                    "string",
+                    "string"
+                  ]
+                ],
+                "Effect": "string",
+                "Resource": [
+                  "tuple",
+                  [
+                    "string",
+                    "string"
+                  ]
+                ],
+                "Sid": "string"
+              }
+            ],
+            [
+              "object",
+              {
+                "Action": [
+                  "tuple",
+                  [
+                    "string",
+                    "string",
+                    "string",
+                    "string",
+                    "string",
+                    "string",
+                    "string",
+                    "string"
+                  ]
+                ],
+                "Effect": "string",
+                "Resource": [
+                  "tuple",
+                  [
+                    "string"
+                  ]
+                ],
+                "Sid": "string"
+              }
+            ]
+          ]
+        ],
+        "Version": "string"
+      }
+    ],
+    "value": {
+      "Statement": [
+        {
+          "Action": [
+            "s3:GetObject",
+            "s3:PutObject",
+            "s3:DeleteObject"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:s3:::mediashrink-raw-local/*"
+          ],
+          "Sid": "S3RawObjectsReadWrite"
+        },
+        {
+          "Action": [
+            "s3:GetObject",
+            "s3:PutObject",
+            "s3:DeleteObject"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:s3:::mediashrink-optimized-local/*"
+          ],
+          "Sid": "S3OptimizedObjectsReadWrite"
+        },
+        {
+          "Action": [
+            "s3:ListBucket"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:s3:::mediashrink-raw-local",
+            "arn:aws:s3:::mediashrink-optimized-local"
+          ],
+          "Sid": "S3ListOnlyNamedBuckets"
+        },
+        {
+          "Action": [
+            "sqs:SendMessage",
+            "sqs:ReceiveMessage",
+            "sqs:DeleteMessage",
+            "sqs:ChangeMessageVisibility",
+            "sqs:GetQueueAttributes",
+            "sqs:GetQueueUrl"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs",
+            "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq"
+          ],
+          "Sid": "SqsJobsAndDlqMessaging"
+        },
+        {
+          "Action": [
+            "dynamodb:GetItem",
+            "dynamodb:PutItem",
+            "dynamodb:UpdateItem",
+            "dynamodb:DeleteItem",
+            "dynamodb:Query",
+            "dynamodb:BatchGetItem",
+            "dynamodb:BatchWriteItem",
+            "dynamodb:DescribeTable"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs"
+          ],
+          "Sid": "DynamoDbJobsTableCrud"
+        }
+      ],
+      "Version": "2012-10-17"
+    }
+  },
+  "iam_role_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:iam::000000000000:role/mediashrink-app-role"
+  },
+  "iam_role_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "mediashrink-app-role"
+  },
+  "iam_trust_policy": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "Statement": [
+          "tuple",
+          [
+            [
+              "object",
+              {
+                "Action": "string",
+                "Effect": "string",
+                "Principal": [
+                  "object",
+                  {
+                    "Service": "string"
+                  }
+                ],
+                "Sid": "string"
+              }
+            ]
+          ]
+        ],
+        "Version": "string"
+      }
+    ],
+    "value": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "lambda.amazonaws.com"
+          },
+          "Sid": "LambdaAssumeRoleOnly"
+        }
+      ],
+      "Version": "2012-10-17"
+    }
+  },
+  "provider_region": {
+    "sensitive": false,
+    "type": "string",
+    "value": "us-east-1"
+  },
+  "s3_bucket_optimized": {
+    "sensitive": false,
+    "type": "string",
+    "value": "mediashrink-optimized-local"
+  },
+  "s3_bucket_raw": {
+    "sensitive": false,
+    "type": "string",
+    "value": "mediashrink-raw-local"
+  },
+  "s3_cors_configuration": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        [
+          "object",
+          {
+            "allowed_headers": [
+              "tuple",
+              [
+                "string",
+                "string",
+                "string",
+                "string",
+                "string",
+                "string",
+                "string",
+                "string"
+              ]
+            ],
+            "allowed_methods": [
+              "tuple",
+              [
+                "string",
+                "string"
+              ]
+            ],
+            "allowed_origins": [
+              "tuple",
+              [
+                "string"
+              ]
+            ],
+            "expose_headers": [
+              "tuple",
+              [
+                "string",
+                "string",
+                "string",
+                "string"
+              ]
+            ],
+            "max_age_seconds": "number"
+          }
+        ]
+      ]
+    ],
+    "value": [
+      {
+        "allowed_headers": [
+          "authorization",
+          "content-type",
+          "content-md5",
+          "etag",
+          "x-amz-content-sha256",
+          "x-amz-date",
+          "x-amz-security-token",
+          "x-amz-server-side-encryption"
+        ],
+        "allowed_methods": [
+          "GET",
+          "PUT"
+        ],
+        "allowed_origins": [
+          "http://localhost:5173"
+        ],
+        "expose_headers": [
+          "content-type",
+          "etag",
+          "x-amz-id-2",
+          "x-amz-request-id"
+        ],
+        "max_age_seconds": 3000
+      }
+    ]
+  },
+  "s3_lifecycle_expiration_days": {
+    "sensitive": false,
+    "type": "number",
+    "value": 30
+  },
+  "sqs_dlq_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq"
+  },
+  "sqs_dlq_url": {
+    "sensitive": false,
+    "type": "string",
+    "value": "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq"
+  },
+  "sqs_max_receive_count": {
+    "sensitive": false,
+    "type": "number",
+    "value": 3
+  },
+  "sqs_queue_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs"
+  },
+  "sqs_queue_url": {
+    "sensitive": false,
+    "type": "string",
+    "value": "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs"
+  },
+  "sqs_visibility_timeout_seconds": {
+    "sensitive": false,
+    "type": "number",
+    "value": 120
+  }
+}
+TF_OUTPUT_EXIT: 0
+--- 7) npx vitest run tests/integration/infra ---
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<ROOT>[39m
+
+[90mstdout[2m | tests/integration/infra/gsi.test.ts[2m > [22m[2mDescribeTable: la tabla de jobs no declara ├¡ndices secundarios globales
+[22m[39mGSI_COUNT: 0
+
+ [32mÔ£ô[39m tests/integration/infra/gsi.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 109[2mms[22m[39m
+[90mstdout[2m | tests/integration/infra/retention-guard.test.ts[2m > [22m[2mretention_days=30 coincide en Terraform, .env.example y el cat├ílogo congelado
+[22m[39mRETENTION_GUARD: {"EXPECTED_DAYS":30,"EXPECTED_TTL_SECONDS":2592000,"ENV_RETENTION_DAYS":30,"CATALOG_RETENTION_DAYS":30,"CATALOG_TTL_SECONDS":2592000,"TF_DEFAULT_RETENTION_DAYS":30,"TF_APPLIED_RETENTION_DAYS":30,"TF_APPLIED_TTL_SECONDS":2592000}
+
+ [32mÔ£ô[39m tests/integration/infra/retention-guard.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1160[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m retention_days=30 coincide en Terraform, .env.example y el cat├ílogo congelado [33m1159[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/infra/resources.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1497[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m infra aplicada contra aws/aws-emulator[2m > [22mla pol├¡tica IAM se deriva de los recursos reales, sin comodines amplios [33m1177[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 08:35:18
+[2m   Duration [22m 2.56s[2m (transform 380ms, setup 0ms, collect 1.27s, tests 2.77s, environment 1ms, prepare 696ms)[22m
+
+INFRA_TESTS_EXIT: 0
+--- 8) docker compose down / ps -a ---
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed 
+COMPOSE_DOWN_EXIT: 0
+docker compose ps (POST): 
+docker ps -a (POST): 
+UTC_END: 2026-11-18T13:35:24.3328044Z

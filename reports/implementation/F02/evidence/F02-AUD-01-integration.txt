@@ -1,0 +1,29 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [32mÔ£ô[39m tests/integration/api/userstore.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 6267[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/jobs-contract.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 6738[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/routes.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 7161[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/download.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 7943[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Descarga/ZIP/borrado reales en aws-emulator (CA-05)[2m > [22mdescarga individual: la URL firmada devuelve los bytes reales de cada variante [33m522[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Descarga/ZIP/borrado reales en aws-emulator (CA-05)[2m > [22mZIP: contiene WebP + AVIF + miniaturas reales del lote [33m321[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Descarga/ZIP/borrado reales en aws-emulator (CA-05)[2m > [22mDELETE: elimina raw + optimized y la fila DynamoDB; repetir da 404 [33m305[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Descarga/ZIP/borrado reales en aws-emulator (CA-05)[2m > [22maislamiento: otro usuario recibe 404 y no puede descargar ni borrar el lote ajeno [33m519[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/presign.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 7230[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Presigned URLs S3 reales en aws-emulator (CA-02)[2m > [22mPUT presignado sube un fixture 100x100 a raw y el objeto es verificable [33m535[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/e2e-persist.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 21802[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mlas 3 variantes existen en optimized y suma(HeadObject.ContentLength) === job.bytesAfter [33m8037[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mGET /jobs/:id/download/:imageId devuelve los bytes exactos de cada objeto persistido [33m6890[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mGET /jobs/:id/download.zip contiene WebP, AVIF y miniatura id├®nticos a los objetos persistidos [33m6873[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/e2e-metrics.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 34846[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mflujo completo: los bytes persistidos son los reales de S3, con savingsPct exacto y exifStripped real [33m8158[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mexifStripped: true solo despu├®s de verificar que las tres salidas no contienen metadatos [33m6667[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mestados coherentes: una imagen FAILED produce PARTIAL y todas FAILED producen FAILED [33m7021[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mobservabilidad: dlqFailures y dlqDeliveryFailed se a├¡slan y skippedAsDuplicate se reporta [33m6693[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mCONFIRM_INCONSISTENT: pol├¡tica at-most-once, sin reparaci├│n autom├ítica [33m6306[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m7 passed[39m[22m[90m (7)[39m
+[2m      Tests [22m [1m[32m29 passed[39m[22m[90m (29)[39m
+[2m   Start at [22m 05:37:28
+[2m   Duration [22m 38.60s[2m (transform 2.57s, setup 0ms, collect 15.01s, tests 91.99s, environment 3ms, prepare 1.93s)[22m
+

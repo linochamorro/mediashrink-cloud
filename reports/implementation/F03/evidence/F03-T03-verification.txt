@@ -1,0 +1,8 @@
+F03-T03 — validación y API mock
+Comando focal: npx vitest run tests/unit/frontend/core.test.ts
+Resultado: PASS · 1 archivo · 9 tests. Comprueba MIME permitido, SVG rechazado, exceso de tamaño y cantidad, POST con fileName/contentType/sizeBytes, PUT binario con headers de firma, confirmación, listado y variante original.
+
+Typecheck frontend: npm run typecheck --workspace=@mediashrink/frontend — PASS.
+Build frontend: npm run build --workspace=@mediashrink/frontend — PASS · Vite 5.4.21.
+
+Limitación: mocks implementan el contrato de F03; el handler F02 observado aún usa otra forma de POST /jobs. La verificación no prueba interoperabilidad de servidor mientras F02 no adopte/confirme el acuerdo.

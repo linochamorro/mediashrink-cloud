@@ -1,0 +1,333 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [31m├ù[39m tests/unit/api/delete.test.ts[2m > [22mDELETE /jobs/:id (CA-05)[2m > [22melimina objetos raw y optimized y la fila del lote
+[31m   ÔåÆ expected 501 to be 204 // Object.is equality[39m
+ [31m├ù[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22mdevuelve una URL HTTPS presignada para la variante webp del usuario
+[31m   ÔåÆ expected 501 to be 200 // Object.is equality[39m
+ [31m├ù[39m tests/unit/api/zip.test.ts[2m > [22mGET /jobs/:id/download.zip (CA-05)[2m > [22mdevuelve un ZIP con WebP, AVIF y miniatura de cada imagen del lote
+[31m   ÔåÆ expected 501 to be 200 // Object.is equality[39m
+ [31m├ù[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22mgenera URLs distintas para avif, thumbnail y original
+[31m   ÔåÆ expected 501 to be 200 // Object.is equality[39m
+ [31m├ù[39m tests/unit/api/zip.test.ts[2m > [22mGET /jobs/:id/download.zip (CA-05)[2m > [22momite variantes ausentes de un lote parcial sin fallar
+[31m   ÔåÆ expected 501 to be 200 // Object.is equality[39m
+ [31m├ù[39m tests/unit/api/delete.test.ts[2m > [22mDELETE /jobs/:id (CA-05)[2m > [22m404 indistinto para lote ajeno e inexistente, sin borrar nada
+[31m   ÔåÆ expected 501 to be 404 // Object.is equality[39m
+ [31m├ù[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22mdevuelve 404 indistinto para lote ajeno y lote inexistente
+[31m   ÔåÆ expected 501 to be 404 // Object.is equality[39m
+ [31m├ù[39m tests/unit/api/delete.test.ts[2m > [22mDELETE /jobs/:id (CA-05)[2m > [22msegunda llamada es segura: 404 sin efecto y sin borrar otros lotes
+[31m   ÔåÆ expected 501 to be 204 // Object.is equality[39m
+ [31m├ù[39m tests/unit/api/zip.test.ts[2m > [22mGET /jobs/:id/download.zip (CA-05)[2m > [22mno incluye binarios de otro usuario ni de otro lote
+[31m   ÔåÆ expected 501 to be 404 // Object.is equality[39m
+ [31m├ù[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22mdevuelve 404 para una imagen que no pertenece al lote propio
+[31m   ÔåÆ expected 501 to be 404 // Object.is equality[39m
+ [31m├ù[39m tests/unit/api/delete.test.ts[2m > [22mDELETE /jobs/:id (CA-05)[2m > [22msi falla el borrado S3, conserva la fila para poder reintentar
+[31m   ÔåÆ expected 501 to be 204 // Object.is equality[39m
+ [31m├ù[39m tests/unit/api/zip.test.ts[2m > [22mGET /jobs/:id/download.zip (CA-05)[2m > [22macota la lectura al lote propio aunque exista otro lote del mismo usuario
+[31m   ÔåÆ expected [] to deeply equal [ 'img_alpha.webp' ][39m
+ [31m├ù[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22mtoma el userId del JWT aunque el cliente env├¡e cabeceras de suplantaci├│n
+[31m   ÔåÆ expected 501 to be 200 // Object.is equality[39m
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts[2m > [22mDELETE /jobs/:id (CA-05)[2m > [22msin JWT responde 401
+ [31m├ù[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22mrechaza variantes no permitidas e IDs inseguros con 400
+[31m   ÔåÆ expected 501 to be 400 // Object.is equality[39m
+ [31m├ù[39m tests/unit/api/zip.test.ts[2m > [22mGET /jobs/:id/download.zip (CA-05)[2m > [22m404 indistinto para lote ajeno e inexistente
+[31m   ÔåÆ expected 501 to be 404 // Object.is equality[39m
+ [32mÔ£ô[39m tests/unit/api/download.test.ts[2m > [22mGET /jobs/:id/download/:imageId (CA-05)[2m > [22msin autenticaci├│n responde 401 y no firma nada
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts[2m > [22mGET /jobs/:id/download.zip (CA-05)[2m > [22msin JWT responde 401
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 15 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/unit/api/delete.test.ts > DELETE /jobs/:id (CA-05) > elimina objetos raw y optimized y la fila del lote
+AssertionError: expected 501 to be 204 // Object.is equality
+
+- Expected
++ Received
+
+- 204
++ 501
+
+ ÔØ» tests/unit/api/delete.test.ts:40:29
+     38| 
+     39|     const response = await deleteJob(env.app, `/jobs/${jobId}`, token);
+     40|     expect(response.status).toBe(204);
+       |                             ^
+     41|     expect(await response.text()).toBe('');
+     42|     expect([...env.objects.objects.keys()]).toHaveLength(0);
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/15]ÔÄ»
+
+ FAIL  tests/unit/api/delete.test.ts > DELETE /jobs/:id (CA-05) > 404 indistinto para lote ajeno e inexistente, sin borrar nada
+AssertionError: expected 501 to be 404 // Object.is equality
+
+- Expected
++ Received
+
+- 404
++ 501
+
+ ÔØ» tests/unit/api/delete.test.ts:67:28
+     65|       attacker.token,
+     66|     );
+     67|     expect(foreign.status).toBe(404);
+       |                            ^
+     68|     expect(missing.status).toBe(404);
+     69|     expect(await jsonOf(foreign)).toEqual(await jsonOf(missing));
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/15]ÔÄ»
+
+ FAIL  tests/unit/api/delete.test.ts > DELETE /jobs/:id (CA-05) > segunda llamada es segura: 404 sin efecto y sin borrar otros lotes
+AssertionError: expected 501 to be 204 // Object.is equality
+
+- Expected
++ Received
+
+- 204
++ 501
+
+ ÔØ» tests/unit/api/delete.test.ts:85:72
+     83|     env.objects.seedOptimized({ userId, jobId: otherJobId }, imageB, 'ÔÇª
+     84| 
+     85|     expect((await deleteJob(env.app, `/jobs/${jobId}`, token)).status)ÔÇª
+       |                                                                        ^
+     86|     const second = await deleteJob(env.app, `/jobs/${jobId}`, token);
+     87|     expect(second.status).toBe(404);
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/15]ÔÄ»
+
+ FAIL  tests/unit/api/delete.test.ts > DELETE /jobs/:id (CA-05) > si falla el borrado S3, conserva la fila para poder reintentar
+AssertionError: expected 501 to be 204 // Object.is equality
+
+- Expected
++ Received
+
+- 204
++ 501
+
+ ÔØ» tests/unit/api/delete.test.ts:108:26
+    106| 
+    107|     const retry = await deleteJob(env.app, `/jobs/${jobId}`, token);
+    108|     expect(retry.status).toBe(204);
+       |                          ^
+    109|     expect(await env.jobs.getJob(userId, jobId)).toBeNull();
+    110|     expect([...env.objects.objects.keys()]).toHaveLength(0);
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/15]ÔÄ»
+
+ FAIL  tests/unit/api/download.test.ts > GET /jobs/:id/download/:imageId (CA-05) > devuelve una URL HTTPS presignada para la variante webp del usuario
+AssertionError: expected 501 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 501
+
+ ÔØ» tests/unit/api/download.test.ts:24:29
+     22|       token,
+     23|     );
+     24|     expect(response.status).toBe(200);
+       |                             ^
+     25|     const body = await jsonOf(response);
+     26|     expect(String(body.downloadUrl)).toMatch(/^https:\/\/127\.0\.0\.1:ÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/15]ÔÄ»
+
+ FAIL  tests/unit/api/download.test.ts > GET /jobs/:id/download/:imageId (CA-05) > genera URLs distintas para avif, thumbnail y original
+AssertionError: expected 501 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 501
+
+ ÔØ» tests/unit/api/download.test.ts:51:31
+     49|         token,
+     50|       );
+     51|       expect(response.status).toBe(200);
+       |                               ^
+     52|       const body = await jsonOf(response);
+     53|       expect(String(body.downloadUrl)).toContain(suffix);
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[6/15]ÔÄ»
+
+ FAIL  tests/unit/api/download.test.ts > GET /jobs/:id/download/:imageId (CA-05) > devuelve 404 indistinto para lote ajeno y lote inexistente
+AssertionError: expected 501 to be 404 // Object.is equality
+
+- Expected
++ Received
+
+- 404
++ 501
+
+ ÔØ» tests/unit/api/download.test.ts:89:28
+     87|     );
+     88| 
+     89|     expect(foreign.status).toBe(404);
+       |                            ^
+     90|     expect(missing.status).toBe(404);
+     91|     expect(await foreign.json()).toEqual(await missing.json());
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[7/15]ÔÄ»
+
+ FAIL  tests/unit/api/download.test.ts > GET /jobs/:id/download/:imageId (CA-05) > devuelve 404 para una imagen que no pertenece al lote propio
+AssertionError: expected 501 to be 404 // Object.is equality
+
+- Expected
++ Received
+
+- 404
++ 501
+
+ ÔØ» tests/unit/api/download.test.ts:105:29
+    103|       token,
+    104|     );
+    105|     expect(response.status).toBe(404);
+       |                             ^
+    106|     expect(env.objects.presignCalls).toHaveLength(0);
+    107|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[8/15]ÔÄ»
+
+ FAIL  tests/unit/api/download.test.ts > GET /jobs/:id/download/:imageId (CA-05) > toma el userId del JWT aunque el cliente env├¡e cabeceras de suplantaci├│n
+AssertionError: expected 501 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 501
+
+ ÔØ» tests/unit/api/download.test.ts:124:29
+    122|       },
+    123|     );
+    124|     expect(response.status).toBe(200);
+       |                             ^
+    125|     expect(env.objects.presignCalls[0]?.userId).toBe(owner.userId);
+    126|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[9/15]ÔÄ»
+
+ FAIL  tests/unit/api/download.test.ts > GET /jobs/:id/download/:imageId (CA-05) > rechaza variantes no permitidas e IDs inseguros con 400
+AssertionError: expected 501 to be 400 // Object.is equality
+
+- Expected
++ Received
+
+- 400
++ 501
+
+ ÔØ» tests/unit/api/download.test.ts:135:7
+    133|     expect(
+    134|       (await getBinary(env.app, `/jobs/${jobId}/download/${imageId}?vaÔÇª
+    135|     ).toBe(400);
+       |       ^
+    136|     expect(
+    137|       (await getBinary(
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[10/15]ÔÄ»
+
+ FAIL  tests/unit/api/zip.test.ts > GET /jobs/:id/download.zip (CA-05) > devuelve un ZIP con WebP, AVIF y miniatura de cada imagen del lote
+AssertionError: expected 501 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 501
+
+ ÔØ» tests/unit/api/zip.test.ts:31:29
+     29| 
+     30|     const response = await getBinary(env.app, `/jobs/${jobId}/downloadÔÇª
+     31|     expect(response.status).toBe(200);
+       |                             ^
+     32|     expect(response.headers.get('content-type')).toContain('applicatioÔÇª
+     33|     expect(response.headers.get('content-disposition')).toContain(`${jÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[11/15]ÔÄ»
+
+ FAIL  tests/unit/api/zip.test.ts > GET /jobs/:id/download.zip (CA-05) > omite variantes ausentes de un lote parcial sin fallar
+AssertionError: expected 501 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 501
+
+ ÔØ» tests/unit/api/zip.test.ts:70:29
+     68| 
+     69|     const response = await getBinary(env.app, `/jobs/${jobId}/downloadÔÇª
+     70|     expect(response.status).toBe(200);
+       |                             ^
+     71|     expect(readZip(Buffer.from(await response.arrayBuffer())).map((entÔÇª
+     72|       `${imageA}.webp`,
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[12/15]ÔÄ»
+
+ FAIL  tests/unit/api/zip.test.ts > GET /jobs/:id/download.zip (CA-05) > no incluye binarios de otro usuario ni de otro lote
+AssertionError: expected 501 to be 404 // Object.is equality
+
+- Expected
++ Received
+
+- 404
++ 501
+
+ ÔØ» tests/unit/api/zip.test.ts:96:29
+     94| 
+     95|     const response = await getBinary(env.app, `/jobs/${jobId}/downloadÔÇª
+     96|     expect(response.status).toBe(404);
+       |                             ^
+     97|     expect(env.objects.readCalls).toHaveLength(0);
+     98| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[13/15]ÔÄ»
+
+ FAIL  tests/unit/api/zip.test.ts > GET /jobs/:id/download.zip (CA-05) > acota la lectura al lote propio aunque exista otro lote del mismo usuario
+AssertionError: expected [] to deeply equal [ 'img_alpha.webp' ]
+
+- Expected
++ Received
+
+- Array [
+-   "img_alpha.webp",
+- ]
++ Array []
+
+ ÔØ» tests/unit/api/zip.test.ts:116:19
+    114|     const response = await getBinary(env.app, `/jobs/${jobId}/downloadÔÇª
+    115|     const names = readZip(Buffer.from(await response.arrayBuffer())).mÔÇª
+    116|     expect(names).toEqual([`${imageA}.webp`]);
+       |                   ^
+    117|     expect(env.objects.readCalls[0]?.request.jobId).toBe(jobId);
+    118|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[14/15]ÔÄ»
+
+ FAIL  tests/unit/api/zip.test.ts > GET /jobs/:id/download.zip (CA-05) > 404 indistinto para lote ajeno e inexistente
+AssertionError: expected 501 to be 404 // Object.is equality
+
+- Expected
++ Received
+
+- 404
++ 501
+
+ ÔØ» tests/unit/api/zip.test.ts:132:28
+    130|       attacker.token,
+    131|     );
+    132|     expect(foreign.status).toBe(404);
+       |                            ^
+    133|     expect(missing.status).toBe(404);
+    134|     expect(await foreign.json()).toEqual(await missing.json());
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[15/15]ÔÄ»
+
+[2m Test Files [22m [1m[31m3 failed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[31m15 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (18)[39m
+[2m   Start at [22m 22:40:24
+[2m   Duration [22m 2.61s[2m (transform 669ms, setup 0ms, collect 4.04s, tests 1.72s, environment 1ms, prepare 587ms)[22m
+
+EXIT=1
+

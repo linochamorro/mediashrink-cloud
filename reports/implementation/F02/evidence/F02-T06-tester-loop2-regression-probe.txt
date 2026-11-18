@@ -1,0 +1,4 @@
+EXITCODE=0
+REG_A={"batchStatus":"PARTIAL","jobStatus":"PARTIAL","completed":1,"failed":1,"observability":{"dlqFailures":1,"dlqDeliveryFailed":true,"skippedAsDuplicate":false},"redelivery":{"skippedAsDuplicate":true,"outcomes":0,"dlqFailures":0}}
+REG_B={"batchStatus":"FAILED","jobStatus":"FAILED","failed":1}
+REG_C={"firstStatus":503,"firstCode":"CONFIRM_INCONSISTENT","statusAfter":"PROCESSING","retryStatus":200,"retryConfirmed":true,"publishCalls":1}

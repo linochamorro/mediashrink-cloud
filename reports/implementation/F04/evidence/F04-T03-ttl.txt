@@ -1,0 +1,11 @@
+# F04-T03 - ttl
+UTC: 2026-11-18T12:17:34.7667587Z
+COMMAND: node temporary\F04-T03-probe.mjs ttl
+--- OUTPUT ---
+PROBE: DynamoDB DescribeTimeToLive(mediashrink-jobs)
+RESULT: SUCCESS
+TTL_ATTRIBUTE_NAME: ttl
+TTL_STATUS: ENABLED
+TTL_ATTRIBUTE_IS_TTL: true
+TTL_ENABLED: true
+EXIT_CODE: 0

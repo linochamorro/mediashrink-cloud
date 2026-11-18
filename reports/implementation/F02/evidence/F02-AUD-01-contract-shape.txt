@@ -1,0 +1,35 @@
+STATUS 201
+REQUEST {"preset":"BALANCED","files":[{"fileName":"foto.jpg","contentType":"image/jpeg","sizeBytes":2048},{"fileName":"retrato.png","contentType":"image/png","sizeBytes":4096}]}
+RESPONSE {
+  "job": {
+    "jobId": "e517d469-2495-4c9b-82ac-76f2c0d0f2f8",
+    "userId": "18808e9e-67d1-4295-824e-53cefb4c0587",
+    "status": "PENDING",
+    "preset": "BALANCED",
+    "formats": [
+      "webp",
+      "avif"
+    ],
+    "bytesBefore": 0,
+    "bytesAfter": 0,
+    "savingsPct": 0,
+    "exifStripped": false,
+    "createdAt": "2026-11-18T10:38:47.945Z",
+    "updatedAt": "2026-11-18T10:38:47.945Z",
+    "ttl": 1797590327
+  },
+  "uploads": [
+    {
+      "imageId": "0bd2d004-4300-4c24-ac18-b6c49798f745",
+      "uploadUrl": "https://127.0.0.1:9297/mediashrink-raw-local/18808e9e-67d1-4295-824e-53cefb4c0587/e517d469-2495-4c9b-82ac-76f2c0d0f2f8/raw/0bd2d004-4300-4c24-ac18-b6c49798f745?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=900&X-Amz-Signature=firma_local_de_prueba",
+      "method": "PUT"
+    },
+    {
+      "imageId": "15b888fe-3589-4390-939c-461037da62c5",
+      "uploadUrl": "https://127.0.0.1:9297/mediashrink-raw-local/18808e9e-67d1-4295-824e-53cefb4c0587/e517d469-2495-4c9b-82ac-76f2c0d0f2f8/raw/15b888fe-3589-4390-939c-461037da62c5?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=900&X-Amz-Signature=firma_local_de_prueba",
+      "method": "PUT"
+    }
+  ]
+}
+UPLOAD_KEYS ["imageId","uploadUrl","method"]
+PRESIGN_REQUESTS [{"userId":"18808e9e-67d1-4295-824e-53cefb4c0587","jobId":"e517d469-2495-4c9b-82ac-76f2c0d0f2f8","imageId":"0bd2d004-4300-4c24-ac18-b6c49798f745"},{"userId":"18808e9e-67d1-4295-824e-53cefb4c0587","jobId":"e517d469-2495-4c9b-82ac-76f2c0d0f2f8","imageId":"15b888fe-3589-4390-939c-461037da62c5"}]

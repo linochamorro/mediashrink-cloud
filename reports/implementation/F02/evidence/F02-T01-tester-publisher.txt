@@ -1,0 +1,31 @@
+=== Publicador SQS inyectado, sin simulación en producto — Tester F02-T01 ===
+
+Método: inspección de solo lectura + búsquedas en backend/src/api/** (sin editar).
+
+1) backend/src/api/publisher.ts define solo el PUERTO:
+   - JobConfirmationMessage { userId, jobId } y JobQueuePublisher { publish(message): Promise<void> }.
+   - No importa @aws-sdk/client-sqs, no construye SQSClient, no conoce QueueUrl ni envía mensajes.
+   - Comentario explícito: la implementación SQS real pertenece a F02-T04.
+
+2) backend/src/api/app.ts:
+   - ApiAppDeps.publisher es OBLIGATORIO (l. 30); createApiApp lo exige y lo pasa a mountJobsRoutes
+     (l. 62). No hay valor por defecto que simule SQS ni crear un publicador real.
+   - backend/src/index.ts NO se tocó (ver F02-T01-tester-scope.txt): el único punto de entrada
+     nuevo es createApiApp().
+
+3) backend/src/api/jobs.ts ll. 182-197: publisher.publish() se invoca DESPUÉS de la transición
+   PENDING -> PROCESSING, y ante fallo se revierte; el mensaje es {userId, jobId} del token.
+
+4) Búsqueda (grep de solo lectura) sobre backend/src/api/**:
+   - patrón 'client-sqs|SQSClient|SendMessageCommand|QueueUrl': 0 coincidencias de código.
+   - patrón '\.send\(': 1 coincidencia, job-list-store.ts l. 47, que es un QueryCommand de
+     DynamoDB para listar lotes por userId, no SQS.
+   - 'SQS' aparece solo en comentarios y en el nombre 'PublisherNotConfiguredError' de
+     publisher.ts (sin implementación de red).
+
+5) Los dobles viven solo en pruebas: RecordingPublisher en tests/unit/api/fixtures.ts
+   (ll. 134-146), inyectado por createApiTestApp y por la fixture de integración. Ningún doble
+   de publicación se importa desde backend/src/**.
+
+Veredicto: conforme. No hay cliente SQS hardcodeado ni publicación simulada en el producto de
+F02-T01; la implementación real queda diferida a F02-T04 según el contrato de la tarea.

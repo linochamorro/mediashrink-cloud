@@ -1,0 +1,7 @@
+# F04-T02 - validate
+UTC: 2026-11-18T11:56:27.0335862Z
+COMMAND: & $TF -chdir=infra/terraform validate
+--- OUTPUT ---
+[32m[1mSuccess![0m The configuration is valid.
+[0m
+EXIT_CODE: 0

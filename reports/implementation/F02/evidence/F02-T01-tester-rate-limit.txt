@@ -1,0 +1,43 @@
+=== Contraste de rate limit no suplantable (T03-A-01) — Tester F02-T01 ===
+
+Comando propio: npx vitest run tests/unit/api tests/integration/api --no-color ->
+tests/unit/api/rate-limit.test.ts 5/5, EXIT_CODE=0 (detalle en F02-T01-tester-api.txt).
+
+Fuentes leídas (sin editar): backend/src/api/{jobs,app,rate-limit}.ts,
+backend/src/auth/{routes,rate-limit,middleware}.ts, tests/unit/api/rate-limit.test.ts.
+
+1) Clave de /jobs = userId del token
+   - jobs.ts ll. 102-112: orden de guardas requireAuth (401) -> limiter.check(c.get('userId'))
+     (429 con Retry-After) -> handlers. El userId lo fija requireAuth tras verifyToken
+     (auth/middleware.ts l. 59); no hay userId controlable por el cliente en estas rutas.
+   - Ejecución propia (rate-limit.test.ts):
+     a) agotar el cupo de A (2 peticiones 201 + tercera 429) NO afecta a B (201): ll. 11-24.
+     b) rotar x-forwarded-for ('203.0.113.10', '203.0.113.11, 10.0.0.1') y x-real-ip
+        ('198.51.100.7') tras agotar el cupo NO crea cubos nuevos: las tres peticiones dan 429:
+        ll. 26-39.
+     c) una cabecera x-forwarded-for con el userId de A no consume el cupo de B (201): ll. 41-51.
+     d) la ventana se renueva con el reloj inyectado, sin dormir: ll. 75-84.
+     -> 5/5. La cabecera no cambia la clave; el cupo es por usuario autenticado.
+
+2) Clave de /auth: NonSpoofableAuthLimiter con principal fijado por middleware
+   - auth/routes.ts ll. 23-38 construye clientKey(c) desde x-forwarded-for / x-real-ip y se lo
+     pasa al limitador. backend/src/api/rate-limit.ts ll. 28-35: NonSpoofableAuthLimiter
+     extends FixedWindowRateLimiter y override check(_keyFromHeaders) DESCARTA ese argumento y
+     usa principalStore.getStore() (AsyncLocalStorage) ?? ANONYMOUS_PRINCIPAL ('auth:anonimo').
+   - app.ts ll. 43-45 inyecta NonSpoofableAuthLimiter; l. 59 fija el principal con
+     app.use('/auth/*', withPrincipal(ANONYMOUS_PRINCIPAL, () => next())) antes de mountAuthRoutes.
+   - Ejecución propia (rate-limit.test.ts ll. 53-73): tres pequeñas peticiones a /auth/login con
+     x-forwarded-for 203.0.113.1 / .2 / .3 (y x-real-ip en la tercera) -> 401, 401, 429 con
+     Retry-After y código RATE_LIMITED. Rotar las cabeceras NO elude el 429: la cabecera no
+     cambia la clave.
+
+3) Fail-closed
+   - rate-limit.ts l. 34: si el middleware no fijó un principal (getStore() undefined), la clave
+     es ANONYMOUS_PRINCIPAL, NUNCA la cabecera recibida. No hay ruta que use clientKey como clave
+     final. authErrorResponse no filtra la clave ni secretos (auth/middleware.ts ll. 27-45).
+
+Veredicto: T03-A-01 cerrado para el alcance de F02-T01: clave no suplantable en /jobs y en /auth,
+cabeceras x-forwarded-for/x-real-ip sin efecto sobre la clave y fallback fail-closed. Sin
+hallazgos críticos/altos propios. Matiz no bloqueante (Auditoría A-03, MEDIUM): todas las rutas
+/auth comparten el cubo 'auth:anonimo' y el ajuste por proxy de confianza se difiere a F05; no
+es suplantación ni evasión por cabeceras.

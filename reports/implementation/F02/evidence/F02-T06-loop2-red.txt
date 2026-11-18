@@ -1,0 +1,80 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [31mÔØ»[39m tests/integration/api/e2e-persist.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[33m 19932[2mms[22m[39m
+[31m   [31m├ù[31m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mlas 3 variantes existen en optimized y suma(HeadObject.ContentLength) === job.bytesAfter[33m 6731[2mms[22m[31m[39m
+[31m     ÔåÆ UnknownError[39m
+[31m   [31m├ù[31m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mGET /jobs/:id/download/:imageId devuelve los bytes exactos de cada objeto persistido[33m 6623[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 200 // Object.is equality[39m
+[31m   [31m├ù[31m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mGET /jobs/:id/download.zip contiene WebP, AVIF y miniatura id├®nticos a los objetos persistidos[33m 6577[2mms[22m[31m[39m
+[31m     ÔåÆ expected [] to deeply equal [ 'img-persist-1.avif', ÔÇª(2) ][39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 3 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/integration/api/e2e-persist.test.ts > F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01) > las 3 variantes existen en optimized y suma(HeadObject.ContentLength) === job.bytesAfter
+NotFound: UnknownError
+ ÔØ» S3RestXmlProtocol.handleError node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:1398:27
+ ÔØ» S3RestXmlProtocol.deserializeResponse node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:663:13
+ ÔØ» node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:23:24
+ ÔØ» node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/submodules/s3/index.js:380:20
+ ÔØ» node_modules/@smithy/core/dist-cjs/submodules/retry/index.js:205:50
+ ÔØ» node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/submodules/s3/index.js:62:28
+ ÔØ» node_modules/@aws-sdk/middleware-sdk-s3/dist-cjs/submodules/s3/index.js:89:20
+ ÔØ» node_modules/@aws-sdk/core/dist-cjs/submodules/client/index.js:137:26
+ ÔØ» tests/integration/api/e2e-persist.test.ts:82:20
+     80|     for (const variant of VARIANTS) {
+     81|       const key = optimizedImageKey({ userId, jobId, imageId }, varianÔÇª
+     82|       const head = await env.buckets.client.send(
+       |                    ^
+     83|         new HeadObjectCommand({ Bucket: env.buckets.optimizedBucket, KÔÇª
+     84|       );
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/3]ÔÄ»
+
+ FAIL  tests/integration/api/e2e-persist.test.ts > F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01) > GET /jobs/:id/download/:imageId devuelve los bytes exactos de cada objeto persistido
+AssertionError: expected 404 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 404
+
+ ÔØ» tests/integration/api/e2e-persist.test.ts:108:33
+    106|       expect(body.downloadUrl).toBe(body.url);
+    107|       const downloaded = await getViaPresignedUrl(body.downloadUrl);
+    108|       expect(downloaded.status).toBe(200);
+       |                                 ^
+    109| 
+    110|       const stored = await storedBytes(userId, jobId, imageId, variantÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/3]ÔÄ»
+
+ FAIL  tests/integration/api/e2e-persist.test.ts > F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01) > GET /jobs/:id/download.zip contiene WebP, AVIF y miniatura id├®nticos a los objetos persistidos
+AssertionError: expected [] to deeply equal [ 'img-persist-1.avif', ÔÇª(2) ]
+
+- Expected
++ Received
+
+- Array [
+-   "img-persist-1.avif",
+-   "img-persist-1.webp",
+-   "img-persist-1_thumb.webp",
+- ]
++ Array []
+
+ ÔØ» tests/integration/api/e2e-persist.test.ts:124:55
+    122|     expect(response.headers.get('content-type')).toContain('applicatioÔÇª
+    123|     const entries = readZip(Buffer.from(await response.arrayBuffer()));
+    124|     expect(entries.map((entry) => entry.name).sort()).toEqual(
+       |                                                       ^
+    125|       [`${imageId}.webp`, `${imageId}.avif`, `${imageId}_thumb.webp`].ÔÇª
+    126|     );
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/3]ÔÄ»
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[90m (3)[39m
+[2m   Start at [22m 23:38:00
+[2m   Duration [22m 22.40s[2m (transform 580ms, setup 0ms, collect 1.79s, tests 19.93s, environment 0ms, prepare 248ms)[22m
+

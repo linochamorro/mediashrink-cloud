@@ -1,0 +1,19 @@
+STARTED=2026-11-18T06:29:55.1590169-05:00
+COMMAND=npx playwright test --config=tests/e2e/playwright.config.ts --reporter=list --workers=1
+BROWSER=Microsoft Edge (msedge)
+PORT=51605
+LISTENER_BEFORE=none
+[WebServer] (node:16252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:13904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\frontend-flow.spec.ts:9:1 › tema claro inicial y selector oscuro persistente tras recargar (5.5s)
+  ok 2 tests\e2e\frontend-flow.spec.ts:20:1 › registro, error seguro, refresh, upload, polling, resultados, descargas y logout (29.1s)
+  ok 3 tests\e2e\frontend-flow.spec.ts:147:1 › validación de drag & drop, teclado y errores de archivos (1.3s)
+
+  3 passed (48.7s)
+EXIT_CODE=0
+FINISHED=2026-11-18T06:30:49.6562714-05:00

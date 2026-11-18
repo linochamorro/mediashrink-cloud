@@ -1,0 +1,71 @@
+VERIFICACION ESTATICA DE TRANSPORTE Y DEFAULT DEL PROCESADOR (F02-T04)
+Ejecutado por Tester desde <repo-root>. Sin Docker, sin secretos, rutas relativas.
+Inspeccion directa de codigo fuente + busquedas con grep (patrones literales).
+
+== [1] backend/src/worker/sqs-client.ts — transporte y credenciales ==
+L32  export function createSqsClient(options: SqsClientOptions): SQSClient {
+L33-36  const httpsAgent = options.useSsl !== false && options.caBundlePath !== undefined
+                         ? new Agent({ ca: readFileSync(options.caBundlePath), keepAlive: true })
+                         : undefined;
+L40      endpoint: options.endpointUrl,
+L43      useQueueUrlAsEndpoint: false,
+L44-47   credentials: fromIni({ filepath: options.sharedCredentialsFile,
+                                configFilepath: options.configFile }),
+L48      ...(httpsAgent === undefined ? {} : { requestHandler: new NodeHttpHandler({ httpsAgent }) }),
+ RESULTADO: AWS_ENDPOINT_URL es SOLO transporte; CA leido del bundle; credenciales fromIni. CUMPLE.
+
+== [2] backend/src/worker/consumer.ts — procesador por defecto ==
+L22   import { processImage, type ProcessImageOptions, type ProcessImageResult } from './processImage';
+L77   const processor: ImageProcessor = deps.processor ?? processImage;
+L79   const maxAttempts = deps.config.worker.sqsMaxRetries;
+L103  const result = await processor(bytes, options);
+ RESULTADO: el default es processImage (impone guarda A-05 y strip real). CUMPLE.
+
+== [3] renderWithSharp — busqueda en backend/src/**/*.ts ==
+worker/consumer.ts:5   comentario: "Nunca invoca `renderWithSharp` directamente."
+worker/render.ts:49     definicion (heredada de T03).
+worker/processImage.ts:15  import内部; :87 "options.hooks?.render ?? renderWithSharp" (seam de prueba de T03).
+ RESULTADO: 0 llamadas en consumer.ts / publisher.ts / sqs-client.ts. El consumidor no salta las guardas. CUMPLE.
+
+== [4] QueueUrls canonicas ==
+tests/integration/worker/sqs-fixture.ts:32-34
+  function canonicalUrl(name) => `https://sqs.${REGION}.amazonaws.com/${ACCOUNT_ID}/${name}`
+  REGION=us-east-1 (L20), ACCOUNT_ID=000000000000 (L21), ENDPOINT_URL=https://127.0.0.1:9297 (L19)
+.env.example:61  SQS_QUEUE_URL=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs
+.env.example:62  SQS_DLQ_URL=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq
+ RESULTADO: host AWS logico + cuenta fija; el host del endpoint no se escribe en la QueueUrl. CUMPLE.
+
+== [5] puerto retirado :9324 — todas las menciones en backend/src/**/*.ts ==
+config/index.ts:167  const RETIRED_EMULATOR_PORT_PATTERN = /:9324(?:\D|$)/;
+config/index.ts:172  mensaje de error que prohibe :9324
+contracts/zod-schemas.ts:156  validacion que rechaza :9324
+contracts/catalog.ts:266  descripcion: "sin :9324 ni :9297 en la QueueUrl"
+worker/sqs-client.ts:10 y :42  comentarios que prohiben :9324
+ RESULTADO: 0 usos activos en URLs/endpoint; solo guardas y documentacion de prohibicion. CUMPLE.
+
+== [6] credenciales fijas — menciones AKIA/ASIA/AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY ==
+config/index.ts:97-98  patrones del detector de secretos reales (G-3), no credenciales.
+.env.example:38-40  comentario: "NO definir AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY / AWS_PROFILE".
+ RESULTADO: 0 credenciales fijas en codigo ni en la plantilla de entorno. CUMPLE.
+
+== [7] reintentos configurables ==
+config/index.ts:331  sqsMaxRetries: readPositiveInt(env, 'SQS_MAX_RETRIES', 3),
+.env.example:69      SQS_MAX_RETRIES=3
+consumer.ts:79,100    bucle "while (attempt < maxAttempts)" con maxAttempts = sqsMaxRetries
+ RESULTADO: 3 intentos, dato de configuracion (no literal hardcodeado en el consumidor). CUMPLE.
+
+== [8] backend/src/api/** intacto (puerto de T01) ==
+backend/src/api/publisher.ts:10-13  interface JobConfirmationMessage { userId; jobId }
+backend/src/api/publisher.ts:15-17  interface JobQueuePublisher { publish(message): Promise<void> }
+backend/src/api/publisher.ts:19-23  class PublisherNotConfiguredError
+Busqueda '@aws-sdk/client-sqs|SqsJobQueuePublisher|SendMessageCommand' en backend/src/api/*.ts: 0 coincidencias.
+ RESULTADO: T04 solo importa el tipo desde worker/publisher.ts; la API conserva el puerto sin implementacion SQS. CUMPLE.
+
+== [9] contrato canonico de transporte ==
+backend/src/contracts/catalog.ts:263  AwsTransport: { ... }
+backend/src/contracts/zod-schemas.ts:220  AwsTransport: buildSchema(CATALOG.AwsTransport)
+tests/integration/worker/publisher.test.ts:73-83 valida schemas.AwsTransport.safeParse(...) === true
+ (la ejecucion real se registra en F02-T04-tester-publisher.txt)
+
+CONCLUSION: transporte, ausencia de :9324/credenciales fijas, QueueUrls canonicas,
+reintentos = 3 y default processImage quedan acreditados por inspeccion directa.

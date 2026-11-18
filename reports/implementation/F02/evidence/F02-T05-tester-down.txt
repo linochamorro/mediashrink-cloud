@@ -1,0 +1,15 @@
+== docker compose down ==
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed
+DOWN_EXIT=0
+== docker compose ps ==
+NAME      IMAGE     COMMAND   SERVICE   CREATED   STATUS    PORTS
+COMPOSE_PS_EXIT=0
+== docker ps -a ==
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS_A_EXIT=0
+RED_RESIDUAL=NINGUNA

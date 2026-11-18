@@ -1,0 +1,11 @@
+[sonda Tester] endpoint=https://127.0.0.1:9297 (sin :9324)
+[sonda Tester] buckets aislados creados: mediashrink-tester-raw-518c6604, mediashrink-tester-opt-518c6604
+[sonda Tester] PUT host=127.0.0.1:9297 method=PUT X-Amz-Expires=900 firmada=true key=tester-user-518c6604/22222222-2222-4222-8222-222222222222/raw/img_100x100
+[sonda Tester] PUT status=200 fixtureBytes=342 HeadContentLength=342 bytesIdenticos=true
+[sonda Tester] key raw con prefijo userId=true
+[sonda Tester] GET host=127.0.0.1:9297 method=GET X-Amz-Expires=900 key=tester-user-518c6604/22222222-2222-4222-8222-222222222222/optimized/img_100x100.webp
+[sonda Tester] GET status=200 bytesEsperados=38 bytesRecibidos=38 bytesIdenticos=true
+[sonda Tester] key optimized con prefijo userId=true
+[sonda Tester] buckets eliminados en limpieza
+EXIT_CODE=0
+NOTA: la sonda de verificacion fue un archivo temporal en temporary/ con alcance exclusivo de diagnostico; se ejecuto con npx tsx y se elimino tras la ejecucion. No se modifico codigo de producto, tests ni manifiestos.

@@ -1,0 +1,15 @@
+# F04-T01 - no-event-loop
+UTC: 2026-11-18T11:38:35.9277639Z
+COMMAND: Select-String infra/terraform/*.tf (static) ; node temporary/F04-T01-probe.mjs notifications
+--- OUTPUT ---
+STATIC CHECK (infra/terraform/*.tf, comments ignored)
+RESULT: NO aws_s3_bucket_notification / notification block / queue_arn / lambda_function_arn / topic_arn declaration
+LIFECYCLE_RESOURCE_COUNT: 2
+--- RUNTIME CHECK (GetBucketNotificationConfiguration) ---
+PROBE: GetBucketNotificationConfiguration(mediashrink-raw-local)
+RESULT: SUCCESS
+CONFIG_JSON: {"$metadata":{"httpStatusCode":200,"requestId":"0019Z3KB7RLFXMZD","extendedRequestId":"jPWVMj3BOnIXPme+HspK2Mi/uFJdrYGvo3ChGOm4W29t6J7Ji1BjevCu51qrX6G4","attempts":1,"totalRetryDelay":0}}
+PROBE: GetBucketNotificationConfiguration(mediashrink-optimized-local)
+RESULT: SUCCESS
+CONFIG_JSON: {"$metadata":{"httpStatusCode":200,"requestId":"001AA25NXBSZ425K","extendedRequestId":"c1yiJx0eVJYgKnbwOcdL6Im7uFb0uAeopQWOdZQRcGqh6HAe97AbPoGl7pKgYH6D","attempts":1,"totalRetryDelay":0}}
+EXIT_CODE: 0

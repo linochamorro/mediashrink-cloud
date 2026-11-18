@@ -1,0 +1,66 @@
+﻿# F04-T05 - analisis independiente del workflow (Tester)
+UTC: 2026-11-18T13:36:14.3805371Z
+--- js-yaml.load(.github/workflows/infra-integration.yml) ---
+{
+  "triggers": [
+    "push",
+    "pull_request"
+  ],
+  "branches": {
+    "push": [
+      "main"
+    ],
+    "pull_request": [
+      "main"
+    ]
+  },
+  "permissions": {
+    "contents": "read"
+  },
+  "timeout_minutes": 15,
+  "steps": 14,
+  "names": [
+    "Checkout",
+    "Setup Node.js",
+    "Setup Terraform",
+    "Install",
+    "Install infra test SDKs (pending manifest sync)",
+    "Start aws-emulator (G-7: 2 GiB / 2.0 CPUs)",
+    "Wait for emulator healthy",
+    "Export CA and credentials (runbook §1.3)",
+    "Terraform fmt",
+    "Terraform init",
+    "Terraform validate",
+    "Terraform apply (emulator only)",
+    "Integration tests (infra)",
+    "Stop aws-emulator (always)"
+  ],
+  "always": [
+    {
+      "name": "Stop aws-emulator (always)",
+      "if": "always()"
+    }
+  ],
+  "secretsRefs": false,
+  "noSave": true,
+  "terraform_wrapper": false,
+  "uses": [
+    "actions/checkout@v4",
+    "actions/setup-node@v4",
+    "hashicorp/setup-terraform@v3"
+  ],
+  "runs": [
+    "npm ci --no-audit --no-fund",
+    "npm install --no-save --no-audit --no-fund @aws-sdk/client-s3@3.1171.0 @aws-sdk/client-sqs@3.1171.0",
+    "docker compose config --quiet",
+    "for i in $(seq 1 60); do",
+    "# El CA y las credenciales se regeneran en CADA arranque (nota N-01):",
+    "terraform fmt -check",
+    "terraform init",
+    "terraform validate",
+    "terraform apply -auto-approve -input=false -var='is_emulator=true'",
+    "npx vitest run tests/integration/infra",
+    "docker compose down"
+  ]
+}
+WORKFLOW_ANALYSIS_EXIT: 0

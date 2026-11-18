@@ -1,0 +1,2 @@
+EXITCODE=0
+COH_JSON=[{"input":[1000,1000],"bytesBefore":1000,"bytesAfter":1000,"savingsPct":0,"schemaJobOk":true,"schemaMetricsOk":true},{"input":[100,150],"bytesBefore":100,"bytesAfter":150,"savingsPct":-50,"schemaJobOk":true,"schemaMetricsOk":true}]

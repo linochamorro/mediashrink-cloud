@@ -1,0 +1,55 @@
+# F04-T03 (tester) - compose-config
+UTC: 2026-11-18T12:21:39.6543790Z
+COMMAND: <DOCKER_CLI_DIR>\docker.exe compose config
+--- OUTPUT ---
+name: mediashrink-cloud
+services:
+  aws-emulator:
+    deploy:
+      resources:
+        limits:
+          cpus: 2
+          memory: "2147483648"
+    restart: 'no'
+    container_name: mediashrink-aws-emulator
+    cpus: 2
+    command:
+      - -p
+      - "9297"
+    environment:
+      EMULATOR_HEALTHCHECK_PORT: "9297"
+      EMULATOR_TELEMETRY: 'off'
+      HOME: /home/emulator
+    image: ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+    mem_limit: "2147483648"
+    memswap_limit: "2147483648"
+    networks:
+      default: null
+    stop_grace_period: 10s
+    volumes:
+      - type: volume
+        source: aws-emulator-data
+        target: /home/emulator/.aws/emulator
+        volume: {}
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --silent --fail --cacert /home/emulator/.aws/emulator/9297/ca.pem https://127.0.0.1:9297/__admin/health
+          >/dev/null || exit 1
+      timeout: 5s
+      interval: 5s
+      retries: 12
+      start_period: 20s
+    ports:
+      - mode: ingress
+        host_ip: 127.0.0.1
+        target: 9297
+        published: "9297"
+        protocol: tcp
+networks:
+  default:
+    name: mediashrink-cloud_default
+volumes:
+  aws-emulator-data:
+    name: mediashrink-cloud_aws-emulator-data
+EXIT_CODE: 0

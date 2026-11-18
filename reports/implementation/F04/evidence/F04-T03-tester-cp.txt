@@ -1,0 +1,8 @@
+# F04-T03 (tester) - cp
+UTC: 2026-11-18T12:21:49.7604359Z
+COMMAND: <DOCKER_CLI_DIR>\docker.exe cp ca.pem|config|emulator_credentials -> ./.local/aws-emulator/
+--- OUTPUT ---
+CP_ca.pem_EXIT: 0
+CP_config_EXIT: 0
+CP_emulator_credentials_EXIT: 0
+EXIT_CODE: 0

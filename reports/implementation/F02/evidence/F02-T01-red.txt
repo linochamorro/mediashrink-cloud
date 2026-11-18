@@ -1,0 +1,400 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [31mÔØ»[39m tests/unit/api/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m | [22m[31m5 failed[39m[2m)[22m[90m 19[2mms[22m[39m
+[31m   [31m├ù[31m rate limit no suplantable (cierra T03-A-01)[2m > [22mla clave de /jobs deriva del userId: agotar A no afecta a B[90m 12[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m rate limit no suplantable (cierra T03-A-01)[2m > [22mrotar x-forwarded-for y x-real-ip no crea cubos nuevos en /jobs[90m 2[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m rate limit no suplantable (cierra T03-A-01)[2m > [22muna cabecera con el userId ajeno no consume el cupo de ese usuario[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m rate limit no suplantable (cierra T03-A-01)[2m > [22m/auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m rate limit no suplantable (cierra T03-A-01)[2m > [22mla ventana se renueva con el reloj inyectado sin dormir[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+ [31mÔØ»[39m tests/unit/api/authz.test.ts [2m([22m[2m5 tests[22m[2m | [22m[31m5 failed[39m[2m)[22m[90m 19[2mms[22m[39m
+[31m   [31m├ù[31m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mlas cuatro rutas responden 401 sin token, antes que cualquier otra guarda[90m 13[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mun token manipulado y un refresh token no autorizan /jobs[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mGET /jobs/:id de un lote ajeno devuelve 404 id├®ntico al inexistente[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mPOST /jobs/:id/confirm ajeno devuelve 404 y no publica[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mel userId del token no se puede suplantar con x-user-id ni con el path[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+ [31mÔØ»[39m tests/unit/api/routes.test.ts [2m([22m[2m8 tests[22m[2m | [22m[31m8 failed[39m[2m)[22m[90m 18[2mms[22m[39m
+[31m   [31m├ù[31m rutas /jobs (F02-T01, CA-01)[2m > [22mPOST /jobs crea un PENDING con userId del token, formatos congelados y TTL v├ílido[90m 10[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m rutas /jobs (F02-T01, CA-01)[2m > [22mPOST /jobs rechaza preset inv├ílido con 400 y no crea el lote[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m rutas /jobs (F02-T01, CA-01)[2m > [22mPOST /jobs rechaza lote vac├¡o, imageId inv├ílido y bytes no enteros[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m rutas /jobs (F02-T01, CA-01)[2m > [22mGET /jobs devuelve solo los lotes del usuario autenticado[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m rutas /jobs (F02-T01, CA-01)[2m > [22mGET /jobs/:id devuelve el lote propio con sus im├ígenes[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m rutas /jobs (F02-T01, CA-01)[2m > [22mPOST /jobs/:id/confirm publica una vez y pasa a PROCESSING[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m rutas /jobs (F02-T01, CA-01)[2m > [22mPOST /jobs/:id/confirm es idempotente: la segunda llamada no republica[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+[31m   [31m├ù[31m rutas /jobs (F02-T01, CA-01)[2m > [22msi el publicador falla, revierte a PENDING para permitir el reintento[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createApiApp[39m
+ [31mÔØ»[39m tests/unit/api/userstore.test.ts [2m([22m[2m6 tests[22m[2m | [22m[31m6 failed[39m[2m)[22m[90m 15[2mms[22m[39m
+[31m   [31m├ù[31m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mcreate guarda perfil e ├¡ndice de correo con el email normalizado[90m 8[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createDynamoUserStore[39m
+[31m   [31m├ù[31m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mfindByEmail es insensible a may├║sculas y findById devuelve el hash[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createDynamoUserStore[39m
+[31m   [31m├ù[31m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mun correo duplicado lanza EmailAlreadyExistsError y no sobrescribe[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createDynamoUserStore[39m
+[31m   [31m├ù[31m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mcorreo o id desconocidos devuelven null sin filtrar nada[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createDynamoUserStore[39m
+[31m   [31m├ù[31m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mrechaza un perfil almacenado que no satisface el contrato congelado[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createDynamoUserStore[39m
+[31m   [31m├ù[31m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mAuthService registra y hace login sobre el adaptador DynamoDB[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: createDynamoUserStore[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 24 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/unit/api/authz.test.ts > autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > las cuatro rutas responden 401 sin token, antes que cualquier otra guarda
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/authz.test.ts:12:21
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/24]ÔÄ»
+
+ FAIL  tests/unit/api/authz.test.ts > autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > un token manipulado y un refresh token no autorizan /jobs
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/authz.test.ts:26:31
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/24]ÔÄ»
+
+ FAIL  tests/unit/api/authz.test.ts > autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > GET /jobs/:id de un lote ajeno devuelve 404 id├®ntico al inexistente
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/authz.test.ts:46:31
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/24]ÔÄ»
+
+ FAIL  tests/unit/api/authz.test.ts > autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > POST /jobs/:id/confirm ajeno devuelve 404 y no publica
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/authz.test.ts:61:42
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/24]ÔÄ»
+
+ FAIL  tests/unit/api/authz.test.ts > autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01) > el userId del token no se puede suplantar con x-user-id ni con el path
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/authz.test.ts:76:31
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/24]ÔÄ»
+
+ FAIL  tests/unit/api/rate-limit.test.ts > rate limit no suplantable (cierra T03-A-01) > la clave de /jobs deriva del userId: agotar A no afecta a B
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/rate-limit.test.ts:12:31
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[6/24]ÔÄ»
+
+ FAIL  tests/unit/api/rate-limit.test.ts > rate limit no suplantable (cierra T03-A-01) > rotar x-forwarded-for y x-real-ip no crea cubos nuevos en /jobs
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/rate-limit.test.ts:27:31
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[7/24]ÔÄ»
+
+ FAIL  tests/unit/api/rate-limit.test.ts > rate limit no suplantable (cierra T03-A-01) > una cabecera con el userId ajeno no consume el cupo de ese usuario
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/rate-limit.test.ts:42:31
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[8/24]ÔÄ»
+
+ FAIL  tests/unit/api/rate-limit.test.ts > rate limit no suplantable (cierra T03-A-01) > /auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/rate-limit.test.ts:54:21
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[9/24]ÔÄ»
+
+ FAIL  tests/unit/api/rate-limit.test.ts > rate limit no suplantable (cierra T03-A-01) > la ventana se renueva con el reloj inyectado sin dormir
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/rate-limit.test.ts:76:47
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[10/24]ÔÄ»
+
+ FAIL  tests/unit/api/routes.test.ts > rutas /jobs (F02-T01, CA-01) > POST /jobs crea un PENDING con userId del token, formatos congelados y TTL v├ílido
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/routes.test.ts:12:31
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[11/24]ÔÄ»
+
+ FAIL  tests/unit/api/routes.test.ts > rutas /jobs (F02-T01, CA-01) > POST /jobs rechaza preset inv├ílido con 400 y no crea el lote
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/routes.test.ts:35:37
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[12/24]ÔÄ»
+
+ FAIL  tests/unit/api/routes.test.ts > rutas /jobs (F02-T01, CA-01) > POST /jobs rechaza lote vac├¡o, imageId inv├ílido y bytes no enteros
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/routes.test.ts:50:37
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[13/24]ÔÄ»
+
+ FAIL  tests/unit/api/routes.test.ts > rutas /jobs (F02-T01, CA-01) > GET /jobs devuelve solo los lotes del usuario autenticado
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/routes.test.ts:66:31
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[14/24]ÔÄ»
+
+ FAIL  tests/unit/api/routes.test.ts > rutas /jobs (F02-T01, CA-01) > GET /jobs/:id devuelve el lote propio con sus im├ígenes
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/routes.test.ts:82:37
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[15/24]ÔÄ»
+
+ FAIL  tests/unit/api/routes.test.ts > rutas /jobs (F02-T01, CA-01) > POST /jobs/:id/confirm publica una vez y pasa a PROCESSING
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/routes.test.ts:101:42
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[16/24]ÔÄ»
+
+ FAIL  tests/unit/api/routes.test.ts > rutas /jobs (F02-T01, CA-01) > POST /jobs/:id/confirm es idempotente: la segunda llamada no republica
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/routes.test.ts:113:42
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[17/24]ÔÄ»
+
+ FAIL  tests/unit/api/routes.test.ts > rutas /jobs (F02-T01, CA-01) > si el publicador falla, revierte a PENDING para permitir el reintento
+Error: NOT_IMPLEMENTED: createApiApp
+ ÔØ» Module.createApiApp backend/src/api/app.ts:30:9
+     28| 
+     29| export function createApiApp(_deps: ApiAppDeps): Hono {
+     30|   throw new Error('NOT_IMPLEMENTED: createApiApp');
+       |         ^
+     31| }
+     32| 
+ ÔØ» Module.createApiTestApp tests/unit/api/fixtures.ts:183:15
+ ÔØ» tests/unit/api/routes.test.ts:126:48
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[18/24]ÔÄ»
+
+ FAIL  tests/unit/api/userstore.test.ts > adaptador DynamoDB de UserStore (cierra T03-A-04) > create guarda perfil e ├¡ndice de correo con el email normalizado
+Error: NOT_IMPLEMENTED: createDynamoUserStore
+ ÔØ» Module.createDynamoUserStore backend/src/db/user-store-adapter.ts:24:9
+     22| 
+     23| export function createDynamoUserStore(_options: DynamoUserStoreOptionsÔÇª
+     24|   throw new Error('NOT_IMPLEMENTED: createDynamoUserStore');
+       |         ^
+     25| }
+     26| 
+ ÔØ» setup tests/unit/api/userstore.test.ts:78:19
+ ÔØ» tests/unit/api/userstore.test.ts:86:31
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[19/24]ÔÄ»
+
+ FAIL  tests/unit/api/userstore.test.ts > adaptador DynamoDB de UserStore (cierra T03-A-04) > findByEmail es insensible a may├║sculas y findById devuelve el hash
+Error: NOT_IMPLEMENTED: createDynamoUserStore
+ ÔØ» Module.createDynamoUserStore backend/src/db/user-store-adapter.ts:24:9
+     22| 
+     23| export function createDynamoUserStore(_options: DynamoUserStoreOptionsÔÇª
+     24|   throw new Error('NOT_IMPLEMENTED: createDynamoUserStore');
+       |         ^
+     25| }
+     26| 
+ ÔØ» setup tests/unit/api/userstore.test.ts:78:19
+ ÔØ» tests/unit/api/userstore.test.ts:103:23
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[20/24]ÔÄ»
+
+ FAIL  tests/unit/api/userstore.test.ts > adaptador DynamoDB de UserStore (cierra T03-A-04) > un correo duplicado lanza EmailAlreadyExistsError y no sobrescribe
+Error: NOT_IMPLEMENTED: createDynamoUserStore
+ ÔØ» Module.createDynamoUserStore backend/src/db/user-store-adapter.ts:24:9
+     22| 
+     23| export function createDynamoUserStore(_options: DynamoUserStoreOptionsÔÇª
+     24|   throw new Error('NOT_IMPLEMENTED: createDynamoUserStore');
+       |         ^
+     25| }
+     26| 
+ ÔØ» setup tests/unit/api/userstore.test.ts:78:19
+ ÔØ» tests/unit/api/userstore.test.ts:116:31
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[21/24]ÔÄ»
+
+ FAIL  tests/unit/api/userstore.test.ts > adaptador DynamoDB de UserStore (cierra T03-A-04) > correo o id desconocidos devuelven null sin filtrar nada
+Error: NOT_IMPLEMENTED: createDynamoUserStore
+ ÔØ» Module.createDynamoUserStore backend/src/db/user-store-adapter.ts:24:9
+     22| 
+     23| export function createDynamoUserStore(_options: DynamoUserStoreOptionsÔÇª
+     24|   throw new Error('NOT_IMPLEMENTED: createDynamoUserStore');
+       |         ^
+     25| }
+     26| 
+ ÔØ» setup tests/unit/api/userstore.test.ts:78:19
+ ÔØ» tests/unit/api/userstore.test.ts:128:23
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[22/24]ÔÄ»
+
+ FAIL  tests/unit/api/userstore.test.ts > adaptador DynamoDB de UserStore (cierra T03-A-04) > rechaza un perfil almacenado que no satisface el contrato congelado
+Error: NOT_IMPLEMENTED: createDynamoUserStore
+ ÔØ» Module.createDynamoUserStore backend/src/db/user-store-adapter.ts:24:9
+     22| 
+     23| export function createDynamoUserStore(_options: DynamoUserStoreOptionsÔÇª
+     24|   throw new Error('NOT_IMPLEMENTED: createDynamoUserStore');
+       |         ^
+     25| }
+     26| 
+ ÔØ» setup tests/unit/api/userstore.test.ts:78:19
+ ÔØ» tests/unit/api/userstore.test.ts:134:31
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[23/24]ÔÄ»
+
+ FAIL  tests/unit/api/userstore.test.ts > adaptador DynamoDB de UserStore (cierra T03-A-04) > AuthService registra y hace login sobre el adaptador DynamoDB
+Error: NOT_IMPLEMENTED: createDynamoUserStore
+ ÔØ» Module.createDynamoUserStore backend/src/db/user-store-adapter.ts:24:9
+     22| 
+     23| export function createDynamoUserStore(_options: DynamoUserStoreOptionsÔÇª
+     24|   throw new Error('NOT_IMPLEMENTED: createDynamoUserStore');
+       |         ^
+     25| }
+     26| 
+ ÔØ» setup tests/unit/api/userstore.test.ts:78:19
+ ÔØ» tests/unit/api/userstore.test.ts:146:23
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[24/24]ÔÄ»
+
+[2m Test Files [22m [1m[31m4 failed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[31m24 failed[39m[22m[90m (24)[39m
+[2m   Start at [22m 20:49:34
+[2m   Duration [22m 3.72s[2m (transform 934ms, setup 0ms, collect 4.91s, tests 71ms, environment 1ms, prepare 1.03s)[22m
+
+EXIT_CODE=1

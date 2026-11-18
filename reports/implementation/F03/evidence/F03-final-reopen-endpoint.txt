@@ -1,0 +1,7 @@
+CHECKED=2026-11-18T06:31:12.5055805-05:00
+COMMAND=Get-NetTCPConnection -LocalPort <run-port> -State Listen; TCP connect probe
+PORT=51605
+LISTENERS_AFTER=0
+TCP_PROBE=timeout/no listener
+ENDPOINT_204=CONFIRMED_BY_NATURAL_EXIT_CODE_0: global-teardown.mjs resolves only after HTTP 204 with x-f03-server-shutdown=accepted; any other status throws and Playwright would exit nonzero
+EXIT_CODE=0

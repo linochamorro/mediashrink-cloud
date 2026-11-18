@@ -1,0 +1,18 @@
+# F04-T02 - emulator-down
+UTC: 2026-11-18T11:58:42.4633177Z
+COMMAND: $dk compose down ; $dk ps -a ; $dk network ls --filter name=mediashrink-cloud_default
+--- OUTPUT ---
+--- docker compose down ---
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed 
+--- docker ps -a ---
+DOCKER_PSA_EXIT: 0
+--- docker network ls (mediashrink-cloud_default) ---
+DOCKER_NETWORK_EXIT: 0
+CONTAINERS_REMAINING: 0
+NETWORK_REMAINING: 0
+EXIT_CODE: 0

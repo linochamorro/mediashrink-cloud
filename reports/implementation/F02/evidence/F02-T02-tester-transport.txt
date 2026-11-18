@@ -1,0 +1,31 @@
+# AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY / AWS_PROFILE: las variables de entorno
+AWS_ENDPOINT_URL=https://127.0.0.1:9297
+AWS_SHARED_CREDENTIALS_FILE=./.local/aws-emulator/emulator_credentials
+AWS_CONFIG_FILE=./.local/aws-emulator/config
+USE_SSL=true
+CA_BUNDLE_PATH=./.local/aws-emulator/ca.pem
+=== storage/client.ts: fromIni + CA explicito + forcePathStyle ===
+* `fromIni`: nunca credenciales fijas ni secretos en variables de entorno
+import { fromIni } from '@aws-sdk/credential-providers';
+import { NodeHttpHandler } from '@smithy/node-http-handler';
+? new Agent({ ca: readFileSync(options.caBundlePath), keepAlive: true })
+endpoint: options.endpointUrl,
+forcePathStyle: true,
+credentials: fromIni({
+...(httpsAgent === undefined ? {} : { requestHandler: new NodeHttpHandler({ httpsAgent }) }),
+=== sonda runtime (config cargada) ===
+[sonda Tester] region=us-east-1
+[sonda Tester] endpointUrl=https://127.0.0.1:9297
+[sonda Tester] endpoint 127.0.0.1:9297=true
+[sonda Tester] endpoint sin :9324=true
+[sonda Tester] useSsl=true
+[sonda Tester] caBundlePath=./.local/aws-emulator/ca.pem
+[sonda Tester] sharedCredentialsFile=./.local/aws-emulator/emulator_credentials
+[sonda Tester] configFile=./.local/aws-emulator/config
+[sonda Tester] AWS_ACCESS_KEY_ID en entorno=false
+[sonda Tester] AWS_SECRET_ACCESS_KEY en entorno=false
+[sonda Tester] AWS_PROFILE en entorno=false
+EXIT_CODE=0
+=== credenciales efemeras del emulador (sin imprimir valores) ===
+lineas aws_access_key_id con prefijo EMULATOR=1 (valor no impreso)
+NOTA: la sonda de verificacion fue un archivo temporal en temporary/ con alcance exclusivo de diagnostico; se ejecuto con npx tsx y se elimino tras la ejecucion. No se modifico codigo de producto, tests ni manifiestos.

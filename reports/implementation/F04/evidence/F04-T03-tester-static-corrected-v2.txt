@@ -1,0 +1,34 @@
+# F04-T03 (tester) - static-corrected-v2
+UTC: 2026-11-18T12:27:10.1524432Z
+COMMAND: Get-Content over infra/terraform/*.tf (heredocs/comments excluded, ordinal substring checks)
+--- OUTPUT ---
+--- retention literals in CODE (full-line comments and EOT heredocs excluded) ---
+CODE_RETENTION_LITERALS_data: 0
+CODE_RETENTION_LITERALS_dynamodb: 0
+CODE_RETENTION_LITERALS_outputs: 0
+CODE_RETENTION_LITERALS_provider: 0
+LITERAL s3.tf: default     = 30
+CODE_RETENTION_LITERALS_s3: 1
+CODE_RETENTION_LITERALS_sqs: 0
+CODE_RETENTION_LITERALS_variables: 0
+CODE_RETENTION_LITERALS_versions: 0
+TOTAL_CODE_RETENTION_LITERALS: 1
+--- dynamodb.tf structural checks (ordinal substring match) ---
+DYNAMODB_TF_CONTAINS [ttl_seconds = var.retention_days * 86400]: True
+DYNAMODB_TF_CONTAINS [check "retention_alignment_s3_dynamodb"]: True
+DYNAMODB_TF_CONTAINS [check "dynamodb_ttl_enabled"]: True
+DYNAMODB_TF_CONTAINS [output "dynamodb_ttl_seconds"]: True
+DYNAMODB_TF_CONTAINS [output "dynamodb_ttl_attribute"]: True
+DYNAMODB_TF_CONTAINS [hash_key  = "userId"]: True
+DYNAMODB_TF_CONTAINS [range_key = "jobId"]: True
+DYNAMODB_TF_CONTAINS [attribute_name = "ttl"]: True
+DYNAMODB_TF_CONTAINS [enabled        = true]: True
+DYNAMODB_TF_CONTAINS [NO se crea `mediashrink-users`]: True
+--- s3.tf single source (ordinal substring match) ---
+S3_TF_CONTAINS [default     = 30]: True
+S3_TF_CONTAINS [days = var.retention_days]: True
+S3_TF_CONTAINS [status = "Enabled"]: True
+--- conclusion ---
+NO_DUPLICATED_RETENTION_LITERAL_IN_DYNAMODB_TF: True
+STATIC_CHECKS_CONSISTENT: True
+EXIT_CODE: 0
