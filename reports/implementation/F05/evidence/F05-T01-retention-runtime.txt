@@ -1,0 +1,14 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/config.test.ts [2m([22m[2m37 tests[22m[2m)[22m[90m 46[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m37 passed[39m[22m[90m (37)[39m
+[2m   Start at [22m 18:32:19
+[2m   Duration [22m 1.93s[2m (transform 628ms, setup 0ms, collect 613ms, tests 46ms, environment 0ms, prepare 709ms)[22m
+
+RETENTION_UNIT_EXIT=0
+SOURCE=export const RETENTION_TTL_SECONDS = RETENTION_DAYS * SECONDS_PER_DAY;
+SOURCE=retentionDays: readPositiveInt(env, 'RETENTION_DAYS', RETENTION_DAYS),
+CATALOG_TTL_DERIVATION=30*86400=2592000
