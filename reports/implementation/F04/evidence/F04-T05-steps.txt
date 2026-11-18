@@ -61,3 +61,86 @@ GH_LOG_EXIT: 0
 12 | Terraform apply (emulator only) | if=-
 13 | Integration tests (infra) | if=-
 14 | Stop aws-emulator (always) | if=always()
+--- GitHub steps run 44312560558 (success) ---
+
+Ô£ô main Infra integration (aws-emulator) ┬À 44312560558
+Triggered via push about 2 minutes ago
+
+Ô£ô emulator / terraform apply / tests/integration/infra in 2m8s (ID 134830187611)
+  Ô£ô Set up job
+  Ô£ô Checkout
+  Ô£ô Setup Node.js
+  Ô£ô Setup Terraform
+  Ô£ô Install
+  Ô£ô Install infra test SDKs (pending manifest sync)
+  Ô£ô Start aws-emulator (G-7: 2 GiB / 2.0 CPUs)
+  Ô£ô Wait for emulator healthy
+  Ô£ô Export CA and credentials (runbook ┬º1.3)
+  Ô£ô Terraform fmt
+  Ô£ô Terraform init
+  Ô£ô Terraform validate
+  Ô£ô Terraform apply (emulator only)
+  Ô£ô Integration tests (infra)
+  Ô£ô Stop aws-emulator (always)
+  Ô£ô Post Setup Node.js
+  Ô£ô Post Checkout
+  Ô£ô Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, hashicorp/setup-terraform@v3. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+emulator / terraform apply / tests/integration/infra: .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+emulator / terraform apply / tests/integration/infra: .github#1
+
+
+To see the full job log, try: gh run view --log --job=134830187611
+View this run on GitHub: https://github.com/linochamorro/mediashrink-cloud/actions/runs/44312560558
+GH_JOB_VIEW_EXIT: 0
+--- vitest summary (run 44312560558, line 1023) ---
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:41.0764898Z ##[group]Run npx vitest run tests/integration/infra
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:41.0765244Z ^[[36;1mnpx vitest run tests/integration/infra^[[0m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:41.0784546Z shell: /usr/bin/bash -e {0}
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:41.0784769Z ##[endgroup]
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:41.4458019Z 
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:41.4464405Z ^[[1m^[[7m^[[36m RUN ^[[39m^[[27m^[[22m ^[[36mv2.1.9 ^[[39m^[[90m/home/runner/work/mediashrink-cloud/mediashrink-cloud^[[39m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:41.4464982Z 
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:41.8695889Z ^[[90mstdout^[[2m | tests/integration/infra/gsi.test.ts^[[2m > ^[[22m^[[2mDescribeTable: la tabla de jobs no declara ├¡ndices secundarios globales
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:41.8696802Z ^[[22m^[[39mGSI_COUNT: 0
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:41.8697319Z 
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:41.8698299Z  ^[[32mÔ£ô^[[39m tests/integration/infra/gsi.test.ts ^[[2m(^[[22m^[[2m1 test^[[22m^[[2m)^[[22m^[[90m 74^[[2mms^[[22m^[[39m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.2932115Z ^[[90mstdout^[[2m | tests/integration/infra/retention-guard.test.ts^[[2m > ^[[22m^[[2mretention_days=30 coincide en Terraform, .env.example y el cat├ílogo congelado
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.2933798Z ^[[22m^[[39mRETENTION_GUARD: {"EXPECTED_DAYS":30,"EXPECTED_TTL_SECONDS":2592000,"ENV_RETENTION_DAYS":30,"CATALOG_RETENTION_DAYS":30,"CATALOG_TTL_SECONDS":2592000,"TF_DEFAULT_RETENTION_DAYS":30,"TF_APPLIED_RETENTION_DAYS":30,"TF_APPLIED_TTL_SECONDS":2592000}
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.2934425Z 
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.2934845Z  ^[[32mÔ£ô^[[39m tests/integration/infra/retention-guard.test.ts ^[[2m(^[[22m^[[2m1 test^[[22m^[[2m)^[[22m^[[33m 497^[[2mms^[[22m^[[39m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.2935515Z    ^[[33m^[[2mÔ£ô^[[22m^[[39m retention_days=30 coincide en Terraform, .env.example y el cat├ílogo congelado ^[[33m497^[[2mms^[[22m^[[39m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5000778Z  ^[[32mÔ£ô^[[39m tests/integration/infra/resources.test.ts ^[[2m(^[[22m^[[2m4 tests^[[22m^[[2m)^[[22m^[[33m 692^[[2mms^[[22m^[[39m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5002172Z    ^[[33m^[[2mÔ£ô^[[22m^[[39m infra aplicada contra aws/aws-emulator^[[2m > ^[[22mla pol├¡tica IAM se deriva de los recursos reales, sin comodines amplios ^[[33m490^[[2mms^[[22m^[[39m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5078766Z 
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5085782Z ^[[2m Test Files ^[[22m ^[[1m^[[32m3 passed^[[39m^[[22m^[[90m (3)^[[39m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5086727Z ^[[2m      Tests ^[[22m ^[[1m^[[32m6 passed^[[39m^[[22m^[[90m (6)^[[39m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5087310Z ^[[2m   Start at ^[[22m 13:21:41
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5088185Z ^[[2m   Duration ^[[22m 1.06s^[[2m (transform 135ms, setup 0ms, collect 461ms, tests 1.26s, environment 0ms, prepare 175ms)^[[22m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5088947Z 
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5305449Z ##[group]Run docker compose down
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5305687Z ^[[36;1mdocker compose down^[[0m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5305878Z ^[[36;1mdocker compose ps^[[0m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5325327Z shell: /usr/bin/bash -e {0}
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5325542Z ##[endgroup]
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.5780708Z  Container mediashrink-aws-emulator Stopping 
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.6724614Z  Container mediashrink-aws-emulator Stopped 
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.6724969Z  Container mediashrink-aws-emulator Removing 
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.6770442Z  Container mediashrink-aws-emulator Removed 
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.6775624Z  Network mediashrink-cloud_default Removing 
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.7411122Z  Network mediashrink-cloud_default Removed 
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.7844794Z NAME      IMAGE     COMMAND   SERVICE   CREATED   STATUS    PORTS
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.7932045Z Post job cleanup.
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.8861778Z (node:3518) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.8862566Z (Use `node --trace-deprecation ...` to show where the warning was created)
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:42.8864128Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-26d7d9d67dede47fd64a103fc09dd1369fe09299330f0251508a73856d0acba5, not saving cache.
+
+--- apply summary (run 44312560558) ---
+
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:21:41.0564468Z Apply complete! Resources: 11 added, 0 changed, 0 destroyed.^[[0m
+
+

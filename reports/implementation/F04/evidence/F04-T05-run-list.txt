@@ -1,0 +1,9 @@
+# F04-T05 - gh run list --workflow infra-integration.yml
+UTC: 2026-11-18T13:15:24.4941884Z
+--- OUTPUT ---
+in_progress		ci(F04-T05): workflow de integracion vs aws-emulator + tests de infraÔÇª	Infra integration (aws-emulator)	main	push	44311817714	17s	2026-11-18T13:15:09Z
+RUN_LIST_EXIT: 0
+--- revalidacion tras push 8f1de0b ---
+in_progress		fix(F04-T05): instalar SDKs S3/SQS sin tocar manifiestos y documentarÔÇª	Infra integration (aws-emulator)	main	push	44312560558	7s	2026-11-18T13:19:36Z
+completed	failure	ci(F04-T05): workflow de integracion vs aws-emulator + tests de infraÔÇª	Infra integration (aws-emulator)	main	push	44311817714	1m57s	2026-11-18T13:15:09Z
+RUN_LIST_2_EXIT: 0

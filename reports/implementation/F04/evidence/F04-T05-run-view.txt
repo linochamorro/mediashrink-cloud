@@ -1,0 +1,65 @@
+# F04-T05 - gh run view 44311817714
+UTC: 2026-11-18T13:17:09.9980807Z
+--- gh run view ---
+
+X main Infra integration (aws-emulator) ┬À 44311817714
+Triggered via push about 2 minutes ago
+
+JOBS
+X emulator / terraform apply / tests/integration/infra in 1m53s (ID 134827599974)
+  Ô£ô Set up job
+  Ô£ô Checkout
+  Ô£ô Setup Node.js
+  Ô£ô Setup Terraform
+  Ô£ô Install
+  Ô£ô Start aws-emulator (G-7: 2 GiB / 2.0 CPUs)
+  Ô£ô Wait for emulator healthy
+  Ô£ô Export CA and credentials (runbook ┬º1.3)
+  Ô£ô Terraform fmt
+  Ô£ô Terraform init
+  Ô£ô Terraform validate
+  Ô£ô Terraform apply (emulator only)
+  X Integration tests (infra)
+  Ô£ô Stop aws-emulator (always)
+  - Post Setup Node.js
+  Ô£ô Post Checkout
+  Ô£ô Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, hashicorp/setup-terraform@v3. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+emulator / terraform apply / tests/integration/infra: .github#2
+
+X Process completed with exit code 1.
+emulator / terraform apply / tests/integration/infra: .github#32
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+emulator / terraform apply / tests/integration/infra: .github#1
+
+
+To see what failed, try: gh run view 44311817714 --log-failed
+View this run on GitHub: https://github.com/linochamorro/mediashrink-cloud/actions/runs/44311817714
+RUN_VIEW_EXIT: 0
+--- json status/conclusion/url ---
+{"conclusion":"failure","displayTitle":"ci(F04-T05): workflow de integracion vs aws-emulator + tests de infraÔÇª","event":"push","headBranch":"main","status":"completed","url":"https://github.com/linochamorro/mediashrink-cloud/actions/runs/44311817714"}
+RUN_VIEW_JSON_EXIT: 0
+--- run 2: 44312560558 ---
+
+Ô£ô main Infra integration (aws-emulator) ┬À 44312560558
+Triggered via push about 2 minutes ago
+
+JOBS
+Ô£ô emulator / terraform apply / tests/integration/infra in 2m8s (ID 134830187611)
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, hashicorp/setup-terraform@v3. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+emulator / terraform apply / tests/integration/infra: .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+emulator / terraform apply / tests/integration/infra: .github#1
+
+
+For more information about the job, try: gh run view --job=134830187611
+View this run on GitHub: https://github.com/linochamorro/mediashrink-cloud/actions/runs/44312560558
+RUN2_VIEW_EXIT: 0
+{"conclusion":"success","event":"push","headBranch":"main","status":"completed","url":"https://github.com/linochamorro/mediashrink-cloud/actions/runs/44312560558"}
+RUN2_JSON_EXIT: 0
