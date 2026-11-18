@@ -111,5 +111,11 @@ Sesión única `up → docker cp → apply → sondas/tests → down`, sin recre
 - Pasos: 12/14 OK (Checkout, Setup Node, Setup Terraform, Install, Start emulator con límites, healthy, docker cp, fmt, init, validate, **apply → 11 added**, Stop emulator `if: always()`). Falló `Integration tests (infra)` por P-4.
 - URL: https://github.com/linochamorro/mediashrink-cloud/actions/runs/44311817714
 
-### Run 2 — verificación tras el fix de P-4
-_Pendiente de completar con el ID y el veredicto del segundo run._
+### Run 2 — `44312560558` (commit `8f1de0b`, verificación final)
+- `gh run view 44312560558` → **`success`** en 2m8s; **14/14 pasos ✓**, incluidos `Terraform apply (emulator only)`, `Integration tests (infra)` y `Stop aws-emulator (always)` (`F04-T05-run-view.txt`, `F04-T05-steps.txt`).
+- `terraform apply` en el runner: **`Apply complete! Resources: 11 added, 0 changed, 0 destroyed`**.
+- `npx vitest run tests/integration/infra` en el runner: **3 archivos, 6/6 tests**; `GSI_COUNT: 0`; `RETENTION_GUARD` con los 8 valores exactamente iguales que en local.
+- `docker compose down` ejecutado y sin contenedor/red residual; único aviso no bloqueante: Node.js 20 deprecado en acciones y migración futura de `ubuntu-latest` a Ubuntu 26.
+- URL: https://github.com/linochamorro/mediashrink-cloud/actions/runs/44312560558
+
+**Resultado final del job CI real: verde.** No se emite `PASSED` ni se cierra `F04-T05`; los concerns P-2 y P-4 quedan documentados para el Architect (sin G-10).
