@@ -28,3 +28,36 @@ F04-T05-retention-guard.txt
 F04-T05-steps.txt
 F04-T05-up.txt
 F04-T05-workflow.txt
+--- GitHub job steps (run 44311817714) ---
+
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:15:13.7005038Z ##[group]Run actions/checkout@v4
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:15:14.6538020Z ##[group]Run actions/setup-node@v4
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:15:21.6563224Z ##[group]Run npm ci --no-audit --no-fund
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:15:24.3811075Z ##[group]Run docker compose config --quiet
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:15:54.6708830Z ^[[36;1mcurl --silent --show-error --fail --cacert .local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health^[[0m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:15:54.8020739Z ##[group]Run terraform fmt -check
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:15:54.8473904Z ##[group]Run terraform init
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:16:00.3023997Z ##[group]Run terraform validate
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:16:01.8241265Z ##[group]Run terraform apply -auto-approve -input=false -var='is_emulator=true'
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:17:01.9210154Z Apply complete! Resources: 11 added, 0 changed, 0 destroyed.^[[0m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:17:01.9355665Z ##[group]Run npx vitest run tests/integration/infra
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:17:02.6152808Z ^[[2m Test Files ^[[22m ^[[1m^[[31m3 failed^[[39m^[[22m^[[90m (3)^[[39m
+emulator / terraform apply / tests/integration/infra	UNKNOWN STEP	2026-11-18T13:17:02.6461543Z ##[group]Run docker compose down
+
+
+GH_LOG_EXIT: 0
+--- revalidacion steps (14 pasos) ---
+1 | Checkout | if=-
+2 | Setup Node.js | if=-
+3 | Setup Terraform | if=-
+4 | Install | if=-
+5 | Install infra test SDKs (pending manifest sync) | if=-
+6 | Start aws-emulator (G-7: 2 GiB / 2.0 CPUs) | if=-
+7 | Wait for emulator healthy | if=-
+8 | Export CA and credentials (runbook ┬º1.3) | if=-
+9 | Terraform fmt | if=-
+10 | Terraform init | if=-
+11 | Terraform validate | if=-
+12 | Terraform apply (emulator only) | if=-
+13 | Integration tests (infra) | if=-
+14 | Stop aws-emulator (always) | if=always()

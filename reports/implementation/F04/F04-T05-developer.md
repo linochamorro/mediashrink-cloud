@@ -21,7 +21,7 @@
 
 | Requisito CA-05 | Implementación | Evidencia |
 |---|---|---|
-| Trigger push/PR `main`, `contents: read`, checkout@v4, setup-node@v4 (26, cache npm) | `.github/workflows/infra-integration.yml` | `F04-T05-workflow.txt` |
+| Trigger push/PR `main`, `contents: read`, checkout@v4, setup-node@v4 (26, cache npm) | `.github/workflows/infra-integration.yml` (14 pasos) | `F04-T05-workflow.txt` |
 | `hashicorp/setup-terraform@v3`, Terraform `1.17.2`, `terraform_wrapper: false` (JSON limpio) | ídem | ídem |
 | Docker con límites G-7 (2 GiB / 2.0 CPUs), espera `healthy` | `docker compose config --quiet`, `up -d`, `docker inspect` + aserción `2147483648` / `2000000000`, bucle de 60×3 s | `F04-T05-up.txt` |
 | `docker cp` de `ca.pem`/`config`/`emulator_credentials` + healthcheck HTTPS con CA | Bloque repetido en cada arranque (nota N-01), `curl --cacert … /__admin/health` | `F04-T05-cp.txt`, `F04-T05-healthcheck.txt` |
@@ -45,7 +45,7 @@ Sesión única `up → docker cp → apply → sondas/tests → down`, sin recre
 
 ## 4. Decisiones de implementación
 
-- **Acciones del workflow (13 pasos):** cobertura explícita de todos los comandos declarados en el contrato; verificación numérica de los límites G-7 en lugar de asumirlos; espera de `healthy` con volcado de logs si falla; `docker cp` repetido por la regeneración del CA en cada arranque (N-01); `terraform_wrapper: false` para que `terraform output -json` sea consumible por la guardia de retención; apagado con `if: always()`.
+- **Acciones del workflow (14 pasos):** cobertura explícita de todos los comandos declarados en el contrato; verificación numérica de los límites G-7 en lugar de asumirlos; espera de `healthy` con volcado de logs si falla; `docker cp` repetido por la regeneración del CA en cada arranque (N-01); `terraform_wrapper: false` para que `terraform output -json` sea consumible por la guardia de retención; apagado con `if: always()`. Paso 5 (`npm install --no-save` de los SDK S3/SQS) añadido tras el run fallido 44311817714; ver P-4.
 - **Tests de infra (`tests/integration/infra/`):** `emulator.ts` (clientes SDK v3 S3/SQS/DynamoDB con CA y credenciales efímeras, QueueUrls canónicas, `forcePathStyle`), `resources.test.ts` (buckets + lifecycle 30 d + CORS + sin eventos; cola + DLQ + `maxReceiveCount` **`typeof === 'number'`** y ARN real de DLQ; tabla PK/SK + TTL `ENABLED`; política IAM derivada de ARNs reales y sin comodines), `gsi.test.ts` (sonda `GSI_COUNT: 0`), `retention-guard.test.ts` (guardia cross-sistema).
 - **Guardia de retención (cierre de `F04T01-A-01` / `F04T03-A-03`):** compara 4 fuentes — `RETENTION_DAYS` de `.env.example`, `RETENTION_DAYS`/`TTL_SECONDS` del catálogo congelado, `default` de `var.retention_days` en `s3.tf`, y salidas aplicadas `s3_lifecycle_expiration_days`/`dynamodb_ttl_seconds`. Falla si cualquiera diverge de `30` / `2.592.000` o si `TTL != días × 86400`. **No modifica** `.env.example`, catálogo, backend ni HCL.
 - **Sesión única:** toda la verificación local se ejecutó en un único ciclo `up → cp → apply → sondas/tests → down`, evitando la recreación por el estado efímero del emulador (P2 de T02/T03/T04). El state local heredado mostró recursos borrados fuera de Terraform; `apply` los recreó (11 added) y el job CI parte de un runner limpio con state no versionado.
@@ -87,6 +87,15 @@ Sesión única `up → docker cp → apply → sondas/tests → down`, sin recre
 6. **Pendientes:** ninguno para CA-05; se documenta para el runbook de fase.
 7. **Aprendizaje candidato:** la prueba de infra debe ejecutarse siempre en la misma sesión que el `apply`, o contra un state limpio.
 
+### Problema P-4 — SDK de S3/SQS no declarados en los manifiestos de `origin/main`
+1. **Identificación:** `P-4` · run GitHub `44311817714` · severidad MEDIUM (concern abierto).
+2. **Problema:** el run real falló en `Integration tests (infra)` con `Failed to load url @aws-sdk/client-s3 ... in tests/integration/infra/emulator.ts`. Los 3 archivos de test quedaron en `0 test` por error de carga; los 12 pasos anteriores, incluidos `terraform apply` (11 recursos) y el apagado `if: always()`, pasaron.
+3. **Causa:** **DEMOSTRADA** — `git show origin/main:backend/package.json` declara `client-dynamodb`, `credential-providers`, `lib-dynamodb` y `node-http-handler`, pero **no** `client-s3` ni `client-sqs`; `package-lock.json` remoto tampoco los contiene. El harness F02 los añadió al árbol de trabajo (`backend/package.json` y `package-lock.json` modificados, sin publicar), por lo que en local los tests pasaban 6/6 pero en el runner no existen.
+4. **Solución e intentos fallidos:** no se modificaron `backend/` ni manifiestos raíz (prohibido expresamente). Se añadió al workflow el paso 5 `npm install --no-save --no-audit --no-fund @aws-sdk/client-s3@3.1171.0 @aws-sdk/client-sqs@3.1171.0`, fijando las versiones verificadas en local y sin escribir en manifiestos. No se usó `--force` ni se reescribió historia. La alternativa descartada fue publicar los manifiestos del harness F02: queda fuera del ámbito de F04-T05.
+5. **Verificación:** `js-yaml.load` del workflow revisado → 14 pasos, `noSave: true`, `YAML_REVALIDATE_EXIT: 0` (`F04-T05-workflow.txt`, `F04-T05-steps.txt`). El nuevo run se verifica en el addendum.
+6. **Pendientes:** retirar el paso 5 cuando el harness F02/F03 publique `backend/package.json` + `package-lock.json` con ambos SDK; hasta entonces es un parche CI documentado, no un riesgo aceptado por Lino.
+7. **Aprendizaje candidato:** un test de integración debe declarar/exigir sus dependencias en el checkout remoto, no asumir el `node_modules` del árbol de trabajo local; verificar `npm ci` en un runner limpio antes de dar por cerrado el job.
+
 ## 7. Estado final
 
 - Implementación: **completa** para CA-05 (workflow + tests + guardias + evidencias locales).
@@ -96,4 +105,11 @@ Sesión única `up → docker cp → apply → sondas/tests → down`, sin recre
 
 ## 8. Addendum — run real en GitHub
 
-_Pendiente de completar tras `git push` y verificación con `gh run list` / `gh run view`._
+### Run 1 — `44311817714` (commit `94f7b43`)
+- `gh run list --workflow infra-integration.yml --limit 5` → run en `main`, evento `push` (`F04-T05-run-list.txt`).
+- `gh run view 44311817714` → **`failure`** en 1m53s (`F04-T05-run-view.txt`).
+- Pasos: 12/14 OK (Checkout, Setup Node, Setup Terraform, Install, Start emulator con límites, healthy, docker cp, fmt, init, validate, **apply → 11 added**, Stop emulator `if: always()`). Falló `Integration tests (infra)` por P-4.
+- URL: https://github.com/linochamorro/mediashrink-cloud/actions/runs/44311817714
+
+### Run 2 — verificación tras el fix de P-4
+_Pendiente de completar con el ID y el veredicto del segundo run._

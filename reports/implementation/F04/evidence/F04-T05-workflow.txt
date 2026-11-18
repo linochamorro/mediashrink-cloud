@@ -129,3 +129,25 @@ jobs:
           docker compose down
           docker compose ps
 WORKFLOW_FILES: ci.yml, infra-integration.yml
+--- revalidacion tras fix de dependencias CI (run 44311817714) ---
+{
+  "steps": 14,
+  "names": [
+    "Checkout",
+    "Setup Node.js",
+    "Setup Terraform",
+    "Install",
+    "Install infra test SDKs (pending manifest sync)",
+    "Start aws-emulator (G-7: 2 GiB / 2.0 CPUs)",
+    "Wait for emulator healthy",
+    "Export CA and credentials (runbook ┬º1.3)",
+    "Terraform fmt",
+    "Terraform init",
+    "Terraform validate",
+    "Terraform apply (emulator only)",
+    "Integration tests (infra)",
+    "Stop aws-emulator (always)"
+  ],
+  "noSave": true
+}
+YAML_REVALIDATE_EXIT: 0
