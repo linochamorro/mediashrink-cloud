@@ -1,0 +1,42 @@
+F01-T02 (addendum) — Comprobación de tabla efímera huérfana (P-06)
+====================================================================
+Fecha: 2026-11-17 · Comandos ejecutados desde <PROJECT_ROOT>.
+
+$ docker compose up -d
+ Network mediashrink-cloud_default Creating / Created
+ Container mediashrink-aws-emulator Creating / Created / Starting / Started
+UP_EXIT=0
+Poll: STATUS=healthy
+$ docker inspect --format 'memory={{.HostConfig.Memory}} nanoCpus={{.HostConfig.NanoCpus}}'
+memory=2147483648 nanoCpus=2000000000  (G-7: 2 GiB / 2.0 CPUs)
+$ docker cp .../9297/ca.pem ./.local/aws-emulator/ca.pem            CP_CA=0
+$ docker cp .../9297/config ./.local/aws-emulator/config            CP_CONFIG=0
+$ docker cp .../9297/emulator_credentials ./.local/.../emulator_credentials  CP_CREDS=0
+$ curl.exe --cacert ./.local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health
+ok · HEALTH_EXIT=0
+
+$ node temporary/f01-t02-orphan-check.mjs
+ALL_TABLES=[]
+ORPHAN_COUNT=0
+ORPHANS=[]
+AFTER=[]
+REMAINING_DBTEST=0
+CHECK_EXIT=0
+
+El script enumeró TODAS las tablas del emulador con `ListTablesCommand` (paginado) y
+filtró únicamente el prefijo `mediashrink-dbtest-`. No había ninguna tabla de prueba
+huérfana: el reinicio del emulador dejó el estado sin tablas. No se borró ningún
+recurso (no había nada que borrar); la tabla `DYNAMODB_TABLE_JOBS` de F04 tampoco existe aún.
+
+$ docker compose down
+ Container mediashrink-aws-emulator Stopped / Removed
+ Network mediashrink-cloud_default Removed
+DOWN_EXIT=0
+$ docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.Image}}'
+NAMES     STATUS    IMAGE
+PS_EXIT=0
+$ docker compose ps
+NAME      IMAGE     COMMAND   SERVICE   CREATED   STATUS    PORTS
+COMPOSE_PS_EXIT=0
+
+Conclusión: P-06 queda resuelto sin hallazgos; contenedor y red eliminados, G-7 cumplido.

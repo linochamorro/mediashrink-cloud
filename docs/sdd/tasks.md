@@ -43,18 +43,18 @@ Fase Final: Integración, E2E, auditoría de seguridad, pruebas de Lino,
 
 ## Fase 1 — Fundamentos críticos (`F01`)
 
-- **Estado:** `PENDIENTE DE APROBACIÓN (depende de F00 cerrada y G-2)`
+- **Estado:** **`CERRADA — FASE_COMPLETA (P-01)`** — `F01-T01`…`F01-T05` `PASSED`; CA-01…CA-05 verificados; auditorías sin bloqueantes. Fases 2/3/4 NO iniciadas (`docs/sdd/packages/P-01-critical-foundations.md`)
 - **Objetivo:** contratos congelados y reglas puras bajo TDD; base de datos y autenticación operativos en emulador.
 - **Gates:** G-4 (DynamoDB en emulador), contratos de Fase 0 congelados.
 - **Riesgo:** 3 (auth + privacidad) → Auditor obligatorio.
 
 | ID | Tarea | Depende de | Rol | Criterio verificable |
 |---|---|---|---|---|
-| `F01-T01` | Esquemas Zod y tipos compartidos (auth, jobs, imágenes, métricas) | `F00-T02` | Developer | Contratos congelados; frontend consume tipos generados; sin duplicación |
-| `F01-T02` | Cliente DynamoDB y modelo de datos (TTL 30 días, `userId`/`jobId`) | `F01-T01` | Developer | CRUD en emulador con TDD; aislamiento por `userId` probado |
-| `F01-T03` | Auth JWT propio: registro, login, refresh, hash de contraseña | `F01-T01` | Developer | `RED→GREEN→REFACTOR`; tokens verificados; Auditor sin hallazgos |
-| `F01-T04` | Script seed sintético (usuarios demo + imágenes 100×100) | `F01-T02`, `F01-T03` | Developer | Seed ejecutable y reproducible en local/CI; datos ficticios |
-| `F01-T05` | Reglas puras: validación estricta, ahorro y estados | `F01-T01` | Developer | Cobertura unitaria completa; anti-bomba y rechazo de formatos probados |
+| `F01-T01` | Esquemas Zod y tipos compartidos (auth, jobs, imágenes, métricas) | `F00-T02` | Developer | **PASSED (1/3)** — 14 contratos v1 (hash `5d0082f8…`), 32/32 tests, 72/72 suite, sin duplicación; A-01 cerrado por decisión CTO |
+| `F01-T02` | Cliente DynamoDB y modelo de datos (TTL 30 días, `userId`/`jobId`) | `F01-T01` | Developer | **PASSED (1/3)** — 19/19 integración, TTL 30 d, 6/6 aislamiento, `npm ci` + cobertura reproducibles |
+| `F01-T03` | Auth JWT propio: registro, login, refresh, hash de contraseña | `F01-T01` | Developer | **PASSED (1/3)** — 44/44 auth, 150/150 suite, scrypt + JWT HS256, 401/404 y rate limit; MEDIUM derivados a F02/F04 |
+| `F01-T04` | Script seed sintético (usuarios demo + imágenes 100×100) | `F01-T02`, `F01-T03` | Developer | **PASSED (1/3)** — idempotente (12→12), dry-run sin escrituras, 6/6 integración, 188/188 suite |
+| `F01-T05` | Reglas puras: validación estricta, ahorro y estados | `F01-T01` | Developer | **PASSED (1/3)** — 47/47, 100 % cobertura, 119/119 suite; AVIF animado aprobado por CTO; A-03 cobertura en corrección por T02 |
 
 ---
 

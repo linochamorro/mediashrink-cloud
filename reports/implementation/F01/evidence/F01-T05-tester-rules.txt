@@ -1,0 +1,98 @@
+CONTRASTE DE COMPORTAMIENTO EXIGIDO vs TESTS/CÓDIGO EXISTENTES — F01-T05 / CA-05
+Tester independiente · 2026-11-17 · Metodo: lectura de tests permanentes y codigo
+de produccion, mas reejecucion de la suite. NO se reescribieron tests ni se
+reejecuto el RED invirtiendo el codigo. Referencias: rutas relativas a <PROJECT_ROOT>.
+
+FUENTES: P-01 §5 CA-05; F01-T05-task.md §1 y §4; spec FR-07/FR-11/FR-12, §6;
+plan §4; constitution PR-01/PR-12/IN-08/IN-10/IN-12.
+
+(a) MAGIC BYTES / MIME REAL / EXTENSION COHERENTE
+  Exigido: FR-07 + plan §4 "Magic bytes + MIME real + extension coherente".
+  Tests leidos: tests/unit/domain/imageHeader.test.ts:25-44 (detecta JPEG, PNG,
+  WebP, AVIF; rechaza vacio, ZIP, etc.), :107-148 (MIME/extension coherentes,
+  normalizacion de mayusculas y parametros, rechazo de MIME incoherente y de
+  extensiones engañosas/vacias), :184-193 (variante asertiva).
+  Codigo leido: imageHeader.ts:42-61 (firmas y mapas MIME/extension), :119-134
+  (isJpeg/isPng/isWebp/isAvif por magic bytes reales), :141-152 (detectFormat),
+  :205-242 (normalizeMime, extensionOf, validateImageHeader falla cerrado).
+  Conforme: JPEG ffd8ff, PNG 89504e470d0a1a0a, WebP RIFF....WEBP, AVIF ftyp
+  con brand avif/avis. Polimorfismo rechazado por MIME_MISMATCH / EXTENSION_MISMATCH.
+
+(b) RECHAZO DE SVG / GIF ANIMADO / FORMATOS PELIGROSOS (IN-10)
+  Exigido: plan §4 "Rechazo de SVG, GIF animados y cualquier formato no raster".
+  Tests leidos: imageHeader.test.ts:62-76 (SVG con declaracion XML y con BOM;
+  GIF animado NETSCAPE2.0 y GIF estatico), :150-158 (el rechazo de formato se
+  propaga antes de mirar MIME o extension). Fixtures: tests/unit/domain/fixtures.ts
+  :97-118 (svgFixture, svgWithBomFixture, animatedGifFixture, staticGifFixture,
+  zipFixture).
+  Codigo leido: imageHeader.ts:44 (SVG_PATTERN), :106-117 (isSvg con BOM,
+  isGif, isAnimatedGif), :142-146 (orden de seguridad: vacio -> SVG -> GIF ->
+  raster -> FORMAT_NOT_ALLOWED).
+  Conforme: SVG (incluso con BOM/XML) y GIF animado/estatico se rechazan con
+  razones distintas antes de aceptar cualquier raster.
+
+(c) ANTI-BOMBA — MAX_PIXELS / MAX_FILE_SIZE DESDE CONFIG (IN-07)
+  Exigido: CA-05 "anti-bomba (MAX_PIXELS, MAX_FILE_SIZE)"; plan §4; sin constantes
+  embebidas.
+  Tests leidos: tests/unit/domain/antiBomb.test.ts:28-91. Comprueba que
+  limitsFromConfig(loadConfig(...)) devuelve los defaults 15 MB / 25.000.000 px
+  y los overrides 7 MB / 4.000.000 px; acepta el limite exacto y rechaza +1;
+  rechaza size negativo/fraccionario/NaN como INVALID_SIZE y dimensiones no
+  positivas como INVALID_DIMENSIONS; verifica una bomba real (5000x5000,
+  10 MB) con limites tomados del config, no hardcoded.
+  Codigo leido: antiBomb.ts:32-40 (BYTES_PER_MB, limitsFromConfig), :47-70
+  (checkFileSize, checkDimensions); config/index.ts:293-297 (defaults de
+  loadConfig para maxFileSizeMb, maxImagesPerBatch, maxPixels).
+  Conforme: limites proyectados desde AppConfig; producto width*height se
+  comprueba antes de procesar; sin I/O.
+
+(d) AHORRO REAL — 0 % Y NEGATIVO SIN RECORTE (PR-12 / FR-12)
+  Exigido: PR-12 "no se ocultan resultados negativos ni se falsifican cifras".
+  Tests leidos: tests/unit/domain/savings.test.ts:6-73. Cubre ahorro positivo
+  exacto (1000->700 => 300, 30%), 0 % sin ocultar (1000->1000, la propiedad
+  savingsPct existe), negativo sin recortar (1000->1200 => -200, -20%),
+  bytesBefore=0 (savingsPct 0, bytesSaved -500), precision real (3->2 ~33.33%)
+  y coherencia con la refinacion savings-coherence del contrato congelado
+  (tolerancia 0.01), ademas del rechazo con DomainError(INVALID_BYTES).
+  Codigo leido: savings.ts:28-40 (bytesSaved = before - after, sin clamp;
+  savingsPct = 0 solo cuando before === 0; sin redondeo opaco).
+  Matiz observado: cuando bytesBefore=0, savingsPct se define como 0 para evitar
+  division por cero, pero bytesSaved conserva el valor negativo (-500): el
+  resultado negativo no se oculta en bytes. Caso explicitamente cubierto por el
+  test :29-37. Sin recorte en 0 % ni en negativo para before>0. Conforme.
+
+(e) MAQUINA DE ESTADOS — TRANSICIONES Y PARTIAL CON IMAGEN FAILED (IN-08)
+  Exigido: spec §6 PENDING -> PROCESSING -> COMPLETED/PARTIAL/FAILED; terminales
+  sin salida; imagen FAILED sin abortar el lote.
+  Tests leidos: tests/unit/domain/stateMachine.test.ts:14-129. Cubre transiciones
+  validas, salto que omite PROCESSING, retrocesos y auto-transiciones, cualquier
+  salida desde terminales, nextStatus lanzando DomainError, coherencia con
+  imagenes FAILED (COMPLETED las rechaza; PARTIAL exige al menos un completado y
+  un fallado; FAILED rechaza completados), omision del resumen, resolveBatchStatus
+  (incluye resumen vacio -> FAILED) y flujo completo hasta PARTIAL.
+  Codigo leido: stateMachine.ts:29-35 (ALLOWED_TRANSITIONS, unica fuente del
+  grafo), :45-63 (checkTransition), :66-76 (nextStatus), :79-84
+  (resolveBatchStatus fail-closed). JobStatus se importa del contrato congelado
+  (contracts/index.ts:20 -> catalog.ts:202-206): no se redefine. Conforme.
+
+(f) COMPOSICION DE REGLAS PURAS
+  tests/unit/domain/index.test.ts:37-64 integra cabecera + anti-bomba + ahorro
+  + estados sin I/O y termina en PARTIAL con un resumen mixto; la puerta publica
+  backend/src/domain/index.ts:1-5 reexporta los cinco modulos. Conforme.
+
+CRONOLOGIA TDD — REGISTRO (no reejecutada por este rol)
+  Evidencia ajena del Developer leida: F01-T05-red.txt (40 fallos por asercion
+  de comportamiento, 6 aciertos, 0 errores de resolucion/sintaxis, START
+  18:14:17, EXIT 1); F01-T05-green.txt (47/47, EXIT 0); F01-T05-refactor.txt
+  (47/47 + 100% en los 6 archivos, EXIT 0). Cobertura propia: ver
+  F01-T05-tester-coverage.txt y F01-T05-tester-coverage-filtered.txt.
+  Nota de integridad: el RED registro 46 tests (imageHeader.test.ts 14) y el
+  GREEN 47 (imageHeader.test.ts 15): se anadio un caso durante GREEN, coherente
+  con la refinement documentada. Este Tester NO invirtio el codigo para
+  reproducir el RED, segun la regla de no recrearlo.
+
+RESULTADO DE LA REVISION POR LECTURA + CORRIDA PROPIA
+  Las cinco familias exigidas por CA-05 estan representadas en tests permanentes
+  y su comportamiento coincide con el codigo leido. Suite propia: 119/119 en 10
+  archivos; dominio 47/47; cobertura 100% en sentencias, ramas, funciones y
+  lineas de los 6 modulos de backend/src/domain/**.

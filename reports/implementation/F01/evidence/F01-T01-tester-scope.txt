@@ -1,0 +1,43 @@
+F01-T01 — VERIFICACION DE AMBITO (Tester, inspeccion propia)
+Nota metodologica: este repositorio no expone metadatos Git en el harness y el uso de Git/GitHub esta prohibido para esta verificacion. La comprobacion se hace por inspeccion del arbol, contenido y fechas de modificacion (LastWriteTime), no por git diff.
+
+[1] Archivos permitidos por la tarea (task.md §3) — todos presentes y con fecha de la ventana T01
+    backend/src/contracts/catalog.ts             17:22:13
+    backend/src/contracts/zod-schemas.ts         17:22:24
+    backend/src/contracts/generate.ts            17:18:29
+    backend/src/contracts/index.ts               17:18:37
+    frontend/src/api/types.generated.ts          17:27:38  (ver nota [4])
+    backend/package.json                         17:18:42  (deps zod/tsx + script generate:types)
+    package-lock.json                            17:15:22  (efecto colateral de G-8, segun reporte Developer)
+    tests/unit/contracts.test.ts                 17:23:05
+    docs/architecture/04-api-and-component-contract.md 17:24:28
+    reports/implementation/F01/F01-T01-developer.md y evidence/F01-T01-{red,green,refactor,freeze,typecheck,lint,regression}.txt
+
+[2] Archivos prohibidos — sin indicios de escritura en la ventana T01 (fechas anteriores)
+    package.json (raiz)                          10:42:20  (F00; no contiene script 'seed', que es de T04)
+    .env.example                                 16:03:23  (G-3, sin cambios)
+    STATE.md                                     17:14:36  (Architect al abrir la tarea; dice 'F01-T01 en curso')
+    docs/sdd/tasks.md                            17:11:30  (Architect; no marca T01 como cerrada)
+    frontend/src/App.tsx                         10:43:57  (sin cambios; esqueleto F00)
+    frontend/src/main.tsx                        10:43:57  (sin cambios; esqueleto F00)
+    tests/unit/config.test.ts                    16:00:59  (F00)
+    infra/terraform/*.tf, .terraform.lock.hcl    16:25-16:27 (F00; sin artefactos de T01)
+    .github/workflows/ci.yml                     16:50:21  (F00)
+    backend/src/{db,auth,domain}/**               NO EXISTEN (pertenecen a T02/T03/T05)
+    tools/scripts/**                              NO EXISTE (pertenece a T04)
+    reportes ajenos: solo existe F01-T01-developer.md; no hay developer/designer de T02..T05
+
+[3] Contenido coherente con el limite
+    - backend/package.json solo anade 'zod', 'tsx' y el script 'generate:types'; el package.json raiz no fue modificado.
+    - El unico archivo frontend escrito es el generado; App.tsx y main.tsx siguen siendo el esqueleto de F00.
+    - No se implementaron rutas HTTP, worker sharp ni UI de producto.
+
+[4] Transparencia de las propias escrituras del Tester
+    - Este rol ha escrito unicamente: reports/implementation/F01/F01-T01-tester.md y
+      reports/implementation/F01/evidence/F01-T01-tester-{contracts,typecheck,lint,unit,freeze,sdd,scope}.txt.
+    - En cumplimiento de la verificacion 4 se ejecuto 'npm run generate:types --workspace=@mediashrink/backend',
+      que reescribio frontend/src/api/types.generated.ts con bytes identicos (SHA-256 CEB6A184...D36B antes y despues).
+      No se modify ningun otro archivo de producto.
+    - No se uso Git/GitHub ni Docker. Sin secretos ni rutas Windows absolutas en estas salidas.
+
+CONCLUSION: ambito respetado. No se encontro escritura del Developer en rutas prohibidas ni dependencias hacia temporary/.

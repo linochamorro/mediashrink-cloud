@@ -1,0 +1,74 @@
+F01-T02 — Ámbito, secretos y gates (Tester) — 2026-11-17
+=========================================================
+Comprobación propia. Inicio de sesión verify: ~18:28 (hora local). Sin Git/GitHub.
+
+1) RUTAS ESCRITAS POR ESTE ROL
+------------------------------
+Permitidas por .agents/roles/tester.md y por F01-T02-task.md §3 (rol verificador):
+  reports/implementation/F01/F01-T02-tester.md
+  reports/implementation/F01/evidence/F01-T02-tester-integration.txt
+  reports/implementation/F01/evidence/F01-T02-tester-model.txt
+  reports/implementation/F01/evidence/F01-T02-tester-down.txt
+  reports/implementation/F01/evidence/F01-T02-tester-typecheck.txt
+  reports/implementation/F01/evidence/F01-T02-tester-coverage-dep.txt
+  reports/implementation/F01/evidence/F01-T02-tester-scope.txt
+  temporary/F01-T02-tester-orphan.mjs (diagnóstico de solo lectura, alcance explícito;
+      usado para ListTables y ELIMINADO al terminar la comprobación — no existe ya)
+
+NO se editaron: backend/src/**, tests/**, backend/package.json, package.json raíz,
+package-lock.json, docs/**, .env.example, STATE.md, docs/sdd/tasks.md, reportes del Developer
+ni de otras tareas. `npm ci` no alteró el lockfile.
+
+Comprobación de no-modificación (LastWriteTime de archivos representativos, todos ANTERIORES
+al inicio de esta verificación, ~18:28):
+  backend/src/db/job-store.ts            17/11/2026 18:19:28
+  backend/src/db/client.ts               17/11/2026 18:16:07
+  tests/integration/db/ttl.test.ts       17/11/2026 18:17:24
+  tests/integration/db/table-fixture.ts  17/11/2026 18:17:19
+  tests/integration/db/isolation.test.ts 17/11/2026 18:12:54
+  backend/package.json                   17/11/2026 18:22:53
+  package-lock.json                      17/11/2026 18:22:53
+  docs/architecture/03-data-model-and-storage-contract.md 17/11/2026 18:21:07
+  docs/sdd/spec.md                       17/11/2026 9:06:25
+  reports/implementation/F01/F01-T02-developer.md 17/11/2026 18:27:04
+  STATE.md                               17/11/2026 18:27:32
+  .env.example                           17/11/2026 16:03:23
+→ Ningún archivo prohibido fue tocado por este rol.
+
+2) G-3 — SECRETOS Y .env
+------------------------
+Get-ChildItem -Force -Filter '.env' → sin resultados: no existe archivo `.env`.
+Solo `.env.example` (plantilla sin valores reales), sin modificar.
+Búsqueda en los artefactos F01-T02-tester-*.txt con patrones para: letra de unidad Windows
+seguida de separador, prefijo de la ruta absoluta del harness, ID de clave de acceso AWS y
+variable de secreto AWS. Los patrones literales se omiten aquí a propósito para no incorporar
+ninguna ruta Windows a este artefacto (P4 / G-6b).
+→ No matches found. Las credenciales usadas son las efímeras regeneradas por el emulador
+  y exportadas a .local/aws-emulator/ (no versionadas, no reales); nunca se imprimieron valores.
+Rutas en los artefactos: <PROJECT_ROOT> y <DOCKER_CLI_DIR> en lugar de rutas Windows
+absolutas; rutas POSIX del contenedor (/home/emulator/.aws/emulator/9297/…) solo en el
+comando documentado de `docker cp`. P4 (anonimización de rutas en G-6b) no se amplía.
+
+3) G-4 / G-7 — ENTORNO
+----------------------
+Sin AWS real: único endpoint usado https://127.0.0.1:9297 (emulador). Sin `aws configure`.
+Contenedor levantado solo durante la verificación, con memory=2147483648 y
+nanoCpus=2000000000, y apagado con `docker compose down` (EXIT=0). `docker ps -a` y
+`docker compose ps` sin contenedores ni red. Tablas efímeras `mediashrink-dbtest-*`:
+0 huérfanas (`ALL_TABLES=[]`). Detalle en F01-T02-tester-down.txt.
+El volumen named `mediashrink-cloud_aws-emulator-data` persiste por diseño del runbook:
+no es contenedor ni red y no rompe el apagado limpio de G-7. No se ejecutó `down -v`.
+
+4) G-6 / G-6b — GIT
+-------------------
+No se ejecutaron comandos Git ni GitHub en esta verificación.
+
+5) DEPENDENCIAS HACIA temporary/
+-------------------------------
+Ningún archivo de producto, test, manifiesto ni documento de F01-T02 referencia
+temporary/F01-T02-tester-orphan.mjs. El script era de solo lectura, usado una única vez
+para ListTables y borrado al terminar; queda registrado aquí solo por trazabilidad.
+Los archivos ajenos en temporary/ (tsconfig.f01-t02.json del Developer, etc.) no se tocaron.
+
+Conclusión: ámbito respetado, sin secretos ni rutas Windows absolutas en artefactos,
+sin AWS real, contenedor apagado y sin tablas huérfanas.

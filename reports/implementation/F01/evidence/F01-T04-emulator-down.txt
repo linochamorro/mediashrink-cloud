@@ -1,0 +1,16 @@
+=== G-7 apagado final del emulador (F01-T04) ===
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed 
+
+docker compose down EXIT=0
+docker compose ps:
+NAME      IMAGE     COMMAND   SERVICE   CREATED   STATUS    PORTS
+
+docker ps -a:
+
+CONTAINERS=0 (sin contenedores residuales)
+RED_RESIDUAL=ninguna

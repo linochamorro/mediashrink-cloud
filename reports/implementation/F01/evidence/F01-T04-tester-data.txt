@@ -1,0 +1,49 @@
+=== F01-T04 - Tester independiente: datos ficticios y privacidad (PR-01/PR-02, FR-04) ===
+Fecha: 2026-11-17
+CWD: <PROJECT_ROOT>
+Metodo: lectura del codigo sembrado + salida de Mis propias ejecuciones (seed y tests). No se presentan evidencias ajenas.
+
+1) USUARIOS DEMO FICTICIOS (tools/scripts/seed/demo-data.ts)
+   - ana.demo@example.com / userId demo-user-ana / preset BALANCED
+   - bruno.demo@example.com / userId demo-user-bruno / preset HIGH
+   - carla.demo@example.com / userId demo-user-carla / preset MAX_COMPRESSION
+   - Los tres correos terminan en @example.com (dominio reservado, PR-02).
+   - nombres mostrados inventados ("Ana/Bruno/Carla (usuario ficticio)").
+   - Verificado ademas por la prueba propia: `expect(user.email).toMatch(/@example\.com$/)`.
+
+2) CONTRASENAS HASHEADAS CON T03, NUNCA EN CLARO
+   - tools/scripts/seed/index.ts importa `hashPassword` de backend/src/auth/password.ts (sin reimplementacion).
+   - tools/scripts/seed/index.ts llama `await hashPassword(user.password)` antes de persistir.
+   - tools/scripts/seed/store.ts guarda el campo `passwordHash` (nunca `password`) en el item USER.
+   - Mis pruebas de integracion verifican: `stored!.passwordHash` coincide con /^scrypt$/ y
+     `verifyPassword(user.password, stored!.passwordHash)` resuelve true (T03 reutilizado).
+   - La salida CLI del seed NO imprime ninguna contrasena; solo el correo y el texto
+     "contraseña hasheada con scrypt (T03)". Marcadores G-3 en la configuracion local.
+
+3) IMAGENES SINTETICAS 100x100 GENERADAS EN MEMORIA CON SHARP
+   - tools/scripts/seed/images.ts: `buildPixels()` construye un Buffer de spec.width*spec.height*3
+     con un patron determinista (sin leer archivos personales ni descargar nada).
+   - `sharp(buffer, { raw: { width, height, channels: 3 } })` genera PNG/WebP/AVIF en memoria.
+   - `sharp(png).metadata()` valida width===100 y height===100; si no, lanza error.
+   - tools/scripts/seed/demo-data.ts fija width=100, height=100 para las 6 imagenes.
+   - Mis pruebas verifican `image.width === 100` e `image.height === 100` para las 6.
+   - bytesBefore/bytesAfter se calculan con los bytes reales de los buffers (PR-12).
+
+4) SIN DATOS REALES / SIN ARCHIVOS PERSONALES
+   - No hay lectura de fotos del equipo, descargas externas ni rutas de usuario en el seed.
+   - Unico archivo local leido por la CLI es ./.env (ausente en este entorno) y los archivos
+     efimeros de credenciales del emulador (no datos personales).
+   - Tabla efimera propia `mediashrink-seed-demo`, distinta de la de produccion futura (F04).
+
+5) EXIF STRIPPED Y TTL 30 DIAS
+   - tools/scripts/seed/index.ts: `buildJob()` y `buildImageRecord()` fijan `exifStripped: true`.
+   - tools/scripts/seed/index.ts: `ttl: computeTtl(now)` reutiliza el contrato congelado de T01
+     (createdAt + 30 dias, Unix seconds); la tabla del seed tiene TTL ENABLED.
+   - Los items hijos IMAGE heredan el TTL del job (store.ts / indice T02).
+
+6) COMPROBACION EN EMULADOR (salida de MI ejecucion de tests, ver F01-T04-tester-seed-tests.txt)
+   DB-CHECK tabla=mediashrink-seed-demo-dbcheck usuarios=3 jobs=3 imagenes=6 total=12
+   - 3 usuarios con hash scrypt, 3 jobs COMPLETED (webp+avif, exifStripped=true), 6 imagenes 100x100.
+   - Sin skip/only/todo/concurrent en tests/integration/seed/**.
+
+Conclusion de lectura: CA-04 "sin datos reales" queda acreditado por diseno del codigo y por mis propias ejecuciones.

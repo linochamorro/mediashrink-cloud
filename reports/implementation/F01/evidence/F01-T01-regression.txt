@@ -1,0 +1,18 @@
+
+> mediashrink-cloud@0.0.0 test:unit
+> vitest run tests/unit
+
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/frontend.test.ts (3 tests) 7ms
+ Ô£ô tests/unit/health.test.ts (2 tests) 15ms
+ Ô£ô tests/unit/config.test.ts (35 tests) 49ms
+ Ô£ô tests/unit/contracts.test.ts (32 tests) 57ms
+
+ Test Files  4 passed (4)
+      Tests  72 passed (72)
+   Start at  17:23:29
+   Duration  1.11s (transform 504ms, setup 0ms, collect 946ms, tests 129ms, environment 1ms, prepare 873ms)
+
+EXITCODE=0

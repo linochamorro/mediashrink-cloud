@@ -1,0 +1,50 @@
+Evidencia de alcance e integridad — F01-T03 / Tester independiente
+Fecha: 2026-11-17 · raiz del proyecto normalizada (sin rutas Windows absolutas)
+
+A) ARCHIVOS QUE ESTE ROL HA ESCRITO (unicamente)
+   - reports/implementation/F01/F01-T03-tester.md (dictamen)
+   - reports/implementation/F01/evidence/F01-T03-tester-auth.txt
+   - reports/implementation/F01/evidence/F01-T03-tester-unit.txt
+   - reports/implementation/F01/evidence/F01-T03-tester-typecheck.txt
+   - reports/implementation/F01/evidence/F01-T03-tester-lint.txt
+   - reports/implementation/F01/evidence/F01-T03-tester-security.txt
+   - reports/implementation/F01/evidence/F01-T03-tester-scope.txt
+
+B) NO EDITE
+   - Codigo de producto (backend/src/**), tests (tests/**), manifiestos ni lockfiles.
+   - El reporte del Developer (F01-T03-developer.md) ni sus evidencias.
+   - STATE.md, docs/sdd/**, .env.example, frontend/**, infra/terraform/**.
+
+C) MANIFIESTOS Y LOCKFILE SIN CAMBIOS DE ESTA TAREA
+   - backend/package.json declara "hono": "^4.6.0"; no aparece bcrypt, jose ni jsonwebtoken.
+   - package-lock.json: 0 coincidencias para bcryptjs / "jose" / jsonwebtoken.
+   - hono/jwt se importa desde la dependencia Hono ya instalada (verify: 44/44 tests),
+     por lo que no se requirieron dependencias nuevas ni npm install/ci (concern P8).
+   - Fechas de modificacion de backend/package.json, package.json (raiz) y
+     package-lock.json: 17/11/2026 a las 18:22:53 o antes; anteriores al inicio del RED
+     de F01-T03 (18:41:14, segun el registro cronologico del Developer). Sin escrituras
+     de esta tarea en manifiestos ni lockfile.
+
+D) SIN RUTAS /jobs, SIN FRONTEND/IaC
+   - Unico "match" de /jobs en backend/src/auth/** es un comentario en routes.ts que
+     afirma explicitamente que NO implementa rutas /jobs (pertenecen a F02). No hay
+     manejadores /jobs.
+   - Sin worker sharp, sin UI React, sin Cognito/OAuth, sin servicios externos.
+   - Sin AWS real y sin contenedor Docker: las pruebas usan store en memoria y app Hono.
+
+E) SIN SECRETOS NI RUTAS ABSOLUTAS EN SALIDAS
+   - Los valores de prueba son marcadores: REPLACE_WITH_LOCAL_TEST_ACCESS_SECRET,
+     REPLACE_WITH_LOCAL_TEST_REFRESH_SECRET (no credenciales reales).
+   - Las evidencias del Tester normalizan la raiz del proyecto a <PROJECT_ROOT>.
+   - No se uso Git/GitHub ni Docker/AWS en esta verificacion.
+
+F) CONCERN P6 — SEGUIMIENTO NO BLOQUEANTE (registro del Tester)
+   - UserStore es una interfaz con InMemoryUserStore por instancia; no existe tabla
+     DynamoDB de usuarios (T02 solo modela jobs por userId/jobId) y el alcance de T03
+     prohibia escribir en backend/src/db/** e infra/terraform/**.
+   - La autenticacion en si (hash, JWT, refresh, middleware, 401/404, rate limit) queda
+     acreditada por 44/44 con store aislado por prueba; P6 es una decision de arquitectura
+     dentro del alcance, NO un incumplimiento de CA-03 y NO un riesgo aceptado por Lino
+     (no se concedio G-10).
+   - Seguimiento: F04 debe decidir el adaptador DynamoDB y su tabla; la interfaz publica
+     de auth ya esta preparada para sustituir el store sin tocar la logica.

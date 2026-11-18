@@ -1,0 +1,620 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [31mÔØ»[39m tests/unit/auth/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m | [22m[31m5 failed[39m[2m)[22m[90m 17[2mms[22m[39m
+[31m   [31m├ù[31m rate limiting configurable (A-06)[2m > [22mpermite hasta max y bloquea la siguiente petici├│n en la misma ventana[90m 11[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: FixedWindowRateLimiter.check[39m
+[31m   [31m├ù[31m rate limiting configurable (A-06)[2m > [22mrenueva el cupo al cambiar de ventana y mantiene claves independientes[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: FixedWindowRateLimiter.check[39m
+[31m   [31m├ù[31m rate limiting configurable (A-06)[2m > [22mexpone un retryAfterSeconds positivo y no mayor que la ventana[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: FixedWindowRateLimiter.check[39m
+[31m   [31m├ù[31m rate limiting configurable (A-06)[2m > [22mrespeta el valor de max proveniente de configuraci├│n[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: FixedWindowRateLimiter.check[39m
+[31m   [31m├ù[31m rate limiting configurable (A-06)[2m > [22mreset limpia el estado acumulado[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: FixedWindowRateLimiter.check[39m
+ [31mÔØ»[39m tests/unit/auth/password.test.ts [2m([22m[2m6 tests[22m[2m | [22m[31m6 failed[39m[2m)[22m[90m 25[2mms[22m[39m
+[31m   [31m├ù[31m hash de contrase├▒as ÔÇö scrypt (A-02, IN-05)[2m > [22m Produce un hash con el formato scrypt$y$r$p$salt$digest y nunca el claro[90m 11[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: hashPassword[39m
+[31m   [31m├ù[31m hash de contrase├▒as ÔÇö scrypt (A-02, IN-05)[2m > [22mverifica la contrase├▒a correcta y rechaza una incorrecta[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: hashPassword[39m
+[31m   [31m├ù[31m hash de contrase├▒as ÔÇö scrypt (A-02, IN-05)[2m > [22musa una sal aleatoria: dos hashes del mismo password difieren[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: hashPassword[39m
+[31m   [31m├ù[31m hash de contrase├▒as ÔÇö scrypt (A-02, IN-05)[2m > [22mrechaza un digest manipulado sin lanzar[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: hashPassword[39m
+[31m   [31m├ù[31m hash de contrase├▒as ÔÇö scrypt (A-02, IN-05)[2m > [22mrechaza un formato que no es scrypt sin lanzar[90m 7[2mms[22m[31m[39m
+[31m     ÔåÆ promise rejected "Error: NOT_IMPLEMENTED: verifyPassword" instead of resolving[39m
+[31m   [31m├ù[31m hash de contrase├▒as ÔÇö scrypt (A-02, IN-05)[2m > [22mrechaza par├ímetros scrypt manipulados (coste reducido) sin lanzar[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: hashPassword[39m
+ [31mÔØ»[39m tests/unit/auth/middleware.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[90m 28[2mms[22m[39m
+[31m   [31m├ù[31m aislamiento por userId (FR-21, PR-07, spec ┬º6)[2m > [22mpermite el acceso al recurso propio[90m 16[2mms[22m[31m[39m
+[31m     ÔåÆ expected [Function] to not throw an error but 'Error: NOT_IMPLEMENTED: assertOwnershÔÇª' was thrown[39m
+[31m   [31m├ù[31m aislamiento por userId (FR-21, PR-07, spec ┬º6)[2m > [22mrechaza el recurso ajeno con 404 sin filtrar su existencia[90m 9[2mms[22m[31m[39m
+[31m     ÔåÆ expected Error: NOT_IMPLEMENTED: assertOwnership to match object { code: 'RESOURCE_NOT_FOUND', ÔÇª(2) }[39m
+ [31mÔØ»[39m tests/unit/auth/jwt.test.ts [2m([22m[2m7 tests[22m[2m | [22m[31m7 failed[39m[2m)[22m[90m 51[2mms[22m[39m
+[31m   [31m├ù[31m JWT HS256 propio (IN-05, FR-02/FR-03)[2m > [22memite un par Bearer con expiresIn igual al TTL de access de la configuraci├│n[90m 11[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: issueTokenPair[39m
+[31m   [31m├ù[31m JWT HS256 propio (IN-05, FR-02/FR-03)[2m > [22mverifica el access token, expone userId y distingue access de refresh[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: issueTokenPair[39m
+[31m   [31m├ù[31m JWT HS256 propio (IN-05, FR-02/FR-03)[2m > [22mrechaza un access token cuando se espera refresh y viceversa[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: issueTokenPair[39m
+[31m   [31m├ù[31m JWT HS256 propio (IN-05, FR-02/FR-03)[2m > [22mrechaza un token firmado con otro secreto[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: issueTokenPair[39m
+[31m   [31m├ù[31m JWT HS256 propio (IN-05, FR-02/FR-03)[2m > [22mrechaza un token manipulado (firma alterada)[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: issueTokenPair[39m
+[31m   [31m├ù[31m JWT HS256 propio (IN-05, FR-02/FR-03)[2m > [22mrechaza un token expirado firmado con el secreto correcto[90m 31[2mms[22m[31m[39m
+[31m     ÔåÆ expected Error: NOT_IMPLEMENTED: verifyToken to match object { code: 'TOKEN_EXPIRED', status: 401 }[39m
+[31m   [31m├ù[31m JWT HS256 propio (IN-05, FR-02/FR-03)[2m > [22mrechaza tokens sin sub o sin typ y cadenas que no son JWT[90m 3[2mms[22m[31m[39m
+[31m     ÔåÆ expected Error: NOT_IMPLEMENTED: verifyToken to be an instance of AuthError[39m
+ [31mÔØ»[39m tests/integration/auth/isolation.test.ts [2m([22m[2m4 tests[22m[2m | [22m[31m4 failed[39m[2m)[22m[90m 32[2mms[22m[39m
+[31m   [31m├ù[31m aislamiento 401/404 entre usuarios (FR-21, D-07, spec ┬º6)[2m > [22mel token de A no accede al recurso de B y el de B no accede al de A[90m 21[2mms[22m[31m[39m
+[31m     ÔåÆ Unexpected non-whitespace character after JSON at position 4 (line 1 column 5)[39m
+[31m   [31m├ù[31m aislamiento 401/404 entre usuarios (FR-21, D-07, spec ┬º6)[2m > [22m404 es id├®ntico para un recurso ajeno y para uno inexistente (sin filtrar existencia)[90m 3[2mms[22m[31m[39m
+[31m     ÔåÆ Unexpected non-whitespace character after JSON at position 4 (line 1 column 5)[39m
+[31m   [31m├ù[31m aislamiento 401/404 entre usuarios (FR-21, D-07, spec ┬º6)[2m > [22msin token, propio y ajeno responden 401 antes que 404[90m 3[2mms[22m[31m[39m
+[31m     ÔåÆ Unexpected non-whitespace character after JSON at position 4 (line 1 column 5)[39m
+[31m   [31m├ù[31m aislamiento 401/404 entre usuarios (FR-21, D-07, spec ┬º6)[2m > [22mun refresh token no sirve para autorizar rutas privadas[90m 3[2mms[22m[31m[39m
+[31m     ÔåÆ Unexpected non-whitespace character after JSON at position 4 (line 1 column 5)[39m
+stderr | tests/integration/auth/routes.test.ts > rutas HTTP de autenticaci├│n (src/auth/routes.ts) > una ruta privada sin token responde 401
+Error: NOT_IMPLEMENTED: requireAuth
+    at <PROJECT_ROOT>\backend\src\auth\middleware.ts:25:11
+    at dispatch (<PROJECT_ROOT>/node_modules/hono/dist/compose.js:35:17)
+    at <PROJECT_ROOT>/node_modules/hono/dist/compose.js:16:10
+    at <PROJECT_ROOT>/node_modules/hono/dist/hono-base.js:286:27
+    at Hono.#dispatch (<PROJECT_ROOT>/node_modules/hono/dist/hono-base.js:292:5)
+    at Hono.fetch (<PROJECT_ROOT>/node_modules/hono/dist/hono-base.js:306:24)
+    at Hono.request (<PROJECT_ROOT>/node_modules/hono/dist/hono-base.js:323:15)
+    at Module.getWithToken (<PROJECT_ROOT>\tests\integration\auth\fixtures.ts:87:14)
+    at <PROJECT_ROOT>\tests\integration\auth\routes.test.ts:65:28
+    at <PROJECT_ROOT>/node_modules/@vitest/runner/dist/index.js:146:14
+
+ [31mÔØ»[39m tests/unit/auth/service.test.ts [2m([22m[2m10 tests[22m[2m | [22m[31m10 failed[39m[2m)[22m[90m 55[2mms[22m[39m
+[31m   [31m├ù[31m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mregistra un usuario hasheado y devuelve un par de tokens sin exponer el hash[90m 11[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: AuthService.register[39m
+[31m   [31m├ù[31m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mrechaza un registro duplicado con 409 y mensaje gen├®rico[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: AuthService.register[39m
+[31m   [31m├ù[31m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mrechaza una contrase├▒a corta fuera de 8ÔÇô128 caracteres[90m 14[2mms[22m[31m[39m
+[31m     ÔåÆ expected Error: NOT_IMPLEMENTED: AuthService.regisÔÇª to match object { code: 'VALIDATION_ERROR', ÔÇª(1) }[39m
+[31m   [31m├ù[31m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mrechaza una contrase├▒a larga fuera de 8ÔÇô128 caracteres[90m 2[2mms[22m[31m[39m
+[31m     ÔåÆ expected Error: NOT_IMPLEMENTED: AuthService.regisÔÇª to match object { code: 'VALIDATION_ERROR', ÔÇª(1) }[39m
+[31m   [31m├ù[31m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mrechaza un correo sin formato[90m 2[2mms[22m[31m[39m
+[31m     ÔåÆ expected Error: NOT_IMPLEMENTED: AuthService.regisÔÇª to match object { code: 'VALIDATION_ERROR', ÔÇª(1) }[39m
+[31m   [31m├ù[31m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mhace login con credenciales correctas[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: AuthService.register[39m
+[31m   [31m├ù[31m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mdevuelve el mismo error para correo desconocido y contrase├▒a incorrecta[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: AuthService.register[39m
+[31m   [31m├ù[31m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mrechaza refresh inv├ílido y un access token usado como refresh[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: AuthService.register[39m
+[31m   [31m├ù[31m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mrechaza un refresh expirado con TOKEN_EXPIRED[90m 18[2mms[22m[31m[39m
+[31m     ÔåÆ expected Error: NOT_IMPLEMENTED: AuthService.refreÔÇª to match object { code: 'TOKEN_EXPIRED', status: 401 }[39m
+[31m   [31m├ù[31m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mrenueva la sesi├│n emitiendo un nuevo access token del mismo usuario[90m 1[2mms[22m[31m[39m
+[31m     ÔåÆ NOT_IMPLEMENTED: AuthService.register[39m
+ [31mÔØ»[39m tests/integration/auth/routes.test.ts [2m([22m[2m9 tests[22m[2m | [22m[31m9 failed[39m[2m)[22m[90m 65[2mms[22m[39m
+[31m   [31m├ù[31m rutas HTTP de autenticaci├│n (src/auth/routes.ts)[2m > [22mPOST /auth/register responde 201 con usuario sin hash y tokens Bearer[90m 28[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 201 // Object.is equality[39m
+[31m   [31m├ù[31m rutas HTTP de autenticaci├│n (src/auth/routes.ts)[2m > [22mPOST /auth/register rechaza duplicado (409) y contrase├▒a fuera de 8ÔÇô128 (400)[90m 4[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 409 // Object.is equality[39m
+[31m   [31m├ù[31m rutas HTTP de autenticaci├│n (src/auth/routes.ts)[2m > [22mPOST /auth/login devuelve tokens y rechaza credenciales inv├ílidas[90m 4[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 200 // Object.is equality[39m
+[31m   [31m├ù[31m rutas HTTP de autenticaci├│n (src/auth/routes.ts)[2m > [22mPOST /auth/refresh devuelve un par nuevo y rechaza un token inv├ílido[90m 6[2mms[22m[31m[39m
+[31m     ÔåÆ Unexpected non-whitespace character after JSON at position 4 (line 1 column 5)[39m
+[31m   [31m├ù[31m rutas HTTP de autenticaci├│n (src/auth/routes.ts)[2m > [22muna ruta privada sin token responde 401[90m 8[2mms[22m[31m[39m
+[31m     ÔåÆ expected 500 to be 401 // Object.is equality[39m
+[31m   [31m├ù[31m rutas HTTP de autenticaci├│n (src/auth/routes.ts)[2m > [22muna ruta privada con token manipulado responde 401[90m 2[2mms[22m[31m[39m
+[31m     ÔåÆ Unexpected non-whitespace character after JSON at position 4 (line 1 column 5)[39m
+[31m   [31m├ù[31m rutas HTTP de autenticaci├│n (src/auth/routes.ts)[2m > [22mel middleware expone userId y el recurso propio responde 200[90m 2[2mms[22m[31m[39m
+[31m     ÔåÆ Unexpected non-whitespace character after JSON at position 4 (line 1 column 5)[39m
+[31m   [31m├ù[31m rutas HTTP de autenticaci├│n (src/auth/routes.ts)[2m > [22mel rate limit configurable responde 429 con Retry-After y se renueva en la ventana siguiente[90m 7[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 401 // Object.is equality[39m
+[31m   [31m├ù[31m rutas HTTP de autenticaci├│n (src/auth/routes.ts)[2m > [22mlos errores no exponen secretos ni rutas internas[90m 3[2mms[22m[31m[39m
+[31m     ÔåÆ expected 404 to be 400 // Object.is equality[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 43 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/integration/auth/isolation.test.ts > aislamiento 401/404 entre usuarios (FR-21, D-07, spec ┬º6) > el token de A no accede al recurso de B y el de B no accede al de A
+ FAIL  tests/integration/auth/isolation.test.ts > aislamiento 401/404 entre usuarios (FR-21, D-07, spec ┬º6) > 404 es id├®ntico para un recurso ajeno y para uno inexistente (sin filtrar existencia)
+ FAIL  tests/integration/auth/isolation.test.ts > aislamiento 401/404 entre usuarios (FR-21, D-07, spec ┬º6) > sin token, propio y ajeno responden 401 antes que 404
+ FAIL  tests/integration/auth/isolation.test.ts > aislamiento 401/404 entre usuarios (FR-21, D-07, spec ┬º6) > un refresh token no sirve para autorizar rutas privadas
+ FAIL  tests/integration/auth/routes.test.ts > rutas HTTP de autenticaci├│n (src/auth/routes.ts) > POST /auth/refresh devuelve un par nuevo y rechaza un token inv├ílido
+ FAIL  tests/integration/auth/routes.test.ts > rutas HTTP de autenticaci├│n (src/auth/routes.ts) > una ruta privada con token manipulado responde 401
+ FAIL  tests/integration/auth/routes.test.ts > rutas HTTP de autenticaci├│n (src/auth/routes.ts) > el middleware expone userId y el recurso propio responde 200
+SyntaxError: Unexpected non-whitespace character after JSON at position 4 (line 1 column 5)
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/43]ÔÄ»
+
+ FAIL  tests/integration/auth/routes.test.ts > rutas HTTP de autenticaci├│n (src/auth/routes.ts) > POST /auth/register responde 201 con usuario sin hash y tokens Bearer
+AssertionError: expected 404 to be 201 // Object.is equality
+
+- Expected
++ Received
+
+- 201
++ 404
+
+ ÔØ» tests/integration/auth/routes.test.ts:12:29
+     10|     const response = await postJson(app, '/auth/register', credentialsÔÇª
+     11| 
+     12|     expect(response.status).toBe(201);
+       |                             ^
+     13|     const body = await response.json();
+     14|     expect(body.user).toMatchObject({ email: credentials.email });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/43]ÔÄ»
+
+ FAIL  tests/integration/auth/routes.test.ts > rutas HTTP de autenticaci├│n (src/auth/routes.ts) > POST /auth/register rechaza duplicado (409) y contrase├▒a fuera de 8ÔÇô128 (400)
+AssertionError: expected 404 to be 409 // Object.is equality
+
+- Expected
++ Received
+
+- 409
++ 404
+
+ ÔØ» tests/integration/auth/routes.test.ts:27:30
+     25| 
+     26|     const duplicate = await postJson(app, '/auth/register', credentialÔÇª
+     27|     expect(duplicate.status).toBe(409);
+       |                              ^
+     28|     expect((await duplicate.json()).error.code).toBe('REGISTRATION_FAIÔÇª
+     29| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/43]ÔÄ»
+
+ FAIL  tests/integration/auth/routes.test.ts > rutas HTTP de autenticaci├│n (src/auth/routes.ts) > POST /auth/login devuelve tokens y rechaza credenciales inv├ílidas
+AssertionError: expected 404 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 404
+
+ ÔØ» tests/integration/auth/routes.test.ts:42:23
+     40| 
+     41|     const ok = await postJson(app, '/auth/login', credentials);
+     42|     expect(ok.status).toBe(200);
+       |                       ^
+     43|     expect((await ok.json()).accessToken).toBeTypeOf('string');
+     44| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/43]ÔÄ»
+
+ FAIL  tests/integration/auth/routes.test.ts > rutas HTTP de autenticaci├│n (src/auth/routes.ts) > una ruta privada sin token responde 401
+AssertionError: expected 500 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 500
+
+ ÔØ» tests/integration/auth/routes.test.ts:67:29
+     65|     const response = await getWithToken(app, '/private/resources/user_ÔÇª
+     66| 
+     67|     expect(response.status).toBe(401);
+       |                             ^
+     68|     expect((await response.json()).error.code).toBe('UNAUTHORIZED');
+     69|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/43]ÔÄ»
+
+ FAIL  tests/integration/auth/routes.test.ts > rutas HTTP de autenticaci├│n (src/auth/routes.ts) > el rate limit configurable responde 429 con Retry-After y se renueva en la ventana siguiente
+AssertionError: expected 404 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 404
+
+ ÔØ» tests/integration/auth/routes.test.ts:108:26
+    106|     const third = await postJson(app, '/auth/login', credentials);
+    107| 
+    108|     expect(first.status).toBe(401);
+       |                          ^
+    109|     expect(second.status).toBe(401);
+    110|     expect(third.status).toBe(429);
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[6/43]ÔÄ»
+
+ FAIL  tests/integration/auth/routes.test.ts > rutas HTTP de autenticaci├│n (src/auth/routes.ts) > los errores no exponen secretos ni rutas internas
+AssertionError: expected 404 to be 400 // Object.is equality
+
+- Expected
++ Received
+
+- 400
++ 404
+
+ ÔØ» tests/integration/auth/routes.test.ts:125:29
+    123|     const text = await response.text();
+    124| 
+    125|     expect(response.status).toBe(400);
+       |                             ^
+    126|     for (const leaked of [
+    127|       'JWT_ACCESS_SECRET',
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[7/43]ÔÄ»
+
+ FAIL  tests/unit/auth/jwt.test.ts > JWT HS256 propio (IN-05, FR-02/FR-03) > emite un par Bearer con expiresIn igual al TTL de access de la configuraci├│n
+Error: NOT_IMPLEMENTED: issueTokenPair
+ ÔØ» Module.issueTokenPair backend/src/auth/jwt.ts:21:9
+     19|   _user: AuthenticatedUser,
+     20| ): Promise<TokenPair> {
+     21|   throw new Error('NOT_IMPLEMENTED: issueTokenPair');
+       |         ^
+     22| }
+     23| 
+ ÔØ» tests/unit/auth/jwt.test.ts:13:24
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[8/43]ÔÄ»
+
+ FAIL  tests/unit/auth/jwt.test.ts > JWT HS256 propio (IN-05, FR-02/FR-03) > verifica el access token, expone userId y distingue access de refresh
+Error: NOT_IMPLEMENTED: issueTokenPair
+ ÔØ» Module.issueTokenPair backend/src/auth/jwt.ts:21:9
+     19|   _user: AuthenticatedUser,
+     20| ): Promise<TokenPair> {
+     21|   throw new Error('NOT_IMPLEMENTED: issueTokenPair');
+       |         ^
+     22| }
+     23| 
+ ÔØ» tests/unit/auth/jwt.test.ts:23:24
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[9/43]ÔÄ»
+
+ FAIL  tests/unit/auth/jwt.test.ts > JWT HS256 propio (IN-05, FR-02/FR-03) > rechaza un access token cuando se espera refresh y viceversa
+Error: NOT_IMPLEMENTED: issueTokenPair
+ ÔØ» Module.issueTokenPair backend/src/auth/jwt.ts:21:9
+     19|   _user: AuthenticatedUser,
+     20| ): Promise<TokenPair> {
+     21|   throw new Error('NOT_IMPLEMENTED: issueTokenPair');
+       |         ^
+     22| }
+     23| 
+ ÔØ» tests/unit/auth/jwt.test.ts:32:24
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[10/43]ÔÄ»
+
+ FAIL  tests/unit/auth/jwt.test.ts > JWT HS256 propio (IN-05, FR-02/FR-03) > rechaza un token firmado con otro secreto
+Error: NOT_IMPLEMENTED: issueTokenPair
+ ÔØ» Module.issueTokenPair backend/src/auth/jwt.ts:21:9
+     19|   _user: AuthenticatedUser,
+     20| ): Promise<TokenPair> {
+     21|   throw new Error('NOT_IMPLEMENTED: issueTokenPair');
+       |         ^
+     22| }
+     23| 
+ ÔØ» tests/unit/auth/jwt.test.ts:39:24
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[11/43]ÔÄ»
+
+ FAIL  tests/unit/auth/jwt.test.ts > JWT HS256 propio (IN-05, FR-02/FR-03) > rechaza un token manipulado (firma alterada)
+Error: NOT_IMPLEMENTED: issueTokenPair
+ ÔØ» Module.issueTokenPair backend/src/auth/jwt.ts:21:9
+     19|   _user: AuthenticatedUser,
+     20| ): Promise<TokenPair> {
+     21|   throw new Error('NOT_IMPLEMENTED: issueTokenPair');
+       |         ^
+     22| }
+     23| 
+ ÔØ» tests/unit/auth/jwt.test.ts:47:24
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[12/43]ÔÄ»
+
+ FAIL  tests/unit/auth/jwt.test.ts > JWT HS256 propio (IN-05, FR-02/FR-03) > rechaza un token expirado firmado con el secreto correcto
+AssertionError: expected Error: NOT_IMPLEMENTED: verifyToken to match object { code: 'TOKEN_EXPIRED', status: 401 }
+
+- Expected
++ Received
+
+- Object {
+-   "code": "TOKEN_EXPIRED",
+-   "status": 401,
+- }
++ [Error: NOT_IMPLEMENTED: verifyToken]
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[13/43]ÔÄ»
+
+ FAIL  tests/unit/auth/jwt.test.ts > JWT HS256 propio (IN-05, FR-02/FR-03) > rechaza tokens sin sub o sin typ y cadenas que no son JWT
+AssertionError: expected Error: NOT_IMPLEMENTED: verifyToken to be an instance of AuthError
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[14/43]ÔÄ»
+
+ FAIL  tests/unit/auth/middleware.test.ts > aislamiento por userId (FR-21, PR-07, spec ┬º6) > permite el acceso al recurso propio
+AssertionError: expected [Function] to not throw an error but 'Error: NOT_IMPLEMENTED: assertOwnershÔÇª' was thrown
+
+- Expected: 
+undefined
+
++ Received: 
+"Error: NOT_IMPLEMENTED: assertOwnership"
+
+ ÔØ» tests/unit/auth/middleware.test.ts:7:59
+      5| describe('aislamiento por userId (FR-21, PR-07, spec ┬º6)', () => {
+      6|   it('permite el acceso al recurso propio', () => {
+      7|     expect(() => assertOwnership('user_a', 'user_a')).not.toThrow();
+       |                                                           ^
+      8|   });
+      9| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[15/43]ÔÄ»
+
+ FAIL  tests/unit/auth/middleware.test.ts > aislamiento por userId (FR-21, PR-07, spec ┬º6) > rechaza el recurso ajeno con 404 sin filtrar su existencia
+AssertionError: expected Error: NOT_IMPLEMENTED: assertOwnership to match object { code: 'RESOURCE_NOT_FOUND', ÔÇª(2) }
+
+- Expected
++ Received
+
+- Object {
+-   "code": "RESOURCE_NOT_FOUND",
+-   "message": "Recurso no encontrado",
+-   "status": 404,
+- }
++ [Error: NOT_IMPLEMENTED: assertOwnership]
+
+ ÔØ» tests/unit/auth/middleware.test.ts:18:22
+     16|     }
+     17| 
+     18|     expect(captured).toMatchObject({
+       |                      ^
+     19|       code: 'RESOURCE_NOT_FOUND',
+     20|       status: 404,
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[16/43]ÔÄ»
+
+ FAIL  tests/unit/auth/password.test.ts > hash de contrase├▒as ÔÇö scrypt (A-02, IN-05) >  Produce un hash con el formato scrypt$y$r$p$salt$digest y nunca el claro
+Error: NOT_IMPLEMENTED: hashPassword
+ ÔØ» Module.hashPassword backend/src/auth/password.ts:7:9
+      5| 
+      6| export async function hashPassword(_password: string): Promise<string>ÔÇª
+      7|   throw new Error('NOT_IMPLEMENTED: hashPassword');
+       |         ^
+      8| }
+      9| 
+ ÔØ» tests/unit/auth/password.test.ts:9:27
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[17/43]ÔÄ»
+
+ FAIL  tests/unit/auth/password.test.ts > hash de contrase├▒as ÔÇö scrypt (A-02, IN-05) > verifica la contrase├▒a correcta y rechaza una incorrecta
+Error: NOT_IMPLEMENTED: hashPassword
+ ÔØ» Module.hashPassword backend/src/auth/password.ts:7:9
+      5| 
+      6| export async function hashPassword(_password: string): Promise<string>ÔÇª
+      7|   throw new Error('NOT_IMPLEMENTED: hashPassword');
+       |         ^
+      8| }
+      9| 
+ ÔØ» tests/unit/auth/password.test.ts:16:27
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[18/43]ÔÄ»
+
+ FAIL  tests/unit/auth/password.test.ts > hash de contrase├▒as ÔÇö scrypt (A-02, IN-05) > usa una sal aleatoria: dos hashes del mismo password difieren
+Error: NOT_IMPLEMENTED: hashPassword
+ ÔØ» Module.hashPassword backend/src/auth/password.ts:7:9
+      5| 
+      6| export async function hashPassword(_password: string): Promise<string>ÔÇª
+      7|   throw new Error('NOT_IMPLEMENTED: hashPassword');
+       |         ^
+      8| }
+      9| 
+ ÔØ» tests/unit/auth/password.test.ts:23:25
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[19/43]ÔÄ»
+
+ FAIL  tests/unit/auth/password.test.ts > hash de contrase├▒as ÔÇö scrypt (A-02, IN-05) > rechaza un digest manipulado sin lanzar
+Error: NOT_IMPLEMENTED: hashPassword
+ ÔØ» Module.hashPassword backend/src/auth/password.ts:7:9
+      5| 
+      6| export async function hashPassword(_password: string): Promise<string>ÔÇª
+      7|   throw new Error('NOT_IMPLEMENTED: hashPassword');
+       |         ^
+      8| }
+      9| 
+ ÔØ» tests/unit/auth/password.test.ts:30:27
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[20/43]ÔÄ»
+
+ FAIL  tests/unit/auth/password.test.ts > hash de contrase├▒as ÔÇö scrypt (A-02, IN-05) > rechaza un formato que no es scrypt sin lanzar
+AssertionError: promise rejected "Error: NOT_IMPLEMENTED: verifyPassword" instead of resolving
+ ÔØ» tests/unit/auth/password.test.ts:38:62
+     36| 
+     37|   it('rechaza un formato que no es scrypt sin lanzar', async () => {
+     38|     await expect(verifyPassword(PASSWORD, 'claro:Segura1234')).resolveÔÇª
+       |                                                              ^
+     39|     await expect(verifyPassword(PASSWORD, '')).resolves.toBe(false);
+     40|   });
+
+Caused by: Error: NOT_IMPLEMENTED: verifyPassword
+ ÔØ» Module.verifyPassword backend/src/auth/password.ts:11:9
+ ÔØ» tests/unit/auth/password.test.ts:38:18
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[21/43]ÔÄ»
+
+ FAIL  tests/unit/auth/password.test.ts > hash de contrase├▒as ÔÇö scrypt (A-02, IN-05) > rechaza par├ímetros scrypt manipulados (coste reducido) sin lanzar
+Error: NOT_IMPLEMENTED: hashPassword
+ ÔØ» Module.hashPassword backend/src/auth/password.ts:7:9
+      5| 
+      6| export async function hashPassword(_password: string): Promise<string>ÔÇª
+      7|   throw new Error('NOT_IMPLEMENTED: hashPassword');
+       |         ^
+      8| }
+      9| 
+ ÔØ» tests/unit/auth/password.test.ts:43:27
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[22/43]ÔÄ»
+
+ FAIL  tests/unit/auth/rate-limit.test.ts > rate limiting configurable (A-06) > permite hasta max y bloquea la siguiente petici├│n en la misma ventana
+Error: NOT_IMPLEMENTED: FixedWindowRateLimiter.check
+ ÔØ» FixedWindowRateLimiter.check backend/src/auth/rate-limit.ts:20:11
+     18| 
+     19|   check(_key: string): RateLimitDecision {
+     20|     throw new Error('NOT_IMPLEMENTED: FixedWindowRateLimiter.check');
+       |           ^
+     21|   }
+     22| 
+ ÔØ» tests/unit/auth/rate-limit.test.ts:10:20
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[23/43]ÔÄ»
+
+ FAIL  tests/unit/auth/rate-limit.test.ts > rate limiting configurable (A-06) > renueva el cupo al cambiar de ventana y mantiene claves independientes
+Error: NOT_IMPLEMENTED: FixedWindowRateLimiter.check
+ ÔØ» FixedWindowRateLimiter.check backend/src/auth/rate-limit.ts:20:11
+     18| 
+     19|   check(_key: string): RateLimitDecision {
+     20|     throw new Error('NOT_IMPLEMENTED: FixedWindowRateLimiter.check');
+       |           ^
+     21|   }
+     22| 
+ ÔØ» tests/unit/auth/rate-limit.test.ts:19:20
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[24/43]ÔÄ»
+
+ FAIL  tests/unit/auth/rate-limit.test.ts > rate limiting configurable (A-06) > expone un retryAfterSeconds positivo y no mayor que la ventana
+Error: NOT_IMPLEMENTED: FixedWindowRateLimiter.check
+ ÔØ» FixedWindowRateLimiter.check backend/src/auth/rate-limit.ts:20:11
+     18| 
+     19|   check(_key: string): RateLimitDecision {
+     20|     throw new Error('NOT_IMPLEMENTED: FixedWindowRateLimiter.check');
+       |           ^
+     21|   }
+     22| 
+ ÔØ» tests/unit/auth/rate-limit.test.ts:31:13
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[25/43]ÔÄ»
+
+ FAIL  tests/unit/auth/rate-limit.test.ts > rate limiting configurable (A-06) > respeta el valor de max proveniente de configuraci├│n
+Error: NOT_IMPLEMENTED: FixedWindowRateLimiter.check
+ ÔØ» FixedWindowRateLimiter.check backend/src/auth/rate-limit.ts:20:11
+     18| 
+     19|   check(_key: string): RateLimitDecision {
+     20|     throw new Error('NOT_IMPLEMENTED: FixedWindowRateLimiter.check');
+       |           ^
+     21|   }
+     22| 
+ ÔØ» tests/unit/auth/rate-limit.test.ts:43:51
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[26/43]ÔÄ»
+
+ FAIL  tests/unit/auth/rate-limit.test.ts > rate limiting configurable (A-06) > reset limpia el estado acumulado
+Error: NOT_IMPLEMENTED: FixedWindowRateLimiter.check
+ ÔØ» FixedWindowRateLimiter.check backend/src/auth/rate-limit.ts:20:11
+     18| 
+     19|   check(_key: string): RateLimitDecision {
+     20|     throw new Error('NOT_IMPLEMENTED: FixedWindowRateLimiter.check');
+       |           ^
+     21|   }
+     22| 
+ ÔØ» tests/unit/auth/rate-limit.test.ts:51:13
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[27/43]ÔÄ»
+
+ FAIL  tests/unit/auth/service.test.ts > AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > registra un usuario hasheado y devuelve un par de tokens sin exponer el hash
+Error: NOT_IMPLEMENTED: AuthService.register
+ ÔØ» AuthService.register backend/src/auth/service.ts:25:11
+     23| 
+     24|   async register(_input: RegisterInput): Promise<AuthResult> {
+     25|     throw new Error('NOT_IMPLEMENTED: AuthService.register');
+       |           ^
+     26|   }
+     27| 
+ ÔØ» tests/unit/auth/service.test.ts:23:34
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[28/43]ÔÄ»
+
+ FAIL  tests/unit/auth/service.test.ts > AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > rechaza un registro duplicado con 409 y mensaje gen├®rico
+Error: NOT_IMPLEMENTED: AuthService.register
+ ÔØ» AuthService.register backend/src/auth/service.ts:25:11
+     23| 
+     24|   async register(_input: RegisterInput): Promise<AuthResult> {
+     25|     throw new Error('NOT_IMPLEMENTED: AuthService.register');
+       |           ^
+     26|   }
+     27| 
+ ÔØ» tests/unit/auth/service.test.ts:38:19
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[29/43]ÔÄ»
+
+ FAIL  tests/unit/auth/service.test.ts > AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > rechaza una contrase├▒a corta fuera de 8ÔÇô128 caracteres
+ FAIL  tests/unit/auth/service.test.ts > AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > rechaza una contrase├▒a larga fuera de 8ÔÇô128 caracteres
+ FAIL  tests/unit/auth/service.test.ts > AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > rechaza un correo sin formato
+AssertionError: expected Error: NOT_IMPLEMENTED: AuthService.regisÔÇª to match object { code: 'VALIDATION_ERROR', ÔÇª(1) }
+
+- Expected
++ Received
+
+- Object {
+-   "code": "VALIDATION_ERROR",
+-   "status": 400,
+- }
++ [Error: NOT_IMPLEMENTED: AuthService.register]
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[30/43]ÔÄ»
+
+ FAIL  tests/unit/auth/service.test.ts > AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > hace login con credenciales correctas
+Error: NOT_IMPLEMENTED: AuthService.register
+ ÔØ» AuthService.register backend/src/auth/service.ts:25:11
+     23| 
+     24|   async register(_input: RegisterInput): Promise<AuthResult> {
+     25|     throw new Error('NOT_IMPLEMENTED: AuthService.register');
+       |           ^
+     26|   }
+     27| 
+ ÔØ» tests/unit/auth/service.test.ts:70:19
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[31/43]ÔÄ»
+
+ FAIL  tests/unit/auth/service.test.ts > AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > devuelve el mismo error para correo desconocido y contrase├▒a incorrecta
+Error: NOT_IMPLEMENTED: AuthService.register
+ ÔØ» AuthService.register backend/src/auth/service.ts:25:11
+     23| 
+     24|   async register(_input: RegisterInput): Promise<AuthResult> {
+     25|     throw new Error('NOT_IMPLEMENTED: AuthService.register');
+       |           ^
+     26|   }
+     27| 
+ ÔØ» tests/unit/auth/service.test.ts:80:19
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[32/43]ÔÄ»
+
+ FAIL  tests/unit/auth/service.test.ts > AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > rechaza refresh inv├ílido y un access token usado como refresh
+Error: NOT_IMPLEMENTED: AuthService.register
+ ÔØ» AuthService.register backend/src/auth/service.ts:25:11
+     23| 
+     24|   async register(_input: RegisterInput): Promise<AuthResult> {
+     25|     throw new Error('NOT_IMPLEMENTED: AuthService.register');
+       |           ^
+     26|   }
+     27| 
+ ÔØ» tests/unit/auth/service.test.ts:97:38
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[33/43]ÔÄ»
+
+ FAIL  tests/unit/auth/service.test.ts > AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > rechaza un refresh expirado con TOKEN_EXPIRED
+AssertionError: expected Error: NOT_IMPLEMENTED: AuthService.refreÔÇª to match object { code: 'TOKEN_EXPIRED', status: 401 }
+
+- Expected
++ Received
+
+- Object {
+-   "code": "TOKEN_EXPIRED",
+-   "status": 401,
+- }
++ [Error: NOT_IMPLEMENTED: AuthService.refresh]
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[34/43]ÔÄ»
+
+ FAIL  tests/unit/auth/service.test.ts > AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > renueva la sesi├│n emitiendo un nuevo access token del mismo usuario
+Error: NOT_IMPLEMENTED: AuthService.register
+ ÔØ» AuthService.register backend/src/auth/service.ts:25:11
+     23| 
+     24|   async register(_input: RegisterInput): Promise<AuthResult> {
+     25|     throw new Error('NOT_IMPLEMENTED: AuthService.register');
+       |           ^
+     26|   }
+     27| 
+ ÔØ» tests/unit/auth/service.test.ts:126:38
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[35/43]ÔÄ»
+
+[2m Test Files [22m [1m[31m7 failed[39m[22m[90m (7)[39m
+[2m      Tests [22m [1m[31m43 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (44)[39m
+[2m   Start at [22m 18:41:14
+[2m   Duration [22m 1.27s[2m (transform 985ms, setup 0ms, collect 2.32s, tests 274ms, environment 2ms, prepare 1.77s)[22m
+

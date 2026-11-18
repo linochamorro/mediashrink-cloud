@@ -1,0 +1,64 @@
+VERIFICACION DE ALCANCE Y G-3 — F01-T05 (Tester independiente)
+Fecha: 2026-11-17 · Rol: Tester · Comandos ejecutados desde <PROJECT_ROOT>
+Alcance autorizado: backend/src/domain/**, tests/unit/domain/**,
+reports/implementation/F01/evidence/F01-T05-tester-*.txt y F01-T05-tester.md.
+
+1) ARCHIVOS DE EVIDENCIA PROPIOS CREADOS (unicamente por este rol)
+   - F01-T05-tester-coverage.txt           (npx vitest run tests/unit/domain --coverage)
+   - F01-T05-tester-coverage-filtered.txt  (mismo comando con include de dominio + --coverage.all)
+   - F01-T05-tester-unit.txt               (npm run test:unit)
+   - F01-T05-tester-typecheck.txt          (npm run typecheck)
+   - F01-T05-tester-lint.txt               (npm run lint)
+   - F01-T05-tester-rules.txt              (contraste de comportamiento por lectura)
+   - F01-T05-tester-scope.txt              (este archivo)
+
+2) MANIFIESTOS — HASHES Y MTIMES (ninguno escrito por este rol)
+   Referencia registrada por el Developer (F01-T05-developer.md §4 y P5):
+     package.json          inicial = final  A2729881
+     package-lock.json     inicial 3DE69FAD -> handoff FBC9E5D0
+     backend/package.json  inicial 524C9410 -> handoff 6056015E
+   Estado medido en esta verificacion:
+     package.json          SHA256:A2729881  mtime:2026-11-17 10:42:20
+     package-lock.json     SHA256:6716E924  mtime:2026-11-17 18:22:53
+     backend/package.json  SHA256:7F7D339F  mtime:2026-11-17 18:22:53
+   Observacion: package.json permanece intacto (A2729881). package-lock.json y
+   backend/package.json presentan mtime 18:22:53, dentro de la ventana de esta
+   verificacion (18:22:09-18:22:55), y sus hashes ya no coinciden con los valores
+   de handoff del Developer. Este rol NO escribio manifiestos: solo creo los
+   archivos F01-T05-tester-*.txt listados arriba. El hecho es coherente con la
+   actividad concurrente de F01-T02 documentada como P5 por el Developer; se
+   recomienda al Architect confirmar su procedencia. NO bloquea CA-05: el codigo
+   y los tests del dominio no fueron modificados durante esta verificacion.
+
+3) CODIGO Y TESTS DEL DOMINIO — MTIMES (previos a esta verificacion)
+   backend/src/domain/guards.ts         mtime:2026-11-17 18:14:29
+   backend/src/domain/antiBomb.ts       mtime:2026-11-17 18:14:37
+   backend/src/domain/savings.ts        mtime:2026-11-17 18:14:49
+   backend/src/domain/imageHeader.ts    mtime:2026-11-17 18:16:53
+   backend/src/domain/stateMachine.ts   mtime:2026-11-17 18:16:01
+   backend/src/domain/index.ts          mtime:2026-11-17 18:14:06
+   tests/unit/domain/fixtures.ts        mtime:2026-11-17 18:12:42
+   tests/unit/domain/guards.test.ts     mtime:2026-11-17 18:12:48
+   tests/unit/domain/antiBomb.test.ts   mtime:2026-11-17 18:13:02
+   tests/unit/domain/savings.test.ts    mtime:2026-11-17 18:17:56
+   tests/unit/domain/imageHeader.test.ts mtime:2026-11-17 18:15:27
+   tests/unit/domain/stateMachine.test.ts mtime:2026-11-17 18:15:43
+   tests/unit/domain/index.test.ts      mtime:2026-11-17 18:13:35
+   Todos son anteriores al inicio de la verificacion de este Tester (18:22):
+   sin cambios concurrentes en el dominio ni en sus pruebas.
+
+4) G-3 — SIN SECRETOS NI RUTAS ABSOLUTAS
+   Busqueda sobre reports/implementation/F01/evidence/F01-T05-tester-*.txt:
+   0 coincidencias de rutas Windows absolutas ([A-Za-z]:\) y 0 patrones de
+   secreto (AKIA..., gh[pousr]_...). Las lineas RUN estan normalizadas a
+   <PROJECT_ROOT>. Los unicos valores sensibles que aparecen en tests/unit/domain
+   son marcadores locales del tipo REPLACE_WITH_LOCAL_DEV_SECRET (G-3).
+
+5) SKIP / ONLY / TODO
+   Busqueda sobre tests/unit/**/*.ts: 0 coincidencias de .skip/.only/.todo,
+   xit o xdescribe. La corrida de suite reporto 10 archivos, 119/119 tests.
+
+6) CONCLUSION DE ALCANCE
+   Sin cambios propios fuera de evidencia y reporte. Sin Docker, Git/GitHub, AWS
+   real ni secretos. Los archivos de evidencia del Developer se tratan como
+   registros ajenos y no se presentan como evidencia propia.

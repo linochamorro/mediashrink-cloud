@@ -2,33 +2,38 @@
 
 | Campo | Valor |
 |---|---|
-| **Última actualización** | `2026-11-17 (P-00 CERRADA — FASE_COMPLETA)` |
+| **Última actualización** | `2026-11-17 (P-01 CERRADA — FASE_COMPLETA)` |
 | **Estructura del proyecto** | `Canónica completa` (`frontend/` + `backend/` + `infra/terraform/`) |
-| **Fase actual** | `Fase 0 CERRADA — docs/sdd/packages/P-00-foundation-and-emulator.md` |
-| **Estado de retorno** | **`FASE_COMPLETA` — retorno a CTO; Fase 1 (P-01) NO iniciada** |
-| **Única tarea o bloque autorizado** | `Ninguna. Siguiente: revisión CTO y autorización expresa de P-01` |
-| **Último dictamen verificado** | `F00-T06 PASSED por Tester (run 44184037945 success, 4/4 pasos) + Auditor READY_WITH_CONCERNS sin bloqueantes. CA-01…CA-06 PASSED; sin G-9/G-10` |
+| **Fase actual** | `Fase 1 CERRADA — docs/sdd/packages/P-01-critical-foundations.md` |
+| **Estado de retorno** | **`FASE_COMPLETA` — retorno a CTO; fases 2/3/4 NO iniciadas** |
+| **Única tarea o bloque autorizado** | `Ninguna. Siguiente: revisión CTO y autorización expresa de F02/F03/F04` |
+| **Último dictamen verificado** | `F01-T04 PASSED por Tester (idempotente, dry-run, 6/6 integración, 188/188 suite). CA-01…CA-05 PASSED; auditorías READY_WITH_CONCERNS sin bloqueantes; sin G-9/G-10` |
 | **Harness en curso** | `OpenCode → CTO (Atenea)` |
 | **Gate Git (G-6) y archivos IA en GitHub (G-6b)** | `Git: Autorizado desde Fase 0 (repo público 'mediashrink-cloud') · Archivos agentes/IA en GitHub: Permitidos (G-6b abierto)` |
 | **Otros gates abiertos** | `G-2 (F00 autorizada) · G-3 (.env.example) · G-4 (BD en emulador para F01) · G-8 (dependencias F00) · G-11 (borrado temporary/ en F05) · G-12 (publicación final) · G-7 Docker: Autorizado con límite --memory=2g --cpus="2.0"` |
 
 ## 1. Trabajo en curso
-**Fase 0 cerrada (`FASE_COMPLETA`).** Opción A ejecutada sin `G-9` ni `G-10`: addendum A-03 en `F00-T01`; `F00-T03` en vivo (límites `2147483648`/`2000000000`, TLS con `ca.pem`, apagado limpio, imagen por digest y procedencia documentada); `F00-T04` bootstrap Terraform (`fmt`/`init`/`validate`/`plan`, STS en vivo, sin `apply`); `F00-T05` repo público `mediashrink-cloud` con G-6b y A-05 cerrado; `F00-T06` CI verde (run `44184037945`). Las seis tareas tienen `PASSED` de Tester y auditorías `READY_WITH_CONCERNS` sin bloqueantes. Binarios de tooling fuera de PATH: resolver marcadores `<TF_CLI_DIR>` / `<DOCKER_CLI_DIR>` (ver `AGENTS.md` §6).
+**Fase 1 cerrada (`FASE_COMPLETA`).** Las cinco tareas (`F01-T01`…`F01-T05`) tienen `PASSED` de Tester y auditorías `READY_WITH_CONCERNS` sin bloqueantes; CA-01…CA-05 verificados. Contratos Zod v1 congelados (hash `5d0082f8…`), DynamoDB con TTL 30 d y aislamiento en emulador, auth scrypt + JWT HS256 con 401/404 y rate limit, reglas puras al 100 % de cobertura y seed idempotente con datos ficticios. Dos decisiones de producto no escritas fueron resueltas por CTO/Lino (contraseña 8–128; AVIF animado), ambas **no G-10**. Seguimientos derivados a F02 (clave de rate limit, orden de guardas), F04 (adaptador UserStore, retención S3 vs TTL) y control de cambios del CTO (`spec.md`, marcadores JWT, tope de `LoginInput`). Docker apagado, sin tablas huérfanas, P4 no ampliado. Retorno: [F01-architect.md](reports/verification/F01-architect.md).
 
 ## 2. Pendientes inmediatos (en orden de prioridad)
-1. Revisión del retorno `FASE_COMPLETA` por CTO y autorización expresa de `P-01` (Fase 1) — Responsable: `CTO / Lino` — Condición de entrada: `reports/verification/F00-architect.md §7 (hecho)`
+1. Revisión del retorno `FASE_COMPLETA` de P-01 y autorización expresa de las fases paralelas F02/F03/F04 — Responsable: `CTO / Lino` — Condición de entrada: `reports/verification/F01-architect.md (hecho)`
 2. Resolver P4 antes de `G-12`: anonimizar rutas en artefactos G-6b (opción A) o decisión expresa de Lino (opción B, G-10) — Responsable: `CTO / Lino` — Destino: `F05`
-3. ~~Sincronizar el commit local `ab5ef7c` (reportes/evidencias T06) con el remoto~~ — **RESUELTO**: push a `main` en los commits `ab5ef7c` y `f9bab63`; árbol de trabajo limpio
-4. No heredar flags `skip_*` del bootstrap en F04; migrar ESLint 8 y reevaluar scripts nativos en tareas futuras — Responsable: `CTO` al planificar fases
+3. Correcciones documentales del CTO: etiqueta «PROPUESTA» de presets en `spec.md` §4 (A-04 de T01), marcadores JWT sin longitud mínima y tope de `LoginInput.password` (T03-A-03/A-05) — Responsable: `CTO`
+4. Al planificar F02/F04: clave de rate limit no suplantable y orden de guardas (F02); adaptador DynamoDB para `UserStore` y alineación retención S3 ↔ TTL (F04); no heredar `skip_*` del bootstrap — Responsable: `CTO`
 
 ## 3. Bloqueos activos
 | ID / Tarea | Causa del bloqueo (`BLOCKED` / `GATE` / `NEEDS_CONTEXT`) | Quién desbloquea | Desde |
 |---|---|---|---|
-| `Ninguno` | `F00` cerrada; `P-01` requiere autorización expresa (`G-2`) | `CTO / Lino` | — |
+| `Ninguno` | `F00` y `F01` cerradas; F02/F03/F04 requieren autorización expresa (`G-2`) | `CTO / Lino` | — |
 
 ## 4. Últimos hitos cerrados
 | Fecha | Fase / Tarea | Veredicto | Reporte verificable |
 |---|---|---|---|
+| `2026-11-17` | `F01-T04` — Seed sintético idempotente | `PASSED (1/3)` | `reports/implementation/F01/F01-T04-{developer,tester,architect}.md` + `evidence/` |
+| `2026-11-17` | `F01-T03` — Auth JWT (hash, JWT, 401/404, rate limit) | `PASSED (1/3)` | `reports/implementation/F01/F01-T03-{developer,tester,architect}.md` + `reports/audits/F01/F01-T03-auditor.md` + `evidence/` |
+| `2026-11-17` | `F01-T02` — Cliente DynamoDB (TTL/aislamiento) | `PASSED (1/3)` | `reports/implementation/F01/F01-T02-{developer,tester,architect}.md` + `reports/audits/F01/F01-T02-auditor.md` + `evidence/` |
+| `2026-11-17` | `F01-T05` — Reglas puras (100 % cobertura) | `PASSED (1/3)` | `reports/implementation/F01/F01-T05-{developer,tester,architect}.md` + `reports/audits/F01/F01-T05-auditor.md` + `evidence/` |
+| `2026-11-17` | `F01-T01` — Contratos Zod congelados + tipos generados | `PASSED (1/3)` | `reports/implementation/F01/F01-T01-{developer,tester,architect}.md` + `reports/audits/F01/F01-T01-auditor.md` + `evidence/` |
 | `2026-11-17` | `F00-T06` — CI base (run verde) | `PASSED (1/3)` | `reports/implementation/F00/F00-T06-{developer,tester,architect}.md` + `reports/audits/F00/F00-T06-auditor.md` |
 | `2026-11-17` | `F00-T05` — `.gitignore` + repo público | `PASSED (1/3)` | `reports/implementation/F00/F00-T05-{developer,tester,architect}.md` + `reports/audits/F00/F00-T05-auditor.md` |
 | `2026-11-17` | `F00-T04` — Bootstrap Terraform | `PASSED (1/3)` | `reports/implementation/F00/F00-T04-{developer,tester,architect}.md` + `reports/audits/F00/F00-T04-auditor.md` |
@@ -41,6 +46,36 @@
 | `2026-11-17` | `Selección de ruta, stack y G-6b/G-7` | `APROBADO` | `docs/decisions/ADR-001-stack-and-aws-emulator.md` |
 
 ## 5. Relevos de sesión (append-only, el más reciente arriba)
+### `2026-11-17` — `Architect (cierre de P-01 — FASE_COMPLETA)`
+- **Realizado:** `F01-T04` cerrada `PASSED` (dry-run sin escrituras, idempotencia 12→12, 6/6 integración, 188/188 suite) con Tester independiente. Con las cinco tareas en `PASSED`, se entregó `reports/verification/F01-architect.md` con CA-01…CA-05 verificados y se actualizaron `tasks.md` y `STATE.md`.
+- **Decidido / Verificado:** `FASE_COMPLETA`, sin G-9 ni G-10; dos decisiones de producto de CTO/Lino registradas (contraseña 8–128, AVIF animado), ambas no G-10. Auditorías `READY_WITH_CONCERNS` sin CRITICAL/HIGH ni bloqueantes. Seguimientos con responsable y fase: F02 (rate limit no suplantable, orden de guardas), F04 (UserStore → DynamoDB, retención S3 ↔ TTL), CTO (spec.md, marcadores JWT, tope de LoginInput).
+- **Pendiente al retomar:** Revisión CTO y autorización expresa de F02/F03/F04; resolución de P4 antes de G-12.
+- **No repetir:** No iniciar F02/F03/F04 sin autorización; no aceptar riesgos sin Lino; no reabrir contratos/reglas congelados sin control de cambios.
+
+### `2026-11-17` — `Architect (cierre F01-T03)`
+- **Realizado:** `F01-T03` cerrada `PASSED` (44/44 auth, 150/150 suite) con Tester independiente; Auditor `READY_WITH_CONCERNS` sin CRITICAL/HIGH ni bloqueantes. Actualizados `tasks.md` y `STATE.md`. Despachado `F01-T04` (seed) como última tarea de P-01.
+- **Decidido / Verificado:** Seguimientos con fase de destino: `T03-A-01` (clave de rate limit suplantable) → F02 antes de exponer `/auth/login`; `T03-A-04` (UserStore en memoria) → F04 con adaptador DynamoDB; `T03-A-03`/`T03-A-05` → control de cambios del CTO. Ninguno aceptado como riesgo (sin G-10). Manifiestos sin cambios: `hono/jwt` ya estaba disponible.
+- **Pendiente al retomar:** Cierre de `F01-T04` y retorno consolidado con `reports/verification/F01-architect.md` (CA-01…CA-05 PASSED), sin iniciar F02/F03/F04.
+- **No repetir:** No exponer rutas HTTP en F01; no iniciar fases paralelas; no aceptar riesgos sin Lino.
+
+### `2026-11-17` — `Architect (cierres F01-T05 y F01-T02)`
+- **Realizado:** `F01-T05` cerrada `PASSED` (47/47 reglas, 100 % cobertura, 119/119 suite); Auditor `READY_WITH_CONCERNS` con AVIF animado como decisión no escrita → **Lino aprobó los aliases** (no G-10). `F01-T02` cerrada `PASSED` (19/19 integración, TTL 30 d, 6/6 aislamiento); Auditor `READY_WITH_CONCERNS` sin bloqueantes. Concern P3 de T05 resuelto por T02: `@vitest/coverage-v8` declarado y verificable con `npm ci`. Actualizados `tasks.md` y `STATE.md`.
+- **Decidido / Verificado:** Dos decisiones de producto registradas por CTO/Lino (contraseña 8–128 en T01; AVIF animado en T05), ambas no G-10. Docker apagado tras las pruebas, sin tablas huérfanas, typecheck global limpio.
+- **Pendiente al retomar:** Cierre de `F01-T03` (auth) y `F01-T04` (seed); retorno final con `F01-architect.md`. Seguimientos: A-04 del CTO en `spec.md`, T02-A-01 para F04, A-05 de T05 para F02.
+- **No repetir:** No reabrir contratos/reglas cerrados sin control de cambios; no iniciar F02/F03/F04.
+
+### `2026-11-17` — `Architect (cierre F01-T01)`
+- **Realizado:** Tester emitió `PASSED` (32/32 contratos, 72/72 suite, generación byte-idéntica y sin duplicación en frontend); Auditor `READY_WITH_CONCERNS` con A-01 (longitud de contraseña no escrita) como único punto de gobernanza. Consultado CTO/Lino, **aprobó 8–128 caracteres**; el Auditor registró el cierre de A-01 en addendum append-only. Cerrada `F01-T01` con `F01-T01-architect.md`; actualizados `tasks.md` y `STATE.md`. Despachados en paralelo los Developers de T02 y T05.
+- **Decidido / Verificado:** Decisión de producto 8–128 es **no G-10**; PR-06 satisfecho. A-02 (versión zod citada), A-03 (`tsx` devDependency) y A-04 (`spec.md` con etiqueta «PROPUESTA») quedan como seguimientos documentales; A-04 compete al CTO. Sin cambios en el catálogo ni en el hash `5d0082f8…`.
+- **Pendiente al retomar:** Cierre de T02 y T05, despacho de T03 y T04, y retorno final con `F01-architect.md`.
+- **No repetir:** No reabrir los contratos congelados sin control de cambios; no iniciar F02/F03/F04; no aceptar riesgos sin Lino.
+
+### `2026-11-17` — `Architect (inicio de F01)`
+- **Realizado:** Verificada DoR de `P-01` (paquete aprobado, F00 cerrada, gates G-2/G-3/G-4/G-6/G-6b/G-7 resueltos). Abiertos los cinco contratos `reports/implementation/F01/F01-T0x-task.md` con ámbitos disjuntos. Despachado `F01-T01` a Developer. Actualizado este `STATE.md`.
+- **Decidido / Verificado:** Interpretación de ámbito: `backend/package.json` puede recibir dependencias de T01/T02/T03/T05; `package.json` raíz solo lo toca T04 para el script `seed`. Sin supuestos de producto; F02/F03/F04 no iniciadas. Docker con límites y apagado tras pruebas.
+- **Pendiente al retomar:** Dictámenes de T01; cierre y avance a T02/T03/T05 en paralelo, luego T04; retorno final con `F01-architect.md`.
+- **No repetir:** No implementar producto ni ejecutar pruebas como Architect; no iniciar F02/F03/F04; no usar AWS real.
+
 ### `2026-11-17` — `Architect (cierre de F00 — FASE_COMPLETA)`
 - **Realizado:** `F00-T04`, `F00-T05` y `F00-T06` cerradas `PASSED` con Tester independiente y Auditor riesgo 2 sin bloqueantes. Terraform `init`/`validate`/`plan` en vivo; repo público `mediashrink-cloud` con G-6b y A-05 cerrado; CI run `44184037945` `success` (4/4 pasos). Actualizados `AGENTS.md` §6 (comandos comprobados, cifra final 40/40), `tasks.md`, `STATE.md` y `reports/verification/F00-architect.md` §7 (consolidación append-only).
 - **Decidido / Verificado:** CA-01…CA-06 `PASSED`; sin `G-9` ni `G-10`; P4 y deudas CI/herramientas quedan como seguimientos no bloqueantes con responsable y fase. `G-12` no ejecutado (sin release/deploy); contenedor Docker apagado tras cada prueba.
@@ -104,4 +139,4 @@
 - Retorno de Fase 0: [F00-architect.md](reports/verification/F00-architect.md)
 
 ## 7. Retorno al CTO
-**Estado: `FASE_COMPLETA`.** P-00 cerrada: `F00-T01`…`F00-T06` `PASSED` con evidencia de Tester; CA-01…CA-06 verificados; auditorías de riesgo 2 `READY_WITH_CONCERNS` sin hallazgos bloqueantes. No se concedió `G-9` ni `G-10`; G-6/G-6b/G-7/G-8 ejecutados; G-12 no ejecutado. Seguimientos no bloqueantes: **P4** (rutas en G-6b → anonimizar en F05 o decisión de Lino), deuda ESLint 8 / scripts nativos / acciones `@v4`, flags `skip_*` para F04 (sincronización de `ab5ef7c` ya resuelta en `f9bab63`). Se detiene la ejecución del Architect; **Fase 1 no iniciada** y se solicita autorización expresa de `P-01`. Detalle: [F00-architect.md §7](reports/verification/F00-architect.md).
+**Estado: `FASE_COMPLETA` (P-01).** P-00 y P-01 cerradas: `F00-T01`…`F00-T06` y `F01-T01`…`F01-T05` con `PASSED` de Tester; CA-01…CA-06 y CA-01…CA-05 verificados; auditorías `READY_WITH_CONCERNS` sin hallazgos bloqueantes. No se concedió `G-9` ni `G-10`; G-1…G-8 ejecutados según fase; G-11/G-12 no ejecutados. P-01 dejó contratos congelados (hash `5d0082f8…`), persistencia con TTL/aislamiento, auth scrypt+JWT, reglas puras al 100 % y seed idempotente. Seguimientos no bloqueantes con responsable y fase: F02 (rate limit no suplantable, orden de guardas), F04 (UserStore → DynamoDB, retención S3 ↔ TTL, flags `skip_*`), CTO (P4, `spec.md`, marcadores JWT, tope de `LoginInput`, deuda ESLint 8/scripts). Se detiene la ejecución del Architect; **F02/F03/F04 no iniciadas** y se solicita autorización expresa. Detalle: [F01-architect.md](reports/verification/F01-architect.md) y [F00-architect.md §7](reports/verification/F00-architect.md).

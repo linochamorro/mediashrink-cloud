@@ -1,0 +1,431 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ÔØ» tests/unit/contracts.test.ts (27 tests | 19 failed) 34ms
+   ├ù F01-T01 ÔÇö Auth (register/login/refresh y usuario autenticado) > rechaza un correo sin formato y una contrase├▒a corta 9ms
+     ÔåÆ el esquema debi├│ rechazar {"email":"correo-invalido","password":"Segura1234"}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö Auth (register/login/refresh y usuario autenticado) > acepta login v├ílido y rechaza credenciales vac├¡as 1ms
+     ÔåÆ el esquema debi├│ rechazar {"email":"","password":"Segura1234"}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö Auth (register/login/refresh y usuario autenticado) > acepta refresh v├ílido y rechaza un token vac├¡o 1ms
+     ÔåÆ el esquema debi├│ rechazar {"refreshToken":""}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö Auth (register/login/refresh y usuario autenticado) > acepta un par de tokens y rechaza un tipo de token distinto de Bearer 1ms
+     ÔåÆ el esquema debi├│ rechazar {"accessToken":"access.token.local","refreshToken":"refresh.token.local","tokenType":"Basic","expiresIn":900}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö Auth (register/login/refresh y usuario autenticado) > acepta un usuario autenticado con userId y rechaza uno sin ├®l 1ms
+     ÔåÆ el esquema debi├│ rechazar {"email":"demo@example.com","createdAt":"2026-11-17T10:00:00.000Z"}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö presets, estados y formatos (casos negativos) > rechaza un preset que no est├® en el conjunto congelado 1ms
+     ÔåÆ el esquema debi├│ rechazar "ULTRA": expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö presets, estados y formatos (casos negativos) > rechaza un estado de job inv├ílido 1ms
+     ÔåÆ el esquema debi├│ rechazar "QUEUED": expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö presets, estados y formatos (casos negativos) > rechaza un formato de salida no permitido 1ms
+     ÔåÆ el esquema debi├│ rechazar "gif": expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö jobs > rechaza un job sin userId 1ms
+     ÔåÆ el esquema debi├│ rechazar {"jobId":"job_demo_001","status":"PROCESSING","preset":"BALANCED","formats":["webp","avif"],"bytesBefore":1000,"bytesAfter":600,"savingsPct":40,"exifStripped":true,"createdAt":"2026-11-17T10:00:00.000Z","updatedAt":"2026-11-17T10:00:05.000Z","ttl":1797501600}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö jobs > rechaza un job con preset, estado o formato inv├ílidos 1ms
+     ÔåÆ el esquema debi├│ rechazar {"jobId":"job_demo_001","userId":"user_demo_001","status":"PROCESSING","preset":"ULTRA","formats":["webp","avif"],"bytesBefore":1000,"bytesAfter":600,"savingsPct":40,"exifStripped":true,"createdAt":"2026-11-17T10:00:00.000Z","updatedAt":"2026-11-17T10:00:05.000Z","ttl":1797501600}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö jobs > rechaza un TTL que no corresponde a createdAt + 30 d├¡as 1ms
+     ÔåÆ el esquema debi├│ rechazar {"jobId":"job_demo_001","userId":"user_demo_001","status":"PROCESSING","preset":"BALANCED","formats":["webp","avif"],"bytesBefore":1000,"bytesAfter":600,"savingsPct":40,"exifStripped":true,"createdAt":"2026-11-17T10:00:00.000Z","updatedAt":"2026-11-17T10:00:05.000Z","ttl":60}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö jobs > rechaza claves desconocidas (validaci├│n estricta) 1ms
+     ÔåÆ el esquema debi├│ rechazar {"jobId":"job_demo_001","userId":"user_demo_001","status":"PROCESSING","preset":"BALANCED","formats":["webp","avif"],"bytesBefore":1000,"bytesAfter":600,"savingsPct":40,"exifStripped":true,"createdAt":"2026-11-17T10:00:00.000Z","updatedAt":"2026-11-17T10:00:05.000Z","ttl":1797501600,"campoExtra":"no permitido"}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö im├ígenes > rechaza un imageId vac├¡o y un estado individual inv├ílido 1ms
+     ÔåÆ el esquema debi├│ rechazar {"imageId":"","status":"COMPLETED","exifStripped":true}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö m├®tricas honestas > rechaza un porcentaje incoherente con los bytes 1ms
+     ÔåÆ el esquema debi├│ rechazar {"bytesBefore":100,"bytesAfter":60,"savingsPct":99,"exifStripped":true}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö m├®tricas honestas > rechaza un porcentaje no nulo cuando bytesBefore es 0 1ms
+     ÔåÆ el esquema debi├│ rechazar {"bytesBefore":0,"bytesAfter":0,"savingsPct":10,"exifStripped":true}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö l├¡mites desde configuraci├│n y transporte AWS > valida los l├¡mites tal como los expone el loader de configuraci├│n 2ms
+     ÔåÆ el esquema debi├│ rechazar {"maxFileSizeMb":15,"maxImagesPerBatch":20,"maxPixels":0}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö l├¡mites desde configuraci├│n y transporte AWS > rechaza el puerto retirado :9324 y una QueueUrl fabricada con :9297 1ms
+     ÔåÆ el esquema debi├│ rechazar {"region":"us-east-1","accountId":"000000000000","endpointUrl":"https://127.0.0.1:9297","queueUrl":"http://127.0.0.1:9324/queue/mediashrink-jobs","dlqUrl":"https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq"}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö l├¡mites desde configuraci├│n y transporte AWS > rechaza transporte sin HTTPS y una cuenta distinta de la de la QueueUrl 1ms
+     ÔåÆ el esquema debi├│ rechazar {"region":"us-east-1","accountId":"000000000000","endpointUrl":"http://127.0.0.1:9297","queueUrl":"https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs","dlqUrl":"https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq"}: expected true to be false // Object.is equality
+   ├ù F01-T01 ÔÇö l├¡mites desde configuraci├│n y transporte AWS > congela la pol├¡tica de retenci├│n en 30 d├¡as 1ms
+     ÔåÆ el esquema debi├│ rechazar {"retentionDays":29,"ttlSeconds":2592000}: expected true to be false // Object.is equality
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 19 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö Auth (register/login/refresh y usuario autenticado) > rechaza un correo sin formato y una contrase├▒a corta
+AssertionError: el esquema debi├│ rechazar {"email":"correo-invalido","password":"Segura1234"}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:97:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö Auth (register/login/refresh y usuario autenticado) > acepta login v├ílido y rechaza credenciales vac├¡as
+AssertionError: el esquema debi├│ rechazar {"email":"","password":"Segura1234"}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:103:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö Auth (register/login/refresh y usuario autenticado) > acepta refresh v├ílido y rechaza un token vac├¡o
+AssertionError: el esquema debi├│ rechazar {"refreshToken":""}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:108:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö Auth (register/login/refresh y usuario autenticado) > acepta un par de tokens y rechaza un tipo de token distinto de Bearer
+AssertionError: el esquema debi├│ rechazar {"accessToken":"access.token.local","refreshToken":"refresh.token.local","tokenType":"Basic","expiresIn":900}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:118:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö Auth (register/login/refresh y usuario autenticado) > acepta un usuario autenticado con userId y rechaza uno sin ├®l
+AssertionError: el esquema debi├│ rechazar {"email":"demo@example.com","createdAt":"2026-11-17T10:00:00.000Z"}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:132:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö presets, estados y formatos (casos negativos) > rechaza un preset que no est├® en el conjunto congelado
+AssertionError: el esquema debi├│ rechazar "ULTRA": expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:138:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[6/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö presets, estados y formatos (casos negativos) > rechaza un estado de job inv├ílido
+AssertionError: el esquema debi├│ rechazar "QUEUED": expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:143:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[7/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö presets, estados y formatos (casos negativos) > rechaza un formato de salida no permitido
+AssertionError: el esquema debi├│ rechazar "gif": expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:148:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[8/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö jobs > rechaza un job sin userId
+AssertionError: el esquema debi├│ rechazar {"jobId":"job_demo_001","status":"PROCESSING","preset":"BALANCED","formats":["webp","avif"],"bytesBefore":1000,"bytesAfter":600,"savingsPct":40,"exifStripped":true,"createdAt":"2026-11-17T10:00:00.000Z","updatedAt":"2026-11-17T10:00:05.000Z","ttl":1797501600}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:161:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[9/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö jobs > rechaza un job con preset, estado o formato inv├ílidos
+AssertionError: el esquema debi├│ rechazar {"jobId":"job_demo_001","userId":"user_demo_001","status":"PROCESSING","preset":"ULTRA","formats":["webp","avif"],"bytesBefore":1000,"bytesAfter":600,"savingsPct":40,"exifStripped":true,"createdAt":"2026-11-17T10:00:00.000Z","updatedAt":"2026-11-17T10:00:05.000Z","ttl":1797501600}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:165:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[10/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö jobs > rechaza un TTL que no corresponde a createdAt + 30 d├¡as
+AssertionError: el esquema debi├│ rechazar {"jobId":"job_demo_001","userId":"user_demo_001","status":"PROCESSING","preset":"BALANCED","formats":["webp","avif"],"bytesBefore":1000,"bytesAfter":600,"savingsPct":40,"exifStripped":true,"createdAt":"2026-11-17T10:00:00.000Z","updatedAt":"2026-11-17T10:00:05.000Z","ttl":60}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:171:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[11/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö jobs > rechaza claves desconocidas (validaci├│n estricta)
+AssertionError: el esquema debi├│ rechazar {"jobId":"job_demo_001","userId":"user_demo_001","status":"PROCESSING","preset":"BALANCED","formats":["webp","avif"],"bytesBefore":1000,"bytesAfter":600,"savingsPct":40,"exifStripped":true,"createdAt":"2026-11-17T10:00:00.000Z","updatedAt":"2026-11-17T10:00:05.000Z","ttl":1797501600,"campoExtra":"no permitido"}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:175:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[12/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö im├ígenes > rechaza un imageId vac├¡o y un estado individual inv├ílido
+AssertionError: el esquema debi├│ rechazar {"imageId":"","status":"COMPLETED","exifStripped":true}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:197:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[13/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö m├®tricas honestas > rechaza un porcentaje incoherente con los bytes
+AssertionError: el esquema debi├│ rechazar {"bytesBefore":100,"bytesAfter":60,"savingsPct":99,"exifStripped":true}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:227:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[14/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö m├®tricas honestas > rechaza un porcentaje no nulo cuando bytesBefore es 0
+AssertionError: el esquema debi├│ rechazar {"bytesBefore":0,"bytesAfter":0,"savingsPct":10,"exifStripped":true}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:232:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[15/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö l├¡mites desde configuraci├│n y transporte AWS > valida los l├¡mites tal como los expone el loader de configuraci├│n
+AssertionError: el esquema debi├│ rechazar {"maxFileSizeMb":15,"maxImagesPerBatch":20,"maxPixels":0}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:251:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[16/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö l├¡mites desde configuraci├│n y transporte AWS > rechaza el puerto retirado :9324 y una QueueUrl fabricada con :9297
+AssertionError: el esquema debi├│ rechazar {"region":"us-east-1","accountId":"000000000000","endpointUrl":"https://127.0.0.1:9297","queueUrl":"http://127.0.0.1:9324/queue/mediashrink-jobs","dlqUrl":"https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq"}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:259:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[17/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö l├¡mites desde configuraci├│n y transporte AWS > rechaza transporte sin HTTPS y una cuenta distinta de la de la QueueUrl
+AssertionError: el esquema debi├│ rechazar {"region":"us-east-1","accountId":"000000000000","endpointUrl":"http://127.0.0.1:9297","queueUrl":"https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs","dlqUrl":"https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq"}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:270:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[18/19]ÔÄ»
+
+ FAIL  tests/unit/contracts.test.ts > F01-T01 ÔÇö l├¡mites desde configuraci├│n y transporte AWS > congela la pol├¡tica de retenci├│n en 30 d├¡as
+AssertionError: el esquema debi├│ rechazar {"retentionDays":29,"ttlSeconds":2592000}: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» expectReject tests/unit/contracts.test.ts:32:80
+     30| const expectReject = (schema: z.ZodTypeAny, value: unknown): void => {
+     31|   const result = schema.safeParse(value);
+     32|   expect(result.success, `el esquema debi├│ rechazar ${JSON.stringify(vÔÇª
+       |                                                                                ^
+     33| };
+     34| 
+ ÔØ» tests/unit/contracts.test.ts:276:5
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[19/19]ÔÄ»
+
+ Test Files  1 failed (1)
+      Tests  19 failed | 8 passed (27)
+   Start at  17:17:16
+   Duration  1.04s (transform 227ms, setup 0ms, collect 311ms, tests 34ms, environment 0ms, prepare 232ms)
+
+EXITCODE=1

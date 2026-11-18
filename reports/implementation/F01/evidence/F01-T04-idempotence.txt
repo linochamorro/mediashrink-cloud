@@ -1,0 +1,19 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+[90mstdout[2m | tests/integration/seed/db-check.test.ts[2m > [22m[2mF01-T04 ÔÇö comprobaci├│n del estado en DynamoDB[2m > [22m[2mel emulador contiene exactamente 3 usuarios, 3 jobs y 6 im├ígenes
+[22m[39mDB-CHECK tabla=mediashrink-seed-demo-dbcheck usuarios=3 jobs=3 imagenes=6 total=12
+
+ [32mÔ£ô[39m tests/integration/seed/db-check.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 7576[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/seed/idempotence.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 11415[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22m--dry-run no escribe nada en el emulador [33m1160[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mcrea usuarios con hash scrypt de T03 e im├ígenes sint├®ticas reales [33m1509[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22muna segunda ejecuci├│n no duplica usuarios ni ├¡tems [33m1100[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mrecupera un lote sembrado a medias sin duplicar usuarios ni jobs [33m1474[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 19:07:54
+[2m   Duration [22m 13.79s[2m (transform 1.30s, setup 0ms, collect 2.34s, tests 18.99s, environment 1ms, prepare 1.27s)[22m
+
+EXIT=0

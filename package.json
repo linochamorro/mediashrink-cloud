@@ -14,7 +14,8 @@
     "build": "npm run build --workspace=@mediashrink/frontend && npm run build --workspace=@mediashrink/backend",
     "typecheck": "tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json",
     "lint": "eslint . --ext .ts,.tsx",
-    "test:unit": "vitest run tests/unit"
+    "test:unit": "vitest run tests/unit",
+    "seed": "tsx tools/scripts/seed/cli.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.0",

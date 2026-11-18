@@ -1,0 +1,12 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ✓ tests/integration/db/ttl.test.ts (5 tests) 6712ms
+ ✓ tests/integration/db/isolation.test.ts (6 tests) 6971ms
+ ✓ tests/integration/db/job-store.test.ts (8 tests) 7048ms
+
+ Test Files  3 passed (3)
+      Tests  19 passed (19)
+   Start at  18:17:38
+   Duration  10.79s (transform 1.22s, setup 0ms, collect 9.00s, tests 20.73s, environment 1ms, prepare 725ms)
+

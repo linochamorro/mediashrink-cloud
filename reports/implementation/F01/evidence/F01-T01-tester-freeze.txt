@@ -1,0 +1,33 @@
+F01-T01 - VERIFICACION DE CONGELACION / DETERMINISMO (Tester, ejecucion propia)
+
+[1] SHA-256 de frontend/src/api/types.generated.ts
+  antes de regenerar  : CEB6A1845622B30B3D9A8FB16A11D24BC2362971C7869489B154B3724EF7D36B
+  despues de regenerar: CEB6A1845622B30B3D9A8FB16A11D24BC2362971C7869489B154B3724EF7D36B
+  identicos           : True
+
+[2] Regeneracion: npm run generate:types --workspace=@mediashrink/backend
+  exit code: 0
+  salida    : > @mediashrink/backend@0.0.0 generate:types
+> tsx src/contracts/generate.ts
+
+Tipos generados: <PROJECT_ROOT>\frontend\src\api\types.generated.ts
+
+[3] Cabecera del archivo generado
+  version fijada            : 1.0.0
+  hash del catalogo leido   : 5d0082f8d97e0329862739123b7599c75ff7261834430039fa6e815bf68d626d
+  coincide con 5d0082f8...  : True
+  marcador <PROJECT_ROOT>   : True
+
+DETERMINISMO: True
+
+[4] Sin duplicacion de tipos en frontend/src (excluido el archivo generado)
+  archivos .ts/.tsx escaneados (excluido generado): 2  (main.tsx, App.tsx)
+  redefiniciones de los 14 nombres congelados     : 0
+  imports de backend/ o contracts en frontend    : 0
+  unico archivo con los 14 'export type'         : frontend/src/api/types.generated.ts (14 tipos)
+
+[5] Higiene del test permanente
+  numero de it() en tests/unit/contracts.test.ts : 32 (esperado 32)
+  marcadores .skip/.only/.todo/skipIf/runIf/xdescribe/xit: 0 (verificacion con grep)
+
+CONCLUSION: sin duplicacion=True; 32 tests sin marcadores de exclusion; generado es el unico contrato tipado del frontend.

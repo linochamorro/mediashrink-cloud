@@ -1,0 +1,19 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/auth/rate-limit.test.ts (5 tests) 10ms
+ Ô£ô tests/unit/auth/middleware.test.ts (3 tests) 10ms
+ Ô£ô tests/unit/auth/jwt.test.ts (7 tests) 45ms
+ Ô£ô tests/unit/auth/password.test.ts (6 tests) 790ms
+ Ô£ô tests/integration/auth/isolation.test.ts (4 tests) 606ms
+ Ô£ô tests/unit/auth/service.test.ts (10 tests) 930ms
+ Ô£ô tests/integration/auth/routes.test.ts (9 tests) 1004ms
+
+ Test Files  7 passed (7)
+      Tests  44 passed (44)
+   Start at  18:49:45
+   Duration  2.34s (transform 1.17s, setup 0ms, collect 2.95s, tests 3.39s, environment 2ms, prepare 1.76s)
+
+
+
+[Verificación adicional del Tester] Búsqueda de .skip/.only/.todo/xit/xdescribe en tests/**: 0 coincidencias. Los 44 tests se ejecutaron todos (7 archivos, 44 passed, 0 skipped, 0 todo).

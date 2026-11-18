@@ -1,0 +1,53 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ❯ tests/integration/db/ttl.test.ts (5 tests | 5 skipped) 5380ms
+ ❯ tests/integration/db/job-store.test.ts (8 tests | 8 skipped) 5437ms
+ ❯ tests/integration/db/isolation.test.ts (6 tests | 6 skipped) 5692ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/integration/db/isolation.test.ts > F01-T02 — usuario B nunca ve ni toca los lotes de A
+Error: NOT_IMPLEMENTED: createJobStore (F01-T02 RED)
+ ❯ Module.createJobStore backend/src/db/index.ts:19:9
+     17|   client: unknown;
+     18| }): JobStore {
+     19|   throw new Error('NOT_IMPLEMENTED: createJobStore (F01-T02 RED)');
+       |         ^
+     20| }
+     21| 
+ ❯ tests/integration/db/isolation.test.ts:24:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/integration/db/job-store.test.ts > F01-T02 — CRUD DynamoDB con aislamiento por userId
+Error: NOT_IMPLEMENTED: createJobStore (F01-T02 RED)
+ ❯ Module.createJobStore backend/src/db/index.ts:19:9
+     17|   client: unknown;
+     18| }): JobStore {
+     19|   throw new Error('NOT_IMPLEMENTED: createJobStore (F01-T02 RED)');
+       |         ^
+     20| }
+     21| 
+ ❯ tests/integration/db/job-store.test.ts:23:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/integration/db/ttl.test.ts > F01-T02 — TTL de 30 días (IN-09)
+Error: NOT_IMPLEMENTED: createJobStore (F01-T02 RED)
+ ❯ Module.createJobStore backend/src/db/index.ts:19:9
+     17|   client: unknown;
+     18| }): JobStore {
+     19|   throw new Error('NOT_IMPLEMENTED: createJobStore (F01-T02 RED)');
+       |         ^
+     20| }
+     21| 
+ ❯ tests/integration/db/ttl.test.ts:23:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+ Test Files  3 failed (3)
+      Tests  19 skipped (19)
+   Start at  18:14:24
+   Duration  7.61s (transform 1.06s, setup 0ms, collect 3.75s, tests 16.51s, environment 1ms, prepare 652ms)
+

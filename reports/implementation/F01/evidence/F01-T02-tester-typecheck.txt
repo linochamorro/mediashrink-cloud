@@ -1,0 +1,17 @@
+F01-T02 — Typecheck global (Tester) — 2026-11-17
+================================================
+Ejecución propia desde <PROJECT_ROOT>. Cubre backend y frontend; el proyecto backend
+incluye tests/unit/domain/** (F01-T05), por lo que verifica también ese dominio.
+
+$ npm run typecheck
+Inicio: 2026-11-17T18:30:11   Fin: 2026-11-17T18:30:16   EXIT=0
+
+> mediashrink-cloud@0.0.0 typecheck
+> tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json
+
+(sin diagnósticos: ni backend/tsconfig.json ni frontend/tsconfig.json emitieron errores)
+
+Nota de contexto: el reporte del Developer registró el concern P-01 (fallo TS2367 en
+tests/unit/domain/savings.test.ts durante la escritura paralela de F01-T05) y su cierre
+en el addendum A.3. Esta ejecución propia, ya estabilizada F01-T05, confirma el cierre:
+no aparece ningún diagnóstico. No se corrigió código ajeno para lograr este resultado.

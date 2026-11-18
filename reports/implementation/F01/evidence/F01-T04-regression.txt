@@ -1,0 +1,42 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/config.test.ts [2m([22m[2m35 tests[22m[2m)[22m[90m 74[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/stateMachine.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/imageHeader.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 32[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/contracts.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 80[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/jwt.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 60[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/antiBomb.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/service.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1391[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mdevuelve el mismo error para correo desconocido y contrase├▒a incorrecta [33m408[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/auth/routes.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 1489[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rutas HTTP de autenticaci├│n (src/auth/routes.ts)[2m > [22mPOST /auth/login devuelve tokens y rechaza credenciales inv├ílidas [33m342[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rutas HTTP de autenticaci├│n (src/auth/routes.ts)[2m > [22mel rate limit configurable responde 429 con Retry-After y se renueva en la ventana siguiente [33m383[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/savings.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/auth/isolation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 671[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/guards.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/password.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 764[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/frontend.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/middleware.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/health.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/db/job-store.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 6642[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/db/isolation.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 6455[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/db/ttl.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 6215[2mms[22m[39m
+[90mstdout[2m | tests/integration/seed/db-check.test.ts[2m > [22m[2mF01-T04 ÔÇö comprobaci├│n del estado en DynamoDB[2m > [22m[2mel emulador contiene exactamente 3 usuarios, 3 jobs y 6 im├ígenes
+[22m[39mDB-CHECK tabla=mediashrink-seed-demo-dbcheck usuarios=3 jobs=3 imagenes=6 total=12
+
+ [32mÔ£ô[39m tests/integration/seed/db-check.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 7333[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/seed/idempotence.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 10552[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22m--dry-run no escribe nada en el emulador [33m960[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mcrea usuarios con hash scrypt de T03 e im├ígenes sint├®ticas reales [33m1348[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22muna segunda ejecuci├│n no duplica usuarios ni ├¡tems [33m951[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mrecupera un lote sembrado a medias sin duplicar usuarios ni jobs [33m946[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m22 passed[39m[22m[90m (22)[39m
+[2m      Tests [22m [1m[32m188 passed[39m[22m[90m (188)[39m
+[2m   Start at [22m 19:08:26
+[2m   Duration [22m 13.61s[2m (transform 3.28s, setup 0ms, collect 8.32s, tests 41.86s, environment 8ms, prepare 5.82s)[22m
+
+EXIT=0

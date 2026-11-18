@@ -1,0 +1,13 @@
+=== F01-T04 - Tester independiente: apagado del emulador (G-7) ===
+Fecha: 2026-11-17
+CWD: <PROJECT_ROOT>
+Docker CLI: <DOCKER_CLI_DIR> (fuera de PATH; ruta omitida)
+
+Comandos ejecutados por el Tester tras las verificaciones:
+- docker compose down            -> exit 0
+- docker ps -a --format ...      -> salida vacia (CONTAINERS=[])
+- docker network ls ...          -> sin red mediashrink-cloud_default (RESIDUAL_NETWORKS=[])
+
+Resultado: contenedor mediashrink-aws-emulator detenido y eliminado; sin contenedores
+en ejecucion ni red residual. G-7 cumplido por el Tester.
+El volumen named aws-emulator-data persiste por diseno del runbook (no es contenedor ni red).

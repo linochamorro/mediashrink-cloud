@@ -6,10 +6,20 @@
   "description": "API Hono + esqueleto sharp — F00-T02 (sin rutas de producto)",
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "build": "tsc --noEmit -p tsconfig.json"
+    "build": "tsc --noEmit -p tsconfig.json",
+    "generate:types": "tsx src/contracts/generate.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1171.0",
+    "@aws-sdk/credential-providers": "^3.1171.0",
+    "@aws-sdk/lib-dynamodb": "^3.1171.0",
+    "@smithy/node-http-handler": "^4.14.2",
     "hono": "^4.6.0",
-    "sharp": "^0.33.5"
+    "sharp": "^0.33.5",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^2.1.9",
+    "tsx": "^4.23.15"
   }
 }

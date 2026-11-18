@@ -1,0 +1,11 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/contracts.test.ts (27 tests) 17ms
+
+ Test Files  1 passed (1)
+      Tests  27 passed (27)
+   Start at  17:19:55
+   Duration  952ms (transform 183ms, setup 0ms, collect 330ms, tests 17ms, environment 0ms, prepare 201ms)
+
+EXITCODE=0

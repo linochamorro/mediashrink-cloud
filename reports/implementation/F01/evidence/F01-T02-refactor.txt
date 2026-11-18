@@ -1,0 +1,26 @@
+REFACTOR — verificación tras simplificación (2026-11-17)
+=========================================================
+
+Cambios preservadores:
+- `imageItem()` extrae la construcción duplicada del ítem hijo (putImage/updateImage).
+- `getImage()` elimina la comprobación redundante del prefijo de SK (la GetCommand
+  ya direcciona por clave exacta; `parentJobId` sigue verificando propiedad).
+- `UpdateExpressionParts` renombra el tipo local de expresiones.
+
+$ npx tsc --noEmit -p temporary/tsconfig.f01-t02.json
+EXIT=0 · sin diagnósticos (backend/src/** + tests/integration/db/**)
+
+$ npx vitest run tests/integration/db
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ✓ tests/integration/db/ttl.test.ts (5 tests) 6176ms
+ ✓ tests/integration/db/isolation.test.ts (6 tests) 6414ms
+ ✓ tests/integration/db/job-store.test.ts (8 tests) 6479ms
+
+ Test Files  3 passed (3)
+      Tests  19 passed (19)
+   Start at  18:20:12
+   Duration  7.72s (transform 511ms, setup 0ms, collect 1.62s, tests 19.07s, environment 1ms, prepare 744ms)
+
+EXIT=0

@@ -1,0 +1,11 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/domain/stateMachine.test.ts (13 tests) 8ms
+
+ Test Files  1 passed (1)
+      Tests  13 passed (13)
+   Start at  18:17:24
+   Duration  909ms (transform 137ms, setup 0ms, collect 164ms, tests 8ms, environment 0ms, prepare 223ms)
+
+EXIT_CODE=0

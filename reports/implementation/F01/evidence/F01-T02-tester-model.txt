@@ -1,0 +1,41 @@
+F01-T02 — Contraste SDD ↔ modelo implementado (Tester) — 2026-11-17
+====================================================================
+Fuentes superiores: docs/sdd/spec.md §4 (modelo de datos) y §6 (errores);
+docs/sdd/constitution.md PR-07, IN-06, IN-09; docs/sdd/packages/P-01-critical-foundations.md
+CA-02. Implementación leída en backend/src/db/** y backend/src/contracts/catalog.ts;
+pruebas leídas en tests/integration/db/**. Ejecución propia: 19/19 (integration.txt).
+Rutas relativas; sin secretos.
+
+| # | Criterio SDD | Implementación observada | Evidencia de ejecución | Estado |
+|---|---|---|---|---|
+| 1 | PK `userId`, SK `jobId` (spec §4; IN-06) | `backend/src/db/keys.ts:4` declara la convención; `job-store.ts:130-136` (`GetCommand` con `Key: { userId, jobId }`); `createJob` usa `PutCommand` condicionado a esa clave (`:210-229`). El fixture crea `KeySchema` HASH=`userId`, RANGE=`jobId` (`table-fixture.ts:73-77`). | `job-store.test.ts` «crea un job y lo recupera por userId + jobId»; 8/8 CRUD | CUMPLIDO |
+| 2 | TTL = `createdAt + 30 días`, Unix seconds, `ENABLED` (spec §4; IN-09) | `catalog.ts:16-18` `RETENTION_DAYS=30`, `TTL_SECONDS=2_592_000`; `computeTtl()` (`:35-41`) = `floor(Date.parse(createdAt)/1000) + TTL_SECONDS`. `createJob`/`updateJob` validan con `schemas.Job` (refinamiento `ttl-coherence`, `catalog.ts:233`). El fixture habilita `TimeToLiveSpecification { AttributeName: 'ttl', Enabled: true }` y espera a `ENABLED` (`table-fixture.ts:80-95`). | `ttl.test.ts:30-57`: constantes congeladas, `DescribeTimeToLive` → `ENABLED`/`ttl`, y `raw.Item.ttl === computeTtl(createdAt)` entero; 5/5 TTL | CUMPLIDO |
+| 3 | Herencia del TTL en ítems hijos (CA-02) | `job-store.ts:89-99` `imageItem(userId, jobId, image, ttl)` escribe `ttl` en el hijo; `putImage` (`:263-276`) y `updateImage` (`:282-304`) pasan `parent.ttl` leído del job del usuario. | `ttl.test.ts:59-75`: Query por `parentJobId` y `Number(ttl.N) === computeTtl(job.createdAt)` | CUMPLIDO |
+| 4 | Ítem hijo por imagen con `imageId`, estado, bytes y motivo de fallo (spec §4 / D-09) | `catalog.ts:212-223` define `ImageRecord` con `imageId`, `status`, `bytesBefore?`, `bytesAfter?`, `failureReason?`, `exifStripped`. `keys.ts:23-31` construye SK `IMAGE#<jobId>#<imageId>` con IDs opacos. `job-store.ts` expone `putImage`/`getImage`/`listImages`/`updateImage`/`deleteImages`/`deleteJobWithImages`; `listImages` usa `Query` + `begins_with` (nunca `Scan`). | `job-store.test.ts:86-134`: dos hijos con `status: COMPLETED`/`FAILED`, `failureReason: FORMATO_NO_SOPORTADO`, actualización a `PARTIAL` y borrado sin afectar al job | CUMPLIDO |
+| 5 | Aislamiento: B no lee el lote de A → `null` (404 lógico, PR-07 / spec §6) | Toda firma exige `userId` (`types.ts:33-49`); `getJob` direcciona la partición del usuario y `parseStoredJob` devuelve `null` si no hay ítem. | `isolation.test.ts:31-37`: `getJob(userB, jobA.jobId)` → `null`, mientras A sí lo lee | CUMPLIDO |
+| 6 | Aislamiento: B no modifica ni borra el lote de A | `updateJob`/`deleteJob`/`deleteJobWithImages` comprueban propiedad vía `getJob` y lanzan `JobNotFoundError` (`job-store.ts:233-261`, `:308-312`). | `isolation.test.ts:39-59`: update/delete/deleteWithImages de B fallan y `getJob(userA, …)` sigue igual | CUMPLIDO |
+| 7 | Aislamiento: B no ve ni modifica las imágenes de A | `listImages`/`getImage` consultan la partición de B; `updateImage` comprueba PRIMERO el job del usuario y después la imagen (`job-store.ts:288-293`, corrección P-04). | `isolation.test.ts:61-73`: `listImages(userB,…)` → `[]`, `getImage` → `null`, `updateImage` → `JobNotFoundError`, `deleteImages` no altera las imágenes de A | CUMPLIDO |
+| 8 | Un `imageId` ajeno no es direccionable con otro `userId`/`jobId` | `getImage` valida `itemType`, `parentJobId` e `imageId` (`job-store.ts:155-177`); `imageSortKey` usa `jobId` + `imageId` bajo la partición del usuario. | `isolation.test.ts:75-85`: `getImage` con otro `jobId`/`imageId` → `null`; `updateImage` → `ImageNotFoundError` | CUMPLIDO |
+| 9 | Mismo `jobId` en A y B sin colisión ni fuga | La clave compuesta `userId + jobId` permite la coexistencia; los hijos incluyen `userId` en su partición. | `isolation.test.ts:87-105`: A y B crean el mismo `jobId`, cada uno con su imagen, y solo ven la suya | CUMPLIDO |
+| 10 | Entorno aislado, sin AWS real | `table-fixture.ts:26-31` apunta a `https://127.0.0.1:9297`; tablas `mediashrink-dbtest-<tag>-<uuid>` creadas y destruidas en `dispose()`. | `evidence/F01-T02-tester-down.txt`: `ALL_TABLES=[]`, `ORPHAN_COUNT=0`, contenedor apagado | CUMPLIDO |
+
+Errores de aislamiento: `backend/src/db/errors.ts:4-20` implementa la semántica «no encontrado»
+para `JobNotFoundError`, `ImageNotFoundError` y `JobAlreadyExistsError`, coherente con spec §6
+(no revelar existencia ajena). `client.ts:28-47` apunta a `AWS_ENDPOINT_URL` y lee credenciales
+efímeras con `fromIni`, sin secretos fijos ni `:9324` (G-3 / A-03).
+
+Coherencia de docs/architecture/03-data-model-and-storage-contract.md:
+- §2 reproduce exactamente las claves del código (job PK `userId`/SK `jobId`; imagen SK
+  `IMAGE#<jobId>#<imageId>` con `parentJobId`), el índice por `userId` sin GSI y el uso de
+  `Query`/`begins_with` en lugar de `Scan`. Coincide con `keys.ts` y `job-store.ts`.
+- §3 describe `computeTtl`, `ENABLED` asíncrono y la herencia del TTL; coincide con `catalog.ts`,
+  `table-fixture.ts` y `imageItem()`.
+- §4 enumeran las nueve operaciones del `JobStore` con la misma semántica de errores; coincide
+  con `types.ts` y `job-store.ts` (incluido el orden de comprobación de `updateImage`).
+- §5 documenta transporte y credenciales; coincide con `client.ts`.
+- §6 cita 19 pruebas (8 CRUD/hijos, 5 TTL, 6 aislamiento), exactamente lo ejecutado por este rol.
+No se encontró desincronización entre el documento y el modelo implementado.
+
+Nota de alcance: la etiqueta `[PROPUESTA: nombres a confirmar]` de `spec.md` §4 para los presets
+es el seguimiento documental A-04 ya transferido al CTO en F01-T01; no afecta a CA-02
+(no altera claves, TTL ni aislamiento) y no está en el ámbito de F01-T02.

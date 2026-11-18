@@ -1,0 +1,37 @@
+=== F01-T04 - Tester independiente: DRY-RUN ===
+Fecha: 2026-11-17
+Comando: npm run seed -- --dry-run
+CWD: <PROJECT_ROOT>
+Exit code: 0
+Emulador durante la ejecucion: SIN CONTENEDORES (APAGADO) - verificado con docker ps -a
+--- salida ---
+
+> mediashrink-cloud@0.0.0 seed
+> tsx tools/scripts/seed/cli.ts --dry-run
+
+=== MediaShrink Cloud — seed sintético (F01-T04) ===
+Modo: DRY-RUN (sin escrituras)
+Tabla DynamoDB: mediashrink-seed-demo
+Usuarios: creados=0, omitidos=0
+Lotes: creados=0, omitidos=0
+Imágenes 100x100: creadas=0, omitidas=0
+Nota: --dry-run no ha abierto conexión con DynamoDB ni ha escrito nada.
+
+Usuarios demo (ficticios; contraseña hasheada con T03) (3)
+  [SE CREARÍA] demo-user-ana — ana.demo@example.com · contraseña hasheada con scrypt (T03)
+  [SE CREARÍA] demo-user-bruno — bruno.demo@example.com · contraseña hasheada con scrypt (T03)
+  [SE CREARÍA] demo-user-carla — carla.demo@example.com · contraseña hasheada con scrypt (T03)
+
+Lotes demo (3)
+  [SE CREARÍA] demo-job-ana — BALANCED · 2 imágenes 100x100 · bytes reales
+  [SE CREARÍA] demo-job-bruno — HIGH · 2 imágenes 100x100 · bytes reales
+  [SE CREARÍA] demo-job-carla — MAX_COMPRESSION · 2 imágenes 100x100 · bytes reales
+
+Imágenes sintéticas 100x100 (generadas por código) (6)
+  [SE CREARÍA] img-ana-01 — Paisaje sintético ana 01 · 100x100 7226 B → 5755 B (webp+avif)
+  [SE CREARÍA] img-ana-02 — Paisaje sintético ana 02 · 100x100 7217 B → 3040 B (webp+avif)
+  [SE CREARÍA] img-bruno-01 — Paisaje sintético bruno 01 · 100x100 7229 B → 5390 B (webp+avif)
+  [SE CREARÍA] img-bruno-02 — Paisaje sintético bruno 02 · 100x100 7196 B → 5714 B (webp+avif)
+  [SE CREARÍA] img-carla-01 — Paisaje sintético carla 01 · 100x100 7220 B → 5749 B (webp+avif)
+  [SE CREARÍA] img-carla-02 — Paisaje sintético carla 02 · 100x100 7206 B → 6249 B (webp+avif)
+=== Fin del seed ===

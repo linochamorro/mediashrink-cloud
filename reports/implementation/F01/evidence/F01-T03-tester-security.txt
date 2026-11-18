@@ -1,0 +1,84 @@
+Evidencia de contraste de comportamiento de seguridad — F01-T03 / CA-03
+Tester independiente · Fase 1 · verificacion por LECTURA de codigo y tests + reejecucion propia
+Fecha: 2026-11-17 · valores de prueba (marcadores locales), sin secretos reales
+
+Criterio: CA-03 (P-01 §5) / spec FR-01, FR-02, FR-03, FR-21, NFR-03 / plan §3.1 /
+constitution IN-05, IN-13, PR-08 / task.md §1.
+
+1) HASH DE CONTRASENA (IN-05, A-02, NFR-03)
+   Codigo: backend/src/auth/password.ts
+   - scrypt nativo de node:crypto; formato scrypt$N$r$p$saltHex$digestHex.
+   - Parametros fijos en codigo: N=16384, r=8, p=1, maxmem=64 MiB; sal aleatoria de
+     16 bytes (randomBytes) y digest de 64 bytes.
+   - verifyPassword exige que los parametros del encoded sean EXACTAMENTE los fijados
+     (un digest manipulado para abaratar el coste se rechaza) y compara con
+     timingSafeEqual (comparacion en tiempo constante).
+   - La contrasena nunca se persiste ni se registra. service.ts guarda solo passwordHash;
+     toAuthenticatedUser NO incluye passwordHash; routes.ts devuelve {user, ...tokens}.
+   Tests: tests/unit/auth/password.test.ts (6/6): formato, claro ausente, verificacion,
+     sal aleatoria, digest manipulado, formato no scrypt, parametros manipulados.
+     service.test.ts: stored.passwordHash no contiene la contrasena y verifica contra el hash.
+     routes.test.ts: cuerpo de registro "sin hash".
+   Pol ITICA 8-128 caracteres: decision CTO ya registrada (F01-T01), aplicada via
+     schemas.RegisterInput.safeParse; service.test.ts y routes.test.ts cubren 7 y 129.
+
+2) JWT VERIFICADO Y SECRETOS/TTLS DESDE CONFIG (IN-05, FR-02/FR-03, NFR-03, PR-08)
+   Codigo: backend/src/auth/jwt.ts + backend/src/config/index.ts
+   - hono/jwt (sign/verify) con algoritmo FIJO HS256.
+   - verify() se llama con exp:false, iat:false y luego se comprueban explic-itamente
+     firma, exp (<= now -> TOKEN_EXPIRED), iat (future -> INVALID_TOKEN), typ, sub y email.
+   - claim typ distingue 'access' de 'refresh'; jti=randomUUID(); sub=userId.
+   - access y refresh usan secretos DISTINTOS (config.jwt.accessSecret / refreshSecret) y
+     TTLs distintos (accessTtlSeconds / refreshTtlSeconds) leidos de loadConfig().
+     loadConfig valida access < refresh y rechaza placeholders inseguros en production.
+   Tests: jwt.test.ts (7/7): par Bearer, expiresIn = TTL de config, access vs refresh,
+     otro secreto, firma alterada, expirado -> TOKEN_EXPIRED, sin sub/sin typ/no-JWT.
+     service.test.ts: refresh invalido, access usado como refresh, refresh expirado,
+     renovacion emite nuevo token del mismo userId.
+     routes.test.ts: /auth/refresh con token manipulado -> 401 INVALID_TOKEN.
+
+3) MIDDLEWARE userId Y AISLAMIENTO 401/404 (FR-21, D-07, plan §3.1 paso 3)
+   Codigo: backend/src/auth/middleware.ts
+   - requireAuth: sin cabecera -> 401; esquema Bearer estricto; verifyToken con acceso y
+     comprobacion de que el usuario siga existiendo; c.set('userId', ...) y c.set('userEmail').
+     Fail-closed: cualquier fallo inesperado se traduce a 401.
+   - assertOwnership/requireOwnershipParam: userId del token != userId del recurso ->
+     404 resourceNotFound() con mensaje generico "Recurso no encontrado", sin identificadores.
+     Precedencia: 401 antes que 404 (sin token, propio y ajeno dan el mismo 401).
+   Tests: isolation.test.ts (4/4): A no accede a B (404) y viceversa; propio 200;
+     404 identico (texto byte a byte) para recurso ajeno e inexistente; sin token 401 antes
+     que 404; refresh token no autoriza rutas privadas (401 INVALID_TOKEN).
+     middleware.test.ts (3/3): propio OK, ajeno 404, mensaje sin identificadores.
+     routes.test.ts: ruta privada sin token -> 401 UNAUTHORIZED; con token manipulado ->
+     401 INVALID_TOKEN; middleware expone userId/email y propio -> 200.
+
+4) RATE LIMIT CONFIGURABLE (A-06)
+   Codigo: backend/src/auth/rate-limit.ts + routes.ts + config/index.ts
+   - FixedWindowRateLimiter(max, windowMs, now) con reloj inyectable; max/window desde
+     config.rateLimit (loadConfig lee RATE_LIMIT_AUTH_MAX y RATE_LIMIT_AUTH_WINDOW_MS).
+   - Clave por x-forwarded-for / x-real-ip / 'local'. Al agotar -> 429 RATE_LIMITED con
+     cabecera Retry-After (segundos >= 1). Ventana se renueva sola.
+   Tests: rate-limit.test.ts (5/5): max, renovacion, claves independientes, retryAfter
+     positivo y <= ventana, max desde configuracion, reset.
+     routes.test.ts: con RATE_LIMIT_AUTH_MAX=2, tercera peticion -> 429 + Retry-After y
+     renovacion en la ventana siguiente; config.rateLimit.authMax === 2 verificado.
+
+5) ERRORES SIN FILTRAR SECRETOS NI RUTAS INTERNAS (NFR-03, PR-08, G-3)
+   Codigo: errors.ts y middleware.ts authErrorResponse: cuerpo homogeneo
+     {error:{code, message}}; sin stack, sin rutas backend/src/**, sin nombres ni valores
+     de secretos. Enrutamiento de errores centralizado en guarded() (routes.ts).
+   Tests: routes.test.ts verifica que la respuesta no contiene JWT_ACCESS_SECRET,
+     JWT_REFRESH_SECRET, 'backend/src', '.env', 'REPLACE_WITH_' ni la contrasena de prueba.
+   Fixtures: solo marcadores REPLACE_WITH_LOCAL_TEST_* (no secretos reales).
+
+6) REGISTRO/LUGAR DE EJECUCION PROPIA
+   - npx vitest run tests/unit/auth tests/integration/auth -> 7 archivos, 44/44, exit 0.
+     Sin .skip/.only/.todo/xit/xdescribe (0 coincidencias en tests/**).
+   - npm run test:unit -> 15 archivos, 150/150, exit 0 (119 previas + 31 nuevas de auth).
+   - npm run typecheck -> exit 0, sin diagnosticos. npm run lint -> exit 0, sin hallazgos.
+
+LIMITE DE COBERTURA (transparencia): las pruebas HTTP usan la app Hono montada en memoria
+(app.request), no un servidor en escucha; acreditan la logica de rutas/middleware de CA-03
+pero no despliegue real (F02). El almacen de usuarios es InMemoryUserStore por prueba
+(concern P6 del Developer): la autenticacion queda probada; el adaptador DynamoDB se difiere
+a F04 y se registra como seguimiento NO bloqueante, no como incumplimiento de CA-03.

@@ -1,0 +1,32 @@
+
+> mediashrink-cloud@0.0.0 test:unit
+> vitest run tests/unit
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/config.test.ts [2m([22m[2m35 tests[22m[2m)[22m[90m 54[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/stateMachine.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/antiBomb.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/imageHeader.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 26[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/jwt.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 91[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/contracts.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 54[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/savings.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/guards.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/frontend.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/service.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1938[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mregistra un usuario hasheado y devuelve un par de tokens sin exponer el hash [33m332[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mhace login con credenciales correctas [33m448[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mdevuelve el mismo error para correo desconocido y contrase├▒a incorrecta [33m553[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/password.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1262[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m hash de contrase├▒as ÔÇö scrypt (A-02, IN-05)[2m > [22mverifica la contrase├▒a correcta y rechaza una incorrecta [33m374[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/middleware.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/health.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 74[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m15 passed[39m[22m[90m (15)[39m
+[2m      Tests [22m [1m[32m150 passed[39m[22m[90m (150)[39m
+[2m   Start at [22m 18:46:07
+[2m   Duration [22m 5.05s[2m (transform 3.44s, setup 0ms, collect 5.84s, tests 3.59s, environment 6ms, prepare 6.08s)[22m
+

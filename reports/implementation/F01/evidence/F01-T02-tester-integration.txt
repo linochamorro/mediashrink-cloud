@@ -1,0 +1,58 @@
+F01-T02 — Verificación independiente de integración (Tester) — 2026-11-17
+=========================================================================
+Rol: Tester (no implementador). Todas las rutas se redactan como <PROJECT_ROOT>.
+Criterio: CA-02 — CRUD DynamoDB en aws/aws-emulator, TTL 30 días, aislamiento por userId.
+Emulador: levantado por este rol con G-7 (2 GiB / 2.0 CPUs), verificado en F01-T02-tester-down.txt.
+Docker CLI resuelto como <DOCKER_CLI_DIR>/docker.exe (fuera de PATH): ruta real omitida en el artefacto.
+
+1) EJECUCIÓN PROPIA (no reutilizada del Developer)
+--------------------------------------------------
+$ npx vitest run tests/integration/db
+Inicio: 2026-11-17T18:29:15   Fin: 2026-11-17T18:29:26   EXIT=0
+
+  RUN  v2.1.9 <PROJECT_ROOT>
+
+  ✓ tests/integration/db/ttl.test.ts (5 tests) 6249ms
+  ✓ tests/integration/db/isolation.test.ts (6 tests) 6443ms
+  ✓ tests/integration/db/job-store.test.ts (8 tests) 6500ms
+
+  Test Files  3 passed (3)
+       Tests  19 passed (19)
+   Start at  18:29:18
+   Duration  7.87s (transform 528ms, setup 0ms, collect 1.93s, tests 19.19s, environment 1ms, prepare 666ms)
+
+Desglose observado: CRUD/ítems hijos 8/8 (job-store.test.ts) · TTL 5/5 (ttl.test.ts) ·
+aislamiento 6/6 (isolation.test.ts). Ninguna prueba omitida ni pendiente en la salida.
+
+2) AUSENCIA DE skip / only / todo
+---------------------------------
+Búsqueda propia en tests/integration/db/** con el patrón:
+  \.skip\( | \.only\( | \.todo\( | xit\( | xdescribe\( | \.skipIf\( | \.runIf\(
+Resultado: No matches found (0 coincidencias). Los 19 tests son ejecutados.
+
+3) CRONOLOGÍA RED → GREEN → REFACTOR — REVISADA COMO REGISTRO, NO REEJECUTADA
+---------------------------------------------------------------------------
+Revisión documental de la evidencia del Developer (NO es ejecución propia, NO se invirtió
+código para recrear el rojo). Se conserva como registro cronológico con sus marcas de tiempo:
+
+  RED  (evidence/F01-T02-red.txt,   Start at 18:14:24): 3 suites fallan por
+       NOT_IMPLEMENTED: createJobStore; 19 tests skipped; EXIT=1. Fallo por comportamiento,
+       no por configuración del entorno.
+  GREEN (evidence/F01-T02-green.txt, Start at 18:17:38): 3 archivos / 19 tests passed; EXIT=0.
+  REFACTOR (evidence/F01-T02-refactor.txt, Start at 18:20:12): 3 archivos / 19 tests passed;
+       EXIT=0, con typecheck acotado previo (temporary/tsconfig.f01-t02.json) EXIT=0.
+
+Contraste leído por este rol en el código actual (sin modificación): backend/src/db/job-store.ts
+contiene imageItem() extraída (líneas 89-99), usada por putImage (línea 271) y updateImage
+(línea 299), y updateImage comprueba el job del usuario antes que la imagen (líneas 290-293).
+Esto es coherente con el REFACTOR declarado y con la corrección P-04 del reporte del Developer.
+Este rol NO reejecutó el RED invirtiendo el código, en aplicación de .agents/roles/tester.md §7.
+
+4) AISLAMIENTO DEL ENTORNO
+--------------------------
+El fixture (tests/integration/db/table-fixture.ts) crea tablas efímeras
+mediashrink-dbtest-<tag>-<uuid> y las destruye en dispose(). No se usó DYNAMODB_TABLE_JOBS
+ni AWS real. Comprobación propia posterior: ALL_TABLES=[], ORPHAN_COUNT=0.
+
+Conclusión de esta verificación: 19/19 con ejecución propia, sin skip/only/todo; registro
+TDD íntegro y coherente con el código entregado.

@@ -1,0 +1,892 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ÔØ» tests/unit/domain/guards.test.ts (5 tests | 3 failed) 21ms
+   ├ù guards ÔÇö enteros seguros (RED por comportamiento) > isNonNegativeSafeInt acepta 0 y enteros positivos 13ms
+     ÔåÆ expected false to be true // Object.is equality
+   ├ù guards ÔÇö enteros seguros (RED por comportamiento) > isPositiveSafeInt exige al menos 1 1ms
+     ÔåÆ expected false to be true // Object.is equality
+   ├ù guards ÔÇö enteros seguros (RED por comportamiento) > assertNonNegativeSafeInt lanza DomainError con c├│digo y campo 3ms
+     ÔåÆ expected Error: debi├│ lanzar to be an instance of DomainError
+ ÔØ» tests/unit/domain/savings.test.ts (7 tests | 6 failed) 29ms
+   ├ù savings ÔÇö ahorro real con bytes enteros (PR-12) > calcula el ahorro positivo Exacto con bytes enteros 18ms
+     ÔåÆ expected { bytesBefore: 1000, ÔÇª(3) } to deeply equal { bytesBefore: 1000, ÔÇª(3) }
+   ├ù savings ÔÇö ahorro real con bytes enteros (PR-12) > reporta el ahorro negativo sin recortarlo a cero 2ms
+     ÔåÆ expected +0 to be -200 // Object.is equality
+   ├ù savings ÔÇö ahorro real con bytes enteros (PR-12) > evita la divisi├│n por cero cuando bytesBefore es 0 2ms
+     ÔåÆ expected { bytesBefore: +0, ÔÇª(3) } to deeply equal { bytesBefore: +0, ÔÇª(3) }
+   ├ù savings ÔÇö ahorro real con bytes enteros (PR-12) > conserva la precisi├│n real del porcentaje (sin redondeo opaco) 1ms
+     ÔåÆ expected +0 to be close to 33.3333, received difference is 33.3333, but expected 0.0005
+   ├ù savings ÔÇö ahorro real con bytes enteros (PR-12) > es coherente con la refinaci├│n savings-coherence del contrato congelado 1ms
+     ÔåÆ expected 66.7 to be less than or equal to 0.01
+   ├ù savings ÔÇö ahorro real con bytes enteros (PR-12) > rechaza bytes negativos, fraccionarios y no seguros con DomainError 2ms
+     ÔåÆ expected function to throw an error, but it didn't
+ ÔØ» tests/unit/domain/stateMachine.test.ts (13 tests | 11 failed) 48ms
+   ├ù m├íquina de estados ÔÇö transiciones v├ílidas > permite PENDING ÔåÆ PROCESSING ÔåÆ COMPLETED sin im├ígenes fallidas 17ms
+     ÔåÆ expected 'PENDING' to be 'PROCESSING' // Object.is equality
+   ├ù m├íquina de estados ÔÇö transiciones v├ílidas > permite fallos parciales: PROCESSING ÔåÆ PARTIAL con imagen FAILED 2ms
+     ÔåÆ expected 'PROCESSING' to be 'PARTIAL' // Object.is equality
+   ├ù m├íquina de estados ÔÇö transiciones inv├ílidas rechazadas > rechaza saltos que omiten PROCESSING 10ms
+     ÔåÆ expected { ok: true } to match object { ok: false, ÔÇª(1) }
+   ├ù m├íquina de estados ÔÇö transiciones inv├ílidas rechazadas > rechaza retrocesos y auto-transiciones 2ms
+     ÔåÆ expected { ok: true } to match object { ok: false, ÔÇª(1) }
+   ├ù m├íquina de estados ÔÇö transiciones inv├ílidas rechazadas > rechaza cualquier salida desde estados terminales 2ms
+     ÔåÆ expected { ok: true } to match object { ok: false, ÔÇª(1) }
+   ├ù m├íquina de estados ÔÇö transiciones inv├ílidas rechazadas > nextStatus lanza DomainError en una transici├│n inv├ílida 2ms
+     ÔåÆ expected Error: debi├│ lanzar to be an instance of DomainError
+   ├ù m├íquina de estados ÔÇö coherencia con im├ígenes FAILED > no permite COMPLETED si alguna imagen fall├│ 2ms
+     ÔåÆ expected { ok: true } to match object { ok: false, ÔÇª(1) }
+   ├ù m├íquina de estados ÔÇö coherencia con im├ígenes FAILED > exige al menos un COMPLETED y un FAILED para PARTIAL 2ms
+     ÔåÆ expected { ok: true } to match object { ok: false, ÔÇª(1) }
+   ├ù m├íquina de estados ÔÇö coherencia con im├ígenes FAILED > no permite FAILED si alguna imagen se complet├│ 2ms
+     ÔåÆ expected { ok: true } to match object { ok: false, ÔÇª(1) }
+   ├ù m├íquina de estados ÔÇö coherencia con im├ígenes FAILED > resolveBatchStatus deriva COMPLETED, PARTIAL o FAILED del resumen 2ms
+     ÔåÆ expected 'COMPLETED' to be 'PARTIAL' // Object.is equality
+   ├ù m├íquina de estados ÔÇö coherencia con im├ígenes FAILED > flujo completo: PROCESSION + resumen mixto ÔåÆ PARTIAL 1ms
+     ÔåÆ expected 'PENDING' to be 'PARTIAL' // Object.is equality
+ ÔØ» tests/unit/domain/antiBomb.test.ts (6 tests | 6 failed) 42ms
+   ├ù anti-bomba ÔÇö l├¡mites le├¡dos de loadConfig() > toma MAX_FILE_SIZE_MB y MAX_PIXELS de la configuraci├│n 22ms
+     ÔåÆ expected { maxFileSizeMb: +0, maxPixels: +0 } to deeply equal { maxFileSizeMb: 15, ÔÇª(1) }
+   ├ù anti-bomba ÔÇö l├¡mites le├¡dos de loadConfig() > acepta el tama├▒o exacto del l├¡mite y lo rechaza por encima (antes de procesar) 5ms
+     ÔåÆ expected { ok: true } to deeply equal { ok: false, ÔÇª(2) }
+   ├ù anti-bomba ÔÇö l├¡mites le├¡dos de loadConfig() > rechaza tama├▒os no enteros o negativos como INVALID_SIZE 2ms
+     ÔåÆ expected true to be false // Object.is equality
+   ├ù anti-bomba ÔÇö l├¡mites le├¡dos de loadConfig() > acepta exactamente MAX_PIXELS y rechaza un p├¡xel m├ís 6ms
+     ÔåÆ expected { ok: true } to match object { Object (ok, reason) }
+   ├ù anti-bomba ÔÇö l├¡mites le├¡dos de loadConfig() > rechaza dimensiones no positivas o no enteras (INVALID_DIMENSIONS) 2ms
+     ÔåÆ expected { ok: true } to match object { ok: false, ÔÇª(1) }
+   ├ù anti-bomba ÔÇö l├¡mites le├¡dos de loadConfig() > usa los l├¡mites del config (no constantes embebidas) en una bomba real 2ms
+     ÔåÆ expected true to be false // Object.is equality
+ ÔØ» tests/unit/domain/index.test.ts (1 test | 1 failed) 21ms
+   ├ù dominio ÔÇö composici├│n de reglas puras (CA-05) > compone cabecera + anti-bomba + ahorro + estados de extremo a extremo 18ms
+     ÔåÆ expected false to be true // Object.is equality
+ ÔØ» tests/unit/domain/imageHeader.test.ts (14 tests | 13 failed) 52ms
+   ├ù cabeceras ÔÇö magic bytes reales (FR-07 / IN-10) > detecta JPEG, PNG, WebP y AVIF por sus magic bytes reales 20ms
+     ÔåÆ expected { kind: 'rejected', ÔÇª(1) } to deeply equal { kind: 'raster', format: 'jpeg' }
+   ├ù cabeceras ÔÇö magic bytes reales (FR-07 / IN-10) > rechaza entrada vac├¡a y formatos no raster permitidos 2ms
+     ÔåÆ expected { kind: 'rejected', ÔÇª(1) } to deeply equal { kind: 'rejected', ÔÇª(1) }
+   ├ù cabeceras ÔÇö magic bytes reales (FR-07 / IN-10) > rechaza SVG, incluso con declaraci├│n XML o BOM 2ms
+     ÔåÆ expected { kind: 'rejected', ÔÇª(1) } to deeply equal { kind: 'rejected', ÔÇª(1) }
+   ├ù cabeceras ÔÇö magic bytes reales (FR-07 / IN-10) > rechaza GIF animado y GIF est├ítico (formato no permitido) 2ms
+     ÔåÆ expected { kind: 'rejected', ÔÇª(1) } to deeply equal { kind: 'rejected', ÔÇª(1) }
+   ├ù cabeceras ÔÇö extracci├│n de dimensiones para anti-bomba > extrae dimensiones de PNG, JPEG y las tres variantes de WebP 2ms
+     ÔåÆ expected null to deeply equal { width: 12, height: 9 }
+   ├ù cabeceras ÔÇö extracci├│n de dimensiones para anti-bomba > extrae dimensiones de AVIF desde la caja ispe 1ms
+     ÔåÆ expected null to deeply equal { width: 12, height: 9 }
+   ├ù cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > acepta formatos raster con MIME y extensi├│n coherentes 2ms
+     ÔåÆ expected { ok: false, ÔÇª(1) } to deeply equal { ok: true, format: 'png', ÔÇª(1) }
+   ├ù cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > normaliza may├║sculas y par├ímetros del MIME 6ms
+     ÔåÆ expected { ok: false, ÔÇª(1) } to match object { ok: true, format: 'webp' }
+(1 matching property omitted from actual)
+   ├ù cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > rechaza MIME incoherente o desconocido 2ms
+     ÔåÆ expected { ok: false, ÔÇª(1) } to match object { ok: false, reason: 'MIME_MISMATCH' }
+   ├ù cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > rechaza extensiones enga├▒osas, desconocidas y vac├¡as 2ms
+     ÔåÆ expected { ok: false, ÔÇª(1) } to match object { ok: false, ÔÇª(1) }
+   ├ù cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > propaga el rechazo de formato antes de mirar MIME o extensi├│n 1ms
+     ÔåÆ expected { ok: false, ÔÇª(1) } to match object { Object (ok, reason) }
+   ├ù cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > falla cerrado si no hay dimensiones o son inv├ílidas 2ms
+     ÔåÆ expected { ok: false, ÔÇª(1) } to match object { ok: false, ÔÇª(1) }
+   ├ù cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > assertValidImageHeader devuelve el resultado v├ílido y lanza si se rechaza 2ms
+     ÔåÆ FORMAT_NOT_ALLOWED
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 40 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/unit/domain/antiBomb.test.ts > anti-bomba ÔÇö l├¡mites le├¡dos de loadConfig() > toma MAX_FILE_SIZE_MB y MAX_PIXELS de la configuraci├│n
+AssertionError: expected { maxFileSizeMb: +0, maxPixels: +0 } to deeply equal { maxFileSizeMb: 15, ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+-   "maxFileSizeMb": 15,
+-   "maxPixels": 25000000,
++   "maxFileSizeMb": 0,
++   "maxPixels": 0,
+  }
+
+ ÔØ» tests/unit/domain/antiBomb.test.ts:30:56
+     28| describe('anti-bomba ÔÇö l├¡mites le├¡dos de loadConfig()', () => {
+     29|   it('toma MAX_FILE_SIZE_MB y MAX_PIXELS de la configuraci├│n', () => {
+     30|     expect(limitsFromConfig(loadConfig(minimalEnv()))).toEqual({
+       |                                                        ^
+     31|       maxFileSizeMb: 15,
+     32|       maxPixels: 25_000_000,
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/40]ÔÄ»
+
+ FAIL  tests/unit/domain/antiBomb.test.ts > anti-bomba ÔÇö l├¡mites le├¡dos de loadConfig() > acepta el tama├▒o exacto del l├¡mite y lo rechaza por encima (antes de procesar)
+AssertionError: expected { ok: true } to deeply equal { ok: false, ÔÇª(2) }
+
+- Expected
++ Received
+
+  Object {
+-   "detail": StringContaining "MAX_FILE_SIZE_MB",
+-   "ok": false,
+-   "reason": "FILE_TOO_LARGE",
++   "ok": true,
+  }
+
+ ÔØ» tests/unit/domain/antiBomb.test.ts:44:47
+     42|     expect(checkFileSize(0, LIMITS)).toEqual({ ok: true });
+     43|     expect(checkFileSize(ONE_MB, LIMITS)).toEqual({ ok: true });
+     44|     expect(checkFileSize(ONE_MB + 1, LIMITS)).toEqual({
+       |                                               ^
+     45|       ok: false,
+     46|       reason: 'FILE_TOO_LARGE',
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/40]ÔÄ»
+
+ FAIL  tests/unit/domain/antiBomb.test.ts > anti-bomba ÔÇö l├¡mites le├¡dos de loadConfig() > rechaza tama├▒os no enteros o negativos como INVALID_SIZE
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» tests/unit/domain/antiBomb.test.ts:52:42
+     50| 
+     51|   it('rechaza tama├▒os no enteros o negativos como INVALID_SIZE', () =>ÔÇª
+     52|     expect(checkFileSize(-1, LIMITS).ok).toBe(false);
+       |                                          ^
+     53|     expect(checkFileSize(1.5, LIMITS)).toMatchObject({ ok: false, reasÔÇª
+     54|     expect(checkFileSize(Number.NaN, LIMITS)).toMatchObject({ ok: falsÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/40]ÔÄ»
+
+ FAIL  tests/unit/domain/antiBomb.test.ts > anti-bomba ÔÇö l├¡mites le├¡dos de loadConfig() > acepta exactamente MAX_PIXELS y rechaza un p├¡xel m├ís
+AssertionError: expected { ok: true } to match object { Object (ok, reason) }
+
+- Expected
++ Received
+
+  Object {
+-   "ok": false,
+-   "reason": "TOO_MANY_PIXELS",
++   "ok": true,
+  }
+
+ ÔØ» tests/unit/domain/antiBomb.test.ts:59:64
+     57|   it('acepta exactamente MAX_PIXELS y rechaza un p├¡xel m├ís', () => {
+     58|     expect(checkDimensions({ width: 40, height: 25 }, LIMITS)).toEqualÔÇª
+     59|     expect(checkDimensions({ width: 40, height: 26 }, LIMITS)).toMatchÔÇª
+       |                                                                ^
+     60|       ok: false,
+     61|       reason: 'TOO_MANY_PIXELS',
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/40]ÔÄ»
+
+ FAIL  tests/unit/domain/antiBomb.test.ts > anti-bomba ÔÇö l├¡mites le├¡dos de loadConfig() > rechaza dimensiones no positivas o no enteras (INVALID_DIMENSIONS)
+AssertionError: expected { ok: true } to match object { ok: false, ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+-   "ok": false,
+-   "reason": "INVALID_DIMENSIONS",
++   "ok": true,
+  }
+
+ ÔØ» tests/unit/domain/antiBomb.test.ts:66:63
+     64| 
+     65|   it('rechaza dimensiones no positivas o no enteras (INVALID_DIMENSIONÔÇª
+     66|     expect(checkDimensions({ width: 0, height: 10 }, LIMITS)).toMatchOÔÇª
+       |                                                               ^
+     67|       ok: false,
+     68|       reason: 'INVALID_DIMENSIONS',
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/40]ÔÄ»
+
+ FAIL  tests/unit/domain/antiBomb.test.ts > anti-bomba ÔÇö l├¡mites le├¡dos de loadConfig() > usa los l├¡mites del config (no constantes embebidas) en una bomba real
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» tests/unit/domain/antiBomb.test.ts:88:71
+     86|       loadConfig(minimalEnv({ MAX_PIXELS: '100', MAX_FILE_SIZE_MB: '1'ÔÇª
+     87|     );
+     88|     expect(checkDimensions({ width: 5000, height: 5000 }, limits).ok).ÔÇª
+       |                                                                       ^
+     89|     expect(checkFileSize(10 * ONE_MB, limits).ok).toBe(false);
+     90|     expect(checkDimensions({ width: 10, height: 10 }, limits)).toEqualÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[6/40]ÔÄ»
+
+ FAIL  tests/unit/domain/guards.test.ts > guards ÔÇö enteros seguros (RED por comportamiento) > isNonNegativeSafeInt acepta 0 y enteros positivos
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ÔØ» tests/unit/domain/guards.test.ts:7:37
+      5| describe('guards ÔÇö enteros seguros (RED por comportamiento)', () => {
+      6|   it('isNonNegativeSafeInt acepta 0 y enteros positivos', () => {
+      7|     expect(isNonNegativeSafeInt(0)).toBe(true);
+       |                                     ^
+      8|     expect(isNonNegativeSafeInt(1048576)).toBe(true);
+      9|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[7/40]ÔÄ»
+
+ FAIL  tests/unit/domain/guards.test.ts > guards ÔÇö enteros seguros (RED por comportamiento) > isPositiveSafeInt exige al menos 1
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ÔØ» tests/unit/domain/guards.test.ts:19:34
+     17| 
+     18|   it('isPositiveSafeInt exige al menos 1', () => {
+     19|     expect(isPositiveSafeInt(1)).toBe(true);
+       |                                  ^
+     20|     expect(isPositiveSafeInt(0)).toBe(false);
+     21|     expect(isPositiveSafeInt(-2)).toBe(false);
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[8/40]ÔÄ»
+
+ FAIL  tests/unit/domain/guards.test.ts > guards ÔÇö enteros seguros (RED por comportamiento) > assertNonNegativeSafeInt lanza DomainError con c├│digo y campo
+AssertionError: expected Error: debi├│ lanzar to be an instance of DomainError
+ ÔØ» tests/unit/domain/guards.test.ts:34:21
+     32|       throw new Error('debi├│ lanzar');
+     33|     } catch (error) {
+     34|       expect(error).toBeInstanceOf(DomainError);
+       |                     ^
+     35|       const domainError = error as DomainError;
+     36|       expect(domainError.code).toBe('INVALID_BYTES');
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[9/40]ÔÄ»
+
+ FAIL  tests/unit/domain/imageHeader.test.ts > cabeceras ÔÇö magic bytes reales (FR-07 / IN-10) > detecta JPEG, PNG, WebP y AVIF por sus magic bytes reales
+AssertionError: expected { kind: 'rejected', ÔÇª(1) } to deeply equal { kind: 'raster', format: 'jpeg' }
+
+- Expected
++ Received
+
+  Object {
+-   "format": "jpeg",
+-   "kind": "raster",
++   "kind": "rejected",
++   "reason": "FORMAT_NOT_ALLOWED",
+  }
+
+ ÔØ» tests/unit/domain/imageHeader.test.ts:27:41
+     25| describe('cabeceras ÔÇö magic bytes reales (FR-07 / IN-10)', () => {
+     26|   it('detecta JPEG, PNG, WebP y AVIF por sus magic bytes reales', () =ÔÇª
+     27|     expect(detectFormat(jpegFixture())).toEqual({ kind: 'raster', formÔÇª
+       |                                         ^
+     28|     expect(detectFormat(pngFixture())).toEqual({ kind: 'raster', formaÔÇª
+     29|     expect(detectFormat(webpVp8xFixture())).toEqual({ kind: 'raster', ÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[10/40]ÔÄ»
+
+ FAIL  tests/unit/domain/imageHeader.test.ts > cabeceras ÔÇö magic bytes reales (FR-07 / IN-10) > rechaza entrada vac├¡a y formatos no raster permitidos
+AssertionError: expected { kind: 'rejected', ÔÇª(1) } to deeply equal { kind: 'rejected', ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+    "kind": "rejected",
+-   "reason": "EMPTY_INPUT",
++   "reason": "FORMAT_NOT_ALLOWED",
+  }
+
+ ÔØ» tests/unit/domain/imageHeader.test.ts:34:44
+     32| 
+     33|   it('rechaza entrada vac├¡a y formatos no raster permitidos', () => {
+     34|     expect(detectFormat(new Uint8Array())).toEqual({ kind: 'rejected',ÔÇª
+       |                                            ^
+     35|     expect(detectFormat(zipFixture())).toEqual({ kind: 'rejected', reaÔÇª
+     36|     expect(detectFormat(new Uint8Array(Buffer.from('abc', 'latin1'))))ÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[11/40]ÔÄ»
+
+ FAIL  tests/unit/domain/imageHeader.test.ts > cabeceras ÔÇö magic bytes reales (FR-07 / IN-10) > rechaza SVG, incluso con declaraci├│n XML o BOM
+AssertionError: expected { kind: 'rejected', ÔÇª(1) } to deeply equal { kind: 'rejected', ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+    "kind": "rejected",
+-   "reason": "SVG_NOT_ALLOWED",
++   "reason": "FORMAT_NOT_ALLOWED",
+  }
+
+ ÔØ» tests/unit/domain/imageHeader.test.ts:43:40
+     41| 
+     42|   it('rechaza SVG, incluso con declaraci├│n XML o BOM', () => {
+     43|     expect(detectFormat(svgFixture())).toEqual({ kind: 'rejected', reaÔÇª
+       |                                        ^
+     44|     expect(detectFormat(svgWithBomFixture())).toEqual({
+     45|       kind: 'rejected',
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[12/40]ÔÄ»
+
+ FAIL  tests/unit/domain/imageHeader.test.ts > cabeceras ÔÇö magic bytes reales (FR-07 / IN-10) > rechaza GIF animado y GIF est├ítico (formato no permitido)
+AssertionError: expected { kind: 'rejected', ÔÇª(1) } to deeply equal { kind: 'rejected', ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+    "kind": "rejected",
+-   "reason": "GIF_ANIMATED_NOT_ALLOWED",
++   "reason": "FORMAT_NOT_ALLOWED",
+  }
+
+ ÔØ» tests/unit/domain/imageHeader.test.ts:51:48
+     49| 
+     50|   it('rechaza GIF animado y GIF est├ítico (formato no permitido)', () =ÔÇª
+     51|     expect(detectFormat(animatedGifFixture())).toEqual({
+       |                                                ^
+     52|       kind: 'rejected',
+     53|       reason: 'GIF_ANIMATED_NOT_ALLOWED',
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[13/40]ÔÄ»
+
+ FAIL  tests/unit/domain/imageHeader.test.ts > cabeceras ÔÇö extracci├│n de dimensiones para anti-bomba > extrae dimensiones de PNG, JPEG y las tres variantes de WebP
+AssertionError: expected null to deeply equal { width: 12, height: 9 }
+
+- Expected: 
+Object {
+  "height": 9,
+  "width": 12,
+}
+
++ Received: 
+null
+
+ ÔØ» tests/unit/domain/imageHeader.test.ts:61:57
+     59| describe('cabeceras ÔÇö extracci├│n de dimensiones para anti-bomba', () =ÔÇª
+     60|   it('extrae dimensiones de PNG, JPEG y las tres variantes de WebP', (ÔÇª
+     61|     expect(extractDimensions(pngFixture(12, 9), 'png')).toEqual({ widtÔÇª
+       |                                                         ^
+     62|     expect(extractDimensions(jpegFixture(12, 9), 'jpeg')).toEqual({ wiÔÇª
+     63|     expect(extractDimensions(webpVp8xFixture(12, 9), 'webp')).toEqual(ÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[14/40]ÔÄ»
+
+ FAIL  tests/unit/domain/imageHeader.test.ts > cabeceras ÔÇö extracci├│n de dimensiones para anti-bomba > extrae dimensiones de AVIF desde la caja ispe
+AssertionError: expected null to deeply equal { width: 12, height: 9 }
+
+- Expected: 
+Object {
+  "height": 9,
+  "width": 12,
+}
+
++ Received: 
+null
+
+ ÔØ» tests/unit/domain/imageHeader.test.ts:69:59
+     67| 
+     68|   it('extrae dimensiones de AVIF desde la caja ispe', () => {
+     69|     expect(extractDimensions(avifFixture(12, 9), 'avif')).toEqual({ wiÔÇª
+       |                                                           ^
+     70|   });
+     71| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[15/40]ÔÄ»
+
+ FAIL  tests/unit/domain/imageHeader.test.ts > cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > acepta formatos raster con MIME y extensi├│n coherentes
+AssertionError: expected { ok: false, ÔÇª(1) } to deeply equal { ok: true, format: 'png', ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+-   "dimensions": Object {
+-     "height": 8,
+-     "width": 8,
+-   },
+-   "format": "png",
+-   "ok": true,
++   "ok": false,
++   "reason": "FORMAT_NOT_ALLOWED",
+  }
+
+ ÔØ» tests/unit/domain/imageHeader.test.ts:85:7
+     83|     expect(
+     84|       validateImageHeader({ bytes: pngFixture(), filename: 'foto.png',ÔÇª
+     85|     ).toEqual({ ok: true, format: 'png', dimensions: { width: 8, heighÔÇª
+       |       ^
+     86|     expect(validateImageHeader({ bytes: jpegFixture() })).toEqual({
+     87|       ok: true,
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[16/40]ÔÄ»
+
+ FAIL  tests/unit/domain/imageHeader.test.ts > cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > normaliza may├║sculas y par├ímetros del MIME
+AssertionError: expected { ok: false, ÔÇª(1) } to match object { ok: true, format: 'webp' }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  Object {
+-   "format": "webp",
+-   "ok": true,
++   "ok": false,
+  }
+
+ ÔØ» tests/unit/domain/imageHeader.test.ts:100:7
+     98|         mimeType: 'IMAGE/WEBP; charset=binary',
+     99|       }),
+    100|     ).toMatchObject({ ok: true, format: 'webp' });
+       |       ^
+    101|     expect(
+    102|       validateImageHeader({ bytes: avifFixture(), filename: 'foto.AVIFÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[17/40]ÔÄ»
+
+ FAIL  tests/unit/domain/imageHeader.test.ts > cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > rechaza MIME incoherente o desconocido
+AssertionError: expected { ok: false, ÔÇª(1) } to match object { ok: false, reason: 'MIME_MISMATCH' }
+
+- Expected
++ Received
+
+  Object {
+    "ok": false,
+-   "reason": "MIME_MISMATCH",
++   "reason": "FORMAT_NOT_ALLOWED",
+  }
+
+ ÔØ» tests/unit/domain/imageHeader.test.ts:109:7
+    107|     expect(
+    108|       validateImageHeader({ bytes: pngFixture(), mimeType: 'image/jpegÔÇª
+    109|     ).toMatchObject({ ok: false, reason: 'MIME_MISMATCH' });
+       |       ^
+    110|     expect(
+    111|       validateImageHeader({ bytes: pngFixture(), mimeType: 'applicatioÔÇª
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[18/40]ÔÄ»
+
+ FAIL  tests/unit/domain/imageHeader.test.ts > cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > rechaza extensiones enga├▒osas, desconocidas y vac├¡as
+AssertionError: expected { ok: false, ÔÇª(1) } to match object { ok: false, ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+    "ok": false,
+-   "reason": "EXTENSION_MISMATCH",
++   "reason": "FORMAT_NOT_ALLOWED",
+  }
+
+ ÔØ» tests/unit/domain/imageHeader.test.ts:117:70
+    115|   it('rechaza extensiones enga├▒osas, desconocidas y vac├¡as', () => {
+    116|     for (const filename of ['foto.jpg', 'foto.svg', 'foto.gif', 'foto.ÔÇª
+    117|       expect(validateImageHeader({ bytes: pngFixture(), filename })).tÔÇª
+       |                                                                      ^
+    118|         ok: false,
+    119|         reason: 'EXTENSION_MISMATCH',
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[19/40]ÔÄ»
+
+ FAIL  tests/unit/domain/imageHeader.test.ts > cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > propaga el rechazo de formato antes de mirar MIME o extensi├│n
+AssertionError: expected { ok: false, ÔÇª(1) } to match object { Object (ok, reason) }
+
+- Expected
++ Received
+
+  Object {
+    "ok": false,
+-   "reason": "SVG_NOT_ALLOWED",
++   "reason": "FORMAT_NOT_ALLOWED",
+  }
+
+ ÔØ» tests/unit/domain/imageHeader.test.ts:127:7
+    125|     expect(
+    126|       validateImageHeader({ bytes: svgFixture(), filename: 'vector.svgÔÇª
+    127|     ).toMatchObject({ ok: false, reason: 'SVG_NOT_ALLOWED' });
+       |       ^
+    128|     expect(validateImageHeader({ bytes: animatedGifFixture(), filenameÔÇª
+    129|       ok: false,
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[20/40]ÔÄ»
+
+ FAIL  tests/unit/domain/imageHeader.test.ts > cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > falla cerrado si no hay dimensiones o son inv├ílidas
+AssertionError: expected { ok: false, ÔÇª(1) } to match object { ok: false, ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+    "ok": false,
+-   "reason": "DIMENSIONS_UNAVAILABLE",
++   "reason": "FORMAT_NOT_ALLOWED",
+  }
+
+ ÔØ» tests/unit/domain/imageHeader.test.ts:137:7
+    135|     expect(
+    136|       validateImageHeader({ bytes: new Uint8Array(Buffer.from([0xff, 0ÔÇª
+    137|     ).toMatchObject({ ok: false, reason: 'DIMENSIONS_UNAVAILABLE' });
+       |       ^
+    138|     expect(validateImageHeader({ bytes: pngFixture(0, 8) })).toMatchObÔÇª
+    139|       ok: false,
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[21/40]ÔÄ»
+
+ FAIL  tests/unit/domain/imageHeader.test.ts > cabeceras ÔÇö coherencia MIME/extensi├│n (rechazo de polimorfismo) > assertValidImageHeader devuelve el resultado v├ílido y lanza si se rechaza
+DomainError: FORMAT_NOT_ALLOWED
+ ÔØ» Module.assertValidImageHeader backend/src/domain/imageHeader.ts:39:25
+     37| export function assertValidImageHeader(input: HeaderValidationInput): ÔÇª
+     38|   const result = validateImageHeader(input);
+     39|   if (!result.ok) throw new DomainError(result.reason, result.reason);
+       |                         ^
+     40|   return result;
+     41| }
+ ÔØ» tests/unit/domain/imageHeader.test.ts:159:12
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[22/40]ÔÄ»
+
+ FAIL  tests/unit/domain/index.test.ts > dominio ÔÇö composici├│n de reglas puras (CA-05) > compone cabecera + anti-bomba + ahorro + estados de extremo a extremo
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ÔØ» tests/unit/domain/index.test.ts:43:25
+     41| 
+     42|     const cabecera = validateImageHeader({ bytes, filename: 'foto.png'ÔÇª
+     43|     expect(cabecera.ok).toBe(true);
+       |                         ^
+     44|     if (!cabecera.ok) throw new Error('cabecera inesperadamente rechazÔÇª
+     45| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[23/40]ÔÄ»
+
+ FAIL  tests/unit/domain/savings.test.ts > savings ÔÇö ahorro real con bytes enteros (PR-12) > calcula el ahorro positivo Exacto con bytes enteros
+AssertionError: expected { bytesBefore: 1000, ÔÇª(3) } to deeply equal { bytesBefore: 1000, ÔÇª(3) }
+
+- Expected
++ Received
+
+  Object {
+    "bytesAfter": 700,
+    "bytesBefore": 1000,
+-   "bytesSaved": 300,
+-   "savingsPct": 30,
++   "bytesSaved": 0,
++   "savingsPct": 0,
+  }
+
+ ÔØ» tests/unit/domain/savings.test.ts:8:68
+      6| describe('savings ÔÇö ahorro real con bytes enteros (PR-12)', () => {
+      7|   it('calcula el ahorro positivo Exacto con bytes enteros', () => {
+      8|     expect(computeSavings({ bytesBefore: 1000, bytesAfter: 700 })).toEÔÇª
+       |                                                                    ^
+      9|       bytesBefore: 1000,
+     10|       bytesAfter: 700,
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[24/40]ÔÄ»
+
+ FAIL  tests/unit/domain/savings.test.ts > savings ÔÇö ahorro real con bytes enteros (PR-12) > reporta el ahorro negativo sin recortarlo a cero
+AssertionError: expected +0 to be -200 // Object.is equality
+
+- Expected
++ Received
+
+- -200
++ 0
+
+ ÔØ» tests/unit/domain/savings.test.ts:25:31
+     23|   it('reporta el ahorro negativo sin recortarlo a cero', () => {
+     24|     const result = computeSavings({ bytesBefore: 1000, bytesAfter: 120ÔÇª
+     25|     expect(result.bytesSaved).toBe(-200);
+       |                               ^
+     26|     expect(result.savingsPct).toBe(-20);
+     27|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[25/40]ÔÄ»
+
+ FAIL  tests/unit/domain/savings.test.ts > savings ÔÇö ahorro real con bytes enteros (PR-12) > evita la divisi├│n por cero cuando bytesBefore es 0
+AssertionError: expected { bytesBefore: +0, ÔÇª(3) } to deeply equal { bytesBefore: +0, ÔÇª(3) }
+
+- Expected
++ Received
+
+  Object {
+    "bytesAfter": 500,
+    "bytesBefore": 0,
+-   "bytesSaved": -500,
++   "bytesSaved": 0,
+    "savingsPct": 0,
+  }
+
+ ÔØ» tests/unit/domain/savings.test.ts:31:65
+     29|   it('evita la divisi├│n por cero cuando bytesBefore es 0', () => {
+     30|     expect(computeSavings({ bytesBefore: 0, bytesAfter: 0 }).savingsPcÔÇª
+     31|     expect(computeSavings({ bytesBefore: 0, bytesAfter: 500 })).toEquaÔÇª
+       |                                                                 ^
+     32|       bytesBefore: 0,
+     33|       bytesAfter: 500,
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[26/40]ÔÄ»
+
+ FAIL  tests/unit/domain/savings.test.ts > savings ÔÇö ahorro real con bytes enteros (PR-12) > conserva la precisi├│n real del porcentaje (sin redondeo opaco)
+AssertionError: expected +0 to be close to 33.3333, received difference is 33.3333, but expected 0.0005
+ ÔØ» tests/unit/domain/savings.test.ts:40:74
+     38| 
+     39|   it('conserva la precisi├│n real del porcentaje (sin redondeo opaco)',ÔÇª
+     40|     expect(computeSavings({ bytesBefore: 3, bytesAfter: 2 }).savingsPcÔÇª
+       |                                                                          ^
+     41|   });
+     42| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[27/40]ÔÄ»
+
+ FAIL  tests/unit/domain/savings.test.ts > savings ÔÇö ahorro real con bytes enteros (PR-12) > es coherente con la refinaci├│n savings-coherence del contrato congelado
+AssertionError: expected 66.7 to be less than or equal to 0.01
+ ÔØ» tests/unit/domain/savings.test.ts:52:54
+     50|       const result = computeSavings({ bytesBefore: before, bytesAfter:ÔÇª
+     51|       const esperado = before === 0 ? 0 : ((before - after) / before) ÔÇª
+     52|       expect(Math.abs(result.savingsPct - esperado)).toBeLessThanOrEquÔÇª
+       |                                                      ^
+     53|     }
+     54|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[28/40]ÔÄ»
+
+ FAIL  tests/unit/domain/savings.test.ts > savings ÔÇö ahorro real con bytes enteros (PR-12) > rechaza bytes negativos, fraccionarios y no seguros con DomainError
+AssertionError: expected function to throw an error, but it didn't
+ ÔØ» tests/unit/domain/savings.test.ts:65:42
+     63|     ];
+     64|     for (const caso of casos) {
+     65|       expect(() => computeSavings(caso)).toThrowError(DomainError);
+       |                                          ^
+     66|     }
+     67|     try {
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[29/40]ÔÄ»
+
+ FAIL  tests/unit/domain/stateMachine.test.ts > m├íquina de estados ÔÇö transiciones v├ílidas > permite PENDING ÔåÆ PROCESSING ÔåÆ COMPLETED sin im├ígenes fallidas
+AssertionError: expected 'PENDING' to be 'PROCESSING' // Object.is equality
+
+Expected: "PROCESSING"
+Received: "PENDING"
+
+ ÔØ» tests/unit/domain/stateMachine.test.ts:20:49
+     18|       ok: true,
+     19|     });
+     20|     expect(nextStatus('PENDING', 'PROCESSING')).toBe('PROCESSING');
+       |                                                 ^
+     21|   });
+     22| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[30/40]ÔÄ»
+
+ FAIL  tests/unit/domain/stateMachine.test.ts > m├íquina de estados ÔÇö transiciones v├ílidas > permite fallos parciales: PROCESSING ÔåÆ PARTIAL con imagen FAILED
+AssertionError: expected 'PROCESSING' to be 'PARTIAL' // Object.is equality
+
+Expected: "PARTIAL"
+Received: "PROCESSING"
+
+ ÔØ» tests/unit/domain/stateMachine.test.ts:26:58
+     24|     const resumen: ImageOutcomeSummary = { completed: 2, failed: 1 };
+     25|     expect(checkTransition('PROCESSING', 'PARTIAL', resumen)).toEqual(ÔÇª
+     26|     expect(nextStatus('PROCESSING', 'PARTIAL', resumen)).toBe('PARTIALÔÇª
+       |                                                          ^
+     27|   });
+     28| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[31/40]ÔÄ»
+
+ FAIL  tests/unit/domain/stateMachine.test.ts > m├íquina de estados ÔÇö transiciones inv├ílidas rechazadas > rechaza saltos que omiten PROCESSING
+AssertionError: expected { ok: true } to match object { ok: false, ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+-   "ok": false,
+-   "reason": "INVALID_TRANSITION",
++   "ok": true,
+  }
+
+ ÔØ» tests/unit/domain/stateMachine.test.ts:39:53
+     37| describe('m├íquina de estados ÔÇö transiciones inv├ílidas rechazadas', () ÔÇª
+     38|   it('rechaza saltos que omiten PROCESSING', () => {
+     39|     expect(checkTransition('PENDING', 'COMPLETED')).toMatchObject({
+       |                                                     ^
+     40|       ok: false,
+     41|       reason: 'INVALID_TRANSITION',
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[32/40]ÔÄ»
+
+ FAIL  tests/unit/domain/stateMachine.test.ts > m├íquina de estados ÔÇö transiciones inv├ílidas rechazadas > rechaza retrocesos y auto-transiciones
+AssertionError: expected { ok: true } to match object { ok: false, ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+-   "ok": false,
+-   "reason": "INVALID_TRANSITION",
++   "ok": true,
+  }
+
+ ÔØ» tests/unit/domain/stateMachine.test.ts:50:54
+     48| 
+     49|   it('rechaza retrocesos y auto-transiciones', () => {
+     50|     expect(checkTransition('PROCESSING', 'PENDING')).toMatchObject({
+       |                                                      ^
+     51|       ok: false,
+     52|       reason: 'INVALID_TRANSITION',
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[33/40]ÔÄ»
+
+ FAIL  tests/unit/domain/stateMachine.test.ts > m├íquina de estados ÔÇö transiciones inv├ílidas rechazadas > rechaza cualquier salida desde estados terminales
+AssertionError: expected { ok: true } to match object { ok: false, ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+-   "ok": false,
+-   "reason": "INVALID_TRANSITION",
++   "ok": true,
+  }
+
+ ÔØ» tests/unit/domain/stateMachine.test.ts:67:50
+     65|     for (const estado of TERMINALES) {
+     66|       for (const destino of ['PENDING', 'PROCESSING', ...TERMINALES] aÔÇª
+     67|         expect(checkTransition(estado, destino)).toMatchObject({
+       |                                                  ^
+     68|           ok: false,
+     69|           reason: 'INVALID_TRANSITION',
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[34/40]ÔÄ»
+
+ FAIL  tests/unit/domain/stateMachine.test.ts > m├íquina de estados ÔÇö transiciones inv├ílidas rechazadas > nextStatus lanza DomainError en una transici├│n inv├ílida
+AssertionError: expected Error: debi├│ lanzar to be an instance of DomainError
+ ÔØ» tests/unit/domain/stateMachine.test.ts:80:21
+     78|       throw new Error('debi├│ lanzar');
+     79|     } catch (error) {
+     80|       expect(error).toBeInstanceOf(DomainError);
+       |                     ^
+     81|       expect((error as DomainError).code).toBe('INVALID_TRANSITION');
+     82|     }
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[35/40]ÔÄ»
+
+ FAIL  tests/unit/domain/stateMachine.test.ts > m├íquina de estados ÔÇö coherencia con im├ígenes FAILED > no permite COMPLETED si alguna imagen fall├│
+AssertionError: expected { ok: true } to match object { ok: false, ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+-   "ok": false,
+-   "reason": "COMPLETED_REJECTS_FAILED_IMAGES",
++   "ok": true,
+  }
+
+ ÔØ» tests/unit/domain/stateMachine.test.ts:90:7
+     88|     expect(
+     89|       checkTransition('PROCESSING', 'COMPLETED', { completed: 2, faileÔÇª
+     90|     ).toMatchObject({ ok: false, reason: 'COMPLETED_REJECTS_FAILED_IMAÔÇª
+       |       ^
+     91|   });
+     92| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[36/40]ÔÄ»
+
+ FAIL  tests/unit/domain/stateMachine.test.ts > m├íquina de estados ÔÇö coherencia con im├ígenes FAILED > exige al menos un COMPLETED y un FAILED para PARTIAL
+AssertionError: expected { ok: true } to match object { ok: false, ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+-   "ok": false,
+-   "reason": "PARTIAL_REQUIRES_BOTH_OUTCOMES",
++   "ok": true,
+  }
+
+ ÔØ» tests/unit/domain/stateMachine.test.ts:94:83
+     92| 
+     93|   it('exige al menos un COMPLETED y un FAILED para PARTIAL', () => {
+     94|     expect(checkTransition('PROCESSING', 'PARTIAL', { completed: 0, faÔÇª
+       |                                                                                   ^
+     95|       ok: false,
+     96|       reason: 'PARTIAL_REQUIRES_BOTH_OUTCOMES',
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[37/40]ÔÄ»
+
+ FAIL  tests/unit/domain/stateMachine.test.ts > m├íquina de estados ÔÇö coherencia con im├ígenes FAILED > no permite FAILED si alguna imagen se complet├│
+AssertionError: expected { ok: true } to match object { ok: false, ÔÇª(1) }
+
+- Expected
++ Received
+
+  Object {
+-   "ok": false,
+-   "reason": "FAILED_REJECTS_COMPLETED_IMAGES",
++   "ok": true,
+  }
+
+ ÔØ» tests/unit/domain/stateMachine.test.ts:107:7
+    105|     expect(
+    106|       checkTransition('PROCESSING', 'FAILED', { completed: 1, failed: ÔÇª
+    107|     ).toMatchObject({ ok: false, reason: 'FAILED_REJECTS_COMPLETED_IMAÔÇª
+       |       ^
+    108|   });
+    109| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[38/40]ÔÄ»
+
+ FAIL  tests/unit/domain/stateMachine.test.ts > m├íquina de estados ÔÇö coherencia con im├ígenes FAILED > resolveBatchStatus deriva COMPLETED, PARTIAL o FAILED del resumen
+AssertionError: expected 'COMPLETED' to be 'PARTIAL' // Object.is equality
+
+Expected: "PARTIAL"
+Received: "COMPLETED"
+
+ ÔØ» tests/unit/domain/stateMachine.test.ts:118:61
+    116|   it('resolveBatchStatus deriva COMPLETED, PARTIAL o FAILED del resumeÔÇª
+    117|     expect(resolveBatchStatus({ completed: 3, failed: 0 })).toBe('COMPÔÇª
+    118|     expect(resolveBatchStatus({ completed: 2, failed: 1 })).toBe('PARTÔÇª
+       |                                                             ^
+    119|     expect(resolveBatchStatus({ completed: 0, failed: 2 })).toBe('FAILÔÇª
+    120|     expect(resolveBatchStatus({ completed: 0, failed: 0 })).toBe('FAILÔÇª
+ Test Files  6 failed (6)
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39/40]ÔÄ»
+
+ FAIL  tests/unit/domain/stateMachine.test.ts > m├íquina de estados ÔÇö coherencia con im├ígenes FAILED > flujo completo: PROCESSION + resumen mixto ÔåÆ PARTIAL
+AssertionError: expected 'PENDING' to be 'PARTIAL' // Object.is equality
+
+Expected: "PARTIAL"
+Received: "PENDING"
+
+ ÔØ» tests/unit/domain/stateMachine.test.ts:128:20
+    126|     estado = nextStatus(estado, 'PROCESSING');
+    127|     estado = nextStatus(estado, resolveBatchStatus(resumen), resumen);
+    128|     expect(estado).toBe('PARTIAL');
+       |                    ^
+    129|   });
+    130| });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[40/40]ÔÄ»
+
+      Tests  40 failed | 6 passed (46)
+   Start at  18:14:17
+   Duration  2.28s (transform 4.47s, setup 0ms, collect 5.30s, tests 213ms, environment 2ms, prepare 4.46s)
+
+EXIT_CODE=1

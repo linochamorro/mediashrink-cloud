@@ -1,0 +1,25 @@
+F01-T02 — Apagado de aws/aws-emulator (G-7) — 2026-11-17
+=========================================================
+Docker CLI resuelto como <DOCKER_CLI_DIR>/docker.exe.
+Comandos ejecutados desde <PROJECT_ROOT> tras la verificación de integración.
+
+$ docker compose down
+ Container mediashrink-aws-emulator Stopping
+ Container mediashrink-aws-emulator Stopped
+ Container mediashrink-aws-emulator Removing
+ Container mediashrink-aws-emulator Removed
+ Network mediashrink-cloud_default Removing
+ Network mediashrink-cloud_default Removed
+DOWN_EXIT=0
+
+$ docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.Image}}'
+NAMES     STATUS    IMAGE
+PS_EXIT=0
+(sin contenedores: ni el emulador ni ningún otro)
+
+$ docker compose ps
+NAME      IMAGE     COMMAND   SERVICE   CREATED   STATUS    PORTS
+COMPOSE_PS_EXIT=0
+
+Conclusión: contenedor y red eliminados; G-7 cumplido (encendido solo durante pruebas).
+El volumen named `aws-emulator-data` persiste por diseño del runbook (no es contenedor ni red).

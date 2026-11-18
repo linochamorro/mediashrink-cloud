@@ -1,0 +1,22 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/auth/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/middleware.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/jwt.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 79[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/password.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1167[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m hash de contrase├▒as ÔÇö scrypt (A-02, IN-05)[2m > [22mverifica la contrase├▒a correcta y rechaza una incorrecta [33m324[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/auth/isolation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 985[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m aislamiento 401/404 entre usuarios (FR-21, D-07, spec ┬º6)[2m > [22mel token de A no accede al recurso de B y el de B no accede al de A [33m387[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/service.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1398[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mregistra un usuario hasheado y devuelve un par de tokens sin exponer el hash [33m311[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mdevuelve el mismo error para correo desconocido y contrase├▒a incorrecta [33m426[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/auth/routes.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 1550[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rutas HTTP de autenticaci├│n (src/auth/routes.ts)[2m > [22mPOST /auth/login devuelve tokens y rechaza credenciales inv├ílidas [33m370[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rutas HTTP de autenticaci├│n (src/auth/routes.ts)[2m > [22mel rate limit configurable responde 429 con Retry-After y se renueva en la ventana siguiente [33m362[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m7 passed[39m[22m[90m (7)[39m
+[2m      Tests [22m [1m[32m44 passed[39m[22m[90m (44)[39m
+[2m   Start at [22m 18:46:09
+[2m   Duration [22m 4.81s[2m (transform 3.58s, setup 0ms, collect 7.05s, tests 5.20s, environment 2ms, prepare 3.28s)[22m
+

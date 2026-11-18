@@ -1,0 +1,81 @@
+F01-T02 — Cobertura reproducible desde manifiesto y lockfile (Tester) — 2026-11-17
+=================================================================================
+Verificación propia del cierre del concern P3 (proveedor de cobertura instalado con
+--no-save por F01-T05). Todo desde <PROJECT_ROOT>; rutas Windows redactadas.
+
+1) DECLARACIÓN DE LA DEPENDENCIA
+--------------------------------
+backend/package.json:22  →  "@vitest/coverage-v8": "^2.1.9"   (devDependencies)
+package-lock.json:2743-2748:
+  "node_modules/@vitest/coverage-v8": {
+    "version": "2.1.9",
+    "resolved": "https://registry.npmjs.org/@vitest/coverage-v8/-/coverage-v8-2.1.9.tgz",
+    "integrity": "sha512-Z2cOr0ksM00MpEfyVE8KXIYPEcBFxdbLSs56L8PO0QQMxt/6bDj45uQfxoc96v05KW3clk7vvgP0qfDit9DmfQ==",
+    "dev": true
+  }
+→ Alineada con vitest@2.1.9; presente en el lockfile, no solo en node_modules.
+
+$ npm ls @vitest/coverage-v8 --all
+mediashrink-cloud@0.0.0 <PROJECT_ROOT>
+`-- @mediashrink/backend@0.0.0 -> .\backend
+  `-- @vitest/coverage-v8@2.1.9
+NPM_LS_EXIT=0
+
+2) INSTALACIÓN LIMPIA
+---------------------
+$ npm ci --no-audit --no-fund
+Inicio: 2026-11-17T18:30:28   Fin: 2026-11-17T18:32:07   EXIT=0
+added 324 packages in 2m
+Avisos: deprecations heredadas (eslint@8.57.1, glob@7.2.3, rimraf@3.0.2, etc.) y
+install-scripts no aprobados (esbuild@0.21.5, sharp@0.33.5, esbuild@0.28.2).
+→ Deuda heredada de F00 (P-05 del Developer), no introducida por F01-T02 y no bloqueante:
+  la instalación terminó exit 0 y las suites cargaron sin problema.
+
+3) CORRIDA DE COBERTURA (comando exigido)
+-----------------------------------------
+$ npx vitest run tests/unit/domain --coverage
+Inicio: 2026-11-17T18:32:13   Fin: 2026-11-17T18:32:20   EXIT=0
+
+  RUN  v2.1.9 <PROJECT_ROOT>
+       Coverage enabled with v8
+
+  ✓ tests/unit/domain/guards.test.ts       (5 tests) 16ms
+  ✓ tests/unit/domain/stateMachine.test.ts (13 tests) 21ms
+  ✓ tests/unit/domain/savings.test.ts      (7 tests) 14ms
+  ✓ tests/unit/domain/antiBomb.test.ts     (6 tests) 18ms
+  ✓ tests/unit/domain/index.test.ts        (1 test) 13ms
+  ✓ tests/unit/domain/imageHeader.test.ts  (15 tests) 36ms
+
+  Test Files  6 passed (6)
+       Tests  47 passed (47)
+   Duration  2.15s
+
+  % Coverage report from v8
+  backend/src/domain  | 100 | 100 | 100 | 100 |
+    antiBomb.ts, guards.ts, imageHeader.ts, index.ts, savings.ts, stateMachine.ts → 100/100/100/100
+
+Nota de precisión: el renglón "All files" de esta corrida muestra 34.4 % porque el
+reporte global del workspace incluye módulos NO ejercitados por esta selección
+(backend/src/contracts, backend/src/db, frontend/src, etc.). El objeto de CA-05 —
+backend/src/domain/** — está al 100 % en las cuatro métricas.
+
+4) CORROBORACIÓN FILTRADA (misma corrida, alcance explícito)
+------------------------------------------------------------
+$ npx vitest run tests/unit/domain --coverage --coverage.include='backend/src/domain/**'
+Inicio: 2026-11-17T18:32:34   Fin: 2026-11-17T18:32:40   EXIT=0
+
+  Test Files  6 passed (6)
+       Tests  47 passed (47)
+
+  % Coverage report from v8
+  All files        |     100 |      100 |     100 |     100 |
+   antiBomb.ts     |     100 |      100 |     100 |     100 |
+   guards.ts       |     100 |      100 |     100 |     100 |
+   imageHeader.ts  |     100 |      100 |     100 |     100 |
+   index.ts        |     100 |      100 |     100 |     100 |
+   savings.ts      |     100 |      100 |     100 |     100 |
+   stateMachine.ts |     100 |      100 |     100 |     100 |
+
+Conclusión: dependencia declarada y fijada, instalación reproducible desde cero y
+47/47 pruebas con backend/src/domain/** al 100 % (stmts/branch/funcs/lines).
+Sin secretos ni rutas Windows absolutas en este artefacto.

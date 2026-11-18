@@ -1,0 +1,5 @@
+
+> mediashrink-cloud@0.0.0 typecheck
+> tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json
+
+

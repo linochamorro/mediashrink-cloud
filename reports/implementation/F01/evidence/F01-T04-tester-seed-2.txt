@@ -1,0 +1,38 @@
+=== F01-T04 - Tester independiente: SEED (2.a ejecucion, idempotencia) ===
+Fecha: 2026-11-17
+Comando: npm run seed
+CWD: <PROJECT_ROOT>
+Estado previo: tabla con 12 items de la 1.a ejecucion del Tester
+--- salida ---
+
+> mediashrink-cloud@0.0.0 seed
+> tsx tools/scripts/seed/cli.ts
+
+=== MediaShrink Cloud — seed sintético (F01-T04) ===
+Modo: ESCRITURA
+Tabla DynamoDB: mediashrink-seed-demo (creada en esta ejecución: no)
+Usuarios: creados=0, omitidos=3
+Lotes: creados=0, omitidos=3
+Imágenes 100x100: creadas=0, omitidas=6
+Conteo en emulador ANTES: usuarios=3, jobs=3, imágenes=6, total=12
+Conteo en emulador DESPUÉS: usuarios=3, jobs=3, imágenes=6, total=12
+
+Usuarios demo (ficticios; contraseña hasheada con T03) (3)
+  [OMITIDO] demo-user-ana — ana.demo@example.com · contraseña hasheada con scrypt (T03)
+  [OMITIDO] demo-user-bruno — bruno.demo@example.com · contraseña hasheada con scrypt (T03)
+  [OMITIDO] demo-user-carla — carla.demo@example.com · contraseña hasheada con scrypt (T03)
+
+Lotes demo (3)
+  [OMITIDO] demo-job-ana — BALANCED · 2 imágenes 100x100 · bytes reales
+  [OMITIDO] demo-job-bruno — HIGH · 2 imágenes 100x100 · bytes reales
+  [OMITIDO] demo-job-carla — MAX_COMPRESSION · 2 imágenes 100x100 · bytes reales
+
+Imágenes sintéticas 100x100 (generadas por código) (6)
+  [OMITIDO] img-ana-01 — Paisaje sintético ana 01 · 100x100 7226 B → 5755 B (webp+avif)
+  [OMITIDO] img-ana-02 — Paisaje sintético ana 02 · 100x100 7217 B → 3040 B (webp+avif)
+  [OMITIDO] img-bruno-01 — Paisaje sintético bruno 01 · 100x100 7229 B → 5390 B (webp+avif)
+  [OMITIDO] img-bruno-02 — Paisaje sintético bruno 02 · 100x100 7196 B → 5714 B (webp+avif)
+  [OMITIDO] img-carla-01 — Paisaje sintético carla 01 · 100x100 7220 B → 5749 B (webp+avif)
+  [OMITIDO] img-carla-02 — Paisaje sintético carla 02 · 100x100 7206 B → 6249 B (webp+avif)
+=== Fin del seed ===
+EXIT_CODE=0

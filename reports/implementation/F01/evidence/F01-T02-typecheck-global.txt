@@ -1,0 +1,17 @@
+F01-T02 (addendum) — Typecheck global (cierre de P-01)
+=====================================================
+Fecha: 2026-11-17 · Ejecutado desde <PROJECT_ROOT>, tras la finalización de F01-T05
+y tras el `npm ci` limpio del addendum de cobertura.
+
+$ npm run typecheck
+
+> mediashrink-cloud@0.0.0 typecheck
+> tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json
+
+(sin diagnósticos)
+
+TYPECHECK_GLOBAL_EXIT=0
+
+El error previo `tests/unit/domain/savings.test.ts(51,24): TS2367` ya no aparece:
+provenía del trabajo en curso de F01-T05, ajeno al ámbito de F01-T02.
+P-01 queda resuelto sin haber modificado ningún archivo ajeno.

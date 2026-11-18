@@ -1,0 +1,31 @@
+
+> mediashrink-cloud@0.0.0 seed
+> tsx tools/scripts/seed/cli.ts --dry-run
+
+=== MediaShrink Cloud ÔÇö seed sint├®tico (F01-T04) ===
+Modo: DRY-RUN (sin escrituras)
+Tabla DynamoDB: mediashrink-seed-demo
+Usuarios: creados=0, omitidos=0
+Lotes: creados=0, omitidos=0
+Im├ígenes 100x100: creadas=0, omitidas=0
+Nota: --dry-run no ha abierto conexi├│n con DynamoDB ni ha escrito nada.
+
+Usuarios demo (ficticios; contrase├▒a hasheada con T03) (3)
+  [SE CREAR├ìA] demo-user-ana ÔÇö ana.demo@example.com ┬À contrase├▒a hasheada con scrypt (T03)
+  [SE CREAR├ìA] demo-user-bruno ÔÇö bruno.demo@example.com ┬À contrase├▒a hasheada con scrypt (T03)
+  [SE CREAR├ìA] demo-user-carla ÔÇö carla.demo@example.com ┬À contrase├▒a hasheada con scrypt (T03)
+
+Lotes demo (3)
+  [SE CREAR├ìA] demo-job-ana ÔÇö BALANCED ┬À 2 im├ígenes 100x100 ┬À bytes reales
+  [SE CREAR├ìA] demo-job-bruno ÔÇö HIGH ┬À 2 im├ígenes 100x100 ┬À bytes reales
+  [SE CREAR├ìA] demo-job-carla ÔÇö MAX_COMPRESSION ┬À 2 im├ígenes 100x100 ┬À bytes reales
+
+Im├ígenes sint├®ticas 100x100 (generadas por c├│digo) (6)
+  [SE CREAR├ìA] img-ana-01 ÔÇö Paisaje sint├®tico ana 01 ┬À 100x100 7226 B ÔåÆ 5755 B (webp+avif)
+  [SE CREAR├ìA] img-ana-02 ÔÇö Paisaje sint├®tico ana 02 ┬À 100x100 7217 B ÔåÆ 3040 B (webp+avif)
+  [SE CREAR├ìA] img-bruno-01 ÔÇö Paisaje sint├®tico bruno 01 ┬À 100x100 7229 B ÔåÆ 5390 B (webp+avif)
+  [SE CREAR├ìA] img-bruno-02 ÔÇö Paisaje sint├®tico bruno 02 ┬À 100x100 7196 B ÔåÆ 5714 B (webp+avif)
+  [SE CREAR├ìA] img-carla-01 ÔÇö Paisaje sint├®tico carla 01 ┬À 100x100 7220 B ÔåÆ 5749 B (webp+avif)
+  [SE CREAR├ìA] img-carla-02 ÔÇö Paisaje sint├®tico carla 02 ┬À 100x100 7206 B ÔåÆ 6249 B (webp+avif)
+=== Fin del seed ===
+EXIT=0

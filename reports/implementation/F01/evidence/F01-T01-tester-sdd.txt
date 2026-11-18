@@ -1,0 +1,31 @@
+F01-T01 — COHERENCIA CON EL SDD (Tester, revision documental propia)
+Fuentes contrastadas: docs/sdd/{constitution,spec,plan}.md, docs/sdd/packages/P-01-critical-foundations.md (CA-01), docs/architecture/04-api-and-component-contract.md, backend/src/contracts/**, frontend/src/api/types.generated.ts, tests/unit/contracts.test.ts.
+
+[1] Los 14 contratos congelados (CATALOG y schemas coinciden; 'export type' = 14)
+    RegisterInput, LoginInput, RefreshInput, TokenPair, AuthenticatedUser,
+    Preset, JobStatus, OutputFormat, ImageRecord, JobMetrics, Job,
+    LimitsConfig, AwsTransport, RetentionPolicy.
+    Cubren auth (5), presets/estados/formatos (3), imagen/metricas/job (3) y
+    configuracion/transporte/retencion (3). Version global 1.0.0, todos v1.
+
+[2] Requisitos del SDD verificados en la fuente
+    - auth: RegisterInput/LoginInput/RefreshInput/TokenPair/AuthenticatedUser (spec FR-01..FR-03; plan 3.1). Test: correo invalido, password corto/vacio, tokenType != Bearer, userId ausente -> rechazados.
+    - presets HIGH / BALANCED / MAX_COMPRESSION: PRESET_VALUES en catalog.ts:20; test rechaza 'ULTRA'. Coincide con IN-02 y spec §4.
+    - 5 estados PENDING/PROCESSING/COMPLETED/PARTIAL/FAILED: JOB_STATUS_VALUES en catalog.ts:21-27; test rechaza 'QUEUED'. Coincide con spec §4 y §6.
+    - formatos webp / avif: OUTPUT_FORMAT_VALUES en catalog.ts:28; array de Job con unique + includes([webp,avif]) (IN-01). Test rechaza 'gif' y formats ['webp','gif'].
+    - userId obligatorio: Job.userId y AuthenticatedUser.userId son campos no opcionales; test 'rechaza un job sin userId'. Coincide con PR-07 / IN-06 / FR-21.
+    - ahorro 0 % y negativo permitidos: test 'acepta un ahorro del 0 % y uno negativo' (0 y -50); refineSavings(zod-schemas.ts:113-125) solo exige |savingsPct - esperado| <= 0.01 y fuerza 0 si bytesBefore = 0. Coincide con PR-12 "métricas honestas" y doc §3.
+    - TTL 30 dias: RETENTION_DAYS=30 y TTL_SECONDS=2_592_000 en catalog.ts:16-18; computeTtl = floor(createdAt/1000)+TTL_SECONDS; refineTtl verifica la coherencia; test rechaza ttl=60. Coincide con IN-09 / spec §4.
+    - limites desde configuracion: LimitsConfig se valida con loadConfig().limits del loader real (config/index.ts) en el test, sin duplicar constantes. Coincide con IN-07 y doc §3.
+    - QueueUrls canonicas sin :9324: refineCanonicalQueueUrls (zod-schemas.ts:141-181) exige prefijo https://sqs.<region>.amazonaws.com/<cuenta>/ y rechaza ':9324', ':9297' y el host del endpoint. ':9324' y ':9297' aparecen SOLO en la logica de rechazo y en la descripcion (catalog.ts:266), nunca como valor de queueUrl/dlqUrl. Coincide con A-03 / addendum F00-T01 y doc §3.
+    - exifStripped obligatorio: presente en ImageRecord, JobMetrics y Job (PR-01, doc §3).
+
+[3] Sin secretos ni rutas absolutas
+    - El unico valor semilla en el test es el marcador local REPLACE_WITH_LOCAL_DEV_SECRET (G-3), no un secreto real.
+    - La cabecera generada usa <PROJECT_ROOT>; la salida de registro de Vitest se normalizo antes de escribir la evidencia.
+
+[4] Coherencia de alcance con P-01
+    - CA-01 (contratos Zod validan entradas/salidas; frontend sin duplicar tipos; typecheck/lint/tests en verde) queda cubierto por la evidencia propia F01-T01-tester-{contracts,typecheck,lint,unit,freeze,scope}.txt.
+    - No se implementaron rutas HTTP /jobs, worker sharp ni UI de producto (pertenecen a F02/F03): los esquemas solo definen contratos de datos, tal como exige docs/architecture/04 §1 y la restriccion de P-01 §3.
+
+CONCLUSION: los 14 contratos y sus reglas son coherentes con constitution/spec/plan/P-01 y con el documento de contratos congelado; no se encontro contradiccion ni valor prohibido (:9324) en las QueueUrls.

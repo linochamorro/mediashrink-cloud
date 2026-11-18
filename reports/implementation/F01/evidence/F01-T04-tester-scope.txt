@@ -1,0 +1,43 @@
+=== F01-T04 - Tester independiente: alcance y dependencias ===
+Fecha: 2026-11-17
+CWD: <PROJECT_ROOT>
+Metodo: git status / git diff sobre el arbol de trabajo + lectura de manifiestos. Sin git diff comparativo
+         entre commits porque toda P-01 permanece sin confirmar (baseline = cierre de F00).
+
+1) ARCHIVOS DE T04 DENTRO DEL AMBITO AUTORIZADO (task.md 3)
+   - tools/scripts/seed/{demo-data,images,store,index,cli}.ts
+   - tests/integration/seed/{helpers,idempotence.test,db-check.test}.ts
+   - package.json (raiz): unica modificacion = clave "seed"
+   - reports/implementation/F01/evidence/F01-T04-tester-*.txt
+   - reports/implementation/F01/F01-T04-tester.md
+   Todos los anteriores estan en las rutas de escritura permitidas para este rol.
+
+2) git diff -- package.json (salida real del Tester)
+   - test:unit": "vitest run tests/unit"
+   + test:unit": "vitest run tests/unit",
+   + "seed": "tsx tools/scripts/seed/cli.ts"
+   => Sin nuevas dependencias en la raiz; la unica adicion es el script "seed".
+
+3) package-lock.json
+   - Aparece modificado, pero el diff corresponde a T01/T02:
+     @aws-sdk/client-dynamodb, @aws-sdk/credential-providers, @aws-sdk/lib-dynamodb,
+     @smithy/node-http-handler, zod, @vitest/coverage-v8 y tsx en el workspace backend.
+   - `tsx` ya estaba disponible (devDependency de backend desde T01, ver A-03 de T01)
+     y resuelto en node_modules por los workspaces; el script "seed" no requirio
+     anadir ningun paquete nuevo. G-8 (sin nuevas dependencias) satisfecho por T04.
+   - No se ejecuto `npm install`/`npm ci` con fines de T04.
+
+4) CAMBIOS FUERA DE T04 VISIBLES EN git status (NO atribuibles a este rol)
+   - STATE.md, docs/sdd/tasks.md: actualizaciones del Architect al cerrar T01/T02/T03.
+   - backend/src/{auth,contracts,db,domain}/**, frontend/src/api/**: entregables de T01/T02/T03.
+   - docs/architecture/03-*.md y 04-*.md: documentacion de T01/T02.
+   - tests/unit/{auth,contracts.test.ts,domain}/**, tests/integration/{db,auth}/**: T01/T02/T03.
+   - reports/implementation/F01/** y reports/audits/F01/**: reportes de tareas previas y de este rol.
+   El alcance de T04 (task.md 3) excluye backend/**, frontend/**, IaC, .env.example,
+   STATE.md, tasks.md y reportes ajenos; el Tester no edito ninguno de ellos.
+
+5) SIN SECRETOS NI RUTAS ABSOLUTAS
+   - Las salidas y evidencias del Tester usan marcadores <PROJECT_ROOT> / <DOCKER_CLI_DIR>.
+   - No se versionaron credenciales reales; los valores de la CLI son marcadores REPLACE_WITH_LOCAL_*.
+
+Conclusion: ningun hallazgo de alcance atribuible a F01-T04; sin nuevas dependencias.
