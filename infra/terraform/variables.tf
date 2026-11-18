@@ -65,3 +65,32 @@ variable "ca_bundle_path" {
   type        = string
   default     = "../../.local/aws-emulator/ca.pem"
 }
+
+variable "is_emulator" {
+  description = <<-EOT
+    Interruptor UNICO de entorno (F04-T04 / T04-A-03). true (default) apunta al
+    emulador aws/aws-emulator y activa EXCLUSIVAMENTE aqui: el endpoint local,
+    el CA autofirmado, las credenciales por archivo y los tres flags skip_*
+    (skip_credentials_validation, skip_requesting_account_id y
+    skip_metadata_api_check). false DEBE usarse en AWS real: desactiva todas esas
+    excepciones y emplea la cadena estandar de credenciales del SDK. Los flags
+    skip_* NUNCA se heredan a un entorno real; ver README.md §"AWS real".
+  EOT
+  type        = bool
+  default     = true
+}
+
+variable "cors_origin" {
+  description = <<-EOT
+    Origen autorizado de la SPA para las solicitudes presignadas a S3. Equivale
+    a CORS_ORIGIN en .env.example (http://localhost:5173). Se aplica
+    explicitamente en la configuracion CORS de los buckets raw y optimized.
+  EOT
+  type        = string
+  default     = "http://localhost:5173"
+
+  validation {
+    condition     = can(regex("^https?://", var.cors_origin))
+    error_message = "cors_origin debe ser una URL absoluta http:// o https:// (CORS_ORIGIN)."
+  }
+}

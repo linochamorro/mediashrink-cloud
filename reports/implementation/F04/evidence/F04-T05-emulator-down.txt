@@ -1,0 +1,15 @@
+# F04-T05 - docker compose down (G-7: apagar al terminar)
+UTC: 2026-11-18T13:11:53.1305535Z
+COMMAND: docker compose down; docker compose ps; docker ps -a
+--- OUTPUT ---
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed 
+DOWN_EXIT: 0
+--- compose ps ---
+NAME      IMAGE     COMMAND   SERVICE   CREATED   STATUS    PORTS
+--- docker ps -a (name filter) ---
+--- END ---

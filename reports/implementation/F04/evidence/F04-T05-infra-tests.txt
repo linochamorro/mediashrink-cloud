@@ -1,0 +1,25 @@
+# F04-T05 - suite completa tests/integration/infra
+UTC: 2026-11-18T13:11:38.6277022Z
+COMMAND: npx vitest run tests/integration/infra
+--- OUTPUT ---
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+[90mstdout[2m | tests/integration/infra/gsi.test.ts[2m > [22m[2mDescribeTable: la tabla de jobs no declara ├¡ndices secundarios globales
+[22m[39mGSI_COUNT: 0
+
+ [32mÔ£ô[39m tests/integration/infra/gsi.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 112[2mms[22m[39m
+[90mstdout[2m | tests/integration/infra/retention-guard.test.ts[2m > [22m[2mretention_days=30 coincide en Terraform, .env.example y el cat├ílogo congelado
+[22m[39mRETENTION_GUARD: {"EXPECTED_DAYS":30,"EXPECTED_TTL_SECONDS":2592000,"ENV_RETENTION_DAYS":30,"CATALOG_RETENTION_DAYS":30,"CATALOG_TTL_SECONDS":2592000,"TF_DEFAULT_RETENTION_DAYS":30,"TF_APPLIED_RETENTION_DAYS":30,"TF_APPLIED_TTL_SECONDS":2592000}
+
+ [32mÔ£ô[39m tests/integration/infra/retention-guard.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1329[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m retention_days=30 coincide en Terraform, .env.example y el cat├ílogo congelado [33m1327[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/infra/resources.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1541[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m infra aplicada contra aws/aws-emulator[2m > [22mla pol├¡tica IAM se deriva de los recursos reales, sin comodines amplios [33m1153[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 08:11:40
+[2m   Duration [22m 2.67s[2m (transform 319ms, setup 0ms, collect 1.24s, tests 2.98s, environment 1ms, prepare 729ms)[22m
+
+INFRA_TESTS_EXIT: 0

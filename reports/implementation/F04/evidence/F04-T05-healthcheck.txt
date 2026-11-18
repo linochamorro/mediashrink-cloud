@@ -1,0 +1,6 @@
+# F04-T05 - healthcheck HTTPS con CA del emulador
+UTC: 2026-11-18T13:08:57.2264181Z
+COMMAND: curl.exe --silent --show-error --fail --cacert ./.local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health
+--- OUTPUT ---
+ok
+HEALTHCHECK_EXIT_CODE: 0

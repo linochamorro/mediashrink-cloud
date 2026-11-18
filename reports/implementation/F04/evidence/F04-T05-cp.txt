@@ -1,0 +1,14 @@
+# F04-T05 - docker cp CA/config/credentials (runbook 1.3)
+UTC: 2026-11-18T13:08:56.6306378Z
+--- OUTPUT ---
+CP_CA_EXIT: 0
+CP_CONFIG_EXIT: 0
+CP_CREDENTIALS_EXIT: 0
+
+Name                 Length
+----                 ------
+ca.pem                  566
+config                  152
+emulator_credentials    116
+
+

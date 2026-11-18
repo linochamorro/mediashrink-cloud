@@ -1,0 +1,30 @@
+# F04-T05 - pasos del job infra-integration
+UTC: 2026-11-18T13:14:21.2965394Z
+SOURCE: .github/workflows/infra-integration.yml
+--- pasos (orden, nombre, if, run/uses resumido) ---
+1 | Checkout | if=- | actions/checkout@v4
+2 | Setup Node.js | if=- | actions/setup-node@v4
+3 | Setup Terraform | if=- | hashicorp/setup-terraform@v3
+4 | Install | if=- | npm ci --no-audit --no-fund
+5 | Start aws-emulator (G-7: 2 GiB / 2.0 CPUs) | if=- | docker compose config --quiet
+6 | Wait for emulator healthy | if=- | for i in $(seq 1 60); do
+7 | Export CA and credentials (runbook ┬º1.3) | if=- | # El CA y las credenciales se regeneran en CADA arranque (nota N-01):
+8 | Terraform fmt | if=- | terraform fmt -check
+9 | Terraform init | if=- | terraform init
+10 | Terraform validate | if=- | terraform validate
+11 | Terraform apply (emulator only) | if=- | terraform apply -auto-approve -input=false -var='is_emulator=true'
+12 | Integration tests (infra) | if=- | npx vitest run tests/integration/infra
+13 | Stop aws-emulator (always) | if=always() | docker compose down
+STEPS_EXIT: 0
+--- evidencias T05 ---
+F04-T05-apply.txt
+F04-T05-cp.txt
+F04-T05-emulator-down.txt
+F04-T05-fmt-init-validate.txt
+F04-T05-gsi-probe.txt
+F04-T05-healthcheck.txt
+F04-T05-infra-tests.txt
+F04-T05-retention-guard.txt
+F04-T05-steps.txt
+F04-T05-up.txt
+F04-T05-workflow.txt
