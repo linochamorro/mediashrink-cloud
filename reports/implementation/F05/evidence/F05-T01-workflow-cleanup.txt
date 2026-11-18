@@ -1,0 +1,9 @@
+in_progress		evidence(F05-T01): hash del commit y resultado del push a main	CI	main	push	44421156056	23s	2026-11-18T23:29:18Z
+completed	success	feat(F05-T01): integracion real API+worker, retencion unica, CI limpiÔÇª	CI	main	push	44421125022	37s	2026-11-18T23:29:05Z
+completed	failure	evidence(F04-T05): run-list/run-view y pasos del run 44312560558	CI	main	push	44313244363	20s	2026-11-18T13:23:35Z
+in_progress		evidence(F05-T01): hash del commit y resultado del push a main	Infra integration (aws-emulator)	main	push	44421156368	24s	2026-11-18T23:29:19Z
+in_progress		feat(F05-T01): integracion real API+worker, retencion unica, CI limpiÔÇª	Infra integration (aws-emulator)	main	push	44421125139	38s	2026-11-18T23:29:05Z
+completed	success	evidence(F04-T05): run-list/run-view y pasos del run 44312560558	Infra integration (aws-emulator)	main	push	44313244490	2m7s	2026-11-18T13:23:36Z
+CI_FINAL_RUN=44421156056 conclusion=success head=fca0252
+INFRA_FINAL_RUN=44421156368 conclusion=success head=fca0252
+NO_NPM_INSTALL_NO_SAVE_STEP=true (15 pasos verificados en el run de infra)
