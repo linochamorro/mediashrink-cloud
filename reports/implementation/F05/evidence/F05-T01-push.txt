@@ -1,0 +1,3 @@
+To https://github.com/linochamorro/mediashrink-cloud.git
+   8f65a7f..b191b3c  main -> main
+PUSH_EXIT=0
