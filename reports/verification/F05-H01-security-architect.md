@@ -55,7 +55,7 @@ El `NO-PASSED` de v1 se conservó append-only en `F05-H01-tester.md` (§7 addend
 |---|---|
 | `git pull --ff-only` | Sin conflictos |
 | Commit + push a `main` (`linochamorro/mediashrink-cloud`) | Sin `--force` |
-| Run CI en GitHub Actions | Verificado en verde tras el push (ver dictamen en el mensaje de retorno) |
+| Run CI en GitHub Actions | ✅ `ci.yml` run `44476774564` → **`success`** sobre `8814233`; `infra-integration.yml` run `44476774863` → **`success`** (tras corrección loop 3/3; el run previo `44475902700` había fallado solo por `seed --dry-run` leyendo `ca.pem`, ya corregido) |
 | Docker | `docker compose down` exit 0; `ps -a` solo `dazzling_edison` (ajeno) |
 
 ## 6. Pendientes para el CTO/Lino (antes de G-12)
