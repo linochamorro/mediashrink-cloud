@@ -9,10 +9,10 @@
 import { PRESET_VALUES, type Preset } from '../contracts/index';
 import { assertOpaqueId } from '../db/keys';
 
-/** Imagen a procesar. Los bytes viajan en base64 dentro del cuerpo del mensaje. */
+/** Imagen a procesar. Los bytes viajan en base64 en mensajes pequeños; en lotes grandes se omiten para no exceder los 256 KiB de SQS. */
 export interface JobImagePayload {
   readonly imageId: string;
-  readonly contentBase64: string;
+  readonly contentBase64?: string;
   readonly mimeType?: string;
   readonly filename?: string;
   readonly preset?: Preset;
@@ -112,9 +112,14 @@ export function parseJobQueueMessage(body: string | undefined): JobQueueMessage 
     if (rawPreset !== undefined && !PRESET_VALUES.includes(rawPreset as Preset)) {
       throw new MessageParseError('preset no es uno de los permitidos');
     }
+    const rawContent = image.contentBase64;
+    const content =
+      rawContent !== undefined && rawContent !== null && rawContent !== ''
+        ? base64(rawContent)
+        : undefined;
     return {
       imageId,
-      contentBase64: base64(image.contentBase64),
+      ...(content === undefined ? {} : { contentBase64: content }),
       ...(mimeType === undefined ? {} : { mimeType }),
       ...(filename === undefined ? {} : { filename }),
       ...(rawPreset === undefined ? {} : { preset: rawPreset as Preset }),

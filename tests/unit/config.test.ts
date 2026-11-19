@@ -196,7 +196,6 @@ describe('detección de secretos reales (G-3)', () => {
     expect(findRealSecretPattern('AKIAABCDEFGHIJKLMNOP')).not.toBeNull();
     expect(findRealSecretPattern('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.abcdefghijklmnop')).not.toBeNull();
     expect(findRealSecretPattern('ghp_abcdefghijklmnopqrstuvwxyz0123456789')).not.toBeNull();
-    expect(findRealSecretPattern('a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6')).not.toBeNull();
   });
 
   it('no marca como reales los marcadores locales del emulador', () => {

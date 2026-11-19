@@ -133,7 +133,25 @@ export function createS3EnrichedPublisher(options: S3EnrichedPublisherOptions): 
         jobId: message.jobId,
         images,
       };
-      await options.delegate.publishJob(envelope);
+
+      const serialized = JSON.stringify(envelope);
+      if (Buffer.byteLength(serialized, 'utf8') > 200_000) {
+        // Excede el límite de SQS (256 KiB): se envía sobre ligero sin contentBase64.
+        // El consumidor leerá directamente los objetos de S3 raw (Claim Check Pattern).
+        const lightEnvelope: JobQueueMessage = {
+          userId: message.userId,
+          jobId: message.jobId,
+          images: images.map(({ imageId, preset, mimeType, filename }) => ({
+            imageId,
+            ...(preset === undefined ? {} : { preset }),
+            ...(mimeType === undefined ? {} : { mimeType }),
+            ...(filename === undefined ? {} : { filename }),
+          })),
+        };
+        await options.delegate.publishJob(lightEnvelope);
+      } else {
+        await options.delegate.publishJob(envelope);
+      }
     },
   };
 }

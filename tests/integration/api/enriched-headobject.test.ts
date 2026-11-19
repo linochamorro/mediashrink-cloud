@@ -82,7 +82,7 @@ describe('F05-T02 — HeadObject en raw para bytesBefore', () => {
 
     const envelope = captured[0];
     expect(envelope).toBeDefined();
-    const decoded = Buffer.from(envelope!.images[0]!.contentBase64, 'base64');
+    const decoded = Buffer.from(envelope!.images[0]!.contentBase64!, 'base64');
     expect(decoded.byteLength).toBe(head.ContentLength);
     expect(decoded.byteLength).not.toBe(declaredBytes);
   });

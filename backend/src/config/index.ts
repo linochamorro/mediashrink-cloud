@@ -31,7 +31,7 @@ export interface AppConfig {
     accessTtlSeconds: number;
     refreshTtlSeconds: number;
   };
-  rateLimit: { authMax: number; authWindowMs: number };
+  rateLimit: { authMax: number; authWindowMs: number; apiMax: number };
   aws: {
     region: string;
     endpointUrl: string;
@@ -68,6 +68,7 @@ export const ALL_ENV_KEYS: readonly string[] = [
   'JWT_REFRESH_TTL',
   'RATE_LIMIT_AUTH_MAX',
   'RATE_LIMIT_AUTH_WINDOW_MS',
+  'RATE_LIMIT_API_MAX',
   'AWS_REGION',
   'AWS_ENDPOINT_URL',
   'AWS_SHARED_CREDENTIALS_FILE',
@@ -111,8 +112,9 @@ const REAL_SECRET_PATTERNS: ReadonlyArray<readonly [RegExp, string]> = [
   [/^ASIA[0-9A-Z]{16}$/, 'AWS Access Key ID temporal'],
   [/^eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/, 'JWT'],
   [/^(?:ghp|gho|ghu|ghs|ghr|github_pat)_[A-Za-z0-9_]{20,}$/, 'token de GitHub'],
-  [/^[A-Fa-f0-9]{32,}$/, 'cadena hexadecimal larga'],
-  [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z0-9+/=_-]{24,}$/, 'secreto aleatorio largo'],
+  // Nota M-02: los patrones amplios de hex/base64 se retiran para no generar
+  // falsos positivos con secretos locales aleatorios de 32+ caracteres. Solo se
+  // detectan formatos evidentes de credenciales cloud/CI (AWS, JWT, GitHub).
 ];
 
 type EnvSource = Readonly<Record<string, string | undefined>>;
@@ -317,6 +319,7 @@ export function loadConfig(env: EnvSource = process.env): AppConfig {
     rateLimit: {
       authMax: readPositiveInt(env, 'RATE_LIMIT_AUTH_MAX', 5),
       authWindowMs: readPositiveInt(env, 'RATE_LIMIT_AUTH_WINDOW_MS', 60_000),
+      apiMax: readPositiveInt(env, 'RATE_LIMIT_API_MAX', 120),
     },
     aws: {
       region: readString(env, 'AWS_REGION', 'us-east-1'),

@@ -1,6 +1,6 @@
 import type { ImageRecord, Job, Preset } from './types.generated';
 
-export type JobUploadRequest = { preset: Preset; files: Array<{ fileName: string; contentType: string; sizeBytes: number }> };
+export type JobUploadRequest = { preset: Preset; name?: string; files: Array<{ fileName: string; contentType: string; sizeBytes: number }> };
 export type JobUploadPlan = { job: Job; uploads: Array<{ imageId: string; uploadUrl: string; method: 'PUT'; headers?: Record<string, string> }> };
 export type DownloadVariant = 'original' | 'webp' | 'avif' | 'thumbnail';
 export type DownloadLink = { downloadUrl: string; expiresAt: string };
@@ -68,6 +68,16 @@ function isValidUploadPlan(value: unknown): value is JobUploadPlan {
   return plan.job !== undefined && Array.isArray(plan.uploads);
 }
 
+export function resolveDevStorageUrl(url: string): string {
+  if (url.startsWith('https://127.0.0.1:9297/')) {
+    return `/__s3_local/${url.slice('https://127.0.0.1:9297/'.length)}`;
+  }
+  if (url.startsWith('https://localhost:9297/')) {
+    return `/__s3_local/${url.slice('https://localhost:9297/'.length)}`;
+  }
+  return url;
+}
+
 export function createJobsClient(baseUrl = '', fetcher: Fetcher = fetch, options: JobsClientOptions = {}) {
   const validate = (url: string) => validateSecureUrl(url, options.allowedStorageHosts);
   async function json<T>(path: string, token: string, init: RequestInit = {}): Promise<T> {
@@ -84,14 +94,14 @@ export function createJobsClient(baseUrl = '', fetcher: Fetcher = fetch, options
       for (const upload of plan.uploads) validate(upload.uploadUrl);
       return plan;
     },
-    upload: async (uploadUrl: string, file: Blob, headers: Record<string, string> = {}) => fetcher(validate(uploadUrl), { method: 'PUT', headers, body: file }),
+    upload: async (uploadUrl: string, file: Blob, headers: Record<string, string> = {}) => fetcher(resolveDevStorageUrl(validate(uploadUrl)), { method: 'PUT', headers, body: file }),
     confirm: (token: string, jobId: string, imageIds: string[]) => json<{ job: Job }>(`/jobs/${encodeURIComponent(jobId)}/confirm`, token, { method: 'POST', body: JSON.stringify({ imageIds }) }),
     get: (token: string, jobId: string) => json<{ job: Job; images: ImageRecord[] }>(`/jobs/${encodeURIComponent(jobId)}`, token),
     download: async (token: string, jobId: string, imageId: string, variant: DownloadVariant) => {
       const link: unknown = await json<DownloadLink>(`/jobs/${encodeURIComponent(jobId)}/download/${encodeURIComponent(imageId)}?variant=${variant}`, token);
       if (typeof link !== 'object' || link === null || typeof (link as DownloadLink).downloadUrl !== 'string')
         throw new Error('La API devolvió un enlace de descarga no válido.');
-      return { ...(link as DownloadLink), downloadUrl: validate((link as DownloadLink).downloadUrl) };
+      return { ...(link as DownloadLink), downloadUrl: resolveDevStorageUrl(validate((link as DownloadLink).downloadUrl)) };
     },
     zip: async (token: string, jobId: string) => {
       const response = await fetcher(`${baseUrl}/jobs/${encodeURIComponent(jobId)}/download.zip`, { headers: { authorization: `Bearer ${token}` } });

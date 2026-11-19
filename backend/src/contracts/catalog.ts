@@ -234,6 +234,7 @@ export const CATALOG = {
     fields: {
       jobId: { type: NON_EMPTY },
       userId: { type: NON_EMPTY },
+      name: { type: { type: 'string', max: 80 } as const, optional: true },
       status: { type: { type: 'enum', values: JOB_STATUS_VALUES } },
       preset: { type: { type: 'enum', values: PRESET_VALUES } },
       formats: {

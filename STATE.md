@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |---|---|
-| **Última actualización** | `2026-11-19 00:53 (H-01 Opción A + verificación seguridad + push avances autorizados; G-12 retenido)` |
+| **Última actualización** | `2026-11-19 05:32 (F05-H01 PASSED + push G-6 b95137c + CI verde; listo para pruebas manuales de Lino)` |
 | **Estructura del proyecto** | `Canónica completa` (`frontend/` + `backend/` + `infra/terraform/`) |
-| **Fase actual** | `Fase Final — H-01 (seed→mediashrink-jobs) + verificación seguridad defensiva + push avances (G-12 retenido)` |
-| **Estado de retorno** | **`H-01 OPCIÓN A AUTORIZADA` · push de mejoras autorizado (`G-6`) · cierre final `G-12` RETENIDO hasta pruebas manuales de Lino** |
-| **Única tarea o bloque autorizado** | `Corregir H-01 bajo TDD + auditoría/hardening seguridad defensiva + push de avances a main (SIN declarar cierre G-12)` |
-| **Último dictamen verificado** | `F05-qa-roadmap-architect.md: temporary/ borrado, 303/303 unit, 100/100 int, 7/7 capas QA, 12/12 PNG Playwright CLI, 0 secretos` |
+| **Fase actual** | `Fase Final — Pruebas manuales de Lino (manual-qa-guide-lino.md) + tracking pre-G-12` |
+| **Estado de retorno** | **`F05-H01 ACEPTADA POR CTO (PASSED)` — `ci.yml` + `infra-integration.yml` `success` en `b95137c`; `G-12` retenido** |
+| **Única tarea o bloque autorizado** | `Pruebas manuales de Lino (10 pruebas); tras ellas, cierre pre-G-12 (sharp/zod) y autorización G-12` |
+| **Último dictamen verificado** | `F05-H01-security-architect.md: logins seed 200 OK (Ana/Bruno/Carla), 310/310 unit, 102/102 int, 3 headers + 1 MiB cap, CI verde` |
 | **Harness en curso** | `OpenCode → CTO (Atenea)` |
 | **Gate Git (G-6) y archivos IA en GitHub (G-6b)** | `Git: Autorizado desde Fase 0 (repo público 'mediashrink-cloud') · Archivos agentes/IA en GitHub: Permitidos (G-6b abierto)` |
 | **Otros gates abiertos** | `G-2 (F00 autorizada) · G-3 (.env.example) · G-4 (BD en emulador para F01) · G-8 (dependencias F00) · G-11 (borrado temporary/ en F05) · G-12 (publicación final) · G-7 Docker: Autorizado con límite --memory=2g --cpus="2.0"` |

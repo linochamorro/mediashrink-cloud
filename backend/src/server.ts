@@ -10,10 +10,11 @@
  * Terraform debe haber aplicado la infraestructura antes de arrancar.
  */
 
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { loadConfig } from './config/index';
+import { loadConfig, parseEnvFile } from './config/index';
 import { createDynamoDbDocumentClientFromConfig } from './db/client';
 import { createJobStore } from './db/job-store';
 import { createDynamoUserStore } from './db/user-store-adapter';
@@ -24,12 +25,30 @@ import { drainQueue, type ConsumeDependencies } from './worker/consumer';
 
 const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 
+/** Carga .env de la raíz del proyecto (o del cwd) antes de validar config (M-01). */
+function loadDotEnv(): void {
+  const candidates = [
+    resolve(process.cwd(), '.env'),
+    resolve(process.cwd(), '..', '.env'),
+    resolve(fileURLToPath(new URL('.', import.meta.url)), '..', '..', '.env'),
+  ];
+  for (const candidate of candidates) {
+    if (!existsSync(candidate)) continue;
+    const parsed = parseEnvFile(readFileSync(candidate, 'utf8'));
+    for (const [key, value] of Object.entries(parsed)) {
+      if (process.env[key] === undefined) process.env[key] = value;
+    }
+    break;
+  }
+}
+
 function log(event: string, detail: Record<string, string | number> = {}): void {
   // Sin secretos ni rutas absolutas en logs (G-3 / P4): solo eventos y cifras.
   process.stdout.write(`${event} ${JSON.stringify(detail)}\n`);
 }
 
 export async function startRuntime(): Promise<() => Promise<void>> {
+  loadDotEnv();
   const config = loadConfig();
   const documentClient = createDynamoDbDocumentClientFromConfig(config);
   const sqs = createSqsClientFromConfig(config);

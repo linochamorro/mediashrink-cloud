@@ -1,7 +1,7 @@
 /**
  * ARCHIVO GENERADO — NO EDITAR A MANO.
  * Fuente canónica: <PROJECT_ROOT>/backend/src/contracts/catalog.ts
- * Contratos v1.0.0 · hash SHA-256 del catálogo: 5d0082f8d97e0329862739123b7599c75ff7261834430039fa6e815bf68d626d
+ * Contratos v1.0.0 · hash SHA-256 del catálogo: 110ddd82b9fcacc0afb95eedd53c50575bdf4813fcd363c0e5d089e299af0c2d
  * Regenerar: npm run generate:types --workspace=@mediashrink/backend
  */
 
@@ -68,6 +68,7 @@ export type JobMetrics = {
 export type Job = {
   jobId: string;
   userId: string;
+  name?: string;
   status: "PENDING" | "PROCESSING" | "COMPLETED" | "PARTIAL" | "FAILED";
   preset: "HIGH" | "BALANCED" | "MAX_COMPRESSION";
   formats: Array<"webp" | "avif">;

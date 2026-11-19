@@ -13,6 +13,7 @@
  * del almacén (`putImage`) antes de actualizarlo.
  */
 
+import { GetObjectCommand, type S3Client } from '@aws-sdk/client-s3';
 import {
   DeleteMessageCommand,
   ReceiveMessageCommand,
@@ -24,6 +25,7 @@ import type { AppConfig } from '../config/index';
 import type { JobMetrics, JobStatus } from '../contracts/index';
 import { ALLOWED_TRANSITIONS, computeSavings, nextStatus, resolveBatchStatus } from '../domain/index';
 import type { JobStore } from '../db/index';
+import { createS3ClientFromConfig } from '../storage/client';
 import {
   createObjectAccessServiceFromConfig,
   type OptimizedObjectWriter,
@@ -147,6 +149,8 @@ export async function handleJobMessage(
   const { userId, jobId } = message;
   let objects = deps.objects;
   const getObjects = () => (objects ??= createObjectAccessServiceFromConfig(deps.config));
+  let s3Client: S3Client | undefined;
+  const getS3 = () => (s3Client ??= createS3ClientFromConfig(deps.config));
 
   // A-01: la máquina de estados congelada decide. Un job terminal nunca se reabre.
   const currentJob = await deps.jobs.getJob(userId, jobId);
@@ -174,7 +178,19 @@ export async function handleJobMessage(
       ...(image.filename === undefined ? {} : { filename: image.filename }),
       ...(image.preset === undefined ? {} : { preset: image.preset }),
     };
-    const bytes = Buffer.from(image.contentBase64, 'base64');
+    let bytes: Buffer;
+    if (image.contentBase64 !== undefined && image.contentBase64 !== '') {
+      bytes = Buffer.from(image.contentBase64, 'base64');
+    } else {
+      const rawBucket = deps.config.resources.s3BucketRaw;
+      const rawKey = `${userId}/${jobId}/raw/${image.imageId}`;
+      const s3 = getS3();
+      const object = await s3.send(new GetObjectCommand({ Bucket: rawBucket, Key: rawKey }));
+      if (object.Body === undefined) {
+        throw new Error(`Objeto S3 raw no disponible: ${rawKey}`);
+      }
+      bytes = Buffer.from(await object.Body.transformToByteArray());
+    }
 
     let attempt = 0;
     let success: Extract<ProcessImageResult, { ok: true }> | undefined;

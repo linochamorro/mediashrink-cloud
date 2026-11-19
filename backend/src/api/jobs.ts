@@ -54,6 +54,7 @@ interface NewFile {
 interface CreateJobInput {
   preset: Preset;
   files: NewFile[];
+  name?: string;
 }
 
 export interface JobUploadPlanItem {
@@ -68,7 +69,7 @@ export interface CreateJobResponse {
   uploads: JobUploadPlanItem[];
 }
 
-const BODY_KEYS = new Set(['preset', 'files']);
+const BODY_KEYS = new Set(['preset', 'files', 'name']);
 const FILE_KEYS = new Set(['fileName', 'contentType', 'sizeBytes']);
 /** MIME raster permitidos (D-11/IN-10): SVG, GIF y no-raster se rechazan. */
 const ALLOWED_CONTENT_TYPES = new Set([
@@ -106,6 +107,18 @@ function parseCreateBody(raw: unknown, config: AppConfig): CreateJobInput | null
 
   const preset = parseWith<Preset>(schemas.Preset, body.preset);
   if (preset === null) return null;
+
+  let name: string | undefined;
+  if (body.name !== undefined) {
+    if (typeof body.name !== 'string') return null;
+    const trimmed = body.name.trim();
+    if (trimmed.length === 0) {
+      name = undefined;
+    } else {
+      if (trimmed.length > 80) return null;
+      name = trimmed;
+    }
+  }
   if (!Array.isArray(body.files)) return null;
   if (body.files.length < 1 || body.files.length > config.limits.maxImagesPerBatch) return null;
 
@@ -139,7 +152,7 @@ function parseCreateBody(raw: unknown, config: AppConfig): CreateJobInput | null
     files.push({ fileName: item.fileName, contentType: item.contentType, sizeBytes });
   }
 
-  return { preset, files };
+  return { preset, files, ...(name === undefined ? {} : { name }) };
 }
 
 /**
@@ -207,6 +220,7 @@ export function mountJobsRoutes(app: Hono, deps: JobsRoutesDeps): Hono {
         jobId,
         userId,
         status: 'PENDING',
+        ...(input.name === undefined ? {} : { name: input.name }),
         preset: input.preset,
         formats: ['webp', 'avif'],
         // Sin medición real todavía: el contrato congelado exige coherencia
