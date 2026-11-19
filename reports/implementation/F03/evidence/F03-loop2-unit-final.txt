@@ -3,7 +3,7 @@
 > vitest run tests/unit
 
 
- RUN  v2.1.9 D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud
+ RUN  v2.1.9 <PROJECT_ROOT>
 
  ✓ tests/unit/config.test.ts (35 tests) 78ms
  ✓ tests/unit/frontend/core.test.ts (11 tests) 48ms

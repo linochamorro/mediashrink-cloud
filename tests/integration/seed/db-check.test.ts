@@ -2,7 +2,8 @@
  * F01-T04 — verificación independiente del contenido sembrado en el emulador.
  * Cuenta los ítems USER/JOB/IMAGE directamente en DynamoDB y lo registra en
  * consola para la evidencia `F01-T04-db-check.txt`.
- * Tabla propia para poder ejecutarse en paralelo con el resto de la suite.
+ * Tabla propia de este archivo, derivada del `DYNAMODB_TABLE_JOBS` configurado
+ * (F05-H01), para poder ejecutarse en paralelo con el resto de la suite.
  */
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
@@ -16,12 +17,11 @@ import {
   ensureSeedTable,
   readSeedUser,
   runSeed,
-  SEED_TABLE_NAME,
 } from '../../../tools/scripts/seed/index';
 import { seedTestEnv } from './helpers';
 
-const TABLE = `${SEED_TABLE_NAME}-dbcheck`;
 const config = loadConfig(seedTestEnv());
+const TABLE = `${config.resources.dynamodbTableJobs}-dbcheck`;
 const client = createDynamoDbDocumentClientFromConfig(config);
 const plan = buildSeedPlan();
 

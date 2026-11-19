@@ -16,7 +16,7 @@ Integrar `frontend/`, `backend/` (`createApiApp()` + servidor/worker local en `b
 - **G-11 (Borrado físico de `temporary/`) y G-12 (Publicación final):** **PENDIENTES** de autorización expresa de Lino tras `F05-T03`/`F05-T04`.
 
 ## 3. Ámbito de archivos
-Único harness activo en `F05`: acceso controlado a todo el repositorio `mediashrink-cloud` (`frontend/`, `backend/`, `infra/terraform/`, `.github/workflows/`, `tests/`, `docs/`, `README.md`, `reports/`, `STATE.md`, `docs/sdd/tasks.md`). Prohibido tocar archivos fuera de `D:\Projects\Bluemind_Lab\projects\portfolio\mediashrink-cloud`.
+Único harness activo en `F05`: acceso controlado a todo el repositorio `mediashrink-cloud` (`frontend/`, `backend/`, `infra/terraform/`, `.github/workflows/`, `tests/`, `docs/`, `README.md`, `reports/`, `STATE.md`, `docs/sdd/tasks.md`). Prohibido tocar archivos fuera de `<PROJECT_ROOT>`.
 
 ## 4. Tareas de la fase
 | ID | Tarea | Depende de | Rol | Riesgo | Criterios |

@@ -19,7 +19,7 @@ Error: F03 webServer rejected teardown (HTTP 404)
   23 |     });
   24 |   });
   25 |   req.once('timeout', () => req.destroy(new Error('F03 webServer shutdown request timed out')));
-    at IncomingMessage.<anonymous> (D:\Projects\Bluemind_Lab\projects\portfolio\mediashrink-cloud\tests\e2e\global-teardown.mjs:22:19)
+    at IncomingMessage.<anonymous> (<PROJECT_ROOT>\tests\e2e\global-teardown.mjs:22:19)
 POST-RUN CHECK
 LISTENER_AFTER=ABSENT (Get-NetTCPConnection, port 48585)
 ENDPOINT_AFTER=HTTP 404 (POST /__f03_internal/shutdown; no server listening)

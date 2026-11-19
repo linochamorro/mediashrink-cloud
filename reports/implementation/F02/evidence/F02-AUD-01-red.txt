@@ -1,5 +1,5 @@
 
-[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
 
  [31mÔØ»[39m tests/unit/api/jobs-contract.test.ts [2m([22m[2m9 tests[22m[2m | [22m[31m7 failed[39m[2m)[22m[33m 1037[2mms[22m[39m
 [31m   [31m├ù[31m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22m201 devuelve job PENDING y uploads con imageId seguro, URL HTTPS PUT y sin bucket/key[90m 91[2mms[22m[31m[39m

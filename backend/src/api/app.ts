@@ -25,6 +25,7 @@ import { mountDownloadRoutes } from './download';
 import { mountJobsRoutes } from './jobs';
 import { mountPresignRoutes } from './presign';
 import type { JobQueuePublisher } from './publisher';
+import { jsonBodyLimit, securityHeaders } from './security';
 import {
   createObjectAccessServiceFromConfig,
   createPresignServiceFromConfig,
@@ -104,6 +105,11 @@ export function createApiApp(deps: ApiAppDeps): Hono {
     : publisher;
 
   const app = new Hono();
+
+  // F05-H01: hardening defensivo global (cabeceras + tope de body 1 MiB con
+  // 413). Van primero para cubrir todas las rutas y todos los errores.
+  app.use('*', securityHeaders);
+  app.use('*', jsonBodyLimit);
 
   // T03-A-01: la clave de /auth nunca sale de x-forwarded-for/x-real-ip.
   app.use('/auth/*', async (_c, next) => withPrincipal(ANONYMOUS_PRINCIPAL, () => next()));

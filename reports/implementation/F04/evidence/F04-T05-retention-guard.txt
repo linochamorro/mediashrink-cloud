@@ -3,7 +3,7 @@ UTC: 2026-11-18T13:11:33.8916807Z
 COMMAND: npx vitest run tests/integration/infra/retention-guard.test.ts
 --- OUTPUT ---
 
-[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
 
 [90mstdout[2m | tests/integration/infra/retention-guard.test.ts[2m > [22m[2mretention_days=30 coincide en Terraform, .env.example y el cat├ílogo congelado
 [22m[39mRETENTION_GUARD: {"EXPECTED_DAYS":30,"EXPECTED_TTL_SECONDS":2592000,"ENV_RETENTION_DAYS":30,"CATALOG_RETENTION_DAYS":30,"CATALOG_TTL_SECONDS":2592000,"TF_DEFAULT_RETENTION_DAYS":30,"TF_APPLIED_RETENTION_DAYS":30,"TF_APPLIED_TTL_SECONDS":2592000}

@@ -1,0 +1,42 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [31mÔØ»[39m tests/integration/seed/db-check.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 423[2mms[22m[39m
+ [31mÔØ»[39m tests/integration/seed/idempotence.test.ts [2m([22m[2m7 tests[22m[2m | [22m[33m7 skipped[39m[2m)[22m[33m 450[2mms[22m[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Suites 2 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/integration/seed/db-check.test.ts > F01-T04 ÔÇö comprobaci├│n del estado en DynamoDB
+ FAIL  tests/integration/seed/db-check.test.ts > F01-T04 ÔÇö comprobaci├│n del estado en DynamoDB
+ FAIL  tests/integration/seed/idempotence.test.ts > F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)
+ FAIL  tests/integration/seed/idempotence.test.ts > F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)
+Error: connect ECONNREFUSED 127.0.0.1:9297
+[2m Test Files [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/4]ÔÄ»
+
+[2m      Tests [22m [33m8 skipped[39m[90m (8)[39m
+[2m   Start at [22m 01:37:34
+[2m   Duration [22m 1.92s[2m (transform 438ms, setup 0ms, collect 1.58s, tests 872ms, environment 0ms, prepare 462ms)[22m
+
+EXIT=1
+---REINTENTO TRAS REARRANQUE DEL EMULADOR (el intento anterior dio ECONNREFUSED: la otra sesion habia hecho down)---
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+[90mstdout[2m | tests/integration/seed/db-check.test.ts[2m > [22m[2mF01-T04 ÔÇö comprobaci├│n del estado en DynamoDB[2m > [22m[2mel emulador contiene exactamente 3 usuarios, 3 jobs y 6 im├ígenes
+[22m[39mDB-CHECK tabla=mediashrink-jobs-dbcheck usuarios=3 jobs=3 imagenes=6 total=12
+
+ [32mÔ£ô[39m tests/integration/seed/db-check.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 7141[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/seed/idempotence.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 10015[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22m--dry-run no escribe nada en el emulador [33m732[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mcrea usuarios con hash scrypt de T03 e im├ígenes sint├®ticas reales [33m967[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22muna segunda ejecuci├│n no duplica usuarios ni ├¡tems [33m680[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mF05-H01-loop2 ÔÇö tras runSeed, findByEmail resuelve cada cuenta demo (├¡ndice USER#EMAIL) [33m721[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mrecupera un lote sembrado a medias sin duplicar usuarios ni jobs [33m690[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m8 passed[39m[22m[90m (8)[39m
+[2m   Start at [22m 01:38:09
+[2m   Duration [22m 11.40s[2m (transform 459ms, setup 0ms, collect 1.46s, tests 17.16s, environment 1ms, prepare 412ms)[22m
+
+EXIT=0

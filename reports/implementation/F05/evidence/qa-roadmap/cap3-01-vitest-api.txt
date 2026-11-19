@@ -1,0 +1,37 @@
+== CAPA 3 / Comando 1: npx vitest run tests/integration/api (POST /jobs, presigned PUT/GET, confirm idempotente, ZIP+413, DELETE)
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ✓ tests/integration/api/jobs-contract.test.ts (3 tests) 6964ms
+   ✓ F02-AUD-01 — POST /jobs: URLs PUT firmadas y subida real a raw (aws-emulator) > 201 con uploads; la PUT real deja cada objeto bajo raw/<userId>/<jobId>/<imageId> 332ms
+ ✓ tests/integration/api/presign.test.ts (5 tests) 7416ms
+   ✓ Presigned URLs S3 reales en aws-emulator (CA-02) > PUT presignado sube un fixture 100x100 a raw y el objeto es verificable 451ms
+ ✓ tests/integration/api/routes.test.ts (6 tests) 7479ms
+   ✓ rutas /jobs con DynamoDB real en aws-emulator (CA-01) > registro, creación, listado y detalle respetan el userId del JWT 351ms
+ ✓ tests/integration/api/download.test.ts (4 tests) 7944ms
+   ✓ Descarga/ZIP/borrado reales en aws-emulator (CA-05) > descarga individual: la URL firmada devuelve los bytes reales de cada variante 663ms
+   ✓ Descarga/ZIP/borrado reales en aws-emulator (CA-05) > ZIP: contiene WebP + AVIF + miniaturas reales del lote 361ms
+   ✓ Descarga/ZIP/borrado reales en aws-emulator (CA-05) > DELETE: elimina raw + optimized y la fila DynamoDB; repetir da 404 426ms
+ ✓ tests/integration/api/userstore.test.ts (3 tests) 6203ms
+ ✓ tests/integration/api/enriched-headobject.test.ts (3 tests) 19774ms
+   ✓ F05-T02 — HeadObject en raw para bytesBefore > el publicador enriquecido consulta HeadObject y el sobre lleva los bytes reales, no el declarado 6761ms
+   ✓ F05-T02 — HeadObject en raw para bytesBefore > un sobre declarado distinto al objeto persistido conserva bytesBefore real en DynamoDB 6703ms
+   ✓ F05-T02 — HeadObject en raw para bytesBefore > falla cerrado si HeadObject y GetObject divergen en el tamaño 6308ms
+ ✓ tests/integration/api/e2e-persist.test.ts (3 tests) 21189ms
+   ✓ F02-T06 loop 2 — variantes persistidas y métricas ancladas a S3 (A-01) > las 3 variantes existen en optimized y suma(HeadObject.ContentLength) === job.bytesAfter 7373ms
+   ✓ F02-T06 loop 2 — variantes persistidas y métricas ancladas a S3 (A-01) > GET /jobs/:id/download/:imageId devuelve los bytes exactos de cada objeto persistido 6947ms
+   ✓ F02-T06 loop 2 — variantes persistidas y métricas ancladas a S3 (A-01) > GET /jobs/:id/download.zip contiene WebP, AVIF y miniatura idénticos a los objetos persistidos 6867ms
+ ✓ tests/integration/api/e2e-metrics.test.ts (5 tests) 34378ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > flujo completo: los bytes persistidos son los reales de S3, con savingsPct exacto y exifStripped real 7428ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > exifStripped: true solo después de verificar que las tres salidas no contienen metadatos 6721ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > estados coherentes: una imagen FAILED produce PARTIAL y todas FAILED producen FAILED 6975ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > observabilidad: dlqFailures y dlqDeliveryFailed se aíslan y skippedAsDuplicate se reporta 6832ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > CONFIRM_INCONSISTENT: política at-most-once, sin reparación automática 6421ms
+
+ Test Files  8 passed (8)
+      Tests  32 passed (32)
+   Start at  22:11:38
+   Duration  37.19s (transform 3.83s, setup 0ms, collect 14.37s, tests 111.35s, environment 3ms, prepare 2.04s)
+
+
+EXIT_CODE=0

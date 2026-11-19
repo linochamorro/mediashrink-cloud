@@ -1,0 +1,163 @@
+ echo '=== TYPECHECK ==='; npm run typecheck 2>&1; echo "TYPECHECK_EXIT=$?"; echo '=== LINT ==='; npm run lint 2>&1; echo "LINT_EXIT=$?"; echo '=== BUILD ==='; npm run build 2>&1; echo "BUILD_EXIT=$?"; 
+
+> mediashrink-cloud@0.0.0 typecheck
+> tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json
+
+TYPECHECK_EXIT=0
+
+> mediashrink-cloud@0.0.0 lint
+> eslint . --ext .ts,.tsx
+
+LINT_EXIT=0
+
+> mediashrink-cloud@0.0.0 build
+> npm run build --workspace=@mediashrink/frontend && npm run build --workspace=@mediashrink/backend
+
+
+> @mediashrink/frontend@0.0.0 build
+> vite build
+
+[36mvite v5.4.21 [32mbuilding for production...[36m[39m
+transforming...
+[32mÔ£ô[39m 35 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                 [39m[1m[2m  0.60 kB[22m[1m[22m[2m Ôöé gzip:  0.38 kB[22m
+[2mdist/[22m[35massets/index-q1UhD0F4.css  [39m[1m[2m 11.18 kB[22m[1m[22m[2m Ôöé gzip:  3.08 kB[22m
+[2mdist/[22m[36massets/index-DOrZLUKZ.js   [39m[1m[2m162.93 kB[22m[1m[22m[2m Ôöé gzip: 52.80 kB[22m
+[32mÔ£ô built in 1.32s[39m
+
+> @mediashrink/backend@0.0.0 build
+> tsc --noEmit -p tsconfig.json
+
+BUILD_EXIT=0
+
+> mediashrink-cloud@0.0.0 test:unit
+> vitest run tests/unit
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/frontend/secure-url.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 38[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/config.test.ts [2m([22m[2m37 tests[22m[2m)[22m[90m 54[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/frontend/core.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 39[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/imageHeader.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/contracts.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 63[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/userstore.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 351[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mAuthService registra y hace login sobre el adaptador DynamoDB [33m329[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/service.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1205[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mdevuelve el mismo error para correo desconocido y contrase├▒a incorrecta [33m423[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 759[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/download.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 969[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 971[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/routes.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1072[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/stateMachine.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 17[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/jwt.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 77[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/antiBomb.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/antiBomb.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 60[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/processImage.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 134[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-routes.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1183[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/jobs-contract.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 3123[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22macepta todos los MIME raster permitidos y rechaza SVG/GIF/no-raster [33m1230[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22mvalida fileName no vac├¡o sin separadores, NUL ni %xx (sin usarlo en la clave) [33m1152[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-keys.test.ts [2m([22m[2m30 tests[22m[2m)[22m[90m 21[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/authz.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 966[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/savings.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 12[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/security-headers.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 358[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1097[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22m/auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 [33m338[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip-cap.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 531[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete-partial.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 398[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/confirm.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 417[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/guards.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/frontend.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/middleware.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/password.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 899[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/health.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+(node:15604) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ [32mÔ£ô[39m tests/unit/seed-table.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 4370[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-H01 ÔÇö el seed escribe en DYNAMODB_TABLE_JOBS (RED)[2m > [22mel informe --dry-run nombra mediashrink-jobs como tabla destino [33m2249[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-H01 ÔÇö el seed escribe en DYNAMODB_TABLE_JOBS (RED)[2m > [22mel informe --dry-run no menciona la tabla ef├¡mera legada [33m1937[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m34 passed[39m[22m[90m (34)[39m
+[2m      Tests [22m [1m[32m310 passed[39m[22m[90m (310)[39m
+[2m   Start at [22m 01:16:19
+[2m   Duration [22m 12.15s[2m (transform 3.05s, setup 0ms, collect 18.68s, tests 19.29s, environment 13ms, prepare 8.02s)[22m
+
+UNIT_EXIT=0
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/integration/auth/routes.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 1172[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/infra/resources.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1962[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m infra aplicada contra aws/aws-emulator[2m > [22mla pol├¡tica IAM se deriva de los recursos reales, sin comodines amplios [33m1516[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 561[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/presign.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 7072[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/download.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 7699[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Descarga/ZIP/borrado reales en aws-emulator (CA-05)[2m > [22mdescarga individual: la URL firmada devuelve los bytes reales de cada variante [33m522[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/seed/idempotence.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 9208[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22m--dry-run no escribe nada en el emulador [33m651[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mcrea usuarios con hash scrypt de T03 e im├ígenes sint├®ticas reales [33m931[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22muna segunda ejecuci├│n no duplica usuarios ni ├¡tems [33m681[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mrecupera un lote sembrado a medias sin duplicar usuarios ni jobs [33m713[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/db/job-store.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 6483[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/observability.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 6621[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m summarizeConsumeResult ÔÇö observabilidad E2E (CA-06)[2m > [22mexpone los tres campos de resiliencia de T04 en un snapshot serializable [33m6620[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/routes.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 6971[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/enriched-headobject.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 19875[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mel publicador enriquecido consulta HeadObject y el sobre lleva los bytes reales, no el declarado [33m6844[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mun sobre declarado distinto al objeto persistido conserva bytesBefore real en DynamoDB [33m6802[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mfalla cerrado si HeadObject y GetObject divergen en el tama├▒o [33m6227[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 240[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/db/isolation.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 6432[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/e2e-persist.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 20708[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mlas 3 variantes existen en optimized y suma(HeadObject.ContentLength) === job.bytesAfter [33m6869[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mGET /jobs/:id/download/:imageId devuelve los bytes exactos de cada objeto persistido [33m6973[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mGET /jobs/:id/download.zip contiene WebP, AVIF y miniatura id├®nticos a los objetos persistidos [33m6864[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/auth/isolation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 574[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/jobs-contract.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 6837[2mms[22m[39m
+[90mstdout[2m | tests/integration/infra/retention-guard.test.ts[2m > [22m[2mretention_days=30 coincide en Terraform, .env.example y el cat├ílogo congelado
+[22m[39mRETENTION_GUARD: {"EXPECTED_DAYS":30,"EXPECTED_TTL_SECONDS":2592000,"ENV_RETENTION_DAYS":30,"CATALOG_RETENTION_DAYS":30,"CATALOG_TTL_SECONDS":2592000,"TF_DEFAULT_RETENTION_DAYS":30,"TF_APPLIED_RETENTION_DAYS":30,"TF_APPLIED_TTL_SECONDS":2592000}
+
+ [32mÔ£ô[39m tests/integration/infra/retention-guard.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1328[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m retention_days=30 coincide en Terraform, .env.example y el cat├ílogo congelado [33m1327[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 127[2mms[22m[39m
+[90mstdout[2m | tests/integration/infra/gsi.test.ts[2m > [22m[2mDescribeTable: la tabla de jobs no declara ├¡ndices secundarios globales
+[22m[39mGSI_COUNT: 0
+
+ [32mÔ£ô[39m tests/integration/infra/gsi.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 99[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/db/ttl.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 6229[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/userstore.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 6246[2mms[22m[39m
+[90mstdout[2m | tests/integration/seed/db-check.test.ts[2m > [22m[2mF01-T04 ÔÇö comprobaci├│n del estado en DynamoDB[2m > [22m[2mel emulador contiene exactamente 3 usuarios, 3 jobs y 6 im├ígenes
+[22m[39mDB-CHECK tabla=mediashrink-jobs-dbcheck usuarios=3 jobs=3 imagenes=6 total=12
+
+ [32mÔ£ô[39m tests/integration/seed/db-check.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 7019[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/metrics-coherence.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 12294[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m m├®tricas reales y coherentes en DynamoDB (PR-12)[2m > [22m0 %: bytesBefore = bytesAfter se persiste como 0, sin redondeos ni recorte [33m6213[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m m├®tricas reales y coherentes en DynamoDB (PR-12)[2m > [22mnegativo: bytesAfter > bytesBefore se persiste tal cual (-50 %), nunca se oculta [33m6080[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/e2e-metrics.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 33981[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mflujo completo: los bytes persistidos son los reales de S3, con savingsPct exacto y exifStripped real [33m7154[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mexifStripped: true solo despu├®s de verificar que las tres salidas no contienen metadatos [33m6726[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mestados coherentes: una imagen FAILED produce PARTIAL y todas FAILED producen FAILED [33m7103[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mobservabilidad: dlqFailures y dlqDeliveryFailed se a├¡slan y skippedAsDuplicate se reporta [33m6704[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mCONFIRM_INCONSISTENT: pol├¡tica at-most-once, sin reparaci├│n autom├ítica [33m6292[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 58241[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mmensaje v├ílido: procesa, marca COMPLETED con m├®tricas y elimina el mensaje de la cola [33m7000[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintento transitorio: 2 fallos y ├®xito en el 3┬║ intento, sin DLQ [33m6462[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta) [33m6311[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mfallo parcial: imagen fallida va a DLQ y FAILED; las dem├ís del lote se completan [33m6468[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mel mensaje v├ílido se consume y elimina; no hay bucle infinito ni duplicados [33m6410[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22msiempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado [33m6388[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-01 redelivery: un job terminal no se reabre y la DLQ no se duplica [33m6402[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-02 fallo de la DLQ: se a├¡sla, se registra y el resto del lote contin├║a [33m6398[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-03 precondici├│n: el consumidor materializa el ImageRecord si falta [33m6400[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m24 passed[39m[22m[90m (24)[39m
+[2m      Tests [22m [1m[32m101 passed[39m[22m[90m (101)[39m
+[2m   Start at [22m 01:16:39
+[2m   Duration [22m 60.67s[2m (transform 2.49s, setup 0ms, collect 15.44s, tests 227.98s, environment 7ms, prepare 4.04s)[22m
+
+INT_EXIT=0

@@ -1,0 +1,25 @@
+F05-T05 — Evidencia 2/9: borrado físico de temporary/ (G-11)
+Fecha: 2026-11-18 · Rol: Tester · Loop 1/3
+Rutas anonimizadas: <PROJECT_ROOT> = raíz autorizada del proyecto.
+
+COMANDO (PowerShell, ejecutado desde <PROJECT_ROOT>):
+  $root = (Resolve-Path .).Path
+  $tmp = Join-Path $root 'temporary'
+  if (-not $tmp.StartsWith($root)) { throw 'RUTA FUERA DE RAÍZ' }
+  $before = @(Get-ChildItem -LiteralPath $tmp -Force -Recurse)
+  Write-Output "BEFORE_COUNT=$($before.Count)"
+  Remove-Item -LiteralPath $tmp -Recurse -Force -ErrorAction Stop
+  Write-Output "REMOVE_EXIT=0"
+  Write-Output "EXISTS_AFTER=$(Test-Path -LiteralPath $tmp)"
+
+SALIDA:
+  BEFORE_COUNT=73
+  REMOVE_EXIT=0
+  EXISTS_AFTER=False
+
+EXIT_CODE=0
+
+ALCANCE:
+  - Se eliminó ÚNICAMENTE <PROJECT_ROOT>\temporary (ruteo previo verificado: IS_UNDER_ROOT=True).
+  - 73 ítems borrados (67 entradas de nivel superior + 6 entradas en 2 subdirectorios; 71 archivos y 2 directorios).
+  - Sin errores (-ErrorAction Stop); ninguna otra ruta tocada.

@@ -30,7 +30,7 @@ Running 3 tests using 1 worker
       97 |   await expect(page.getByAltText('Imagen optimizada image-demo en WEBP')).toBeVisible();
       98 |   await expect.poll(() => refreshCalls).toBeGreaterThan(0);
       99 |   const individualDownload = page.waitForEvent('popup');
-        at D:\Projects\Bluemind_Lab\projects\portfolio\mediashrink-cloud\tests\e2e\frontend-flow.spec.ts:96:65
+        at <PROJECT_ROOT>\tests\e2e\frontend-flow.spec.ts:96:65
 
     Error Context: reports\implementation\F03\evidence\playwright-results\frontend-flow-registro-err-0672b-sultados-descargas-y-logout\error-context.md
 

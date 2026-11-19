@@ -1,0 +1,13 @@
+TESTER F05-H01 — APAGADO G-7 (ejecucion propia)
+Fecha: 2026-11-19 · <PROJECT_ROOT>
+
+docker compose down →
+  Container mediashrink-aws-emulator Removed → EXIT 0
+  Network <PROJECT_ROOT>_default Removed → EXIT 0
+docker ps -a → solo queda el contenedor ajeno preexistente
+  (nombre distinto de mediashrink-*, en marcha desde antes de la sesion;
+  no tocado). Ningun contenedor del proyecto.
+Puertos: https://127.0.0.1:9297/__admin/health → EXIT 7 (cerrado);
+  http://127.0.0.1:3001/health → EXIT 7 (backend detenido, cerrado).
+temporary/ → ausente (diagnosticos transitorios eliminados).
+Sin git add/commit/push (lo hace el Architect). Sin secretos en artefactos.

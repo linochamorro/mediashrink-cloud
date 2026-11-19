@@ -7,7 +7,7 @@
 | **Loop / Fecha / Entorno** | `1/3` · `2026-11-18` · inspección estática + revisión de evidencia (sin ejecución propia) |
 | **Encargo** | (1) retención 30 d ↔ TTL 2.592.000 s y desalineación futura; (2) ausencia de bucles S3→SQS y de reescritura en el mismo bucket; (3) secretos/transporte; (4) estado local y backend; (5) confinamiento a `infra/terraform/**` y Docker apagado |
 | **Frontera** | **No se emite `PASSED`/`NO-PASSED`** (compete a Tester), no se implementa, no se cierra la tarea, **no se acepta riesgo en nombre de Lino (sin G-10)**, no se usan Docker/Git/AWS |
-| **Plantilla** | `D:/Projects/Bluemind_Lab/docs/templates/problema-solucion.md` — 7 campos por hallazgo |
+| **Plantilla** | `<LAB_ROOT>/docs/templates/problema-solucion.md` — 7 campos por hallazgo |
 | **Escala** | Severidad `CRITICAL/HIGH/MEDIUM/LOW/INFO` · Evidencia `REPRODUCED/CORROBORATED/INDICATIVE` · Cobertura `SUFFICIENT/LIMITED/INSUFFICIENT` · Conclusión `READY/READY_WITH_CONCERNS/NOT_READY/INCONCLUSIVE` (METHODOLOGY §7) |
 
 ## 1. Preguntas falsificables y método
@@ -96,3 +96,14 @@
 - **G-10:** no se invocó; ningún riesgo se registra como aceptado por Lino. **No se emite dictamen funcional (`PASSED`/`NO-PASSED`).**
 
 **Recomendación al Architect:** integrar los tres concerns como seguimientos no bloqueantes; en `F04-T03` resolver la disposición de `F04T01-A-01` (guardia de coherencia `RETENTION_DAYS`/`TTL_SECONDS`/retención S3) y cerrar formalmente `T02-A-01`; verificar `F04T01-A-02` con `git ls-files` en el cierre de fase con rol autorizado; mantener la prohibición de `aws_s3_bucket_notification` como invariante en el resto de tareas de P-04.
+
+---
+
+## Addendum de anonimización P4 (F05-T02, 2026-11-18)
+
+En el marco de la tarea `F05-T02` (política P4 / G-6b) se sustituyeron las rutas
+absolutas del entorno de desarrollo por marcadores: `<PROJECT_ROOT>`,
+`<LAB_ROOT>`, `<DOCKER_CLI_DIR>`, `<TF_CLI_DIR>`, `<NPM_CACHE_DIR>` y
+`<USER_HOME>`. La sustitución fue **mecánica y exclusiva de esas rutas**: no se
+modificaron hallazgos, severidades, cifras, conclusiones ni el historial
+append-only. Este addendum conserva la trazabilidad del reemplazo.

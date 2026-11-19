@@ -1,0 +1,13 @@
+=== F05-T04 CAPTURAS REALES - TEMA OSCURO ===
+FUENTE=Playwright + Edge contra emulador + terraform apply + backend real (sin mocks)
+CANTIDAD=9
+01-portada-oscuro.png | 1440x900 | 108238 bytes | PNG_OK=true | CHUNKS=IHDR+IDAT+IEND | METADATA_CHUNKS=0
+02-acceso-oscuro.png | 938x83 | 4207 bytes | PNG_OK=true | CHUNKS=IHDR+IDAT+IEND | METADATA_CHUNKS=0
+03-subida-oscuro.png | 1014x724 | 85226 bytes | PNG_OK=true | CHUNKS=IHDR+IDAT+IEND | METADATA_CHUNKS=0
+04-progreso-oscuro.png | 938x543 | 24031 bytes | PNG_OK=true | CHUNKS=IHDR+IDAT+IEND | METADATA_CHUNKS=0
+05-comparativa-oscuro.png | 904x308 | 98779 bytes | PNG_OK=true | CHUNKS=IHDR+IDAT+IEND | METADATA_CHUNKS=0
+06-metricas-oscuro.png | 904x57 | 4879 bytes | PNG_OK=true | CHUNKS=IHDR+IDAT+IEND | METADATA_CHUNKS=0
+07-descarga-individual-oscuro.png | 296x308 | 34651 bytes | PNG_OK=true | CHUNKS=IHDR+IDAT+IEND | METADATA_CHUNKS=0
+08-zip-oscuro.png | 938x80 | 4255 bytes | PNG_OK=true | CHUNKS=IHDR+IDAT+IEND | METADATA_CHUNKS=0
+09-borrado-oscuro.png | 1014x666 | 81151 bytes | PNG_OK=true | CHUNKS=IHDR+IDAT+IEND | METADATA_CHUNKS=0
+ANONIMIZACION=0 chunks de texto/metadata; 0 rutas locales incrustadas

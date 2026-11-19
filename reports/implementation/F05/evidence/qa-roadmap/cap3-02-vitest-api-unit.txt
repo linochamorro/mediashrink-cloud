@@ -1,0 +1,28 @@
+== CAPA 3 / Comando 2: npx vitest run tests/unit/api (contratos HTTP, confirm idempotente, tope ZIP 413, DELETE, autorizacion)
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ✓ tests/unit/api/userstore.test.ts (6 tests) 343ms
+   ✓ adaptador DynamoDB de UserStore (cierra T03-A-04) > AuthService registra y hace login sobre el adaptador DynamoDB 320ms
+ ✓ tests/unit/api/delete.test.ts (5 tests) 717ms
+ ✓ tests/unit/api/download.test.ts (7 tests) 927ms
+ ✓ tests/unit/api/zip.test.ts (6 tests) 913ms
+ ✓ tests/unit/api/routes.test.ts (8 tests) 1076ms
+ ✓ tests/unit/api/presign-routes.test.ts (12 tests) 1131ms
+ ✓ tests/unit/api/presign-keys.test.ts (30 tests) 18ms
+ ✓ tests/unit/api/authz.test.ts (5 tests) 898ms
+ ✓ tests/unit/api/delete-partial.test.ts (3 tests) 336ms
+ ✓ tests/unit/api/confirm.test.ts (3 tests) 363ms
+ ✓ tests/unit/api/zip-cap.test.ts (4 tests) 446ms
+ ✓ tests/unit/api/jobs-contract.test.ts (9 tests) 2892ms
+   ✓ F02-AUD-01 — POST /jobs contrato { files } → { job, uploads } > acepta todos los MIME raster permitidos y rechaza SVG/GIF/no-raster 1169ms
+   ✓ F02-AUD-01 — POST /jobs contrato { files } → { job, uploads } > valida fileName no vacío sin separadores, NUL ni %xx (sin usarlo en la clave) 1037ms
+ ✓ tests/unit/api/rate-limit.test.ts (5 tests) 964ms
+
+ Test Files  13 passed (13)
+      Tests  103 passed (103)
+   Start at  22:12:41
+   Duration  5.22s (transform 2.28s, setup 0ms, collect 14.18s, tests 11.03s, environment 5ms, prepare 3.26s)
+
+
+EXIT_CODE=0

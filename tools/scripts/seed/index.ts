@@ -24,7 +24,6 @@ import { countAllItems, ensureSeedTable, putUserIfAbsent, type ItemCounts } from
 
 export { buildSeedPlan } from './demo-data';
 export {
-  SEED_TABLE_NAME,
   countAllItems,
   dropSeedTable,
   ensureSeedTable,

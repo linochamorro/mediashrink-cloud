@@ -1,0 +1,44 @@
+== CAPA 1 / Comando 5: terraform -chdir=infra/terraform show -json (analisis de estado; verificacion de lifecycle/SQS/DynamoDB/CORS)
+SHOW_EXIT=0
+PASS | lifecycle_raw.rule_count | rules=1
+PASS | lifecycle_raw.status_enabled | status=Enabled
+PASS | lifecycle_raw.expiration_30d | days=30
+PASS | lifecycle_raw.sin_bucle_transiciones | transition=0, noncurrent_transition=0
+PASS | lifecycle_raw.sin_expiracion_no_correntes | noncurrent_expiration=0
+PASS | cors_raw.rule_count | rules=1
+PASS | cors_raw.origen_exacto | origins=http://localhost:5173
+PASS | cors_raw.metodos_GET_PUT | methods=GET,PUT
+PASS | cors_raw.sin_comodin | wildcard=false
+PASS | lifecycle_optimized.rule_count | rules=1
+PASS | lifecycle_optimized.status_enabled | status=Enabled
+PASS | lifecycle_optimized.expiration_30d | days=30
+PASS | lifecycle_optimized.sin_bucle_transiciones | transition=0, noncurrent_transition=0
+PASS | lifecycle_optimized.sin_expiracion_no_correntes | noncurrent_expiration=0
+PASS | cors_optimized.rule_count | rules=1
+PASS | cors_optimized.origen_exacto | origins=http://localhost:5173
+PASS | cors_optimized.metodos_GET_PUT | methods=GET,PUT
+PASS | cors_optimized.sin_comodin | wildcard=false
+PASS | sqs_jobs.maxReceiveCount_3 | maxReceiveCount=3
+PASS | sqs_jobs.apunta_a_dlq | dlq_arn_presente=true
+PASS | sqs_jobs.visibility_120 | visibility=120
+PASS | sqs_dlq.existe | name=mediashrink-jobs-dlq
+PASS | dynamodb.PK_userId | hash_key=userId
+PASS | dynamodb.SK_jobId | range_key=jobId
+PASS | dynamodb.atributos_userId_jobId | attributes=jobId,userId
+PASS | dynamodb.ttl_enabled | ttl=ttl, enabled=True
+
+== Comando 6: terraform -chdir=infra/terraform output -json (salidas clave)
+OUTPUT_EXIT=0
+output s3_lifecycle_expiration_days = 30
+output sqs_max_receive_count = 3
+output dynamodb_ttl_attribute = "ttl"
+output dynamodb_ttl_seconds = 2592000
+output dynamodb_table_jobs = "mediashrink-jobs"
+output s3_bucket_raw = "mediashrink-raw-local"
+output s3_bucket_optimized = "mediashrink-optimized-local"
+output s3_cors_configuration.allowed_origins = http://localhost:5173
+output s3_cors_configuration.allowed_methods = GET,PUT
+
+TOTAL_CHECKS=26
+TOTAL_FAILS=0
+EXIT_CODE=0

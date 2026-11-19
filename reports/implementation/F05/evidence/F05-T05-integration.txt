@@ -1,0 +1,57 @@
+F05-T05 — Evidencia 8/9: npx vitest run tests/integration (sin temporary/)
+Fecha: 2026-11-18 · Rol: Tester · Loop 1/3 · Ejecutado tras el borrado de <PROJECT_ROOT>\temporary
+
+PRECONDICIONES (verificadas por Tester, G-7 con límites ya declarados en compose):
+  - $env:PATH = "D:\Programs\DevApps\Containers\Docker\Desktop\resources\bin;" + $env:PATH   (Docker CLI fuera de PATH)
+  - docker compose up -d → exit 0, contenedor mediashrink-aws-emulator healthy (imagen fijada por digest)
+  - docker cp de ca.pem / config / emulator_credentials a ./.local/aws-emulator/ → CP1/CP2/CP3_EXIT=0
+  - $tf = D:\Programs\DevApps\DevOps\Terraform\CLI\terraform.exe
+  - terraform -chdir=infra/terraform init → INIT_EXIT=0 (provider hashicorp/aws v5.100.0)
+  - terraform -chdir=infra/terraform apply -auto-approve -var=is_emulator=true con
+    AWS_ENDPOINT_URL=https://127.0.0.1:9297, AWS_CA_BUNDLE=./.local/aws-emulator/ca.pem,
+    AWS_SHARED_CREDENTIALS_FILE=./.local/aws-emulator/emulator_credentials,
+    AWS_CONFIG_FILE=./.local/aws-emulator/config, AWS_EC2_METADATA_DISABLED=true
+    → APPLY_EXIT=0 · "Apply complete! Resources: 11 added, 0 changed, 0 destroyed." (11 recursos esperados)
+
+COMANDO (PowerShell, desde <PROJECT_ROOT>, mismas variables de entorno AWS del emulador):
+  npx vitest run tests/integration
+
+SALIDA (resumen; RUN v2.1.9):
+  ✓ tests/integration/auth/routes.test.ts (9 tests) 1109ms
+  ✓ tests/integration/infra/resources.test.ts (4 tests) 6975ms
+  ✓ tests/integration/worker/publisher.test.ts (5 tests) 576ms
+  ✓ tests/integration/api/download.test.ts (4 tests) 7541ms
+  ✓ tests/integration/api/presign.test.ts (5 tests) 7622ms
+  ✓ tests/integration/db/job-store.test.ts (8 tests) 6434ms
+  ✓ tests/integration/worker/observability.test.ts (1 test) 6740ms
+  ✓ tests/integration/api/routes.test.ts (6 tests) 7168ms
+  ✓ tests/integration/api/enriched-headobject.test.ts (3 tests) 19818ms
+  ✓ tests/integration/db/isolation.test.ts (6 tests) 6402ms
+  ✓ tests/integration/api/e2e-persist.test.ts (3 tests) 21766ms
+  ✓ tests/integration/worker/metadata.test.ts (3 tests) 208ms
+  ✓ tests/integration/api/jobs-contract.test.ts (3 tests) 6759ms
+  ✓ tests/integration/seed/idempotence.test.ts (5 tests) 10370ms
+  ✓ tests/integration/auth/isolation.test.ts (4 tests) 652ms
+  ✓ tests/integration/worker/pipeline.test.ts (4 tests) 130ms
+  ✓ tests/integration/infra/retention-guard.test.ts (1 test) 1550ms
+  ✓ tests/integration/infra/gsi.test.ts (1 test) 99ms
+  ✓ tests/integration/db/ttl.test.ts (5 tests) 6220ms
+  ✓ tests/integration/api/userstore.test.ts (3 tests) 6251ms
+  ✓ tests/integration/seed/db-check.test.ts (1 test) 7047ms
+  ✓ tests/integration/worker/metrics-coherence.test.ts (2 tests) 12379ms
+  ✓ tests/integration/api/e2e-metrics.test.ts (5 tests) 34975ms
+  ✓ tests/integration/worker/consumer.test.ts (9 tests) 59476ms
+
+ Test Files  24 passed (24)
+      Tests  100 passed (100)
+   Start at  21:37:59
+   Duration  66.73s
+
+EXIT_CODE=0
+
+CIFRA: 100/100 tests en 24 archivos, exit 0.
+DISPERSIÓN DE CIFRAS (registrada sin alterar resultados): la cifra de referencia era 97/97 (F05-architect.md);
+la suite actual suma exactamente +3 tests → tests/integration/api/enriched-headobject.test.ts (3 tests),
+archivado en F05-T02 (aceptado) y presente en el árbol. 97 + 3 = 100: ningún test previo desapareció ni falló.
+tests/integration/infra/** corrió contra emulador + terraform apply reales (no mocks).
+DEPENDENCIA DE temporary/: ninguna (directorio inexistente durante la ejecución).

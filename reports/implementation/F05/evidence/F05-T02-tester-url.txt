@@ -1,0 +1,64 @@
+﻿F05-T02 - VERIFICACION INDEPENDIENTE DEL TESTER (URLs presignadas)
+Fecha: 2026-11-18 19:55:55
+
+===== FOCAL: secure-url.test.ts (verbose, 26/26) =====
+CMD: npx vitest run tests/unit/frontend/secure-url.test.ts --reporter=verbose
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö allowlist de almacenamiento > rechaza un host HTTPS ajeno cuando se pasa una allowlist expl├¡cita
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö allowlist de almacenamiento > acepta un host incluido en la allowlist expl├¡cita
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö allowlist de almacenamiento > el cliente rechaza la uploadUrl de un host ajeno antes de hacer la PUT
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö allowlist de almacenamiento > el cliente rechaza la downloadUrl de un host ajeno
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö allowlist de almacenamiento > falla de forma segura ante una respuesta de descarga malformada
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > rechaza "javascript:alert(1)" antes de cualquier uso
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > rechaza "data:text/html,<script>alert(1)</script>" antes de cualquier uso
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > rechaza "http://127.0.0.1:9297/raw/foto" antes de cualquier uso
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > rechaza "https://user:pass@127.0.0.1/raw/foto" antes de cualquier uso
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > rechaza "https://user@127.0.0.1/raw/foto" antes de cualquier uso
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > rechaza "/relative/file" antes de cualquier uso
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > rechaza "" antes de cualquier uso
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > rechaza "   " antes de cualquier uso
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > rechaza un valor no cadena undefined
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > rechaza un valor no cadena null
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > rechaza un valor no cadena 123
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > rechaza un valor no cadena {}
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > rechaza un valor no cadena true
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > acepta el loopback del emulador y los TLD reservados por defecto
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö esquema, credenciales y formas malformadas > normaliza may├║sculas y punto final del hostname
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö resoluci├│n de la allowlist por entorno > la allowlist expl├¡cita tiene prioridad sobre la variable de entorno
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö resoluci├│n de la allowlist por entorno > usa VITE_ALLOWED_STORAGE_HOSTS cuando no hay override
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö resoluci├│n de la allowlist por entorno > cae al default local si la variable est├í vac├¡a o ausente
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö fallo cerrado en el cliente > rechaza un plan de subida malformado antes de exponer las PUT
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö fallo cerrado en el cliente > rechaza una uploadUrl hostil dentro de un plan por lo dem├ís v├ílido
+ Ô£ô tests/unit/frontend/secure-url.test.ts > F03-AUD-03 ÔÇö fallo cerrado en el cliente > el ZIP no es presignado: se sirve desde la API con auth y se comprueba response.ok
+
+ Test Files  1 passed (1)
+      Tests  26 passed (26)
+   Start at  19:55:57
+   Duration  966ms (transform 283ms, setup 0ms, collect 327ms, tests 20ms, environment 0ms, prepare 208ms)
+
+
+EXIT_CODE=0
+
+===== DIAGNOSTICO PROPIO: validacion en el cliente =====
+CMD: npx tsx temporary/F05-T02-tester-diag.ts
+OK   funcion rechaza "javascript:alert(1)"
+OK   funcion rechaza "data:text/html,<script>alert(1)</script>"
+OK   funcion rechaza "http://127.0.0.1:9297/raw/foto"
+OK   funcion rechaza "https://user:pass@127.0.0.1/raw/foto"
+OK   funcion rechaza "https://user@127.0.0.1/raw/foto"
+OK   funcion rechaza "/relative/file"
+OK   funcion rechaza ""
+OK   funcion rechaza "   "
+OK   funcion rechaza host ajeno con allowlist explicita
+OK   funcion acepta allowlist positivo
+OK   cliente.upload rechaza uploadUrl hostil (promesa rechazada)
+OK   cliente.upload NO ejecuta FETCH/PUT con la URL hostil
+OK   cliente.download rechaza downloadUrl hostil
+OK   cliente.create rechaza uploadUrl hostil dentro del plan
+DIAG_RESULTS total=14 failed=0
+
+EXIT_CODE=0
+
+RESUMEN: focal=0 diagnostico=0

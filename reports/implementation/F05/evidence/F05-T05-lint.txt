@@ -1,0 +1,14 @@
+F05-T05 — Evidencia 5/9: npm run lint (sin temporary/)
+Fecha: 2026-11-18 · Rol: Tester · Loop 1/3 · Ejecutado tras el borrado de <PROJECT_ROOT>\temporary
+
+COMANDO (PowerShell, desde <PROJECT_ROOT>):
+  npm run lint
+
+SALIDA:
+> mediashrink-cloud@0.0.0 lint
+> eslint . --ext .ts,.tsx
+
+EXIT_CODE=0
+
+CIFRA: 0 hallazgos de ESLint.
+DEPENDENCIA DE temporary/: ninguna (directorio inexistente durante la ejecución).

@@ -11,7 +11,6 @@ import { existsSync, readFileSync } from 'node:fs';
 import { loadConfig, parseEnvFile, type AppConfig } from '../../../backend/src/config/index';
 import { createDynamoDbDocumentClientFromConfig } from '../../../backend/src/db/client';
 import { runSeed, type SeedSummary } from './index';
-import { SEED_TABLE_NAME } from './store';
 
 /** Valores locales del emulador: marcadores G-3, nunca credenciales reales. */
 const LOCAL_DEFAULTS: Record<string, string> = {
@@ -30,7 +29,10 @@ const LOCAL_DEFAULTS: Record<string, string> = {
   S3_BUCKET_OPTIMIZED: 'mediashrink-optimized-local',
   SQS_QUEUE_URL: 'https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs',
   SQS_DLQ_URL: 'https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq',
-  DYNAMODB_TABLE_JOBS: SEED_TABLE_NAME,
+  // F05-H01: misma default que `.env.example` (§Recursos) y que la variable
+  // `dynamodb_table_jobs` de Terraform. La fuente de verdad en ejecución es
+  // `config.resources.dynamodbTableJobs` (ver `resolveSeedTableName`).
+  DYNAMODB_TABLE_JOBS: 'mediashrink-jobs',
 };
 
 const EMULATOR_ENDPOINT = 'https://127.0.0.1:9297';
@@ -66,6 +68,15 @@ function section(title: string, rows: readonly { id: string; status: string; det
   ];
 }
 
+/**
+ * Tabla destino del seed, resuelta desde la configuración validada (F05-H01).
+ * Es el mismo `DYNAMODB_TABLE_JOBS` que consume la app: el seed y la app
+ * comparten tabla y el login con cuentas demo funciona.
+ */
+export function resolveSeedTableName(config: AppConfig): string {
+  return config.resources.dynamodbTableJobs;
+}
+
 export function formatReport(summary: SeedSummary): string {
   const lines: string[] = [
     '=== MediaShrink Cloud — seed sintético (F01-T04) ===',
@@ -97,7 +108,7 @@ async function main(): Promise<void> {
   const config = loadConfig(resolveEnv());
   assertEmulatorOnly(config);
   const client = createDynamoDbDocumentClientFromConfig(config);
-  const summary = await runSeed({ client, tableName: SEED_TABLE_NAME }, { dryRun });
+  const summary = await runSeed({ client, tableName: resolveSeedTableName(config) }, { dryRun });
   client.destroy();
   console.log(formatReport(summary));
 }

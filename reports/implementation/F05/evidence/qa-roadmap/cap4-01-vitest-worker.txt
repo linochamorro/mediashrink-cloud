@@ -1,0 +1,32 @@
+== CAPA 4 / Comando 1: npx vitest run tests/unit/worker tests/integration/worker (WebP+AVIF+thumb, strip EXIF/XMP/IPTC, HeadObject real, corrupto->3 reintentos->DLQ)
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ✓ tests/unit/worker/antiBomb.test.ts (7 tests) 53ms
+ ✓ tests/unit/worker/processImage.test.ts (4 tests) 104ms
+ ✓ tests/integration/worker/metadata.test.ts (3 tests) 309ms
+ ✓ tests/integration/worker/publisher.test.ts (5 tests) 652ms
+ ✓ tests/integration/worker/pipeline.test.ts (4 tests) 116ms
+ ✓ tests/integration/worker/observability.test.ts (1 test) 6575ms
+   ✓ summarizeConsumeResult — observabilidad E2E (CA-06) > expone los tres campos de resiliencia de T04 en un snapshot serializable 6573ms
+ ✓ tests/integration/worker/metrics-coherence.test.ts (2 tests) 12365ms
+   ✓ métricas reales y coherentes en DynamoDB (PR-12) > 0 %: bytesBefore = bytesAfter se persiste como 0, sin redondeos ni recorte 6154ms
+   ✓ métricas reales y coherentes en DynamoDB (PR-12) > negativo: bytesAfter > bytesBefore se persiste tal cual (-50 %), nunca se oculta 6209ms
+ ✓ tests/integration/worker/consumer.test.ts (9 tests) 58024ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > mensaje válido: procesa, marca COMPLETED con métricas y elimina el mensaje de la cola 6618ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > reintento transitorio: 2 fallos y éxito en el 3º intento, sin DLQ 6484ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > reintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta) 6269ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > fallo parcial: imagen fallida va a DLQ y FAILED; las demás del lote se completan 6606ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > el mensaje válido se consume y elimina; no hay bucle infinito ni duplicados 6380ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > siempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado 6384ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > A-01 redelivery: un job terminal no se reabre y la DLQ no se duplica 6406ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > A-02 fallo de la DLQ: se aísla, se registra y el resto del lote continúa 6388ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > A-03 precondición: el consumidor materializa el ImageRecord si falta 6485ms
+
+ Test Files  8 passed (8)
+      Tests  35 passed (35)
+   Start at  22:12:58
+   Duration  60.76s (transform 2.40s, setup 0ms, collect 10.26s, tests 78.20s, environment 3ms, prepare 2.01s)
+
+
+EXIT_CODE=0

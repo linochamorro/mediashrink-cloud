@@ -7,7 +7,7 @@
 | **Loop / Fecha / Entorno** | `1/3` · `2026-11-18` · inspección estática + revisión de evidencia (sin ejecución propia) |
 | **Encargo** | (1) Aislamiento: PK `userId` / SK `jobId`, hijos `IMAGE#<jobId>#<imageId>` en la misma partición, **sin GSI** que permita acceso sin `userId`, y coherencia de la no-creación de tabla de usuarios con el adaptador `UserStore` (prefijos `USER#`); (2) retención: fuente única `retention_days`, `ttl_seconds` derivado, `check` blocks, alineación S3 ↔ DynamoDB TTL y riesgo residual de desincronización **sin G-10**; (3) billing `PROVISIONED` 5/5: aceptabilidad para MVP y seguimiento a producción real; (4) credenciales por archivo, CA propio, `:9297`, sin `:9324` ni credenciales fijas, evidencia sin secretos ni rutas Windows nuevas; (5) confinamiento a `infra/terraform/**`, sin frontend/backend/manifiestos/`STATE.md`/`tasks.md`/push, Docker apagado según evidencia. **Se indica expresamente si `T02-A-01` puede darse por cerrado.** |
 | **Frontera** | **No se emite `PASSED`/`NO-PASSED`** (compete a Tester), no se implementa, no se cierra la tarea, **no se acepta riesgo en nombre de Lino (sin G-10)**, no se usan Docker/Git/AWS |
-| **Plantilla** | `D:/Projects/Bluemind_Lab/docs/templates/problema-solucion.md` — 7 campos por hallazgo |
+| **Plantilla** | `<LAB_ROOT>/docs/templates/problema-solucion.md` — 7 campos por hallazgo |
 | **Escala** | Severidad `CRITICAL/HIGH/MEDIUM/LOW/INFO` · Evidencia `REPRODUCED/CORROBORATED/INDICATIVE` · Cobertura `SUFFICIENT/LIMITED/INSUFFICIENT` · Conclusión `READY/READY_WITH_CONCERNS/NOT_READY/INCONCLUSIVE` (METHODOLOGY §7) |
 
 ## 1. Preguntas falsificables y método
@@ -145,3 +145,14 @@ Fundamento:
 - **G-10:** no se invocó; ningún riesgo se registra como aceptado por Lino. **No se emite dictamen funcional (`PASSED`/`NO-PASSED`).**
 
 **Recomendación al Architect:** integrar los seis hallazgos como seguimientos no bloqueantes y pasar al Tester independiente sin consumir loop. En `F04-T05`: (i) guardia CI que compare `RETENTION_DAYS`/`TTL_SECONDS` entre `.env.example`, catálogo, variable HCL y lifecycle S3 (`F04T01-A-01` + `F04T03-A-03`); (ii) sonda `DescribeTable` con `GSI_COUNT: 0`; (iii) corregir el comentario de TTL para los ítems `USER#` y añadir una aseveración de «sin ttl» en el adaptador; (iv) normalizar a `/` las rutas de las plantillas de evidencia; (v) ejecutar `up → apply → sondas → down` en una sola sesión y evaluar la capacidad 5/5 de cara a producción. El cierre de fase debe verificar con rol autorizado (`git ls-files`/`git status`) el confinamiento y la exclusión de `*.tfstate*`/`.terraform/`, y consignar el cierre formal de `T02-A-01` junto con el seguimiento `F04T03-A-03` **sin invocar G-10**.
+
+---
+
+## Addendum de anonimización P4 (F05-T02, 2026-11-18)
+
+En el marco de la tarea `F05-T02` (política P4 / G-6b) se sustituyeron las rutas
+absolutas del entorno de desarrollo por marcadores: `<PROJECT_ROOT>`,
+`<LAB_ROOT>`, `<DOCKER_CLI_DIR>`, `<TF_CLI_DIR>`, `<NPM_CACHE_DIR>` y
+`<USER_HOME>`. La sustitución fue **mecánica y exclusiva de esas rutas**: no se
+modificaron hallazgos, severidades, cifras, conclusiones ni el historial
+append-only. Este addendum conserva la trazabilidad del reemplazo.

@@ -1,0 +1,13 @@
+﻿F05-T02 - APAGADO VERIFICADO DEL EMULADOR (G-7)
+Fecha: 2026-11-18 20:04:01
+docker compose down: ejecutado y verificado en F05-T02-tester-headobject.txt (EXIT_CODE=0)
+
+DOCKER_PS_A:
+dazzling_edison Up 2 hours
+
+COMPOSE_PS:
+
+REDES_MEDIASHRINK:
+
+NOTA: dazzling_edison es un contenedor ajeno preexistente (verificado antes de iniciar la sesion).
+

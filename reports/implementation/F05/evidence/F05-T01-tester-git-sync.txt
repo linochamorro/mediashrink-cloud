@@ -1,0 +1,9 @@
+HEAD=8d2549896ec726a6eace3862aa6e0f611d9bc34e
+ORIGIN_MAIN=8d2549896ec726a6eace3862aa6e0f611d9bc34e
+LS_REMOTE=8d2549896ec726a6eace3862aa6e0f611d9bc34e refs/heads/main[0]
+STATUS_SHORT_BEGIN
+?? reports/implementation/F05/evidence/F05-T01-tester-build.txt ?? reports/implementation/F05/evidence/F05-T01-tester-lint.txt ?? reports/implementation/F05/evidence/F05-T01-tester-retention-runtime.txt ?? reports/implementation/F05/evidence/F05-T01-tester-typecheck.txt ?? reports/implementation/F05/evidence/F05-T01-tester-unit.txt
+STATUS_SHORT_END
+LOG:
+8d25498 evidence(F05-T01): retencion runtime con fuente unica verificada a0e9f66 evidence(F05-T01): CI e integracion en GitHub Actions en verde sin paso temporal fca0252 evidence(F05-T01): hash del commit y resultado del push a main b191b3c feat(F05-T01): integracion real API+worker, retencion unica, CI limpia y E2E real (CA-01) 8f65a7f evidence(F04-T05): run-list/run-view y pasos del run 44312560558 d01b2dc docs(F04-T05): addendum con run 44312560558 success (14/14 pasos, 6/6 tests)
+EXIT_CODE=0

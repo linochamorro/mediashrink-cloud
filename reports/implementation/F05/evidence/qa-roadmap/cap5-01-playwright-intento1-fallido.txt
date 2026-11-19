@@ -1,0 +1,49 @@
+== CAPA 5 / Comando 1: npx playwright test tests/e2e/qa-roadmap.spec.ts --config=tests/e2e/playwright.qa-roadmap.config.ts
+> npx playwright test tests/e2e/qa-roadmap.spec.ts --config=tests/e2e/playwright.qa-roadmap.config.ts
+
+PRECHECK ca.pem=True
+
+
+Running 1 test using 1 worker
+
+F05_QA 01: tema claro por defecto y formulario de acceso visibles
+F05_QA browser console.error: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+F05_QA 02: 401 INVALID_CREDENTIALS mostrado como mensaje publico acotado
+F05_QA 03: registro ana.demo@example.com aceptado por el backend real
+F05_QA 04: tema oscuro y sesion restaurada tras recargar (localStorage)
+F05_QA 05: SVG rechazado en cliente antes de subir nada
+F05_QA 06: 3 presets (HIGH/BALANCED/MAX_COMPRESSION) seleccionables
+F05_QA 06: lote A 690a1ca5-dada-4d7b-b0d0-5a019c9a6b9c confirmado por el backend real
+F05_QA 06: progreso observado 2/3 (parcial=true)
+F05_QA 07: COMPLETED con comparativa real, metricas y badge EXIF eliminado
+F05_QA 08: descarga individual real 8690 bytes, magic RIFF/WEBP
+  ✘  1 tests\e2e\qa-roadmap.spec.ts:227:1 › F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks) (11.5s)
+
+
+  1) tests\e2e\qa-roadmap.spec.ts:227:1 › F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks) › 08 — descarga individual (WebP) y ZIP del lote 
+
+    Error: el ZIP real contiene WebP + AVIF + miniatura
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 3
+    Received length: 9
+    Received array:  [{"bytes": {"data": [82, 73, 70, 70, 234, 33, 0, 0, 87, 69, …], "type": "Buffer"}, "name": "5307789a-5fe4-42cb-a644-1e73486aeefc.webp"}, {"bytes": {"data": [0, 0, 0, 28, 102, 116, 121, 112, 97, 118, …], "type": "Buffer"}, "name": "5307789a-5fe4-42cb-a644-1e73486aeefc.avif"}, {"bytes": {"data": [82, 73, 70, 70, 186, 5, 0, 0, 87, 69, …], "type": "Buffer"}, "name": "5307789a-5fe4-42cb-a644-1e73486aeefc_thumb.webp"}, {"bytes": {"data": [82, 73, 70, 70, 138, 34, 0, 0, 87, 69, …], "type": "Buffer"}, "name": "c5d628e7-9505-4e04-9753-addd1124b9a9.webp"}, {"bytes": {"data": [0, 0, 0, 28, 102, 116, 121, 112, 97, 118, …], "type": "Buffer"}, "name": "c5d628e7-9505-4e04-9753-addd1124b9a9.avif"}, {"bytes": {"data": [82, 73, 70, 70, 198, 5, 0, 0, 87, 69, …], "type": "Buffer"}, "name": "c5d628e7-9505-4e04-9753-addd1124b9a9_thumb.webp"}, {"bytes": {"data": [82, 73, 70, 70, 54, 33, 0, 0, 87, 69, …], "type": "Buffer"}, "name": "feb0b571-1666-4698-932f-0879a73df245.webp"}, {"bytes": {"data": [0, 0, 0, 28, 102, 116, 121, 112, 97, 118, …], "type": "Buffer"}, "name": "feb0b571-1666-4698-932f-0879a73df245.avif"}, {"bytes": {"data": [82, 73, 70, 70, 210, 5, 0, 0, 87, 69, …], "type": "Buffer"}, "name": "feb0b571-1666-4698-932f-0879a73df245_thumb.webp"}]
+
+      434 |       expect(zipBytes.subarray(0, 2).toString('ascii')).toBe('PK');
+      435 |       const entries = readZip(zipBytes);
+    > 436 |       expect(entries, 'el ZIP real contiene WebP + AVIF + miniatura').toHaveLength(3);
+          |                                                                       ^
+      437 |       console.log(
+      438 |         `F05_QA 08: ZIP real ${zipBytes.length} bytes, ${entries.length} entradas (${entries
+      439 |           .map((entry) => entry.name)
+        at <PROJECT_ROOT>\tests\e2e\qa-roadmap.spec.ts:436:71
+        at <PROJECT_ROOT>\tests\e2e\qa-roadmap.spec.ts:406:5
+
+    Error Context: reports\implementation\F05\evidence\qa-roadmap\playwright-results\qa-roadmap-F05-QA-roadmap--53122-bre-la-pila-real-sin-mocks-\error-context.md
+
+  1 failed
+    tests\e2e\qa-roadmap.spec.ts:227:1 › F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks) 
+
+EXIT_CODE=1
+

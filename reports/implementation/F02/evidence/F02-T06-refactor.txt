@@ -1,5 +1,5 @@
 
-[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
 
  [32mÔ£ô[39m tests/integration/worker/observability.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 6424[2mms[22m[39m
    [33m[2mÔ£ô[22m[39m summarizeConsumeResult ÔÇö observabilidad E2E (CA-06)[2m > [22mexpone los tres campos de resiliencia de T04 en un snapshot serializable [33m6422[2mms[22m[39m

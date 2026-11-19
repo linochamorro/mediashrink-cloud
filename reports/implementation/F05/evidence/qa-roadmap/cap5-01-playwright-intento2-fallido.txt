@@ -1,0 +1,55 @@
+== CAPA 5 / Comando 1: npx playwright test tests/e2e/qa-roadmap.spec.ts --config=tests/e2e/playwright.qa-roadmap.config.ts
+> npx playwright test tests/e2e/qa-roadmap.spec.ts --config=tests/e2e/playwright.qa-roadmap.config.ts
+
+PRECHECK ca.pem=True
+
+
+Running 1 test using 1 worker
+
+F05_QA 01: tema claro por defecto y formulario de acceso visibles
+F05_QA browser console.error: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+F05_QA 02: 401 INVALID_CREDENTIALS mostrado como mensaje publico acotado
+F05_QA browser console.error: Failed to load resource: the server responded with a status of 409 (Conflict)
+F05_QA 03: cuenta ya registrada en una corrida previa; acceso con la misma
+F05_QA 04: tema oscuro y sesion restaurada tras recargar (localStorage)
+F05_QA 05: SVG rechazado en cliente antes de subir nada
+F05_QA 06: 3 presets (HIGH/BALANCED/MAX_COMPRESSION) seleccionables
+F05_QA 06: lote A c7fee4f7-fe73-48b6-89f3-4bc65b602536 confirmado por el backend real
+F05_QA 06: progreso observado 3/3 (parcial=false)
+F05_QA 07: COMPLETED con comparativa real, metricas y badge EXIF eliminado
+F05_QA 08: descarga individual real 8850 bytes, magic RIFF/WEBP
+  ✘  1 tests\e2e\qa-roadmap.spec.ts:227:1 › F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks) (9.8s)
+
+
+  1) tests\e2e\qa-roadmap.spec.ts:227:1 › F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks) › 08 — descarga individual (WebP) y ZIP del lote 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('list', { name: 'Historial de lotes' }).getByRole('button', { name: 'Descargar ZIP' })
+    Expected: visible
+    Error: strict mode violation: getByRole('list', { name: 'Historial de lotes' }).getByRole('button', { name: 'Descargar ZIP' }) resolved to 2 elements:
+        1) <button type="button" class="text-button">Descargar ZIP</button> aka getByRole('button', { name: 'Descargar ZIP' }).first()
+        2) <button type="button" class="text-button">Descargar ZIP</button> aka getByRole('button', { name: 'Descargar ZIP' }).nth(1)
+
+    Call log:
+      - Expect "toBeVisible" getByRole('list', { name: 'Historial de lotes' }).getByRole('button', { name: 'Descargar ZIP' }) with timeout 30000ms
+      - waiting for getByRole('list', { name: 'Historial de lotes' }).getByRole('button', { name: 'Descargar ZIP' })
+
+
+      438 |
+      439 |       const history = page.getByRole('list', { name: 'Historial de lotes' });
+    > 440 |       await expect(history.getByRole('button', { name: 'Descargar ZIP' })).toBeVisible();
+          |                                                                            ^
+      441 |       const downloadPromise = page.waitForEvent('download');
+      442 |       await history.getByRole('button', { name: 'Descargar ZIP' }).click();
+      443 |       const download = await downloadPromise;
+        at <PROJECT_ROOT>\tests\e2e\qa-roadmap.spec.ts:440:76
+        at <PROJECT_ROOT>\tests\e2e\qa-roadmap.spec.ts:422:5
+
+    Error Context: reports\implementation\F05\evidence\qa-roadmap\playwright-results\qa-roadmap-F05-QA-roadmap--53122-bre-la-pila-real-sin-mocks-\error-context.md
+
+  1 failed
+    tests\e2e\qa-roadmap.spec.ts:227:1 › F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks) 
+
+EXIT_CODE=1
+

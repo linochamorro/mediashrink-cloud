@@ -1,0 +1,1 @@
+F05_SERVER_READY {"port":3001,"retentionDays":30}

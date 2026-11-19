@@ -1,0 +1,42 @@
+UP_EXIT=0
+HEALTHY_AFTER=4
+TF_APPLY_EXIT=0
+Ôöé Automatically removing from Terraform State instead of returning the error,
+Ôöé which may trigger resource recreation. Original error: couldn't find
+Apply complete! Resources: 11 added, 0 changed, 0 destroyed.
+FRESH_SERVER_HEALTH=200
+
+Running 1 test using 1 worker
+
+  Ô£ÿ  1 tests\e2e\real-stack.spec.ts:32:1 ÔÇ║ flujo real: registro ÔåÆ subida S3 ÔåÆ WebP/AVIF/miniatura sin EXIF ÔåÆ comparativa ÔåÆ ZIP ÔåÆ borrado (26.3s)
+
+
+  1) tests\e2e\real-stack.spec.ts:32:1 ÔÇ║ flujo real: registro ÔåÆ subida S3 ÔåÆ WebP/AVIF/miniatura sin EXIF ÔåÆ comparativa ÔåÆ ZIP ÔåÆ borrado 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('region', { name: 'Resultados del lote' }).getByLabel(/Comparativa visual de/).locator('img[alt^="Imagen original"]')
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('region', { name: 'Resultados del lote' }).getByLabel(/Comparativa visual de/).locator('img[alt^="Imagen original"]') with timeout 20000ms
+      - waiting for getByRole('region', { name: 'Resultados del lote' }).getByLabel(/Comparativa visual de/).locator('img[alt^="Imagen original"]')
+
+
+      143 |   const optimized = comparison.locator('img[alt^="Imagen optimizada"]');
+      144 |   for (const image of [original, optimized]) {
+    > 145 |     await expect(image).toBeVisible();
+          |                         ^
+      146 |     await expect
+      147 |       .poll(() =>
+      148 |         image.evaluate((node) => {
+        at <PROJECT_ROOT>\tests\e2e\real-stack.spec.ts:145:25
+
+    Error Context: reports\implementation\F05\evidence\playwright-real-results\real-stack-flujo-real-regi-d4129-comparativa-ÔåÆ-ZIP-ÔåÆ-borrado\error-context.md
+
+  1 failed
+    tests\e2e\real-stack.spec.ts:32:1 ÔÇ║ flujo real: registro ÔåÆ subida S3 ÔåÆ WebP/AVIF/miniatura sin EXIF ÔåÆ comparativa ÔåÆ ZIP ÔåÆ borrado 
+
+PLAYWRIGHT_RETRY_EXIT=1

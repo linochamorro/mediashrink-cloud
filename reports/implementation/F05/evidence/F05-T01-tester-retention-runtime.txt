@@ -1,0 +1,10 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/config.test.ts (37 tests) 27ms
+
+ Test Files  1 passed (1)
+      Tests  37 passed (37)
+   Start at  18:36:23
+   Duration  968ms (transform 283ms, setup 0ms, collect 352ms, tests 27ms, environment 0ms, prepare 183ms)
+EXIT_CODE=0

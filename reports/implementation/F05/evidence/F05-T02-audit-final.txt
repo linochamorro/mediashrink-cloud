@@ -1,0 +1,54 @@
+F05-T02 — INSUMO PARA AUDITORÍA FINAL DE SEGURIDAD / PRIVACIDAD (riesgo 3)
+Fecha: 2026-11-18 · Rol emisor: Developer · Destinatario: Auditor (rol separado)
+Estado: ENTREGADO PARA REVISIÓN. Este rol NO emite PASSED ni cierra la tarea.
+
+1) CAMBIOS DE F05-T02 SOMETIDOS A AUDITORÍA
+   A. F03-AUD-03 (MEDIUM) — frontend/src/api/jobs.ts
+      - validateSecureUrl(value, allowedHosts?) añade allowlist: explícita > VITE_ALLOWED_STORAGE_HOSTS > default local (127.0.0.1, localhost, [::1]).
+      - Rechaza javascript:, data:, http:, relative, credenciales embebidas, host ajeno y valores no cadena. TLD reservados (.test/.example/.invalid/.localhost) se permiten por ser no resolubles en Internet público (soporte a mocks/E2E).
+      - createJobsClient(baseUrl, fetcher, { allowedStorageHosts }) valida el plan de subida y cada uploadUrl antes de la PUT, y la downloadUrl antes de preview/descarga. El ZIP no es presignado: se sirve desde la API con Authorization y response.ok.
+      - Pruebas: tests/unit/frontend/secure-url.test.ts (26 casos). RED 3 fallos por comportamiento -> GREEN 26/26.
+   B. F02-T06 A-02 (LOW heredado) — backend/src/api/enriched-publisher.ts
+      - HeadObjectCommand por objeto en raw; ContentLength validado (entero seguro >= 0) y cotejado con los bytes de GetObject. Si divergen, RawObjectSizeMismatchError (fail-closed) antes de publicar.
+      - Prueba de integración: tests/integration/api/enriched-headobject.test.ts (3 casos). RED 2 fallos -> GREEN 3/3. declaredBytes=1 y =7 frente a bytes reales; bytesBefore persistido = HeadObject.ContentLength en ambos.
+   C. P4 anonimización — reports/** y docs/**
+      - 72 archivos únicos, 119 reemplazos. Marcadores: <PROJECT_ROOT>, <LAB_ROOT>, <DOCKER_CLI_DIR>, <TF_CLI_DIR>, <NPM_CACHE_DIR>, <USER_HOME>. Incluido banner de Vitest y las 3 evidencias F04-T05 de F04T05-A-06.
+      - 8 reportes append-only con addendum de anonimización; sin alteración de hallazgos ni borrado de historial.
+
+2) VERIFICACIÓN DE APOYO (evidencia en reports/implementation/F05/evidence/)
+   - Unitarias: 32 archivos, 303/303, exit 0 (F05-T02-url-validation.txt).
+   - Integración (sin infra/**, que requiere terraform apply y ya fue cubierta en F05-T01): 21 archivos, 94/94, exit 0 (F05-T02-headobject.txt).
+   - typecheck y lint globales: exit 0, sin diagnósticos.
+   - Emulador: G-7 verificado (memory=2147483648, nanoCpus=2000000000, user=1000:1000), healthcheck ok, apagado al terminar (F05-T02-emulator-down.txt).
+   - Escaneo final de rutas absolutas en reports/** y docs/**: 0 coincidencias (F05-T02-anonymization-scan.txt).
+   - Escaneo de secretos: 0 claves AWS reales, 0 claves privadas, 0 AWS_ACCESS_KEY_ID/SECRET_ACCESS_KEY activos en .env.example (solo comentario que prohíbe definirlos). Las 15 coincidencias de ':9324' en Terraform/config son todas negaciones o validaciones de guardia (`condition = !can(regex(":9324", ...))`).
+
+3) HALLAZGOS CRÍTICOS / HIGH ABIERTOS: 0
+   - F03-AUD-01 (HIGH) RESOLVED desde F03; F03-AUD-03 (MEDIUM) y F02-T06 A-02 (LOW) tratados en F05-T02, pendientes de confirmación del Auditor.
+
+4) SECRETOS: 0
+   - Cadenas tipo secreto en evidencias históricas son fixtures sintéticos deliberados ('AKIAABCDEFGHIJKLMNOP', 'ghp_abcdefghijklmnopqrstuvwxyz0123456789') usados como literales negativos del detector de secretos, y marcadores 'REPLACE_WITH_LOCAL_DEV_SECRET_32_CHARS' en .env.example. No son credenciales reales. Se inventarían para el Auditor, sin G-10.
+
+5) INVENTARIO DE RIESGOS LOW/INFO HEREDADOS (NINGUNO ACEPTADO — SIN G-10)
+   | ID | Severidad | Estado / disposición |
+   | F03-AUD-03 | MEDIUM -> tratado | Allowlist implementada; Auditor debe confirmar cierre. |
+   | F02-T06 A-02 | LOW -> tratado | HeadObject fail-closed; Auditor debe confirmar cierre. |
+   | P4 (rutas) | MEDIUM/INFO -> tratado en reports/docs | Residual AGENTS.md/STATE.md (raíz) por ser gobernanza de otro rol; decisión CTO antes de G-12. |
+   | F03-AUD-07 | LOW OPEN | Límites UI 15 MB/20 imágenes son defaults locales; servidor revalida. |
+   | F03-AUD-08 | LOW OPEN | E2E mock no acredita bytes WebP/AVIF ni EXIF real; cobertura real en integración backend. |
+   | F03-AUD-09 | LOW OPEN | Foco/teclado/lector de pantalla del selector sin evidencia asistiva concluyente. |
+   | F04T05-A-01 | LOW OPEN | Acciones GitHub por tag mutable, sin SHA fijo; política de pinning a decisión CTO. |
+   | F04T05-A-03 | LOW CERRADO en F05-T01 | `npm install --no-save` retirado de CI; confirmed en F05-T01-tester-ci.txt. |
+   | F04T05-A-04 | INFO | Inclusión de .tf T01-T04 en commit sin cambio de contenido; decisión de integración F04. |
+   | F04T05-A-05 | INFO | Guardias de retention/GSI cierran F04T01-A-01 y F04T03-A-01; F04T03-A-03 parcial. |
+   | F04T05-A-06 | INFO -> tratado | Inventario P4/IAM/CORS/is_emulator/TTL; parte P4 atendida en F05-T02. |
+   | F04T04-A-01/-A-02/-A-03/-A-04/-A-05 | LOW/INFO OPEN | Rol IAM único, checks anti-comodines, GetRolePolicy, cors_origin HTTPS, default is_emulator. |
+   | F04T03-A-02/-A-03/-A-04/-A-05 | LOW/INFO OPEN | USER#EMAIL, quinta fuente runtime de retención, USER# sin ttl, billing PROVISIONED 5/5. |
+   | SigV4 SignatureDoesNotMatch (F04T04) | INFO | Clasificado como limitación de sonda artesanal, no riesgo real; sin G-10. |
+
+6) LÍMITES Y GOBERNANZA
+   - No se aceptó ningún riesgo en nombre de Lino: G-10 NO invocado.
+   - G-11 (borrado de temporary/) y G-12 (publicación final) NO ejecutados; temporary/ intacto.
+   - No se usó AWS real; el único transporte fue el emulador local tras `docker cp` de CA/credenciales efímeras.
+   - No se modificaron reportes del Tester ni tests de otros roles: solo se añadieron tests/unit/frontend/secure-url.test.ts y tests/integration/api/enriched-headobject.test.ts. La anonimización P4 tocó archivos de otros roles de forma mecánica y documentada (addenda), sin alterar hallazgos.
+   - Entregable pendiente del rol Auditor: reports/audits/F05/F05-T02-auditor.md con conclusión READY / READY_WITH_CONCERNS / NOT_READY y recuento CRITICAL/HIGH. Este Developer no la redacta.

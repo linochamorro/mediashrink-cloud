@@ -3,7 +3,7 @@ UTC: 2026-11-18T13:11:38.6277022Z
 COMMAND: npx vitest run tests/integration/infra
 --- OUTPUT ---
 
-[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
 
 [90mstdout[2m | tests/integration/infra/gsi.test.ts[2m > [22m[2mDescribeTable: la tabla de jobs no declara ├¡ndices secundarios globales
 [22m[39mGSI_COUNT: 0

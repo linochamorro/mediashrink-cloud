@@ -1,5 +1,5 @@
 
-[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
 
  [32mÔ£ô[39m tests/integration/api/e2e-metrics.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m[33m 7019[2mms[22m[39m
    [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mestados coherentes: una imagen FAILED produce PARTIAL y todas FAILED producen FAILED [33m7018[2mms[22m[39m

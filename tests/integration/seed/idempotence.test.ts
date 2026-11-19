@@ -2,15 +2,19 @@
  * F01-T04 — idempotencia del seed sintético (CA-04).
  *
  * Requiere el emulador arrancado y CA/credenciales exportados según el
- * runbook §1.3. Tabla efímera propia de este archivo: permite que Vitest
- * ejecute los archivos de `tests/integration/seed/` en paralelo sin colisión.
+ * runbook §1.3. Tabla propia de este archivo, derivada del `DYNAMODB_TABLE_JOBS`
+ * configurado (F05-H01): permite que Vitest ejecute los archivos de
+ * `tests/integration/seed/` en paralelo sin colisión.
  */
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
+import { GetCommand } from '@aws-sdk/lib-dynamodb';
+
 import { verifyPassword } from '../../../backend/src/auth/password';
 import { loadConfig } from '../../../backend/src/config/index';
 import { createDynamoDbDocumentClientFromConfig } from '../../../backend/src/db/client';
+import { createDynamoUserStore } from '../../../backend/src/db/user-store-adapter';
 import { createJobStore } from '../../../backend/src/db/index';
 import {
   buildSeedPlan,
@@ -19,18 +23,24 @@ import {
   ensureSeedTable,
   readSeedUser,
   runSeed,
-  SEED_TABLE_NAME,
   type SeedDeps,
 } from '../../../tools/scripts/seed/index';
 import { seedTestEnv } from './helpers';
 
-const TABLE = `${SEED_TABLE_NAME}-idem`;
 const config = loadConfig(seedTestEnv());
+const TABLE = `${config.resources.dynamodbTableJobs}-idem`;
 const client = createDynamoDbDocumentClientFromConfig(config);
 const deps: SeedDeps = { client, tableName: TABLE };
 const plan = buildSeedPlan();
 
 describe('F01-T04 — seed sintético idempotente (CA-04)', () => {
+  it('F05-H01 — el seed resuelve su tabla desde DYNAMODB_TABLE_JOBS (mediashrink-jobs)', () => {
+    const resolved = loadConfig(seedTestEnv()).resources.dynamodbTableJobs;
+    expect(resolved).toBe('mediashrink-jobs');
+    expect(resolved).not.toContain('seed-demo');
+    expect(TABLE).toBe(`${resolved}-idem`);
+  });
+
   beforeAll(async () => {
     await dropSeedTable(client, TABLE).catch(() => undefined);
     await ensureSeedTable(client, TABLE);
@@ -99,6 +109,26 @@ describe('F01-T04 — seed sintético idempotente (CA-04)', () => {
     expect(second.images.created).toBe(0);
     expect(second.users.skipped + second.jobs.skipped + second.images.skipped).toBe(12);
     expect(after).toEqual(before);
+  });
+
+  it('F05-H01-loop2 — tras runSeed, findByEmail resuelve cada cuenta demo (índice USER#EMAIL)', async () => {
+    await runSeed(deps);
+    const users = createDynamoUserStore({ tableName: TABLE, client });
+    for (const user of plan.users) {
+      const found = await users.findByEmail(user.email);
+      expect(found?.userId).toBe(user.userId);
+      expect(found?.email).toBe(user.email);
+      const index = await client.send(
+        new GetCommand({
+          TableName: TABLE,
+          Key: { userId: user.email.toLowerCase(), jobId: 'USER#EMAIL' },
+        }),
+      );
+      expect(index.Item).toMatchObject({ itemType: 'USER_EMAIL', ownerUserId: user.userId });
+      expect(index.Item).not.toHaveProperty('ttl');
+    }
+    // La normalización del seed coincide con findByEmail aunque el correo venga en mayúsculas.
+    expect((await users.findByEmail('ANA.DEMO@EXAMPLE.COM'))?.userId).toBe('demo-user-ana');
   });
 
   it('recupera un lote sembrado a medias sin duplicar usuarios ni jobs', async () => {

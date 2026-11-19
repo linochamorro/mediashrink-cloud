@@ -1,0 +1,34 @@
+== CAPA 2 / Comando 3: npx vitest run tests/unit/contracts.test.ts tests/unit/auth tests/integration/auth tests/integration/db tests/integration/seed
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ✓ tests/unit/auth/jwt.test.ts (7 tests) 27ms
+ ✓ tests/unit/contracts.test.ts (32 tests) 216ms
+ ✓ tests/integration/auth/isolation.test.ts (4 tests) 679ms
+ ✓ tests/unit/auth/service.test.ts (10 tests) 1110ms
+   ✓ AuthService — registro, login y refresh (FR-01/FR-02/FR-03) > devuelve el mismo error para correo desconocido y contraseña incorrecta 391ms
+ ✓ tests/integration/auth/routes.test.ts (9 tests) 1200ms
+   ✓ rutas HTTP de autenticación (src/auth/routes.ts) > el rate limit configurable responde 429 con Retry-After y se renueva en la ventana siguiente 345ms
+ ✓ tests/unit/auth/rate-limit.test.ts (5 tests) 7ms
+ ✓ tests/unit/auth/middleware.test.ts (3 tests) 5ms
+ ✓ tests/unit/auth/password.test.ts (6 tests) 623ms
+ ✓ tests/integration/db/ttl.test.ts (5 tests) 6246ms
+ ✓ tests/integration/db/isolation.test.ts (6 tests) 6415ms
+ ✓ tests/integration/db/job-store.test.ts (8 tests) 6471ms
+stdout | tests/integration/seed/db-check.test.ts > F01-T04 — comprobación del estado en DynamoDB > el emulador contiene exactamente 3 usuarios, 3 jobs y 6 imágenes
+DB-CHECK tabla=mediashrink-seed-demo-dbcheck usuarios=3 jobs=3 imagenes=6 total=12
+
+ ✓ tests/integration/seed/db-check.test.ts (1 test) 7723ms
+ ✓ tests/integration/seed/idempotence.test.ts (5 tests) 9939ms
+   ✓ F01-T04 — seed sintético idempotente (CA-04) > --dry-run no escribe nada en el emulador 1350ms
+   ✓ F01-T04 — seed sintético idempotente (CA-04) > crea usuarios con hash scrypt de T03 e imágenes sintéticas reales 1001ms
+   ✓ F01-T04 — seed sintético idempotente (CA-04) > una segunda ejecución no duplica usuarios ni ítems 674ms
+   ✓ F01-T04 — seed sintético idempotente (CA-04) > recupera un lote sembrado a medias sin duplicar usuarios ni jobs 710ms
+
+ Test Files  13 passed (13)
+      Tests  101 passed (101)
+   Start at  22:10:27
+   Duration  15.10s (transform 4.32s, setup 0ms, collect 13.99s, tests 40.66s, environment 4ms, prepare 6.38s)
+
+
+EXIT_CODE=0

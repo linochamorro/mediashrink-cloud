@@ -1,5 +1,5 @@
 
- RUN  v2.1.9 D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud
+ RUN  v2.1.9 <PROJECT_ROOT>
 
  ✓ tests/unit/frontend/core.test.ts (9 tests) 48ms
 

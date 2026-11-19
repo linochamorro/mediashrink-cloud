@@ -7,7 +7,7 @@
 | **Loop / Fecha / Entorno** | `1/3` · `2026-11-18` · inspección estática + revisión de evidencia (sin ejecución propia) |
 | **Encargo** | (1) redrive a la DLQ canónica con `maxReceiveCount = 3` y visibilidad coherente con 3 intentos; (2) ausencia de bucle de redrive (DLQ sin redrive de vuelta); (3) corrección P1 `string` vs `number`: riesgo introducido, deuda del waiter/timeout y disposición **sin G-10**; (4) credenciales por archivo, CA propio, `:9297`, QueueUrls canónicas, sin secretos ni rutas Windows nuevas; (5) confinamiento a `infra/terraform/**` y Docker apagado según evidencia |
 | **Frontera** | **No se emite `PASSED`/`NO-PASSED`** (compete a Tester), no se implementa, no se cierra la tarea, **no se acepta riesgo en nombre de Lino (sin G-10)**, no se usan Docker/Git/AWS |
-| **Plantilla** | `D:/Projects/Bluemind_Lab/docs/templates/problema-solucion.md` — 7 campos por hallazgo |
+| **Plantilla** | `<LAB_ROOT>/docs/templates/problema-solucion.md` — 7 campos por hallazgo |
 | **Escala** | Severidad `CRITICAL/HIGH/MEDIUM/LOW/INFO` · Evidencia `REPRODUCED/CORROBORATED/INDICATIVE` · Cobertura `SUFFICIENT/LIMITED/INSUFFICIENT` · Conclusión `READY/READY_WITH_CONCERNS/NOT_READY/INCONCLUSIVE` (METHODOLOGY §7) |
 
 ## 1. Preguntas falsificables y método
@@ -122,3 +122,14 @@
 - **G-10:** no se invocó; ningún riesgo se registra como aceptado por Lino. **No se emite dictamen funcional (`PASSED`/`NO-PASSED`).**
 
 **Recomendación al Architect:** integrar los cinco hallazgos como seguimientos no bloqueantes y pasar al Tester independiente sin consumir loop. En `F04-T05`: (i) sonda `GetQueueAttributes(RedrivePolicy)` sobre la DLQ; (ii) aserción estática de `maxReceiveCount` numérico y de `plan` post-apply en `No changes`; (iii) medición del peor caso de lote frente a los 120 s de visibilidad; (iv) normalizar a `/` las rutas de las plantillas de evidencia; (v) ejecutar `up → apply → sondas → down` en una sola sesión de CI. El cierre de fase debe verificar con rol autorizado (`git ls-files`/`git status`) el confinamiento y la exclusión de `*.tfstate*`/`.terraform/`.
+
+---
+
+## Addendum de anonimización P4 (F05-T02, 2026-11-18)
+
+En el marco de la tarea `F05-T02` (política P4 / G-6b) se sustituyeron las rutas
+absolutas del entorno de desarrollo por marcadores: `<PROJECT_ROOT>`,
+`<LAB_ROOT>`, `<DOCKER_CLI_DIR>`, `<TF_CLI_DIR>`, `<NPM_CACHE_DIR>` y
+`<USER_HOME>`. La sustitución fue **mecánica y exclusiva de esas rutas**: no se
+modificaron hallazgos, severidades, cifras, conclusiones ni el historial
+append-only. Este addendum conserva la trazabilidad del reemplazo.

@@ -1,0 +1,33 @@
+TF_APPLY_EXIT=0 HEALTHY=healthy
+RATE_LIMIT_AUTH_MAX=1000 SERVER_HEALTH=200
+
+Running 1 test using 1 worker
+
+  Ô£ÿ  1 tests\e2e\real-stack.spec.ts:32:1 ÔÇ║ flujo real: registro ÔåÆ subida S3 ÔåÆ WebP/AVIF/miniatura sin EXIF ÔåÆ comparativa ÔåÆ ZIP ÔåÆ borrado (25.7s)
+
+
+  1) tests\e2e\real-stack.spec.ts:32:1 ÔÇ║ flujo real: registro ÔåÆ subida S3 ÔåÆ WebP/AVIF/miniatura sin EXIF ÔåÆ comparativa ÔåÆ ZIP ÔåÆ borrado 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      151 |         }),
+      152 |       )
+    > 153 |       .toBe(true);
+          |        ^
+      154 |   }
+      155 |
+      156 |   // Descarga individual WEBP: URL presignada real, bytes WebP reales y sin EXIF.
+        at <PROJECT_ROOT>\tests\e2e\real-stack.spec.ts:153:8
+
+    Error Context: reports\implementation\F05\evidence\playwright-real-results\real-stack-flujo-real-regi-d4129-comparativa-ÔåÆ-ZIP-ÔåÆ-borrado\error-context.md
+
+  1 failed
+    tests\e2e\real-stack.spec.ts:32:1 ÔÇ║ flujo real: registro ÔåÆ subida S3 ÔåÆ WebP/AVIF/miniatura sin EXIF ÔåÆ comparativa ÔåÆ ZIP ÔåÆ borrado 
+
+PLAYWRIGHT_RELAXED_EXIT=1

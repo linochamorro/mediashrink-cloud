@@ -1,0 +1,56 @@
+F05-T02 — P4 ANONIMIZACIÓN DE RUTAS ABSOLUTAS (2026-11-18)
+Alcance: reports/** y docs/** (artefactos versionados G-6b)
+Método: sustitución byte-segura (ISO-8859-1, 1 byte = 1 carácter) de subcadenas
+ASCII únicamente; el resto de los bytes se preserva idéntico. Escaneo con patrón
+[A-Za-z]:[\\/](Projects|Programs|Users|Program Files).
+
+1) ESCANEO INICIAL
+   - 105 coincidencias en 70 archivos (reports/** y docs/**).
+   - Variantes detectadas:
+     * <PROJECT_ROOT> y <LAB_ROOT> (con '/' y con '\'), incluido el prefijo
+       file:/// del banner de stack de Vite/Playwright.
+     * <DOCKER_CLI_DIR> (docker.exe y directorio), <TF_CLI_DIR> (terraform.exe y
+       directorio), <NPM_CACHE_DIR>\_logs y <USER_HOME>\AppData\Local\Temp\...
+     * Banner de Vitest "RUN v2.1.9 <ruta>" en más de 50 evidencias .txt.
+   - Artefactos señalados por F04T05-A-06 confirmados y tratados:
+     F04-T05-infra-tests.txt, F04-T05-retention-guard.txt, F04-T05-gsi-probe.txt.
+
+2) MAPA DE MARCADORES
+   <PROJECT_ROOT>   = raíz del repositorio mediashrink-cloud
+   <LAB_ROOT>       = raíz del laboratorio dentro de Projects
+   <DOCKER_CLI_DIR> = directorio del CLI de Docker (fuera de PATH)
+   <TF_CLI_DIR>     = directorio del CLI de Terraform (fuera de PATH)
+   <NPM_CACHE_DIR>  = directorio de caché de npm del entorno de tooling
+   <USER_HOME>      = directorio home del usuario del harness
+   Nota: el encargo enumera los marcadores con "p. ej."; <NPM_CACHE_DIR> se añade
+   porque la lista no cubría la caché de npm y sustituye una ruta absoluta real.
+
+3) SUSTITUCIÓN APLICADA
+   - Pasada 1: 70 archivos, 115 reemplazos (rutas completas y variantes).
+   - Pasada 2: 4 archivos, 4 reemplazos (prefijos abreviados del directorio
+     Projects que quedaban como patrón en reportes).
+   - Total: 72 archivos únicos, 119 reemplazos.
+   - Evidencias .txt/.log: sustitución in situ (capturas de máquina).
+   - 8 reportes append-only con hallazgos sustantivos recibieron además un addendum
+     de anonimización al final: 5 auditorías F04, F04-architect.md,
+     F04-T05-architect.md e intake-mediashrink.md.
+   - Contratos de tarea y paquete P-05: sustitución in situ, sin addendum por ser
+     documentos de control (no registros de hallazgos).
+   - No se alteraron hallazgos, severidades, cifras, dictámenes ni historial.
+   - No se borró ningún archivo; no se introdujeron rutas Windows absolutas nuevas.
+
+4) VERIFICACIÓN FINAL
+   - Escaneo [A-Za-z]:[\\/](Projects|Programs|Users|Program Files) sobre
+     reports/** y docs/** -> COINCIDENCIAS=0.
+   - Las URLs públicas github.com/linochamorro/... se conservan: son el repo
+     público autorizado por G-6/G-6b, no secretos ni rutas de sistema.
+   - Los addenda se grabaron en UTF-8 correcto (verificado por lectura directa).
+
+5) FUERA DE ALCANCE / INVENTARIO PARA AUDITOR Y CTO
+   - AGENTS.md y STATE.md (raíz, visibles en GitHub por G-6b) mantienen referencias
+     institucionales de confinamiento y rutas de tooling. No se editan: el contrato
+     de Developer prohíbe modificar STATE.md/tasks.md y son documentos de gobernanza
+     de otro rol. Quedan inventariados como seguimiento P4 residual para decisión
+     del Auditor/CTO antes de G-12. Sin G-10.
+   - temporary/: intacto (G-11 pendiente). Los scripts de anonimización residen allí
+     y ningún archivo de producto o de tests depende de ellos.

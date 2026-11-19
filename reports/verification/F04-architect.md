@@ -46,7 +46,7 @@ Ninguna tarea consumió loop correctivo. No hubo `NO-PASSED`, `BLOCKED` ni `NEED
 | P-4 — `npm install --no-save` de SDKs S3/SQS en CI (T05) | LOW, temporal: publicar manifiestos del harness F02 y retirar el paso. **No aceptado como riesgo de fase** |
 | P-2 — `.tf` de T01–T04 incluidos en el commit de T05 | Confirmado por Tester: mismos blob-hashes, contenido sin cambios, necesarios para el `apply` de 11 recursos |
 | `F04T03-A-03` — retención cross-sistema | Cerrado **parcialmente**: faltan el default runtime de `backend/src/config/index.ts` y el control de cambios del catálogo (competencia CTO, fuera de alcance) |
-| Inventario a F05 / CTO | P4 (rutas en artefactos G-6b, **ampliado** por 3 evidencias T05 con banner `D:/Projects/...`), rol IAM único para API+worker, `cors_origin` parametrizado, default `is_emulator=true`, perfiles `USER#` sin `ttl`, billing PROVISIONED 5/5, acciones `@v4/@v3` por tag mutable |
+| Inventario a F05 / CTO | P4 (rutas en artefactos G-6b, **ampliado** por 3 evidencias T05 con banner `<PROJECT_ROOT>/...`), rol IAM único para API+worker, `cors_origin` parametrizado, default `is_emulator=true`, perfiles `USER#` sin `ttl`, billing PROVISIONED 5/5, acciones `@v4/@v3` por tag mutable |
 | Gates | G-2 (autorización de fase), G-3 (sin secretos), G-6/G-6b (repo público, archivos IA), G-7 (2 GiB/2.0 con `if: always()` en CI), G-8 (lockfile F00). **G-11/G-12 no ejecutados** (Fase Final). Sin AWS real |
 
 **Confinamiento:** no se modificaron `frontend/`, `backend/`, manifiestos raíz, `STATE.md` ni `docs/sdd/tasks.md`; sin `terraform apply` contra AWS real; Docker apagado tras cada prueba y al cierre (`docker ps -a` vacío, red eliminada); `temporary/` intacto; sin secretos versionados.
@@ -66,3 +66,14 @@ Tiempo observado: ejecución secuencial de cinco tareas con Tester y Auditor por
 ---
 
 **Retorno final:** `FASE_COMPLETA` — P-04 cerrada con `CA-01`…`CA-05` en `PASSED` y auditorías sin `CRITICAL`/`HIGH`. `reports/implementation/F04/F04-coordination.md` se cierra con `FASE_COMPLETA`. Se detiene la ejecución del Architect y se entrega al CTO para revisión, consolidación de `STATE.md`/`tasks.md` y autorización de la Fase Final.
+
+---
+
+## Addendum de anonimización P4 (F05-T02, 2026-11-18)
+
+En el marco de la tarea `F05-T02` (política P4 / G-6b) se sustituyeron las rutas
+absolutas del entorno de desarrollo por marcadores: `<PROJECT_ROOT>`,
+`<LAB_ROOT>`, `<DOCKER_CLI_DIR>`, `<TF_CLI_DIR>`, `<NPM_CACHE_DIR>` y
+`<USER_HOME>`. La sustitución fue **mecánica y exclusiva de esas rutas**: no se
+modificaron hallazgos, severidades, cifras, conclusiones ni el historial
+append-only. Este addendum conserva la trazabilidad del reemplazo.

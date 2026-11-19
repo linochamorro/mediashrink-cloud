@@ -1,0 +1,49 @@
+=== F05-T04 / CA-04 — CAPTURAS REALES CON EL STACK REAL (SIN MOCKS) ===
+Sesion: pila completa levantada exclusivamente para esta tarea; Docker apagado al terminar.
+
+1) EMULADOR AWS (G-7)
+COMMAND=docker compose up -d
+UP_EXIT=0
+HEALTHY=True AFTER_SECONDS=6
+LIMITS=memory=2147483648 nanoCpus=2000000000 user=1000:1000
+DOCKER_CP=ca.pem + config + emulator_credentials exportados del volumen named (repetidos en este arranque)
+CP_EXIT=0
+HEALTHCHECK=curl.exe --cacert ./.local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health
+HEALTHCHECK_BODY=ok
+HEALTHCHECK_EXIT=0
+
+2) TERRAFORM CONTRA EMULADOR (sin AWS real)
+ENV=AWS_ENDPOINT_URL=https://127.0.0.1:9297 ; credenciales por AWS_SHARED_CREDENTIALS_FILE/AWS_CONFIG_FILE ; CA propio
+TF_INIT_EXIT=0
+TF_VALIDATE_EXIT=0
+TF_APPLY_COMMAND=terraform -chdir=infra/terraform apply -input=false -auto-approve -var=is_emulator=true
+TF_APPLY_EXIT=0
+TF_APPLY_RESULT=Apply complete! Resources: 11 added, 0 changed, 0 destroyed.
+DETALLE=F05-T04-tf-apply.tmp (salida cruda sanitizada: sin rutas Windows absolutas)
+
+3) SEED SINTETICO (cuentas ficticias)
+COMMAND=npm run seed
+SEED_EXIT=0
+RESULTADO=usuarios=3 creados, lotes=3 creados, imagenes=6 creadas (tabla efimera del emulador)
+DETALLE=F05-T04-seed.tmp
+
+4) PLAYWRIGHT — FLUJO REAL CLARO + OSCURO
+COMMAND=npx playwright test --config=tests/e2e/playwright.screenshots.config.ts --reporter=line
+ENTORNO=F05_E2E_RATE_LIMIT_MAX=1000 (inyectado SOLO al backend del runner; default de producto intacto)
+WEBSERVERS=npx tsx backend/src/server.ts (API + worker reales) y node ./tests/e2e/vite-webserver.mjs (SPA Vite con proxy /auth y /jobs)
+NAVEGADOR=chromium channel=msedge, ignoreHTTPSErrors=true, acceptDownloads=true, viewport 1440x900
+RELAY=adaptador de transporte para S3 (misma URL firmada y mismo cuerpo; CA real). El emulador no implementa OPTIONS. NO es un doble de API: los bytes llegan al bucket, el worker los procesa y las vistas comparativas cargan pixeles reales.
+RESULTADO=2 passed (18.8s)
+PLAYWRIGHT_EXIT=0
+DETALLE=F05-T04-playwright.tmp ; F05-T04-screens-light.txt ; F05-T04-screens-dark.txt
+
+5) TOOLING
+NODE=v26.13.0 PLAYWRIGHT=1.65.1
+DOCKER_ENGINE=29.9.3 DOCKER_COMPOSE=v5.7.0 TERRAFORM=1.17.2
+
+6) VERIFICACION DE FIDELIDAD
+- Cuentas de captura: diseno-<tema>-<timestamp>@example.test (ficticias, generadas en memoria).
+- Fotografias: gradientes sinteticos generados por codigo con marcadores DEMO-XMP/DEMO-IPTC ficticios; sin datos personales.
+- Las 18 capturas se generaron con page/locator.screenshot() sobre la UI real; ninguna fue inventada ni retocada.
+- Las vistas optimizadas se verifican decodificando naturalWidth > 0 sobre las URL firmadas reales antes de capturar la comparativa.
+- Tras la primera corrida (fallo por montaje anticipado de la comparativa) se corrigo el spec recargando la sesion real antes de capturar; corrida final 2/2 verde.

@@ -1,0 +1,36 @@
+﻿F05-T02 - VERIFICACION INDEPENDIENTE DEL TESTER (integridad y ambito)
+Fecha: 2026-11-18 20:04:01
+
+===== 1) ESTADO DOCKER FINAL (G-7) =====
+DOCKER_PS_A:
+dazzling_edison Up 2 hours
+
+COMPOSE_PS:
+
+REDES_MEDIASHRINK:
+
+
+===== 2) ARCHIVOS PROPIOS (unicos permitidos) =====
+PRESENTE reports/implementation/F05/evidence/F05-T02-tester-unit-typecheck-lint.txt  bytes=3438  utf8_bom=239,187,191
+PRESENTE reports/implementation/F05/evidence/F05-T02-tester-url.txt  bytes=5639  utf8_bom=239,187,191
+PRESENTE reports/implementation/F05/evidence/F05-T02-tester-headobject.txt  bytes=11208  utf8_bom=239,187,191
+PRESENTE reports/implementation/F05/evidence/F05-T02-tester-anonymization.txt  bytes=11016  utf8_bom=239,187,191
+PRESENTE reports/implementation/F05/F05-T02-tester.md  bytes=6237  utf8_bom=35,32,96
+
+===== 3) ESCANEO DE RUTAS ABSOLUTAS Y SECRETOS EN ARCHIVOS PROPIOS =====
+reports/implementation/F05/evidence/F05-T02-tester-unit-typecheck-lint.txt | rutas_entorno=0 secretos=0
+reports/implementation/F05/evidence/F05-T02-tester-url.txt | rutas_entorno=0 secretos=0
+reports/implementation/F05/evidence/F05-T02-tester-headobject.txt | rutas_entorno=0 secretos=0
+reports/implementation/F05/evidence/F05-T02-tester-anonymization.txt | rutas_entorno=0 secretos=0
+reports/implementation/F05/F05-T02-tester.md | rutas_entorno=0 secretos=0
+TOTALES: rutas_entorno=0 secretos=0
+
+===== 4) AMBITO / GATES =====
+temporary/ existe: True
+G-11 (borrado temporary/): NO EJECUTADO - directorio intacto (solo scripts transitorios propios)
+G-12 (push/publicacion): NO EJECUTADO - sin git push/release
+Auditor F05-T02 / Tester F05-T01 / reportes del Auditor: NO MODIFICADOS por este rol
+Codigo, tests, manifiestos, STATE.md, tasks.md: NO MODIFICADOS por este rol
+Secretos: ninguno en evidencias propias (ver seccion 3)
+
+RESUMEN: rutas=0 secretos=0

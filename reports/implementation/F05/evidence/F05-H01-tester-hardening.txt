@@ -1,0 +1,30 @@
+TESTER F05-H01 — HARDENING EN VIVO (ejecucion propia, backend :3001 real)
+Fecha: 2026-11-19 · Todas las respuestas llevan las 3 cabeceras:
+  X-Content-Type-Options: nosniff · X-Frame-Options: DENY · Referrer-Policy: no-referrer
+
+[200] GET /health → 200 OK + 3 cabeceras. Cuerpo: {"status":"ok"}
+[400] POST /auth/register {"email":"no-es-email"} → 400
+      {"error":{"code":"VALIDATION_ERROR",...}} + 3 cabeceras
+[401] POST /auth/login {cuenta demo, password incorrecta} → 401
+      {"error":{"code":"INVALID_CREDENTIALS","message":"Credenciales no válidas"}}
+      + 3 cabeceras. Mismo codigo/cuerpo que con cuenta inexistente por
+      construccion (service.ts:82-86: stored null → dummy verify → mismo
+      error): sin oracle de enumeracion.
+[404] GET /no-existe-xyz → 404 Not Found (text/plain) + 3 cabeceras
+[201] POST /auth/register {email valido, password 15 chars} → 201 Created
+      + 3 cabeceras; cuerpo {user, accessToken:<REDACTED>,
+      refreshToken:<REDACTED>, tokenType:Bearer, expiresIn:900}.
+      Prueba que un body bajo el limite NO es 413 (tope no regresivo).
+      (Un intento previo con campo extra "displayName" → 400 estricto del
+      contrato RegisterInput {email,password}: validacion intacta.)
+[200] POST /auth/login {alta API} → 200 + tokens <REDACTED>;
+      GET /jobs con Bearer → 200 {"jobs":[]} + 3 cabeceras.
+      Login valido 200 verificado (con alta API; con seed bloquea P-01).
+[413] POST /auth/register body 1150039 bytes (>1 MiB) →
+      413 {"error":{"code":"PAYLOAD_TOO_LARGE",
+      "message":"Cuerpo de la petición demasiado grande"}} + 3 cabeceras.
+[429] 5× POST /auth/login 401 + 6º/7º → 429 {"error":{"code":"RATE_LIMITED",
+      "message":"Demasiadas solicitudes; reintente en 19 s"}}
+      + 3 cabeceras + retry-after: 19. Límite authMax=5/60s intacto.
+Conclusion: cabeceras en 200/201/400/401/404/429/413 (7/7);
+  413 con codigo PAYLOAD_TOO_LARGE solo sobre el limite; bajo el limite pasa.

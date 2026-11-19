@@ -1,0 +1,19 @@
+=== F05-T04 / LOOP 2/3 — ALCANCE Y NO-REGRESION (Tester) ===
+Referencia: estado registrado al cierre del dictamen v1 (2026-11-18 20:28:49).
+
+ARCHIVOS CON MTIME POSTERIOR A V1 (excluidos artefactos propios del loop 2):
+  2026-11-18 20:30:48  reports/implementation/F05/evidence/F05-T04-loop2-unit-count.tmp (salida cruda efimera del Designer)
+  2026-11-18 20:30:56  README.md  <- unico cambio del producto publicable (linea 81)
+  2026-11-18 20:32:06  reports/implementation/F05/evidence/F05-T04-loop2-unit-count.txt
+  2026-11-18 20:32:20  reports/implementation/F05/F05-T04-designer.md (addendum append-only)
+
+CODIGO_TESTS_CAPTURAS=0 cambios (ningun archivo de frontend/, backend/, tests/ ni docs/images/ aparece en la ventana anterior; los 18 PNG conservan los mismos bytes que en v1).
+STATE_MD_TASKS_MD=0 cambios (no aparecen en la ventana ni como nuevas entradas en git status).
+REPORTES_AJENOS=0 cambios (solo F05-T04-designer.md, autorizado para este loop).
+TEMPORARY_FILES=71 DIRS=2 (identico a v1; G-11 NO ejecutado).
+GIT_STATUS=v1 + F05-T04-tester.md y F05-T04-tester-*.txt (mios, v1 y loop 2) + F05-T04-loop2-unit-count.txt (Designer). Sin otras entradas nuevas.
+ULTIMO_COMMIT=f43d903 (sin nuevo commit; G-12 NO ejecutado; entregables README.md, LICENSE y docs/images/ siguen sin commitear).
+DOCKER_PS_A=[dazzling_edison] -> 0 contenedores del proyecto, emulador apagado.
+SECRETOS=0 (scan de README.md y LICENSE sin patrones de clave/AWS/JWT).
+
+VERDICTO_AMBITO=OK

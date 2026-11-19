@@ -1,0 +1,14 @@
+F05-T05 — Evidencia 4/9: npm run typecheck (sin temporary/)
+Fecha: 2026-11-18 · Rol: Tester · Loop 1/3 · Ejecutado tras el borrado de <PROJECT_ROOT>\temporary
+
+COMANDO (PowerShell, desde <PROJECT_ROOT>):
+  npm run typecheck
+
+SALIDA:
+> mediashrink-cloud@0.0.0 typecheck
+> tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json
+
+EXIT_CODE=0
+
+CIFRA: 0 diagnósticos · backend y frontend sin errores de tipos.
+DEPENDENCIA DE temporary/: ninguna (directorio inexistente durante la ejecución).

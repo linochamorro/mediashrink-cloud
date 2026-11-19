@@ -1,0 +1,37 @@
+=== F05-T04 / LOOP 2/3 — CORRECCION DE FIDELIDAD DOCUMENTAL (F05T04-T-01) ===
+Hallazgo: README.md linea 81 afirmaba 277 pruebas unitarias; la cifra vigente es 303.
+
+EJECUCION PROPIA
+COMMAND=npm run test:unit
+UNIT_EXIT=0
+RESULTADO=Test Files 32 passed (32) | Tests 303 passed (303)
+DURATION=8.33s
+SALIDA_REDUNDANTE=F05-T04-loop2-unit-count.tmp (salida cruda del comando; sin rutas Windows absolutas)
+
+CONTRASTE CON EVIDENCIA REAL
+- F05-T02-tester.md:20 -> 32 archivos / 303/303, exit 0 (F05-T02 anadio 26 pruebas de validacion de URL segura).
+- F05-T02-architect.md:8 -> 303/303 (PASSED).
+- F05-T01 developer: 277/277 en 31 archivos (estado anterior, ya no vigente). Diferencia 303-277=26.
+- .github/workflows/ci.yml:48 ejecuta exactamente `npm run test:unit`, sin filtros.
+
+CORRECCION APLICADA
+ANTES=... `npm run test:unit` (277 pruebas unitarias aisladas).
+DESPUES=... `npm run test:unit` (303 pruebas unitarias aisladas en 32 archivos).
+UNICO CAMBIO EN README=esa linea; el resto del documento queda intacto.
+
+OTRAS CIFRAS REVISADAS (sin cambios; contrastadas con el repo)
+- Hasta 20 imagenes por lote = MAX_IMAGES_PER_BATCH de .env.example.
+- Hasta 15 MB por imagen = MAX_FILE_SIZE_MB de .env.example.
+- Retencion de 30 dias = RETENTION_DAYS / ciclo de vida Terraform.
+- Node.js 26 = node-version del workflow de CI; npm 11 = version local verificada.
+- Terraform 1.17 = version verificada 1.17.2.
+- React 18 / TypeScript 5.7 = rangos declarados en los manifiestos.
+- No se encontro ninguna otra cifra de pruebas o estado desactualizada.
+
+ESCANEO DE RASTROS INTERNOS TRAS EL CAMBIO
+Host paths de usuario=0 (la unica ruta /home/emulator/... es del contenedor en docker cp)
+Herramientas de orquestacion=0 | Roles=0 | Documentacion excluida=0
+Identificadores internos=0 | Nombres internos=0 | Cifra 277=0
+Enlaces relativos=24, missing=0 | Portada en linea 1=true
+PNG=18, chunks de texto/EXIF=0
+VEREDICTO=0 RASTROS INTERNOS

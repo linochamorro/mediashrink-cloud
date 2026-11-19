@@ -1,0 +1,49 @@
+TESTER F05-H01 — SEED EN VIVO (ejecucion propia, <PROJECT_ROOT>)
+Fecha: 2026-11-19 · Emulador G-7 (2g/2.0) · Harness OpenCode, Loop 1/3
+
+[1] docker compose config → esquema valido (memory=2147483648, cpus=2)
+[2] docker compose up -d → mediashrink-aws-emulator Up (healthy)
+    docker inspect → MEM=2147483648 CPU(nano)=2000000000 USER=1000:1000
+[3] docker cp ×3 (ca.pem, config, emulator_credentials)
+    desde /home/emulator/.aws/emulator/9297/ → CP_OK
+    (nota: las rutas /home/emulator/.local/... del primer intento no existen)
+[4] healthcheck: curl --cacert <PROJECT_ROOT>/.local/aws-emulator/ca.pem
+    https://127.0.0.1:9297/__admin/health → cuerpo "ok", EXIT=0
+[5] terraform init → EXIT 0 (provider hashicorp/aws v5.100.0 reutilizado)
+[6] terraform apply -auto-approve -var=is_emulator=true
+    - Encarnacion 1: Apply complete! 0 added, 0 changed, 0 destroyed
+      (estado previo; state list = 11 gestionados + 2 data sources:
+      jobs(raw,optimized,cors×2,lifecycle×2), sqs(jobs,dlq), iam(app,policy),
+      dynamodb(jobs) + data caller_identity/iam_role)
+    - Encarnacion 2 (tras desaparicion del contenedor, ver suite):
+      Apply complete! 11 added, 0 changed, 0 destroyed
+[7] npm run seed (pasada 1, encarnacion 2, tabla vacia):
+    Tabla DynamoDB: mediashrink-jobs (creada en esta ejecucion: no)
+    Usuarios: creados=3, omitidos=0 · Lotes: creados=3, omitidos=0
+    Imagenes 100x100: creadas=6, omitidas=0 · total 0 → 12
+[8] backend: npx tsx backend/src/server.ts con .env cargado →
+    F05_SERVER_READY {"port":3001,"retentionDays":30};
+    GET /health → {"status":"ok"} (EXIT 0)
+    (nota: sin .env en el entorno falla con ConfigError porque loadConfig()
+    lee process.env y nada carga .env automaticamente; entorno, no producto)
+[9] POST /auth/login cuenta demo seed → 401
+    {"error":{"code":"INVALID_CREDENTIALS","message":"Credenciales no válidas"}}
+    (cabeceras §hardening; cuerpo sin oracle)
+[10] Lecturas directas contra mediashrink-jobs (misma config que la app):
+    - Get {userId: demo-user-ana, jobId: USER#PROFILE} → FOUND=true,
+      EMAIL=ana.demo@example.com, HAS_HASH=true
+    - DynamoUserStore.findByEmail("ana.demo@example.com") → BY_EMAIL=false
+    - El seed solo escribe el perfil; el item indice
+      {userId: email, jobId: USER#EMAIL, itemType: USER_EMAIL} no existe
+      (putUserIfAbsent hace un unico PutCommand del perfil).
+      login() → stored null → verifyAgainstDummy → invalidCredentials (401).
+      Ver backend/src/auth/service.ts:82-86 y
+      backend/src/db/user-store-adapter.ts:135-152.
+[11] npm run seed (pasada 2, encarnacion 1):
+    Tabla DynamoDB: mediashrink-jobs (creada en esta ejecucion: no)
+    creados=0, omitidos=3/3/6; conteos ANTES 3/3/6=12 = DESPUES 3/3/6=12.
+    Mismos IDs, 0 duplicados → IDEMPOTENTE (PASSED parcial de CA-H01.2).
+[12] Mecanica login+lotes verificada con alta API (no seed):
+    register tester.vivo@example.com → 201 + tokens (<REDACTED>);
+    login → 200 (accessToken 313 chars); GET /jobs con Bearer → 200 {"jobs":[]}.
+    La ruta auth→lotes funciona; solo los usuarios seed son inalcanzables (P-01).

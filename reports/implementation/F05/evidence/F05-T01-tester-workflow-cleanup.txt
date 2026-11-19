@@ -1,0 +1,8 @@
+NPM_NO_SAVE_HITS=1
+WORKFLOW_INSTALL_LINES:
+# (npm ci, typecheck, lint, test:unit → 35/35). No se redefinen ni debilitan. run: npm ci --no-audit --no-fund run: npm ci --no-audit --no-fund # `npm ci` (paso anterior) los instala sin mutar manifiestos (P4 cerrado).
+GIT_LS_FILES_FORBIDDEN:
+.env.example
+TEMPORARY_ITEMS=55
+ENV_PRESENT=False
+EXIT_CODE=0

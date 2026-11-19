@@ -1,0 +1,15 @@
+=== F05-T04 / G-7 — APAGADO VERIFICADO ===
+COMMAND=docker compose down
+DOWN_EXIT=0
+Salida: contenedor mediashrink-aws-emulator detenido y eliminado; red mediashrink-cloud_default eliminada.
+PROJECT_CONTAINERS=0
+PROJECT_NETWORKS=0
+PORT_3001_LISTENERS=0
+PORT_9297_LISTENERS=0
+OTROS_CONTENEDORES=dazzling_edison (preexistente y ajeno al proyecto; no se manipulo)
+NETWORKS_RESTANTES=bridge, host, none (por defecto de Docker)
+
+Estados de la sesion:
+- Backend Hono/worker y servidor Vite gestionados por Playwright: detenidos por el runner al terminar las dos corridas.
+- Sin AWS real, sin secretos en logs/reportes y sin rutas Windows absolutas en los artefactos de esta tarea.
+- No se ejecutaron el borrado de la carpeta efimera ni la publicacion final (pendientes de autorizacion expresa).

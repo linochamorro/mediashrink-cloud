@@ -37,7 +37,7 @@
 ## 5. Addendum de reanudación (CTO, 2026-11-17 — Opción A, sin G-9)
 
 - **Versión / Loop:** `v2 — Loop 1/3` (el loop anterior NO se consumió: `NEEDS_CONTEXT` por recurso ausente).
-- **Entorno:** Docker Desktop 4.99.0 / engine 29.9.3 y Terraform 1.17.2 instalados por Lino. **PATH no incluye los binarios**: Docker CLI en `D:\Programs\DevApps\Containers\Docker\Desktop\resources\bin\docker.exe`, Terraform en `D:\Programs\DevApps\DevOps\Terraform\CLI\terraform.exe`. Todo subagente debe anteponer esos directorios a `$env:PATH` o usar rutas absolutas.
+- **Entorno:** Docker Desktop 4.99.0 / engine 29.9.3 y Terraform 1.17.2 instalados por Lino. **PATH no incluye los binarios**: Docker CLI en `<DOCKER_CLI_DIR>\docker.exe`, Terraform en `<TF_CLI_DIR>\terraform.exe`. Todo subagente debe anteponer esos directorios a `$env:PATH` o usar rutas absolutas.
 - **Hardening previo (Auditor):**
   - `A-01`: fijar la imagen en `docker-compose.yml` por digest inmutable `ghcr.io/xsavikx/aws-emulator@sha256:<digest>` (el digest ya constaba en un comentario), verificándolo con `docker image inspect` cuando esté disponible.
   - `A-02`: documentar en `docs/runbooks/development-workflow.md` la procedencia de la imagen comunitaria (AWS no publica imagen oficial), tag/digest y responsable de actualización.

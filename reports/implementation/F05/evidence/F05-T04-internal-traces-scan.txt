@@ -1,0 +1,35 @@
+=== F05-T04 — ESCANEO DE RASTROS INTERNOS (P4 / G-6b) ===
+Objeto: README.md, LICENSE y las 18 imagenes de docs/images/.
+Destino: artefactos publicables del repositorio. Criterio: cero rutas locales,
+cero referencias a herramientas de orquestacion o nombres de roles, cero enlaces
+a documentacion excluida, cero identificadores de flujo interno.
+
+RESULTADOS (P1..P6 = 0 hallazgos en todos los archivos escaneados)
+P1 rutas absolutas de host (unidad de disco, perfiles de usuario): 0
+P2 nombres de herramientas de orquestacion / session runner: 0
+P3 nombres de roles de trabajo y cargos internos: 0
+P4 enlaces a carpetas y archivos de documentacion excluida: 0
+P5 identificadores de fase, tarea, criterio y gate: 0
+P6 nombres propios de la coordination interna: 0
+
+ENLACES RELATIVOS DEL README
+LINKS_EXTERNOS=9 (badges y repositorio publico)
+LINKS_RELATIVOS=24
+LINKS_MISSING=0 (todas las rutas relativas existen en el repositorio)
+LINE1_IMAGE=true (la primera linea es una imagen de docs/images/)
+
+IMAGENES PNG
+PNG_COUNT=18
+CHUNK_TYPES=IHDR+IDAT+IEND (unicos en las 18 capturas)
+TEXT_OR_EXIF_CHUNKS=0 -> no hay metadatos incrustados, por lo que no puede
+haber rutas locales en los metadatos de las capturas.
+Nota: un escaneo byte a byte sobre los datos IDAT comprimidos puede producir
+coincidencias aleatorias de patrones de texto; no son metadatos ni rutas. El
+analisis valido es por chunks PNG y da 0 en todos los casos.
+
+ACLARACION
+La unica ruta con prefijo /home/ en el README es la ruta DENTRO del contenedor
+del emulador usada en los comandos docker cp. No es una ruta del equipo local
+ni identifica maquina, usuario o directorio de trabajo alguno.
+
+VEREDICTO=0 RASTROS INTERNOS

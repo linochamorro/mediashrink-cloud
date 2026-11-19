@@ -7,7 +7,7 @@
 | **Loop / Fecha / Entorno** | `1/3` · `2026-11-18` · inspección estática + revisión de evidencia (sin ejecución propia) |
 | **Encargo** | (1) IAM: mínimo privilegio real, ausencia de comodines `Action`/`Resource`, ARNs derivados de recursos, confianza solo Lambda, suficiencia de la representación declarativa en `locals`/`outputs`/`check`s y riesgo de deriva; (2) sonda SigV4 `SignatureDoesNotMatch`: clasificar como limitación del emulador/sonda o riesgo real, con severidad y confianza, **sin aceptarla como riesgo sin G-10**; (3) CORS: origen exacto `localhost:5173`, métodos/headers sin comodín y adecuación para producción vs. parametrización por entorno; (4) `skip_*`/`is_emulator`: imposibilidad de herencia a AWS real, procedimiento documentado no ejecutado y riesgo del default `true`; (5) corrección `F04T03-A-04`: comentario/`check` sobre `USER#` sin `ttl` y coherencia con el adaptador; (6) secretos/transporte (CA propio, `:9297`, sin `:9324`, sin credenciales fijas, evidencia sin secretos ni rutas Windows nuevas); (7) confinamiento a `infra/terraform/**`, sin `frontend/`, `backend/`, manifiestos, `STATE.md`, `tasks.md` ni push, Docker apagado según evidencia. |
 | **Frontera** | **No se emite `PASSED`/`NO-PASSED`** (compete a Tester); no se implementa, no se cierra la tarea, **no se acepta riesgo en nombre de Lino (sin G-10)**, no se usan Docker/Git/AWS. No se repite la suite funcional del Tester (METHODOLOGY §3.1). |
-| **Plantilla** | `D:/Projects/Bluemind_Lab/docs/templates/problema-solucion.md` — 7 campos por hallazgo, append-only. |
+| **Plantilla** | `<LAB_ROOT>/docs/templates/problema-solucion.md` — 7 campos por hallazgo, append-only. |
 | **Escala** | Severidad `CRITICAL/HIGH/MEDIUM/LOW/INFO` · Confianza `ALTA/MEDIA/BAJA` · Evidencia `REPRODUCED/CORROBORATED/INDICATIVE` · Cobertura `SUFFICIENT/LIMITED/INSUFFICIENT` · Conclusión `READY/READY_WITH_CONCERNS/NOT_READY/INCONCLUSIVE` (METHODOLOGY §7 y `.agents/roles/auditor.md`). |
 
 ## 1. Preguntas falsificables y método
@@ -153,3 +153,14 @@
 - **G-10:** no se invocó; ningún riesgo se registra como aceptado por Lino. **No se emite dictamen funcional (`PASSED`/`NO-PASSED`).**
 
 **Recomendación al Architect:** integrar los siete hallazgos como seguimientos no bloqueantes y pasar al Tester independiente sin consumir loop. En `F04-T05`: (i) reforzar los `check`s IAM con regex/igualdad estricta y añadir un caso negativo (`A-02`); (ii) si hay SDK oficial de IAM, leer `GetRolePolicy` y declarar la cobertura resultante (`A-03`); (iii) guardar por entorno que `cors_origin` sea HTTPS y no localhost cuando `is_emulator=false` (`A-04`); (iv) guardia CI que exija el interruptor explícito en despliegues reales (`A-05`); (v) comprobación estática sobre el adaptador para `USER#` sin `ttl` (`A-06`); (vi) normalizar a `/` las rutas de las plantillas de evidencia (`A-07`). El cierre de fase debe verificar con rol autorizado (`git ls-files`/`git status`) el confinamiento y la exclusión de `*.tfstate*`/`.terraform/`, **sin invocar G-10**.
+
+---
+
+## Addendum de anonimización P4 (F05-T02, 2026-11-18)
+
+En el marco de la tarea `F05-T02` (política P4 / G-6b) se sustituyeron las rutas
+absolutas del entorno de desarrollo por marcadores: `<PROJECT_ROOT>`,
+`<LAB_ROOT>`, `<DOCKER_CLI_DIR>`, `<TF_CLI_DIR>`, `<NPM_CACHE_DIR>` y
+`<USER_HOME>`. La sustitución fue **mecánica y exclusiva de esas rutas**: no se
+modificaron hallazgos, severidades, cifras, conclusiones ni el historial
+append-only. Este addendum conserva la trazabilidad del reemplazo.

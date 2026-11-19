@@ -1,0 +1,42 @@
+TESTER F05-H01 loop2 — SESION VIVA (ejecucion propia, loop 2/3)
+Fecha: 2026-11-19 · Re-verifica P-01 (indice USER#EMAIL del seed) · Harness OpenCode
+Sin secretos ni rutas absolutas (credenciales demo: ver tools/scripts/seed/demo-data.ts).
+
+[1] docker compose config: esquema valido (cpus 2.0, mem_limit 2g, 127.0.0.1:9297).
+[2] docker compose up -d: red creada + mediashrink-aws-emulator Started.
+    Tras espera: Up (healthy). Contenedor ajeno preexistente (puerto 8082) intacto.
+    docker inspect: Memory=2147483648 NanoCpus=2000000000 User=1000:1000 (G-7 OK).
+[3] docker cp x3 (ca.pem, config, emulator_credentials)
+    desde /home/emulator/.aws/emulator/9297/ -> CP_OK.
+[4] healthcheck: curl.exe --cacert <PROJECT_ROOT>/.local/aws-emulator/ca.pem
+    https://127.0.0.1:9297/__admin/health -> cuerpo "ok", EXIT 0.
+[5] terraform init -> EXIT 0 (provider hashicorp/aws v5.100.0 reutilizado).
+[6] terraform apply -auto-approve -var=is_emulator=true
+    -> Apply complete! 11 added, 0 changed, 0 destroyed.
+    (Nota: el estado previo marcaba 5 recursos como eliminados fuera de
+    Terraform porque el emulador fresco no conserva estado entre arranques;
+    el plan los recreo: dynamodb jobs, iam role+policy, s3 raw+optimized,
+    sqs jobs+dlq + cors/lifecycle.)
+[7] npm run seed (pasada 1, tabla vacia):
+    Tabla DynamoDB: mediashrink-jobs (creada en esta ejecucion: no)
+    Usuarios: creados=3, omitidos=0 · Lotes: creados=3, omitidos=0
+    Imagenes 100x100: creadas=6, omitidas=0 · total 0 -> 12.
+[8] backend: servidor real (backend/src/server.ts) con .env cargado ->
+    GET /health -> 200 {"status":"ok"}.
+[9] POST /auth/login demo (pasada 1) + GET /jobs con Bearer:
+    LOGIN ana.demo: 200 tokens=yes
+    JOBS ana.demo: 200 count=1 ids=["demo-job-ana"] expect=demo-job-ana visible=true
+    LOGIN bruno.demo: 200 tokens=yes
+    JOBS bruno.demo: 200 count=1 ids=["demo-job-bruno"] expect=demo-job-bruno visible=true
+    LOGIN carla.demo: 200 tokens=yes
+    JOBS carla.demo: 200 count=1 ids=["demo-job-carla"] expect=demo-job-carla visible=true
+    RESULT: ALL_OK (script de verificacion: contrasenas demo leidas del propio
+    repo tools/scripts/seed/demo-data.ts; ningun secreto en este fichero).
+[10] npm run seed (pasada 2): creados=0, omitidos=3/3/6;
+     conteos ANTES 3/3/6=12 = DESPUES 3/3/6=12. Mismos IDs -> IDEMPOTENTE.
+[11] Tras re-seed (ventana de rate-limit renovada con espera de 70 s):
+    LOGIN ana.demo: 200 · JOBS 200 ["demo-job-ana"]
+    LOGIN bruno.demo: 200 · JOBS 200 ["demo-job-bruno"]
+    LOGIN carla.demo: 200 · JOBS 200 ["demo-job-carla"]
+    RESULT: ALL_OK.
+Conclusion live: P-01 CORREGIDO. CA-H01.2 verificado en vivo con evidencia propia.

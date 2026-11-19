@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |---|---|
-| **Última actualización** | `2026-11-18 09:03 (P-05 G-2 autorizada en OpenCode)` |
+| **Última actualización** | `2026-11-19 00:53 (H-01 Opción A + verificación seguridad + push avances autorizados; G-12 retenido)` |
 | **Estructura del proyecto** | `Canónica completa` (`frontend/` + `backend/` + `infra/terraform/`) |
-| **Fase actual** | `Fase Final EN EJECUCIÓN — docs/sdd/packages/P-05-final-integration-and-delivery.md` |
-| **Estado de retorno** | **`G-2 AUTORIZADO POR LINO` — `P-05` (`F05-T01`/`F05-T02`/`F05-T04`) en ejecución en OpenCode** |
-| **Única tarea o bloque autorizado** | `F05-T01, F05-T02, F05-T04 hasta retorno para pruebas exploratorias de Lino (F05-T03) y gates G-11/G-12` |
-| **Último dictamen verificado** | `F04-architect.md: CA-01..CA-05 PASSED (6/6 infra, CI run 44312560558 success 14/14 pasos), 0 CRITICAL/HIGH, sin G-9/G-10` |
+| **Fase actual** | `Fase Final — H-01 (seed→mediashrink-jobs) + verificación seguridad defensiva + push avances (G-12 retenido)` |
+| **Estado de retorno** | **`H-01 OPCIÓN A AUTORIZADA` · push de mejoras autorizado (`G-6`) · cierre final `G-12` RETENIDO hasta pruebas manuales de Lino** |
+| **Única tarea o bloque autorizado** | `Corregir H-01 bajo TDD + auditoría/hardening seguridad defensiva + push de avances a main (SIN declarar cierre G-12)` |
+| **Último dictamen verificado** | `F05-qa-roadmap-architect.md: temporary/ borrado, 303/303 unit, 100/100 int, 7/7 capas QA, 12/12 PNG Playwright CLI, 0 secretos` |
 | **Harness en curso** | `OpenCode → CTO (Atenea)` |
 | **Gate Git (G-6) y archivos IA en GitHub (G-6b)** | `Git: Autorizado desde Fase 0 (repo público 'mediashrink-cloud') · Archivos agentes/IA en GitHub: Permitidos (G-6b abierto)` |
 | **Otros gates abiertos** | `G-2 (F00 autorizada) · G-3 (.env.example) · G-4 (BD en emulador para F01) · G-8 (dependencias F00) · G-11 (borrado temporary/ en F05) · G-12 (publicación final) · G-7 Docker: Autorizado con límite --memory=2g --cpus="2.0"` |
@@ -84,7 +84,7 @@
 
 ### `2026-11-17` — `Architect (re-despacho F00: A-03 y T03 en vivo)`
 - **Realizado:** Addendum A-03 de `F00-T01` corregido y re-verificado (`PASSED`): sin `:9324`, credenciales por archivos generados, QueueUrls canónicas con `AWS_ENDPOINT_URL` como transporte (sonda SigV4 real). `F00-T03` reanudada con Docker real: corregido el montaje (volumen named + `docker cp`, sin `user:`), imagen fijada por digest (A-01), procedencia documentada (A-02) y N-01/N-02 resueltos. Cerrada `PASSED` por Tester v2 con evidencia propia; Auditor `READY_WITH_CONCERNS` con A-05 transferido a T05. Actualizados `tasks.md` y `STATE.md`.
-- **Decidido / Verificado:** Opción A sin G-9 ni G-10. Binarios fuera de PATH: Docker en `D:\Programs\DevApps\Containers\Docker\Desktop\resources\bin`, Terraform en `D:\Programs\DevApps\DevOps\Terraform\CLI` — se pasan rutas explícitas a cada subagente. Contenedor dejado APAGADO.
+- **Decidido / Verificado:** Opción A sin G-9 ni G-10. Binarios fuera de PATH: Docker en `<DOCKER_CLI_DIR>`, Terraform en `<TF_CLI_DIR>` — se pasan rutas explícitas a cada subagente. Contenedor dejado APAGADO.
 - **Pendiente al retomar:** `F00-T04` (Terraform) → `F00-T05` (repo, cierra A-05) → `F00-T06` (CI) → cierre de fase con `AGENTS.md` §6 y retorno consolidado.
 - **No repetir:** No simular evidencia, no reabrir T01/T02/T03 salvo control de cambios, no iniciar Fase 1, no aceptar riesgos sin Lino.
 

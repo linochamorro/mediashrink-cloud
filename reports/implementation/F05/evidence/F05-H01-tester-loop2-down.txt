@@ -1,0 +1,13 @@
+TESTER F05-H01 loop2 — APAGADO G-7 (ejecucion propia)
+Fecha: 2026-11-19 · Loop 2/3.
+
+[1] Backend detenido: proceso en :3001 terminado (Stop-Process). El runtime
+    habia publicado F05_SERVER_READY {"port":3001,"retentionDays":30}.
+[2] docker compose down -> EXIT 0.
+    Contenedor mediashrink-aws-emulator: Stopping/Stopped/Removed.
+    Red mediashrink-cloud_default: Removed.
+[3] Contenedor ajeno preexistente intacto (puerto 8082, no tocado).
+[4] Puertos: curl :3001 -> exit 7 (refused); curl :9297/health -> exit 7
+    (refused). Ambos cerrados.
+[5] Volumen named aws-emulator-data persiste (no es contenedor ni red; G-7 OK).
+G-7 cumplido: sin contenedor ni red del proyecto en ejecucion.

@@ -1,0 +1,51 @@
+F05-T05 — Evidencia 9/9: apagado del emulador Docker (G-7) e higiene final
+Fecha: 2026-11-18 · Rol: Tester · Loop 1/3
+
+COMANDO 1 (PowerShell, desde <PROJECT_ROOT>, Docker CLI prependido):
+  $env:PATH = "D:\Programs\DevApps\Containers\Docker\Desktop\resources\bin;" + $env:PATH
+  docker compose down
+
+SALIDA 1:
+  Container mediashrink-aws-emulator Stopping
+  Container mediashrink-aws-emulator Stopped
+  Container mediashrink-aws-emulator Removing
+  Container mediashrink-aws-emulator Removed
+  Network mediashrink-cloud_default Removing
+  Network mediashrink-cloud_default Removed
+
+EXIT_CODE=0
+
+COMANDO 2 (PowerShell):
+  docker compose ps -a
+
+SALIDA 2:
+  NAME      IMAGE     COMMAND   SERVICE   CREATED   STATUS   PORTS
+  (vacío)
+
+EXIT_CODE=0
+  -> Sin contenedores ni red del proyecto `mediashrink-cloud`.
+
+COMANDO 3 (PowerShell — inventario global de contenedores):
+  docker ps -a
+
+SALIDA 3:
+  CONTAINER ID   IMAGE                              COMMAND                  CREATED        STATUS                    PORTS               NAMES
+  23ba9bc1bd6e   ghcr.io/github/github-mcp-server   "/server/github-mcp-…"   4 hours ago    Up 4 hours                 8082/tcp            dazzling_edison
+
+EXIT_CODE=0
+  -> Único contenedor presente: `dazzling_edison` (AJENO al proyecto, preexistente; no se tocó).
+
+COMANDO 4 (PowerShell — verificación final de temporary/):
+  Write-Output "TEST_PATH_TEMP=$(Test-Path -LiteralPath (Join-Path (Resolve-Path .).Path 'temporary'))"
+
+SALIDA 4:
+  TEST_PATH_TEMP=False
+
+EXIT_CODE=0
+
+CONCLUSIÓN:
+  - Emulador apagado tras las pruebas (G-7: levantar solo durante pruebas/desarrollo y apagar al terminar).
+  - Sin contenedores, red ni puertos residuales del proyecto.
+  - temporary/ sigue inexistente tras la reejecución completa de la suite.
+  - Nota: no se ejecutó `terraform destroy` (no exigido por la tarea); el estado local queda con 11 recursos
+    aplicados en el emulador, que se destruyen al parar el contenedor.

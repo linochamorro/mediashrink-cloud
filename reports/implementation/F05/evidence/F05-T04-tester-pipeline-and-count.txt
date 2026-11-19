@@ -1,0 +1,25 @@
+=== F05-T04 / CA-04 — EJECUCION PROPIA: pipeline de capturas y fidelidad de conteo ===
+
+1) DESCUBRIMIENTO DEL PIPELINE DE CAPTURAS (sin arrancar Docker)
+COMMAND=npx playwright test --list --config=tests/e2e/playwright.screenshots.config.ts
+RESULTADO=Total: 2 tests in 1 file
+TESTS=[screenshots.spec.ts:269 capturas reales del flujo completo en tema Claro, screenshots.spec.ts:273 capturas reales del flujo completo en tema Oscuro]
+CONCLUSION=el pipeline de capturas sigue cableado y descubre exactamente los dos flujos (Claro y Oscuro).
+
+2) INSPECCION ESTATICA DEL SPEC (ausencia de mocks de API)
+- unico context.route(): relay de transporte S3 al emulador real (misma URL firmada, mismo cuerpo, CA real); route.fulfill devuelve la respuesta real del upstream.
+- sin page.route() sobre /auth, /jobs ni sobre rutas de la API; sin fixtures de respuesta.
+- las 18 capturas se toman con screenshot() sobre la UI real; la comparativa exige naturalWidth > 0 sobre URL firmada real antes de capturar.
+
+3) CONTEO UNITARIO (fidelidad exigida por la plantilla, linea 71)
+COMMAND=npm run test:unit
+RESULTADO=Test Files 32 passed (32) ; Tests 303 passed (303) ; Duration 8.32s
+COMMAND=npx vitest run tests/unit --reporter=dot
+RESULTADO=Test Files 32 passed (32) ; Tests 303 passed (303) ; Duration 9.69s
+README_LINEA_81=El workflow de CI ... ejecuta ... npm run test:unit (277 pruebas unitarias aisladas).
+FUENTE_277=reports/implementation/F05/F05-T01-tester.md y F05-T01-developer.md (estado previo a F05-T02).
+FUENTE_303=reports/implementation/F05/F05-T02-tester.md (32 archivos / 303/303) y F05-T02-architect.md.
+DIFERENCIA=303 - 277 = 26 pruebas.
+HALLAZGO=F05T04-T-01 (7 campos en el reporte del Tester).
+
+No se arranco Docker: las capturas ya existen y se verificaron por chunks y visualmente; el descubrimiento de tests basta para confirmar que el pipeline sigue funcionando sin repetir una corrida valida (proporcionalidad METHODOLOGY 3.1).

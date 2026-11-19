@@ -1,0 +1,9 @@
+=== F05-T04 / LOOP 2/3 — RE-EJECUCION PROPIA DEL COMANDO CITADO EN EL README ===
+COMMAND=npm run test:unit
+UNIT_EXIT=0
+RESULTADO=Test Files  32 passed (32)
+RESULTADO=Tests  303 passed (303)
+RESULTADO=Duration  7.98s (transform 2.77s, setup 0ms, collect 16.55s, tests 14.02s, environment 12ms, prepare 7.53s)
+README_AFIRMA=303 pruebas unitarias aisladas en 32 archivos
+COINCIDE=true
+Contraste: F05-T02-tester.md:20 -> 32 archivos / 303/303; F05-T02-architect.md:8 -> 303/303.

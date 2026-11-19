@@ -1,0 +1,13 @@
+=== F05-T04 / CA-04 — ESCANEO PROPIO DE RASTROS INTERNOS (G-6b / P4) ===
+Objeto: README.md, LICENSE y las 18 capturas PNG. Salida sin rutas absolutas.
+P1 rutas absolutas de host=0
+P2 herramientas de orquestacion=0
+P3 roles internos=0
+P4 documentacion excluida=0
+P5 identificadores internos=0
+P6 coordination interna=0
+P7 chunks de texto/EXIF en PNG=0 (0 = imposible alojar ruta local en metadatos)
+ALCANCE_RUTA_CONTENEDOR=true (aceptable: aparece solo en comandos docker cp)
+P8 secretos en README/LICENSE=0
+TOTAL_RASTROS=0
+VERDICTO_RASTROS=CERO_RASTROS

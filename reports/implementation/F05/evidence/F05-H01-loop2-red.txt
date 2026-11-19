@@ -1,0 +1,34 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [31mÔØ»[39m tests/integration/seed/idempotence.test.ts [2m([22m[2m7 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m6 skipped[39m[2m)[22m[33m 6971[2mms[22m[39m
+[31m   [31m├ù[31m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mF05-H01-loop2 ÔÇö tras runSeed, findByEmail resuelve cada cuenta demo (├¡ndice USER#EMAIL)[33m 805[2mms[22m[31m[39m
+[31m     ÔåÆ expected undefined to be 'demo-user-ana' // Object.is equality[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 1 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/integration/seed/idempotence.test.ts > F01-T04 ÔÇö seed sint├®tico idempotente (CA-04) > F05-H01-loop2 ÔÇö tras runSeed, findByEmail resuelve cada cuenta demo (├¡ndice USER#EMAIL)
+AssertionError: expected undefined to be 'demo-user-ana' // Object.is equality
+
+- Expected: 
+"demo-user-ana"
+
++ Received: 
+undefined
+
+ ÔØ» tests/integration/seed/idempotence.test.ts:119:29
+    117|     for (const user of plan.users) {
+    118|       const found = await users.findByEmail(user.email);
+    119|       expect(found?.userId).toBe(user.userId);
+       |                             ^
+    120|       expect(found?.email).toBe(user.email);
+    121|       const index = await client.send(
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/1]ÔÄ»
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m6 skipped[39m[90m (7)[39m
+[2m   Start at [22m 01:36:41
+[2m   Duration [22m 8.40s[2m (transform 300ms, setup 0ms, collect 792ms, tests 6.97s, environment 0ms, prepare 192ms)[22m
+
+EXIT=1

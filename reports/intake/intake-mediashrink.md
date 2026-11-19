@@ -20,7 +20,7 @@
 5. `docs/decisions/ADR-001-stack-and-aws-emulator.md` e `index.md`.
 6. `docs/architecture/00-overview.md`, `01-stack.md`.
 7. `docs/runbooks/development-workflow.md`, `portfolio-publication.md`.
-8. Plantillas oficiales `D:\Projects\Bluemind_Lab\docs\templates\` (`P-xx-package.md`, `task.md`, `retorno-architect.md`, `readme-github.md`).
+8. Plantillas oficiales `<LAB_ROOT>\docs\templates\` (`P-xx-package.md`, `task.md`, `retorno-architect.md`, `readme-github.md`).
 
 ### 1.1 Decisiones ya aprobadas que NO se reabrieron
 
@@ -167,3 +167,14 @@ Se detiene la ejecución aquí, según `WORKFLOW.md` §1 (condiciones de retorno
 - **Estado:** `Pendiente revisión CTO y Gate 1`.
 - **Siguiente acción del CTO:** revisar consistencia de los borradores, resolver A-01…A-07 si lo considera material, consolidar `docs/sdd/`, presentar a Lino para Gate 1 y —solo entonces— preparar `P-00`.
 - **No repetir:** dar por aprobado el SDD, redactar `P-00` ni iniciar Fase 0 sin Gate 1.
+
+---
+
+## Addendum de anonimización P4 (F05-T02, 2026-11-18)
+
+En el marco de la tarea `F05-T02` (política P4 / G-6b) se sustituyeron las rutas
+absolutas del entorno de desarrollo por marcadores: `<PROJECT_ROOT>`,
+`<LAB_ROOT>`, `<DOCKER_CLI_DIR>`, `<TF_CLI_DIR>`, `<NPM_CACHE_DIR>` y
+`<USER_HOME>`. La sustitución fue **mecánica y exclusiva de esas rutas**: no se
+modificaron hallazgos, severidades, cifras, conclusiones ni el historial
+append-only. Este addendum conserva la trazabilidad del reemplazo.

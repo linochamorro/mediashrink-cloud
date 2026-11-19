@@ -10,7 +10,7 @@
 ## 1. Criterio (`CA-02`)
 1. **F03-AUD-03** (MEDIUM): validar en `frontend/` que toda URL presignada (PUT de subida, preview/descarga, ZIP) sea `https:` con hostname permitido, sin usuario/contraseña embebidos, y fallar de forma segura ante `javascript:`/HTTP/host ajeno. Añadir pruebas unitarias.
 2. **HeadObject en `raw` (bytesBefore)**: garantizar que el publicador enriquecido lee el tamaño real del objeto subido desde S3 (no del cuerpo declarado) y que la métrica persistida coincide; verificar con prueba de integración.
-3. **P4 anonimización**: sustituir rutas absolutas `D:/Projects/...` (y variantes con `\`) en `reports/` y evidencias G-6b por marcadores (`<PROJECT_ROOT>`, `<LAB_ROOT>`), **incluido el banner de Vitest** y los artefactos F04-T05 señalados por `F04T05-A-06`. No alterar el contenido sustantivo de hallazgos ni borrar historial append-only: usar addendum de anonimización cuando un archivo deba conservar su texto original.
+3. **P4 anonimización**: sustituir rutas absolutas `<PROJECT_ROOT>/...` (y variantes con `\`) en `reports/` y evidencias G-6b por marcadores (`<PROJECT_ROOT>`, `<LAB_ROOT>`), **incluido el banner de Vitest** y los artefactos F04-T05 señalados por `F04T05-A-06`. No alterar el contenido sustantivo de hallazgos ni borrar historial append-only: usar addendum de anonimización cuando un archivo deba conservar su texto original.
 4. **Auditoría final** de seguridad y privacidad con **0 CRITICAL/HIGH abiertos y 0 secretos**. Inventariar P4, riesgos LOW/INFO heredados y su disposición sin G-10.
 
 ## 2. Entradas y entorno

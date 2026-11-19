@@ -16,7 +16,7 @@ export function seedTestEnv(overrides: Record<string, string> = {}): Record<stri
     S3_BUCKET_OPTIMIZED: 'mediashrink-optimized-local',
     SQS_QUEUE_URL: 'https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs',
     SQS_DLQ_URL: 'https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq',
-    DYNAMODB_TABLE_JOBS: 'mediashrink-seed-demo',
+    DYNAMODB_TABLE_JOBS: 'mediashrink-jobs',
     ...overrides,
   };
 }

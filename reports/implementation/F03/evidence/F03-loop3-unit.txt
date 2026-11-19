@@ -6,7 +6,7 @@ npm error   npm init # Create a package.json file
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error Log files were not written due to an error writing to the directory: D:\Programs\DevApps\Cache\npm\_logs
+npm error Log files were not written due to an error writing to the directory: <NPM_CACHE_DIR>\_logs
 npm error You can rerun the command with `--loglevel=verbose` to see the logs in your terminal
 EXIT_CODE=1
 
@@ -17,7 +17,7 @@ COMMAND=npm run test:unit
 > vitest run tests/unit
 
 
- RUN  v2.1.9 D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud
+ RUN  v2.1.9 <PROJECT_ROOT>
 
  ✓ tests/unit/config.test.ts (35 tests) 91ms
  ✓ tests/unit/frontend/core.test.ts (11 tests) 42ms

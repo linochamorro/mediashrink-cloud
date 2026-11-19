@@ -1,0 +1,50 @@
+== CAPA 2+4 / Comando 2: npm run test:unit (suite unitaria completa de referencia 303/303)
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ✓ tests/unit/frontend/secure-url.test.ts (26 tests) 34ms
+ ✓ tests/unit/frontend/core.test.ts (11 tests) 45ms
+ ✓ tests/unit/config.test.ts (37 tests) 72ms
+ ✓ tests/unit/domain/imageHeader.test.ts (15 tests) 29ms
+ ✓ tests/unit/contracts.test.ts (32 tests) 63ms
+ ✓ tests/unit/api/userstore.test.ts (6 tests) 368ms
+   ✓ adaptador DynamoDB de UserStore (cierra T03-A-04) > AuthService registra y hace login sobre el adaptador DynamoDB 347ms
+ ✓ tests/unit/api/delete.test.ts (5 tests) 756ms
+ ✓ tests/unit/api/download.test.ts (7 tests) 936ms
+ ✓ tests/unit/auth/service.test.ts (10 tests) 1279ms
+   ✓ AuthService — registro, login y refresh (FR-01/FR-02/FR-03) > devuelve el mismo error para correo desconocido y contraseña incorrecta 432ms
+ ✓ tests/unit/api/zip.test.ts (6 tests) 963ms
+ ✓ tests/unit/api/routes.test.ts (8 tests) 1063ms
+ ✓ tests/unit/domain/stateMachine.test.ts (13 tests) 19ms
+ ✓ tests/unit/auth/jwt.test.ts (7 tests) 50ms
+ ✓ tests/unit/domain/antiBomb.test.ts (6 tests) 13ms
+ ✓ tests/unit/worker/antiBomb.test.ts (7 tests) 64ms
+ ✓ tests/unit/worker/processImage.test.ts (4 tests) 130ms
+ ✓ tests/unit/api/presign-routes.test.ts (12 tests) 1162ms
+ ✓ tests/unit/api/jobs-contract.test.ts (9 tests) 2986ms
+   ✓ F02-AUD-01 — POST /jobs contrato { files } → { job, uploads } > acepta todos los MIME raster permitidos y rechaza SVG/GIF/no-raster 1135ms
+   ✓ F02-AUD-01 — POST /jobs contrato { files } → { job, uploads } > valida fileName no vacío sin separadores, NUL ni %xx (sin usarlo en la clave) 1108ms
+ ✓ tests/unit/api/presign-keys.test.ts (30 tests) 21ms
+ ✓ tests/unit/api/authz.test.ts (5 tests) 933ms
+ ✓ tests/unit/domain/savings.test.ts (7 tests) 13ms
+ ✓ tests/unit/domain/index.test.ts (1 test) 12ms
+ ✓ tests/unit/auth/rate-limit.test.ts (5 tests) 10ms
+ ✓ tests/unit/api/rate-limit.test.ts (5 tests) 1122ms
+   ✓ rate limit no suplantable (cierra T03-A-01) > /auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 312ms
+ ✓ tests/unit/api/delete-partial.test.ts (3 tests) 424ms
+ ✓ tests/unit/api/zip-cap.test.ts (4 tests) 499ms
+ ✓ tests/unit/api/confirm.test.ts (3 tests) 436ms
+ ✓ tests/unit/domain/guards.test.ts (5 tests) 11ms
+ ✓ tests/unit/frontend.test.ts (3 tests) 9ms
+ ✓ tests/unit/auth/middleware.test.ts (3 tests) 10ms
+ ✓ tests/unit/auth/password.test.ts (6 tests) 817ms
+   ✓ hash de contraseñas — scrypt (A-02, IN-05) > verifica la contraseña correcta y rechaza una incorrecta 300ms
+ ✓ tests/unit/health.test.ts (2 tests) 11ms
+
+ Test Files  32 passed (32)
+      Tests  303 passed (303)
+   Start at  22:14:30
+   Duration  8.10s (transform 2.85s, setup 0ms, collect 16.80s, tests 14.36s, environment 12ms, prepare 7.66s)
+
+
+EXIT_CODE=0

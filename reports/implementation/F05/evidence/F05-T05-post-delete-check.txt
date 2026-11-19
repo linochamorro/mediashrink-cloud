@@ -1,0 +1,54 @@
+F05-T05 — Evidencia 3/9: comprobación post-borrado de temporary/ (G-11)
+Fecha: 2026-11-18 · Rol: Tester · Loop 1/3
+Rutas anonimizadas: <PROJECT_ROOT> = raíz autorizada del proyecto.
+
+COMANDO 1 (PowerShell — Test-Path y listado del padre):
+  $root = (Resolve-Path .).Path
+  Write-Output "TEST_PATH_TEMP=$(Test-Path -LiteralPath (Join-Path $root 'temporary'))"
+  Get-ChildItem -LiteralPath $root -Force | Select-Object -ExpandProperty Name
+
+SALIDA 1:
+  TEST_PATH_TEMP=False
+  --- listado del padre ---
+  .agents
+  .git
+  .github
+  .local
+  backend
+  coverage
+  docs
+  frontend
+  infra
+  node_modules
+  reports
+  tests
+  tools
+  .env.example
+  .gitignore
+  AGENTS.md
+  docker-compose.yml
+  LICENSE
+  package-lock.json
+  package.json
+  README.md
+  STATE.md
+  tsconfig.base.json
+
+EXIT_CODE=0
+  -> No aparece `temporary` en el listado del padre.
+
+COMANDO 2 (Git — estado general y trackeo tras el borrado):
+  git status --porcelain
+  git ls-files -- temporary
+
+SALIDA 2 (extracto relevante):
+  (git status sin ninguna entrada `temporary/` — los cambios listados pertenecen a otros roles/fases, sin relación con temporary/)
+  git ls-files -- temporary → sin salida
+  TRACKED_COUNT=0
+
+EXIT_CODE=0 (git status) / EXIT_CODE=0 (git ls-files)
+
+CONCLUSIÓN:
+  - Test-Path <PROJECT_ROOT>\temporary → False (ya no existe).
+  - El listado del padre confirma la ausencia total del directorio.
+  - 0 archivos trackeados de temporary/ antes y después → el borrado no afecta al historial de git.

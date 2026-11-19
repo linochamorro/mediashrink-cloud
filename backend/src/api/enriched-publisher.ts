@@ -6,7 +6,8 @@
  * completo con las imágenes. Este adaptador, dentro de `api/**`:
  *
  *   1. lee de S3 `raw` los objetos realmente subidos bajo
- *      `<userId>/<jobId>/raw/` (nunca el tamaño declarado por el cliente),
+ *      `<userId>/<jobId>/raw/` (nunca el tamaño declarado por el cliente) y
+ *      confirma su tamaño con `HeadObject` (F05-T02, cierre de F02-T06 A-02),
  *   2. construye el sobre con `contentBase64` y el preset del lote, y
  *   3. delega en `publishJob()` del publicador inyectado.
  *
@@ -15,7 +16,12 @@
  * `backend/src/db/**`.
  */
 
-import { GetObjectCommand, ListObjectsV2Command, type S3Client } from '@aws-sdk/client-s3';
+import {
+  GetObjectCommand,
+  HeadObjectCommand,
+  ListObjectsV2Command,
+  type S3Client,
+} from '@aws-sdk/client-s3';
 
 import type { AppConfig } from '../config/index';
 import type { JobStore } from '../db/types';
@@ -27,6 +33,19 @@ import type { JobConfirmationMessage, JobQueuePublisher } from './publisher';
 /** Capacidad mínima del publicador de `worker/**` que este adaptador aprovecha. */
 export interface JobEnvelopePublisher {
   publishJob(message: JobQueueMessage): Promise<void>;
+}
+
+/**
+ * F05-T02: el tamaño confirmado por `HeadObject` no coincide con los bytes
+ * leídos por `GetObject`. Se lanza antes de publicar (fail-closed) para que la
+ * métrica `bytesBefore` nunca provenga de un sobre desactualizado/manipulado.
+ * El mensaje no incluye claves ni identificadores (G-3).
+ */
+export class RawObjectSizeMismatchError extends Error {
+  constructor() {
+    super('El tamaño confirmado del objeto raw no coincide con los bytes leídos');
+    this.name = 'RawObjectSizeMismatchError';
+  }
 }
 
 export interface S3EnrichedPublisherOptions {
@@ -80,11 +99,28 @@ export function createS3EnrichedPublisher(options: S3EnrichedPublisherOptions): 
         assertKeyWithinPrefix(key, message.userId);
         const imageId = key.slice(prefix.length);
         assertSafeKeySegment(imageId, 'imageId');
+
+        // F05-T02 / auditoría F02-T06 A-02: la fuente de verdad es el objeto
+        // persistido en `raw`, nunca el `sizeBytes` declarado por el cliente ni
+        // el contenido de un sobre viejo. HeadObject confirma el tamaño real.
+        const head = await getS3().send(new HeadObjectCommand({ Bucket: rawBucket, Key: key }));
+        const contentLength = head.ContentLength;
+        if (
+          typeof contentLength !== 'number' ||
+          !Number.isSafeInteger(contentLength) ||
+          contentLength < 0
+        ) {
+          throw new RawObjectSizeMismatchError();
+        }
+
         const object = await getS3().send(new GetObjectCommand({ Bucket: rawBucket, Key: key }));
         if (object.Body === undefined) continue;
         // Bytes exactos del objeto: ni mimeType ni filename (el worker detecta
         // el formato por magic bytes y un filename sin extensión lo rechazaría).
         const bytes = Buffer.from(await object.Body.transformToByteArray());
+        // Fail-closed: si el objeto cambió entre HeadObject y GetObject, no se
+        // publica un sobre cuya métrica no corresponda al artefacto persistido.
+        if (bytes.byteLength !== contentLength) throw new RawObjectSizeMismatchError();
         images.push({
           imageId,
           contentBase64: bytes.toString('base64'),

@@ -1,0 +1,91 @@
+== CAPA 5 / Pila real de QA (sin mocks): arranque, health y desviaciones
+Fecha de ejecución: 2026-11-18/19 · Gates: G-7 (Docker con límites del compose), G-12 RETENIDO (sin push)
+
+== Comando 1: docker compose up -d   (G-7: memory=2g, cpus=2.0, user=1000:1000)
+> docker compose up -d
+Contenedor mediashrink-aws-emulator levantado y `healthy` (arranque de la sesión QA).
+EXIT_CODE=0
+
+== Comando 2: exportación de CA/config/credenciales (volumen named; se repite en cada arranque)
+> docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/ca.pem ./.local/aws-emulator/ca.pem
+> docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/config ./.local/aws-emulator/config
+> docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/emulator_credentials ./.local/aws-emulator/emulator_credentials
+Las tres copias completadas (EXIT_CODE=0 x3); el spec relee ca.pem en cada petición al relay.
+EXIT_CODE=0
+
+== Comando 3: healthcheck del emulador con su propia CA
+> curl.exe --cacert ./.local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health
+ok
+EXIT_CODE=0
+
+== Comando 4: estado de la pila durante la corrida QA
+> docker compose ps
+NAME                       IMAGE                                         SERVICE        STATUS                PORTS
+mediashrink-aws-emulator   ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8…  aws-emulator   Up 2 hours (healthy)  127.0.0.1:9297->9297/tcp
+EXIT_CODE=0
+
+== Comando 5: infraestructura real con Terraform (contra el emulador)
+> terraform -chdir=infra/terraform apply -auto-approve
+Referencia: cap1-02-apply.txt → Resources: 11 added, 0 changed, 0 destroyed
+EXIT_CODE=0
+
+== Comando 6: backend real (Hono + worker SQS interno) arrancado desde la raíz
+> npx tsx backend/src/server.ts
+BACKEND_ENV_LOADED port=3001 table=mediashrink-jobs
+RATE_LIMIT_AUTH_MAX_QA=1000
+F05_SERVER_READY {"port":3001,"retentionDays":30}
+(EXIT_CODE=0 · proceso en segundo plano durante toda la corrida QA; el loop interno drena la cola cada 2 s)
+Lanzador en el temp del sistema (<SYSTEM_TEMP>/start-backend.ps1): carga .env, fija RATE_LIMIT_AUTH_MAX=1000
+solo en este proceso y ejecuta el mismo binario que `npm run dev:backend`.
+
+== Comando 7: SPA real (Vite) con proxy same-origin /auth y /jobs
+> node ./tests/e2e/vite-webserver.mjs
+FRONTEND_START port=5173 proxyTo=3001
+F03 mock frontend listening on 127.0.0.1:5173
+(EXIT_CODE=0 · el rótulo "mock frontend" es el nombre del script F03: sirve la SPA REAL de frontend/dist
+ con proxy al backend; no sustituye ninguna llamada de API. Puerto 5173 = origen exacto del CORS de S3.)
+
+== Comando 8: health del backend
+> Invoke-WebRequest http://127.0.0.1:3001/health
+BACKEND 200 {"status":"ok"}
+EXIT_CODE=0
+
+== Comando 9: health de la SPA
+> Invoke-WebRequest http://127.0.0.1:5173/
+FRONTEND 200 len=757
+EXIT_CODE=0
+
+== Comando 10: registro previo de bruno.demo@example.com por la API real (requisito del escenario 11)
+> POST http://127.0.0.1:3001/auth/register  body={"email":"bruno.demo@example.com","password":"DemoBruno2026!"}
+HTTP 201 · {"user":{"userId":"dddffa06-62ea-4a99-ad50-aead378c1361","email":"bruno.demo@example.com","createdAt":"2026-11-19T04:12:23.517Z"}}
+(los tokens JWT devueltos NO se conservan en la evidencia: credenciales efímeras, G-3)
+EXIT_CODE=0
+
+== Comando 11: verificación de cuentas antes de la corrida
+> POST http://127.0.0.1:3001/auth/login  ana.demo@example.com / DemoAna2026!        → 401  (aún no registrada)
+> POST http://127.0.0.1:3001/auth/login  bruno.demo@example.com / DemoBruno2026!    → 200  (registrada en el Comando 10)
+> POST http://127.0.0.1:3001/auth/login  ana.demo@example.com / PasswordIncorrecta… → 401  (mismo código que credencial desconocida: sin oráculo)
+EXIT_CODE=0
+
+== Comando 12: corrida Playwright CLI (Capa 5, ver cap5-01-playwright.txt)
+> npx playwright test tests/e2e/qa-roadmap.spec.ts --config=tests/e2e/playwright.qa-roadmap.config.ts
+EXIT_CODE=0 · 1 passed (21.5s) · 12/12 PNG emitidos
+
+== DESVIACIONES DOCUMENTADAS (por qué no se usaron los atajos habituales)
+D-1 · Backend: `npm run dev:backend` NO sirve para QA. `npm --workspace` cambia el cwd a backend/ y `.env`
+      usa rutas RELATIVAS a la raíz (.local/aws-emulator/*), lo que produce `F05_RUNTIME_FAILED`. Se usa
+      `npx tsx backend/src/server.ts` desde <PROJECT_ROOT> (mismo binario, mismas variables).
+D-2 · CORS: `backend/src` NO declara middleware CORS (solo la config `corsOrigin` en config/index.ts, sin
+      `hono/cors` ni cabeceras `Access-Control-*`). Por eso la SPA se sirve con vite-webserver.mjs en el
+      5173 proxificando /auth y /jobs al 3001 (same-origin). `npm run dev:frontend` a solas no funcionaría
+      desde el navegador. El preflight de S3 lo resuelve el relay del spec (D-5).
+D-3 · Seed: `npm run seed` escribe en su tabla propia `mediashrink-seed-demo` (tools/scripts/seed/store.ts:24
+      SEED_TABLE_NAME), mientras la aplicación usa `mediashrink-jobs`. Por eso las cuentas seed NO autentican
+      (login ana.demo → 401, Comando 11). Los escenarios 03 y 11 registran las MISMAS cuentas ficticias
+      mediante el registro real de la UI/API; el escenario 03 es idempotente ante corridas repetidas (409 →
+      acceso con la misma cuenta).
+D-4 · Rate limit: RATE_LIMIT_AUTH_MAX=1000 se inyecta SOLO en el proceso backend de esta corrida QA (mismo
+      criterio aceptado en F05-T01). El default de producto (5) y `.env.example` quedan intactos.
+D-5 · Emulador S3: no implementa OPTIONS/CORS. El spec instala un relay de transporte en el contexto del
+      navegador (misma URL firmada, mismo cuerpo, respuesta real + solo cabeceras CORS). NO hay dobles de API:
+      todas las respuestas de negocio salen del backend real y todos los bytes salen del emulador.

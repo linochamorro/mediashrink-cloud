@@ -1,0 +1,24 @@
+TESTER F05-H01 — SUITE (ejecucion propia, exit codes propios)
+Fecha: 2026-11-19 · <PROJECT_ROOT>
+
+npm run typecheck → EXIT 0 (tsc backend + frontend, sin diagnosticos)
+npm run lint      → EXIT 0 (eslint, sin hallazgos)
+npm run build     → EXIT 0 (frontend vite 1.20s + backend tsc --noEmit)
+
+npm run test:unit → EXIT 0 · Test Files 34 passed (34) · Tests 310 passed (310)
+  Duracion ~10.5s. Incluye seed-table 3/3 y security-headers 4/4.
+
+npx vitest run tests/integration (intento 1) → EXIT 1 · 13 ficheros FAILED,
+  17 failed / 60 passed / 24 skipped (101): causa ECONNREFUSED 127.0.0.1:9297 —
+  el contenedor mediashrink-aws-emulator habia desaparecido (docker ps -a ya
+  no lo listaba; solo quedaba el contenedor ajeno preexistente). No es fallo
+  de producto: entorno G-7 caido a mitad de sesion.
+  Accion: docker compose up -d → healthy; docker cp ×3; healthcheck ok;
+  terraform apply → 11 added, 0 changed, 0 destroyed; npm run seed →
+  Tabla DynamoDB: mediashrink-jobs, 3/3/6 creados, total 0 → 12.
+
+npx vitest run tests/integration (intento 2, emulador sano) → EXIT 0
+  Test Files 24 passed (24) · Tests 101 passed (101) · Duracion ~60.7s.
+
+Cifras finales propias: typecheck 0 · lint 0 · build 0 ·
+  unit 310/310 (34 f.) · integration 101/101 (24 f.).

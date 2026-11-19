@@ -1,0 +1,10 @@
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed 
+DOWN_EXIT=0
+NAME      IMAGE     COMMAND   SERVICE   CREATED   STATUS    PORTS
+PS_EXIT=0
+dazzling_edison

@@ -1,5 +1,5 @@
 
-[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
 
  [32mÔ£ô[39m tests/integration/worker/consumer.test.ts [2m([22m[2m9 tests[22m[2m | [22m[33m8 skipped[39m[2m)[22m[33m 6284[2mms[22m[39m
    [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-01 redelivery: un job terminal no se reabre y la DLQ no se duplica [33m6283[2mms[22m[39m

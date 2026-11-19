@@ -1,0 +1,71 @@
+F05-T05 — Evidencia 1/9: verificación de la ruta real de temporary/ (G-11)
+Fecha: 2026-11-18 · Rol: Tester · Loop 1/3
+Rutas anonimizadas: <PROJECT_ROOT> = raíz autorizada del proyecto.
+
+COMANDO 1 (PowerShell):
+  $root = (Resolve-Path .).Path
+  $tmp = Join-Path $root 'temporary'
+  Write-Output "ROOT=$root"; Write-Output "TEMP_PATH=$tmp"
+  Write-Output "EXISTS=$(Test-Path -LiteralPath $tmp)"
+  $items = @(Get-ChildItem -LiteralPath $tmp -Force)
+  Write-Output "ITEM_COUNT=$($items.Count)"
+
+SALIDA 1:
+  ROOT=<PROJECT_ROOT>
+  TEMP_PATH=<PROJECT_ROOT>\temporary
+  EXISTS=True
+  ITEM_COUNT=67
+EXIT_CODE=0
+
+COMANDO 2 (PowerShell — conteo recursivo y ubicación):
+  $rec = @(Get-ChildItem -LiteralPath $tmp -Force -Recurse)
+  $files = @($rec | Where-Object { -not $_.PSIsContainer })
+  Write-Output "TOP=... RECURSIVE=$($rec.Count)"
+  Write-Output "FILES=$($files.Count) DIRS=$($rec.Count - $files.Count)"
+  $tmp2 = (Get-Item -LiteralPath $tmp)
+  Write-Output "FULLNAME=$($tmp2.FullName)"; Write-Output "PARENT=$($tmp2.Parent.FullName)"
+  Write-Output "IS_UNDER_ROOT=$($tmp2.FullName.StartsWith($root))"
+
+SALIDA 2:
+  TOP=67 RECURSIVE=73
+  FILES=71 DIRS=2
+  FULLNAME=<PROJECT_ROOT>\temporary
+  PARENT=<PROJECT_ROOT>
+  IS_UNDER_ROOT=True
+EXIT_CODE=0
+  -> 73 ítems en total (67 en el nivel superior + 6 dentro de 2 subdirectorios).
+
+COMANDO 3 (PowerShell — .gitignore):
+  Select-String -Path .gitignore -Pattern 'temporary' | ForEach-Object { $_.Line }
+
+SALIDA 3:
+  temporary/
+EXIT_CODE=0
+
+COMANDO 4 (Git — archivos trackeados bajo temporary/):
+  git ls-files -- temporary
+
+SALIDA 4:
+  (sin salida — 0 líneas)
+EXIT_CODE=0
+  TRACKED_COUNT=0
+
+COMANDO 5 (Git — confirmación de ignorado):
+  git check-ignore -v temporary/
+
+SALIDA 5:
+  .gitignore:40:temporary/	temporary/
+EXIT_CODE=0
+
+COMANDO 6 (Git — estado de temporary/):
+  git status --porcelain -- temporary
+
+SALIDA 6:
+  (sin salida — sin cambios trackeados ni no ignorados)
+EXIT_CODE=0
+
+CONCLUSIÓN:
+  - Ruta real: <PROJECT_ROOT>\temporary, dentro de la raíz autorizada (IS_UNDER_ROOT=True).
+  - .gitignore regla `temporary/` en línea 40 → ignorada (check-ignore exit 0).
+  - git ls-files temporary → 0 archivos trackeados → el borrado no pierde historial git.
+  - 73 ítems presentes antes del borrado.

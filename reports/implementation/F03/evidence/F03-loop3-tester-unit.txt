@@ -5,7 +5,7 @@ START=2026-11-17T22:37:37.5573502-05:00
 > vitest run tests/unit
 
 
- RUN  v2.1.9 D:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud
+ RUN  v2.1.9 <PROJECT_ROOT>
 
  ✓ tests/unit/config.test.ts (35 tests) 59ms
  ✓ tests/unit/domain/imageHeader.test.ts (15 tests) 30ms

@@ -1,0 +1,15 @@
+== CAPA 6 / Comando 3: escaneo final del informe Tester (G-3 / G-6b) ==
+> PowerShell: patrones de secreto y rutas absolutas sobre F05-QA-roadmap-tester.md
+
+Informe presente: True
+ruta-Windows-absoluta  -> 0 (PASS)
+ruta-Usuarios          -> 0 (PASS)
+JWT                    -> 0 (PASS)
+clave-AWS-AKIA         -> 0 (PASS)
+clave-privada-PEM      -> 0 (PASS)
+token-de-acceso        -> 0 (PASS)
+
+TOTAL HALLAZGOS: 0
+Lineas del informe: 158
+
+EXIT_CODE=0

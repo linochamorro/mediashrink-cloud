@@ -31,7 +31,7 @@ Vigente desde: 2026-11-17 · Coordinación global: CTO (Atenea) · Aprobación d
 - **G-6 (Git/GitHub):** **AUTORIZADO desde Fase 0**.
 - **G-6b (Archivos de agentes/IA en GitHub):** **PERMITIDO SUBIR** (`AGENTS.md`, `STATE.md`, `.agents/`, `docs/sdd/`, `reports/` serán visibles en GitHub para mostrar el flujo de ingeniería asistido por IA).
 - **G-7 (Docker / `aws/aws-emulator`):** **AUTORIZADO** con límites de recursos (`--memory=2g --cpus="2.0"`), levantando el contenedor solo durante pruebas/desarrollo y apagándolo al terminar.
-- **Confinamiento:** todo trabajo y borrado se limita a `D:\Projects\Bluemind_Lab\projects\portfolio\mediashrink-cloud`.
+- **Confinamiento:** todo trabajo y borrado se limita a la raíz autorizada del proyecto (`<PROJECT_ROOT>`).
 
 ## 6. Comandos comprobados
 *Validados en Fase 0 (`P-00`). Ejecutar siempre desde la raíz del proyecto.*

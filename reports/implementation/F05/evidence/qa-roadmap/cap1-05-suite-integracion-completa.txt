@@ -1,0 +1,76 @@
+== CAPA 1-4 / Comando 8: npx vitest run tests/integration (suite de integracion completa de referencia 100/100)
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ✓ tests/integration/auth/routes.test.ts (9 tests) 977ms
+ ✓ tests/integration/infra/resources.test.ts (4 tests) 8607ms
+   ✓ infra aplicada contra aws/aws-emulator > la política IAM se deriva de los recursos reales, sin comodines amplios 8202ms
+ ✓ tests/integration/api/presign.test.ts (5 tests) 7040ms
+ ✓ tests/integration/api/download.test.ts (4 tests) 7809ms
+   ✓ Descarga/ZIP/borrado reales en aws-emulator (CA-05) > descarga individual: la URL firmada devuelve los bytes reales de cada variante 608ms
+   ✓ Descarga/ZIP/borrado reales en aws-emulator (CA-05) > ZIP: contiene WebP + AVIF + miniaturas reales del lote 323ms
+ ✓ tests/integration/worker/publisher.test.ts (5 tests) 617ms
+ ✓ tests/integration/db/job-store.test.ts (8 tests) 6346ms
+ ✓ tests/integration/worker/observability.test.ts (1 test) 6485ms
+   ✓ summarizeConsumeResult — observabilidad E2E (CA-06) > expone los tres campos de resiliencia de T04 en un snapshot serializable 6483ms
+ ✓ tests/integration/api/routes.test.ts (6 tests) 6958ms
+ ✓ tests/integration/api/enriched-headobject.test.ts (3 tests) 17421ms
+   ✓ F05-T02 — HeadObject en raw para bytesBefore > el publicador enriquecido consulta HeadObject y el sobre lleva los bytes reales, no el declarado 6640ms
+   ✓ F05-T02 — HeadObject en raw para bytesBefore > un sobre declarado distinto al objeto persistido conserva bytesBefore real en DynamoDB 4684ms
+   ✓ F05-T02 — HeadObject en raw para bytesBefore > falla cerrado si HeadObject y GetObject divergen en el tamaño 6095ms
+ ✓ tests/integration/api/e2e-persist.test.ts (3 tests) 17820ms
+   ✓ F02-T06 loop 2 — variantes persistidas y métricas ancladas a S3 (A-01) > las 3 variantes existen en optimized y suma(HeadObject.ContentLength) === job.bytesAfter 6964ms
+   ✓ F02-T06 loop 2 — variantes persistidas y métricas ancladas a S3 (A-01) > GET /jobs/:id/download/:imageId devuelve los bytes exactos de cada objeto persistido 4176ms
+   ✓ F02-T06 loop 2 — variantes persistidas y métricas ancladas a S3 (A-01) > GET /jobs/:id/download.zip contiene WebP, AVIF y miniatura idénticos a los objetos persistidos 6678ms
+ ✓ tests/integration/worker/metadata.test.ts (3 tests) 87ms
+ ✓ tests/integration/auth/isolation.test.ts (4 tests) 458ms
+stdout | tests/integration/infra/retention-guard.test.ts > retention_days=30 coincide en Terraform, .env.example y el catálogo congelado
+RETENTION_GUARD: {"EXPECTED_DAYS":30,"EXPECTED_TTL_SECONDS":2592000,"ENV_RETENTION_DAYS":30,"CATALOG_RETENTION_DAYS":30,"CATALOG_TTL_SECONDS":2592000,"TF_DEFAULT_RETENTION_DAYS":30,"TF_APPLIED_RETENTION_DAYS":30,"TF_APPLIED_TTL_SECONDS":2592000}
+
+ ✓ tests/integration/infra/retention-guard.test.ts (1 test) 1352ms
+   ✓ retention_days=30 coincide en Terraform, .env.example y el catálogo congelado 1350ms
+ ✓ tests/integration/db/isolation.test.ts (6 tests) 6412ms
+ ✓ tests/integration/api/jobs-contract.test.ts (3 tests) 6711ms
+ ✓ tests/integration/worker/pipeline.test.ts (4 tests) 120ms
+ ✓ tests/integration/seed/idempotence.test.ts (5 tests) 9609ms
+   ✓ F01-T04 — seed sintético idempotente (CA-04) > --dry-run no escribe nada en el emulador 727ms
+   ✓ F01-T04 — seed sintético idempotente (CA-04) > crea usuarios con hash scrypt de T03 e imágenes sintéticas reales 1116ms
+   ✓ F01-T04 — seed sintético idempotente (CA-04) > una segunda ejecución no duplica usuarios ni ítems 912ms
+   ✓ F01-T04 — seed sintético idempotente (CA-04) > recupera un lote sembrado a medias sin duplicar usuarios ni jobs 792ms
+stdout | tests/integration/infra/gsi.test.ts > DescribeTable: la tabla de jobs no declara índices secundarios globales
+GSI_COUNT: 0
+
+ ✓ tests/integration/infra/gsi.test.ts (1 test) 100ms
+ ✓ tests/integration/db/ttl.test.ts (5 tests) 6167ms
+ ✓ tests/integration/api/userstore.test.ts (3 tests) 6326ms
+ ✓ tests/integration/worker/metrics-coherence.test.ts (2 tests) 12261ms
+   ✓ métricas reales y coherentes en DynamoDB (PR-12) > 0 %: bytesBefore = bytesAfter se persiste como 0, sin redondeos ni recorte 6114ms
+   ✓ métricas reales y coherentes en DynamoDB (PR-12) > negativo: bytesAfter > bytesBefore se persiste tal cual (-50 %), nunca se oculta 6145ms
+ ✓ tests/integration/api/e2e-metrics.test.ts (5 tests) 31555ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > flujo completo: los bytes persistidos son los reales de S3, con savingsPct exacto y exifStripped real 7138ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > exifStripped: true solo después de verificar que las tres salidas no contienen metadatos 4122ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > estados coherentes: una imagen FAILED produce PARTIAL y todas FAILED producen FAILED 7102ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > observabilidad: dlqFailures y dlqDeliveryFailed se aíslan y skippedAsDuplicate se reporta 6808ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > CONFIRM_INCONSISTENT: política at-most-once, sin reparación automática 6383ms
+stdout | tests/integration/seed/db-check.test.ts > F01-T04 — comprobación del estado en DynamoDB > el emulador contiene exactamente 3 usuarios, 3 jobs y 6 imágenes
+DB-CHECK tabla=mediashrink-seed-demo-dbcheck usuarios=3 jobs=3 imagenes=6 total=12
+
+ ✓ tests/integration/seed/db-check.test.ts (1 test) 7075ms
+ ✓ tests/integration/worker/consumer.test.ts (9 tests) 56282ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > mensaje válido: procesa, marca COMPLETED con métricas y elimina el mensaje de la cola 6840ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > reintento transitorio: 2 fallos y éxito en el 3º intento, sin DLQ 4174ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > reintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta) 6130ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > fallo parcial: imagen fallida va a DLQ y FAILED; las demás del lote se completan 6590ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > el mensaje válido se consume y elimina; no hay bucle infinito ni duplicados 6439ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > siempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado 6419ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > A-01 redelivery: un job terminal no se reabre y la DLQ no se duplica 6410ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > A-02 fallo de la DLQ: se aísla, se registra y el resto del lote continúa 6959ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > A-03 precondición: el consumidor materializa el ImageRecord si falta 6317ms
+
+ Test Files  24 passed (24)
+      Tests  100 passed (100)
+   Start at  22:15:14
+   Duration  60.28s (transform 7.98s, setup 0ms, collect 24.64s, tests 224.59s, environment 8ms, prepare 4.34s)
+
+
+EXIT_CODE=0

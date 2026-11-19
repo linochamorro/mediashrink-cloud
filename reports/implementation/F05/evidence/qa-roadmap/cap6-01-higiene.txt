@@ -1,0 +1,35 @@
+== CAPA 6 / Comando 1: higiene de los artefactos nuevos (G-3 / G-6b)
+> PowerShell: escaneo de patrones de secreto y de rutas absolutas en *.txt/*.md/*.json de la
+> carpeta de evidencia + tests/e2e/qa-roadmap.spec.ts + tests/e2e/playwright.qa-roadmap.config.ts
+> Patrones: [A-Za-z]:\segmento (ruta Windows) · eyJhbGciOi (JWT) · AKIA… (clave AWS) · -----BEGIN (PEM) · Bearer <token>
+
+Archivos escaneados: 19
+
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap1-01-fmt-validate.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap1-02-apply.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap1-03-state-checks.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap1-04-integration-infra.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap1-05-suite-integracion-completa.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap2-01-seed-idempotente.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap2-02-vitest-contracts-auth-db.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap2-03-suite-unit-completa.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap3-01-vitest-api.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap3-02-vitest-api-unit.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap4-01-vitest-worker.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap5-00-stack.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap5-01-playwright-intento1-fallido.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap5-01-playwright-intento2-fallido.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap5-01-playwright.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\cap5-02-png-check.txt
+PASS  reports\implementation\F05\evidence\qa-roadmap\playwright-results\.last-run.json
+PASS  tests\e2e\playwright.qa-roadmap.config.ts
+PASS  tests\e2e\qa-roadmap.spec.ts
+
+TOTAL HALLAZGOS: 0
+
+temporary/ inexistente (G-11): PASS (ausente)
+.env local presente (NO versionado; solo .env.example): PASS (presente en disco, fuera de git)
+.env.example presente: True
+Cuentas ficticias usadas (no son secretos): ana.demo@example.com · bruno.demo@example.com · carla.demo@example.com (sin usar)
+
+EXIT_CODE=0

@@ -1,0 +1,222 @@
+﻿F05-T02 - VERIFICACION INDEPENDIENTE DEL TESTER (HeadObject / emulador real)
+Fecha: 2026-11-18 19:56:48
+
+===== ESTADO PREVIO =====
+dazzling_edison Up 2 hours
+
+
+===== COMPOSE CONFIG (limites G-7) =====
+CMD: docker compose config
+name: mediashrink-cloud
+services:
+  aws-emulator:
+    deploy:
+      resources:
+        limits:
+          cpus: 2
+          memory: "2147483648"
+    restart: 'no'
+    container_name: mediashrink-aws-emulator
+    cpus: 2
+    command:
+      - -p
+      - "9297"
+    environment:
+      EMULATOR_HEALTHCHECK_PORT: "9297"
+      EMULATOR_TELEMETRY: 'off'
+      HOME: /home/emulator
+    image: ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376
+    mem_limit: "2147483648"
+    memswap_limit: "2147483648"
+    networks:
+      default: null
+    stop_grace_period: 10s
+    volumes:
+      - type: volume
+        source: aws-emulator-data
+        target: /home/emulator/.aws/emulator
+        volume: {}
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --silent --fail --cacert /home/emulator/.aws/emulator/9297/ca.pem https://127.0.0.1:9297/__admin/health
+          >/dev/null || exit 1
+      timeout: 5s
+      interval: 5s
+      retries: 12
+      start_period: 20s
+    ports:
+      - mode: ingress
+        host_ip: 127.0.0.1
+        target: 9297
+        published: "9297"
+        protocol: tcp
+networks:
+  default:
+    name: mediashrink-cloud_default
+volumes:
+  aws-emulator-data:
+    name: mediashrink-cloud_aws-emulator-data
+
+EXIT_CODE=0
+
+===== UP (G-7, limites 2g/2.0) =====
+CMD: docker compose up -d
+cmd.exe :  Network mediashrink-cloud_default Creating 
+En <PROJECT_ROOT>\temporary\F05-T02-tester-emulator.ps1: 18 Carácter: 10
++   $out = & cmd /c $cmd 2>&1 | Out-String -Width 500
++          ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Network medias...fault Creating :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Created 
+ Network mediashrink-cloud_default Created 
+ Container mediashrink-aws-emulator Creating 
+ Container mediashrink-aws-emulator Created 
+ Container mediashrink-aws-emulator Starting 
+ Container mediashrink-aws-emulator Started 
+
+EXIT_CODE=0
+
+HEALTHY=True
+
+===== INSPECT (limites efectivos) =====
+memory=2147483648 nanoCpus=2000000000 user=1000:1000
+
+
+===== DOCKER CP ca.pem =====
+CMD: docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/ca.pem ./.local/aws-emulator/ca.pem
+
+EXIT_CODE=0
+
+===== DOCKER CP config =====
+CMD: docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/config ./.local/aws-emulator/config
+
+EXIT_CODE=0
+
+===== DOCKER CP emulator_credentials =====
+CMD: docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/emulator_credentials ./.local/aws-emulator/emulator_credentials
+
+EXIT_CODE=0
+
+===== HEALTHCHECK HTTPS con CA =====
+CMD: curl.exe --silent --show-error --fail --cacert ./.local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health
+ok
+
+EXIT_CODE=0
+
+===== HEADOBJECT FOCAL: declaredBytes 1 y 7 vs bytes reales =====
+CMD: npx vitest run tests/integration/api/enriched-headobject.test.ts
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ✓ tests/integration/api/enriched-headobject.test.ts (3 tests) 20906ms
+   ✓ F05-T02 — HeadObject en raw para bytesBefore > el publicador enriquecido consulta HeadObject y el sobre lleva los bytes reales, no el declarado 7843ms
+   ✓ F05-T02 — HeadObject en raw para bytesBefore > un sobre declarado distinto al objeto persistido conserva bytesBefore real en DynamoDB 6881ms
+   ✓ F05-T02 — HeadObject en raw para bytesBefore > falla cerrado si HeadObject y GetObject divergen en el tamaño 6181ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  19:57:01
+   Duration  23.42s (transform 675ms, setup 0ms, collect 1.86s, tests 20.91s, environment 0ms, prepare 219ms)
+
+
+EXIT_CODE=0
+
+===== REGRESION integracion sin infra/** =====
+CMD: npx vitest run tests/integration --exclude "tests/integration/infra/**"
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ✓ tests/integration/auth/routes.test.ts (9 tests) 1110ms
+ ✓ tests/integration/worker/publisher.test.ts (5 tests) 556ms
+ ✓ tests/integration/api/presign.test.ts (5 tests) 7131ms
+ ✓ tests/integration/api/download.test.ts (4 tests) 7751ms
+   ✓ Descarga/ZIP/borrado reales en aws-emulator (CA-05) > descarga individual: la URL firmada devuelve los bytes reales de cada variante 606ms
+   ✓ Descarga/ZIP/borrado reales en aws-emulator (CA-05) > ZIP: contiene WebP + AVIF + miniaturas reales del lote 307ms
+ ✓ tests/integration/db/job-store.test.ts (8 tests) 6351ms
+ ✓ tests/integration/worker/observability.test.ts (1 test) 6580ms
+   ✓ summarizeConsumeResult — observabilidad E2E (CA-06) > expone los tres campos de resiliencia de T04 en un snapshot serializable 6578ms
+ ✓ tests/integration/api/routes.test.ts (6 tests) 6992ms
+ ✓ tests/integration/seed/idempotence.test.ts (5 tests) 9658ms
+   ✓ F01-T04 — seed sintético idempotente (CA-04) > --dry-run no escribe nada en el emulador 1008ms
+   ✓ F01-T04 — seed sintético idempotente (CA-04) > crea usuarios con hash scrypt de T03 e imágenes sintéticas reales 985ms
+   ✓ F01-T04 — seed sintético idempotente (CA-04) > una segunda ejecución no duplica usuarios ni ítems 683ms
+   ✓ F01-T04 — seed sintético idempotente (CA-04) > recupera un lote sembrado a medias sin duplicar usuarios ni jobs 716ms
+ ✓ tests/integration/api/enriched-headobject.test.ts (3 tests) 19762ms
+   ✓ F05-T02 — HeadObject en raw para bytesBefore > el publicador enriquecido consulta HeadObject y el sobre lleva los bytes reales, no el declarado 6798ms
+   ✓ F05-T02 — HeadObject en raw para bytesBefore > un sobre declarado distinto al objeto persistido conserva bytesBefore real en DynamoDB 6723ms
+   ✓ F05-T02 — HeadObject en raw para bytesBefore > falla cerrado si HeadObject y GetObject divergen en el tamaño 6240ms
+ ✓ tests/integration/worker/metadata.test.ts (3 tests) 369ms
+ ✓ tests/integration/api/e2e-persist.test.ts (3 tests) 21109ms
+   ✓ F02-T06 loop 2 — variantes persistidas y métricas ancladas a S3 (A-01) > las 3 variantes existen en optimized y suma(HeadObject.ContentLength) === job.bytesAfter 7158ms
+   ✓ F02-T06 loop 2 — variantes persistidas y métricas ancladas a S3 (A-01) > GET /jobs/:id/download/:imageId devuelve los bytes exactos de cada objeto persistido 7033ms
+   ✓ F02-T06 loop 2 — variantes persistidas y métricas ancladas a S3 (A-01) > GET /jobs/:id/download.zip contiene WebP, AVIF y miniatura idénticos a los objetos persistidos 6915ms
+ ✓ tests/integration/db/isolation.test.ts (6 tests) 6342ms
+ ✓ tests/integration/auth/isolation.test.ts (4 tests) 534ms
+ ✓ tests/integration/api/jobs-contract.test.ts (3 tests) 6769ms
+ ✓ tests/integration/worker/pipeline.test.ts (4 tests) 132ms
+ ✓ tests/integration/db/ttl.test.ts (5 tests) 6195ms
+ ✓ tests/integration/api/userstore.test.ts (3 tests) 6301ms
+stdout | tests/integration/seed/db-check.test.ts > F01-T04 — comprobación del estado en DynamoDB > el emulador contiene exactamente 3 usuarios, 3 jobs y 6 imágenes
+DB-CHECK tabla=mediashrink-seed-demo-dbcheck usuarios=3 jobs=3 imagenes=6 total=12
+
+ ✓ tests/integration/seed/db-check.test.ts (1 test) 7134ms
+ ✓ tests/integration/worker/metrics-coherence.test.ts (2 tests) 12329ms
+   ✓ métricas reales y coherentes en DynamoDB (PR-12) > 0 %: bytesBefore = bytesAfter se persiste como 0, sin redondeos ni recorte 6227ms
+   ✓ métricas reales y coherentes en DynamoDB (PR-12) > negativo: bytesAfter > bytesBefore se persiste tal cual (-50 %), nunca se oculta 6100ms
+ ✓ tests/integration/api/e2e-metrics.test.ts (5 tests) 34107ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > flujo completo: los bytes persistidos son los reales de S3, con savingsPct exacto y exifStripped real 7123ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > exifStripped: true solo después de verificar que las tres salidas no contienen metadatos 6812ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > estados coherentes: una imagen FAILED produce PARTIAL y todas FAILED producen FAILED 7159ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > observabilidad: dlqFailures y dlqDeliveryFailed se aíslan y skippedAsDuplicate se reporta 6725ms
+   ✓ F02-T06 — métricas reales e integración E2E del backend (CA-06) > CONFIRM_INCONSISTENT: política at-most-once, sin reparación automática 6286ms
+ ✓ tests/integration/worker/consumer.test.ts (9 tests) 58006ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > mensaje válido: procesa, marca COMPLETED con métricas y elimina el mensaje de la cola 6846ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > reintento transitorio: 2 fallos y éxito en el 3º intento, sin DLQ 6532ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > reintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta) 6292ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > fallo parcial: imagen fallida va a DLQ y FAILED; las demás del lote se completan 6468ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > el mensaje válido se consume y elimina; no hay bucle infinito ni duplicados 6429ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > siempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado 6395ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > A-01 redelivery: un job terminal no se reabre y la DLQ no se duplica 6283ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > A-02 fallo de la DLQ: se aísla, se registra y el resto del lote continúa 6391ms
+   ✓ consumidor SQS — reintentos y DLQ (CA-04) > A-03 precondición: el consumidor materializa el ImageRecord si falta 6366ms
+
+ Test Files  21 passed (21)
+      Tests  94 passed (94)
+   Start at  19:57:27
+   Duration  60.65s (transform 4.47s, setup 0ms, collect 16.92s, tests 225.22s, environment 6ms, prepare 3.68s)
+
+
+EXIT_CODE=0
+
+===== DOWN obligatorio (G-7) =====
+CMD: docker compose down
+cmd.exe :  Container mediashrink-aws-emulator Stopping 
+En <PROJECT_ROOT>\temporary\F05-T02-tester-emulator.ps1: 18 Carácter: 10
++   $out = & cmd /c $cmd 2>&1 | Out-String -Width 500
++          ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Container medi...lator Stopping :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed 
+
+EXIT_CODE=0
+
+===== ESTADO FINAL =====
+DOCKER_PS_A:
+dazzling_edison Up 2 hours
+
+COMPOSE_PS:
+
+REDES:
+bridge
+host
+none
+
+RESUMEN: config=0 up=0 healthy=True cp=0/0/0 health=0 focal=0 regresion=0 down=0

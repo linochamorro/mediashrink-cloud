@@ -4,6 +4,7 @@ export * from './enriched-publisher';
 export * from './job-list-store';
 export * from './job-transition';
 export * from './rate-limit';
+export * from './security';
 export * from './jobs';
 export * from './presign';
 export * from './app';

@@ -14,7 +14,7 @@ Declarar en `infra/terraform/**` los buckets `raw` y `optimized` (`mediashrink-r
 ## 2. Entradas y entorno
 - Bootstrap F00 presente (`versions.tf`, `provider.tf`, `variables.tf`, `data.tf`, `outputs.tf`): proveedor apunta a `:9297`, credenciales `fromIni`, CA propio, `skip_*` condicionables.
 - `RETENTION_DAYS=30` de `.env.example`; `TTL_SECONDS=2592000` del catálogo congelado (`docs/architecture/03-*.md`).
-- Terraform `D:\Programs\DevApps\DevOps\Terraform\CLI\terraform.exe` (1.17.2) y Docker `D:\Programs\DevApps\Containers\Docker\Desktop\resources\bin\docker.exe` (fuera de PATH).
+- Terraform `<TF_CLI_DIR>\terraform.exe` (1.17.2) y Docker `<DOCKER_CLI_DIR>\docker.exe` (fuera de PATH).
 - Emulador: `docker compose up -d` (2 GiB/2.0), `docker cp` de `ca.pem`/`config`/`emulator_credentials` a `.local/aws-emulator/`, **apagar con `docker compose down`** al terminar.
 
 ## 3. Ámbito

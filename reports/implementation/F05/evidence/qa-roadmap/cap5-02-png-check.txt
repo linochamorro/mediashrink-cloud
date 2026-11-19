@@ -1,0 +1,49 @@
+== CAPA 5 / Comando 2: verificacion de los 12 PNG obligatorios (runbook §2)
+> PowerShell: Test-Path + Length + magic 89 50 4E 47 + chunk IHDR en offset 12
+
+01-auth-login-claro.png                       140924 bytes  magic=[89 50 4E 47]  IHDR=OK  => PASS
+02-auth-error-credenciales.png                  6702 bytes  magic=[89 50 4E 47]  IHDR=OK  => PASS
+03-auth-registro.png                            5919 bytes  magic=[89 50 4E 47]  IHDR=OK  => PASS
+04-dashboard-tema-oscuro.png                  129110 bytes  magic=[89 50 4E 47]  IHDR=OK  => PASS
+05-upload-validacion-error.png                 83343 bytes  magic=[89 50 4E 47]  IHDR=OK  => PASS
+06-upload-lote-preset-progreso.png            159449 bytes  magic=[89 50 4E 47]  IHDR=OK  => PASS
+07-resultados-comparativa-metricas.png        110242 bytes  magic=[89 50 4E 47]  IHDR=OK  => PASS
+08-descarga-individual-y-zip.png              255230 bytes  magic=[89 50 4E 47]  IHDR=OK  => PASS
+09-lote-parcial-o-error.png                    29044 bytes  magic=[89 50 4E 47]  IHDR=OK  => PASS
+10-borrado-manual-lote.png                     94204 bytes  magic=[89 50 4E 47]  IHDR=OK  => PASS
+11-aislamiento-usuario-b.png                  158744 bytes  magic=[89 50 4E 47]  IHDR=OK  => PASS
+12-logout-limpio.png                          130698 bytes  magic=[89 50 4E 47]  IHDR=OK  => PASS
+
+RESUMEN: 12/12 PASS · 0 FAIL
+
+== Contenido adicional de la carpeta de evidencia
+[dir]  playwright-results
+    140924 bytes  01-auth-login-claro.png
+      6702 bytes  02-auth-error-credenciales.png
+      5919 bytes  03-auth-registro.png
+    129110 bytes  04-dashboard-tema-oscuro.png
+     83343 bytes  05-upload-validacion-error.png
+    159449 bytes  06-upload-lote-preset-progreso.png
+    110242 bytes  07-resultados-comparativa-metricas.png
+    255230 bytes  08-descarga-individual-y-zip.png
+     29044 bytes  09-lote-parcial-o-error.png
+     94204 bytes  10-borrado-manual-lote.png
+    158744 bytes  11-aislamiento-usuario-b.png
+    130698 bytes  12-logout-limpio.png
+      1098 bytes  cap1-01-fmt-validate.txt
+     27989 bytes  cap1-02-apply.txt
+      2159 bytes  cap1-03-state-checks.txt
+      1500 bytes  cap1-04-integration-infra.txt
+      7173 bytes  cap1-05-suite-integracion-completa.txt
+      3985 bytes  cap2-01-seed-idempotente.txt
+      2198 bytes  cap2-02-vitest-contracts-auth-db.txt
+      2931 bytes  cap2-03-suite-unit-completa.txt
+      3595 bytes  cap3-01-vitest-api.txt
+      1527 bytes  cap3-02-vitest-api-unit.txt
+      2592 bytes  cap4-01-vitest-worker.txt
+      3788 bytes  cap5-01-playwright-intento1-fallido.txt
+      3367 bytes  cap5-01-playwright-intento2-fallido.txt
+      2669 bytes  cap5-01-playwright.txt
+        45 bytes  playwright-results\.last-run.json
+
+EXIT_CODE=0

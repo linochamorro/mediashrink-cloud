@@ -22,7 +22,7 @@ Running 3 tests using 1 worker
       107 |   await page.getByRole('button', { name: 'Descargar original' }).click();
       108 |   await originalAssetRequest;
       109 |   await page.getByRole('button', { name: 'job-partial' }).click();
-        at D:\Projects\Bluemind_Lab\projects\portfolio\mediashrink-cloud\tests\e2e\frontend-flow.spec.ts:106:37
+        at <PROJECT_ROOT>\tests\e2e\frontend-flow.spec.ts:106:37
 
     Error Context: reports\implementation\F03\evidence\playwright-results\frontend-flow-registro-err-0672b-sultados-descargas-y-logout\error-context.md
 

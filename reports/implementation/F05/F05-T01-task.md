@@ -15,12 +15,12 @@
 - Suite completa real: typecheck, lint, build, unitarias, integración S3/SQS/DLQ/DynamoDB y E2E Playwright contra frontend + backend + terraform + emulador reales: registro/login, subida directa S3, WebP+AVIF+miniatura, strip EXIF/GPS, comparativa, ZIP y borrado.
 
 ## 2. Entradas y entorno
-- F00/F01/F02(+addendum)/F03(reapertura PASSED)/F04(FASE_COMPLETA) cerradas. Binarios fuera de PATH: Docker `D:\Programs\DevApps\Containers\Docker\Desktop\resources\bin`, Terraform `D:\Programs\DevApps\DevOps\Terraform\CLI`.
+- F00/F01/F02(+addendum)/F03(reapertura PASSED)/F04(FASE_COMPLETA) cerradas. Binarios fuera de PATH: Docker `<DOCKER_CLI_DIR>`, Terraform `<TF_CLI_DIR>`.
 - Emulador con 2 GiB/2.0, `docker cp` de CA/credenciales por arranque, **apagar al terminar**. Sin AWS real.
 - **No borrar `temporary/` (G-11 pendiente) ni hacer publicación final (G-12 pendiente).**
 
 ## 3. Ámbito
-Acceso controlado a todo el repositorio; sin tocar nada fuera de `D:\Projects\Bluemind_Lab\projects\portfolio\mediashrink-cloud`. Sin secretos en reportes/logs; rutas en evidencia con marcadores.
+Acceso controlado a todo el repositorio; sin tocar nada fuera de `<PROJECT_ROOT>`. Sin secretos en reportes/logs; rutas en evidencia con marcadores.
 
 ## 4. Método y entregables
 - Evidencia `reports/implementation/F05/evidence/F05-T01-*.txt`: wiring, retention-runtime, git-sync, workflow-cleanup, typecheck, lint, build, unit, integration, playwright-real, emulator-down.

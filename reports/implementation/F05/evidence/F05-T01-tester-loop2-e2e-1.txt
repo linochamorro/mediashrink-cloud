@@ -1,0 +1,20 @@
+PRE_PORT_3001=000
+UP_EXIT=0
+HEALTHY=healthy AFTER=4 MEMORY=2147483648 NANOCPUS=2000000000 USER=1000:1000
+CP_ca.pem_EXIT=0
+CP_config_EXIT=0
+CP_emulator_credentials_EXIT=0
+EMULATOR_HEALTH=ok
+Apply complete! Resources: 11 added, 0 changed, 0 destroyed.
+TF_APPLY_EXIT=0
+
+Running 1 test using 1 worker
+
+F05_RELAY_GET {"status":200,"contentType":"binary/octet-stream","upstreamContentLength":"766","bodyLength":766,"magic":"├┐├ÿ├┐├í\u0000qhttp:/","headerNames":["accept-ranges","content-length","content-type","date","etag","last-modified","x-amz-expiration","x-amz-id-2","x-amz-request-id","x-amz-server-side-encryption"]}
+F05_RELAY_GET {"status":200,"contentType":"image/webp","upstreamContentLength":"114","bodyLength":114,"magic":"RIFFj\u0000\u0000\u0000WEBP","headerNames":["accept-ranges","content-length","content-type","date","etag","last-modified","x-amz-expiration","x-amz-id-2","x-amz-request-id","x-amz-server-side-encryption"]}
+F05_RELAY_GET {"status":200,"contentType":"image/webp","upstreamContentLength":"114","bodyLength":114,"magic":"RIFFj\u0000\u0000\u0000WEBP","headerNames":["accept-ranges","content-length","content-type","date","etag","last-modified","x-amz-expiration","x-amz-id-2","x-amz-request-id","x-amz-server-side-encryption"]}
+  Ô£ô  1 tests\e2e\real-stack.spec.ts:32:1 ÔÇ║ flujo real: registro ÔåÆ subida S3 ÔåÆ WebP/AVIF/miniatura sin EXIF ÔåÆ comparativa ÔåÆ ZIP ÔåÆ borrado (6.2s)
+
+  1 passed (12.9s)
+
+PLAYWRIGHT_RUN1_EXIT=0

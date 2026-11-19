@@ -20,7 +20,7 @@
 
 ## 2. Entradas, contratos y entorno
 - **Revisión previa:** `F01-T01` debe estar `PASSED`; consumir los contratos congelados sin redefinirlos. La tabla aún no existe en Terraform (F04): los tests la crean en un entorno aislado del emulador (setup/teardown), sin afectar a otras fases.
-- **Entorno:** emulador vía `docker compose up -d` con límites 2g/2.0; credenciales y CA en `.local/aws-emulator/`; **apagar con `docker compose down` al terminar** y verificar `docker ps -a` vacío. Docker CLI fuera de PATH: `D:\Programs\DevApps\Containers\Docker\Desktop\resources\bin\docker.exe`.
+- **Entorno:** emulador vía `docker compose up -d` con límites 2g/2.0; credenciales y CA en `.local/aws-emulator/`; **apagar con `docker compose down` al terminar** y verificar `docker ps -a` vacío. Docker CLI fuera de PATH: `<DOCKER_CLI_DIR>\docker.exe`.
 - **Gates:** G-4 AUTORIZADO (100 % ficticio en emulador), G-7 con límites, G-3 sin secretos reales.
 
 ## 3. Ámbito exclusivo de archivos y límites

@@ -1,0 +1,352 @@
+===== SESIÓN EMULADOR (G-7) =====
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Created 
+ Network mediashrink-cloud_default Created 
+ Container mediashrink-aws-emulator Creating 
+ Container mediashrink-aws-emulator Created 
+ Container mediashrink-aws-emulator Starting 
+ Container mediashrink-aws-emulator Started 
+UP_EXIT=0
+HEALTHY=healthy CHECKS=2
+memory=2147483648 nanoCpus=2000000000 user=1000:1000
+CP_CA_EXIT=0
+CP_CONFIG_EXIT=0
+CP_CRED_EXIT=0
+HEALTH_BODY=ok HEALTHCHECK_EXIT=0
+
+===== RED: prueba de integración HeadObject (antes del cambio) =====
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [31mÔØ»[39m tests/integration/api/enriched-headobject.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[33m 21017[2mms[22m[39m
+[31m   [31m├ù[31m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mel publicador enriquecido consulta HeadObject y el sobre lleva los bytes reales, no el declarado[33m 7935[2mms[22m[31m[39m
+[31m     ÔåÆ expected [] to have a length of 1 but got +0[39m
+   [33m[2mÔ£ô[22m[39m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mun sobre declarado distinto al objeto persistido conserva bytesBefore real en DynamoDB [33m6914[2mms[22m[39m
+[31m   [31m├ù[31m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mfalla cerrado si HeadObject y GetObject divergen en el tama├▒o[33m 6167[2mms[22m[31m[39m
+[31m     ÔåÆ promise resolved "undefined" instead of rejecting[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 2 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/integration/api/enriched-headobject.test.ts > F05-T02 ÔÇö HeadObject en raw para bytesBefore > el publicador enriquecido consulta HeadObject y el sobre lleva los bytes reales, no el declarado
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ÔØ» tests/integration/api/enriched-headobject.test.ts:74:23
+     72| 
+     73|     // RED: hoy headCalls est├í vac├¡o porque la ruta de producto no llaÔÇª
+     74|     expect(headCalls).toHaveLength(1);
+       |                       ^
+     75|     const key = headCalls[0]?.Key ?? '';
+     76|     expect(key).toContain(`${userId}/${jobId}/raw/`);
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/2]ÔÄ»
+
+ FAIL  tests/integration/api/enriched-headobject.test.ts > F05-T02 ÔÇö HeadObject en raw para bytesBefore > falla cerrado si HeadObject y GetObject divergen en el tama├▒o
+AssertionError: promise resolved "undefined" instead of rejecting
+
+- Expected: 
+[Error: rejected promise]
+
++ Received: 
+undefined
+
+ ÔØ» tests/integration/api/enriched-headobject.test.ts:146:54
+    144|       s3: fake,
+    145|     });
+    146|     await expect(publisher.publish({ userId, jobId })).rejects.toThrowÔÇª
+       |                                                      ^
+    147|   });
+    148| });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/2]ÔÄ»
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 19:42:29
+[2m   Duration [22m 23.74s[2m (transform 838ms, setup 0ms, collect 2.08s, tests 21.02s, environment 0ms, prepare 206ms)[22m
+
+RED_EXIT=1
+
+===== GREEN: prueba de integración HeadObject =====
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/integration/api/enriched-headobject.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 19513[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mel publicador enriquecido consulta HeadObject y el sobre lleva los bytes reales, no el declarado [33m6549[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mun sobre declarado distinto al objeto persistido conserva bytesBefore real en DynamoDB [33m6769[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mfalla cerrado si HeadObject y GetObject divergen en el tama├▒o [33m6194[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 19:43:46
+[2m   Duration [22m 22.15s[2m (transform 756ms, setup 0ms, collect 1.96s, tests 19.51s, environment 0ms, prepare 221ms)[22m
+
+GREEN_EXIT=0
+
+===== REGRESION: integracion completa =====
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/integration/auth/routes.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 1015[2mms[22m[39m
+ [31mÔØ»[39m tests/integration/infra/resources.test.ts [2m([22m[2m4 tests[22m[2m | [22m[31m4 failed[39m[2m)[22m[33m 7975[2mms[22m[39m
+[31m   [31m├ù[31m infra aplicada contra aws/aws-emulator[2m > [22maprovisiona ambos buckets con ciclo de vida de 30 d├¡as, CORS expl├¡cito y sin bucles de eventos[90m 145[2mms[22m[31m[39m
+[31m     ÔåÆ expected [] to include 'mediashrink-raw-local'[39m
+[31m   [31m├ù[31m infra aplicada contra aws/aws-emulator[2m > [22maprovisiona cola + DLQ con maxReceiveCount num├®rico 3 y ARN de DLQ real[90m 76[2mms[22m[31m[39m
+[31m     ÔåÆ expected [] to include 'https://sqs.us-east-1.amazonaws.com/0ÔÇª'[39m
+[31m   [31m├ù[31m infra aplicada contra aws/aws-emulator[2m > [22maprovisiona la tabla con PK/SK del contrato y TTL ENABLED sobre ttl[90m 78[2mms[22m[31m[39m
+[31m     ÔåÆ Requested resource not found: Table: mediashrink-jobs not found[39m
+[31m   [31m├ù[31m infra aplicada contra aws/aws-emulator[2m > [22mla pol├¡tica IAM se deriva de los recursos reales, sin comodines amplios[33m 7672[2mms[22m[31m[39m
+[31m     ÔåÆ Requested resource not found: Table: mediashrink-jobs not found[39m
+ [32mÔ£ô[39m tests/integration/api/presign.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 7087[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/download.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 7675[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Descarga/ZIP/borrado reales en aws-emulator (CA-05)[2m > [22mdescarga individual: la URL firmada devuelve los bytes reales de cada variante [33m568[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Descarga/ZIP/borrado reales en aws-emulator (CA-05)[2m > [22mZIP: contiene WebP + AVIF + miniaturas reales del lote [33m333[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 633[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/db/job-store.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 6383[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/observability.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 6682[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m summarizeConsumeResult ÔÇö observabilidad E2E (CA-06)[2m > [22mexpone los tres campos de resiliencia de T04 en un snapshot serializable [33m6681[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/routes.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 7032[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/enriched-headobject.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 19767[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mel publicador enriquecido consulta HeadObject y el sobre lleva los bytes reales, no el declarado [33m6673[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mun sobre declarado distinto al objeto persistido conserva bytesBefore real en DynamoDB [33m6775[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mfalla cerrado si HeadObject y GetObject divergen en el tama├▒o [33m6317[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/e2e-persist.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 20879[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mlas 3 variantes existen en optimized y suma(HeadObject.ContentLength) === job.bytesAfter [33m7145[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mGET /jobs/:id/download/:imageId devuelve los bytes exactos de cada objeto persistido [33m6971[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mGET /jobs/:id/download.zip contiene WebP, AVIF y miniatura id├®nticos a los objetos persistidos [33m6761[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/db/isolation.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 6422[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 273[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/jobs-contract.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 6821[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/auth/isolation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 623[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/seed/idempotence.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 10124[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22m--dry-run no escribe nada en el emulador [33m1000[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mcrea usuarios con hash scrypt de T03 e im├ígenes sint├®ticas reales [33m1216[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22muna segunda ejecuci├│n no duplica usuarios ni ├¡tems [33m894[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mrecupera un lote sembrado a medias sin duplicar usuarios ni jobs [33m737[2mms[22m[39m
+[90mstdout[2m | tests/integration/infra/retention-guard.test.ts[2m > [22m[2mretention_days=30 coincide en Terraform, .env.example y el cat├ílogo congelado
+[22m[39mRETENTION_GUARD: {"EXPECTED_DAYS":30,"EXPECTED_TTL_SECONDS":2592000,"ENV_RETENTION_DAYS":30,"CATALOG_RETENTION_DAYS":30,"CATALOG_TTL_SECONDS":2592000,"TF_DEFAULT_RETENTION_DAYS":30,"TF_APPLIED_RETENTION_DAYS":30,"TF_APPLIED_TTL_SECONDS":2592000}
+
+ [32mÔ£ô[39m tests/integration/infra/retention-guard.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1514[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m retention_days=30 coincide en Terraform, .env.example y el cat├ílogo congelado [33m1512[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 130[2mms[22m[39m
+ [31mÔØ»[39m tests/integration/infra/gsi.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[90m 104[2mms[22m[39m
+[31m   [31m├ù[31m DescribeTable: la tabla de jobs no declara ├¡ndices secundarios globales[90m 103[2mms[22m[31m[39m
+[31m     ÔåÆ Requested resource not found: Table: mediashrink-jobs not found[39m
+ [32mÔ£ô[39m tests/integration/db/ttl.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 6162[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/userstore.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 6274[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/metrics-coherence.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 12206[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m m├®tricas reales y coherentes en DynamoDB (PR-12)[2m > [22m0 %: bytesBefore = bytesAfter se persiste como 0, sin redondeos ni recorte [33m6126[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m m├®tricas reales y coherentes en DynamoDB (PR-12)[2m > [22mnegativo: bytesAfter > bytesBefore se persiste tal cual (-50 %), nunca se oculta [33m6078[2mms[22m[39m
+[90mstdout[2m | tests/integration/seed/db-check.test.ts[2m > [22m[2mF01-T04 ÔÇö comprobaci├│n del estado en DynamoDB[2m > [22m[2mel emulador contiene exactamente 3 usuarios, 3 jobs y 6 im├ígenes
+[22m[39mDB-CHECK tabla=mediashrink-seed-demo-dbcheck usuarios=3 jobs=3 imagenes=6 total=12
+
+ [32mÔ£ô[39m tests/integration/seed/db-check.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 6997[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/e2e-metrics.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 33910[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mflujo completo: los bytes persistidos son los reales de S3, con savingsPct exacto y exifStripped real [33m7060[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mexifStripped: true solo despu├®s de verificar que las tres salidas no contienen metadatos [33m6655[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mestados coherentes: una imagen FAILED produce PARTIAL y todas FAILED producen FAILED [33m7064[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mobservabilidad: dlqFailures y dlqDeliveryFailed se a├¡slan y skippedAsDuplicate se reporta [33m6799[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mCONFIRM_INCONSISTENT: pol├¡tica at-most-once, sin reparaci├│n autom├ítica [33m6331[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 58073[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mmensaje v├ílido: procesa, marca COMPLETED con m├®tricas y elimina el mensaje de la cola [33m6877[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintento transitorio: 2 fallos y ├®xito en el 3┬║ intento, sin DLQ [33m6429[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta) [33m6377[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mfallo parcial: imagen fallida va a DLQ y FAILED; las dem├ís del lote se completan [33m6537[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mel mensaje v├ílido se consume y elimina; no hay bucle infinito ni duplicados [33m6383[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22msiempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado [33m6425[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-01 redelivery: un job terminal no se reabre y la DLQ no se duplica [33m6275[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-02 fallo de la DLQ: se a├¡sla, se registra y el resto del lote contin├║a [33m6404[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-03 precondici├│n: el consumidor materializa el ImageRecord si falta [33m6362[2mms[22m[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 5 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/integration/infra/gsi.test.ts > DescribeTable: la tabla de jobs no declara ├¡ndices secundarios globales
+ResourceNotFoundException: Requested resource not found: Table: mediashrink-jobs not found
+ ÔØ» AwsJson1_0Protocol.handleError node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:263:27
+ ÔØ» AwsJson1_0Protocol.deserializeResponse node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:833:13
+ ÔØ» node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:23:24
+ ÔØ» node_modules/@smithy/core/dist-cjs/index.js:118:20
+ ÔØ» node_modules/@smithy/core/dist-cjs/submodules/retry/index.js:205:50
+ ÔØ» node_modules/@aws-sdk/core/dist-cjs/submodules/client/index.js:137:26
+ ÔØ» tests/integration/infra/gsi.test.ts:25:21
+     23| 
+     24| it('DescribeTable: la tabla de jobs no declara ├¡ndices secundarios gloÔÇª
+     25|   const described = await ddb.send(new DescribeTableCommand({ TableNamÔÇª
+       |                     ^
+     26|   const count = (described.Table?.GlobalSecondaryIndexes ?? []).length;
+     27|   // Salida expl├¡cita para la evidencia F04-T05-gsi-probe.txt.
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/5]ÔÄ»
+
+ FAIL  tests/integration/infra/resources.test.ts > infra aplicada contra aws/aws-emulator > aprovisiona ambos buckets con ciclo de vida de 30 d├¡as, CORS expl├¡cito y sin bucles de eventos
+AssertionError: expected [] to include 'mediashrink-raw-local'
+ ÔØ» tests/integration/infra/resources.test.ts:49:19
+     47|     const listed = await s3.send(new ListBucketsCommand({}));
+     48|     const names = (listed.Buckets ?? []).map((bucket) => bucket.Name ?ÔÇª
+     49|     expect(names).toContain(RAW_BUCKET);
+       |                   ^
+     50|     expect(names).toContain(OPTIMIZED_BUCKET);
+     51| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/5]ÔÄ»
+
+ FAIL  tests/integration/infra/resources.test.ts > infra aplicada contra aws/aws-emulator > aprovisiona cola + DLQ con maxReceiveCount num├®rico 3 y ARN de DLQ real
+AssertionError: expected [] to include 'https://sqs.us-east-1.amazonaws.com/0ÔÇª'
+ ÔØ» tests/integration/infra/resources.test.ts:96:18
+     94|     const jobsUrl = canonicalQueueUrl(JOBS_QUEUE);
+     95|     const dlqUrl = canonicalQueueUrl(DLQ_QUEUE);
+     96|     expect(urls).toContain(jobsUrl);
+       |                  ^
+     97|     expect(urls).toContain(dlqUrl);
+     98| 
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/5]ÔÄ»
+
+ FAIL  tests/integration/infra/resources.test.ts > infra aplicada contra aws/aws-emulator > aprovisiona la tabla con PK/SK del contrato y TTL ENABLED sobre ttl
+ResourceNotFoundException: Requested resource not found: Table: mediashrink-jobs not found
+ ÔØ» AwsJson1_0Protocol.handleError node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:263:27
+ ÔØ» AwsJson1_0Protocol.deserializeResponse node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:833:13
+ ÔØ» node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:23:24
+ ÔØ» node_modules/@smithy/core/dist-cjs/index.js:118:20
+ ÔØ» node_modules/@smithy/core/dist-cjs/submodules/retry/index.js:205:50
+ ÔØ» node_modules/@aws-sdk/core/dist-cjs/submodules/client/index.js:137:26
+ ÔØ» tests/integration/infra/resources.test.ts:121:23
+    119| 
+    120|   it('aprovisiona la tabla con PK/SK del contrato y TTL ENABLED sobre ÔÇª
+    121|     const described = await ddb.send(new DescribeTableCommand({ TableNÔÇª
+       |                       ^
+    122|     expect(described.Table?.TableStatus).toBe('ACTIVE');
+    123|     expect(described.Table?.KeySchema).toEqual(
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/5]ÔÄ»
+
+ FAIL  tests/integration/infra/resources.test.ts > infra aplicada contra aws/aws-emulator > la pol├¡tica IAM se deriva de los recursos reales, sin comodines amplios
+ResourceNotFoundException: Requested resource not found: Table: mediashrink-jobs not found
+ ÔØ» AwsJson1_0Protocol.handleError node_modules/@aws-sdk/core/dist-cjs/submodules/protocols/index.js:263:27
+ ÔØ» AwsJson1_0Protocol.deserializeResponse node_modules/@smithy/core/dist-cjs/submodules/protocols/index.js:833:13
+ ÔØ» node_modules/@smithy/core/dist-cjs/submodules/schema/index.js:23:24
+ ÔØ» node_modules/@smithy/core/dist-cjs/index.js:118:20
+ ÔØ» node_modules/@smithy/core/dist-cjs/submodules/retry/index.js:205:50
+ ÔØ» node_modules/@aws-sdk/core/dist-cjs/submodules/client/index.js:137:26
+ ÔØ» tests/integration/infra/resources.test.ts:170:8
+    168| 
+    169|     const tableArn =
+    170|       (await ddb.send(new DescribeTableCommand({ TableName: JOBS_TABLEÔÇª
+       |        ^
+    171|     const known = [
+    172|       RAW_BUCKET,
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/5]ÔÄ»
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m22 passed[39m[22m[90m (24)[39m
+[2m      Tests [22m [1m[31m5 failed[39m[22m[2m | [22m[1m[32m95 passed[39m[22m[90m (100)[39m
+[2m   Start at [22m 19:44:10
+[2m   Duration [22m 61.44s[2m (transform 6.74s, setup 0ms, collect 21.66s, tests 234.76s, environment 8ms, prepare 4.42s)[22m
+
+INTEGRATION_EXIT=1
+
+===== REGRESION: typecheck y lint =====
+
+
+> mediashrink-cloud@0.0.0 typecheck
+> tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json
+
+tests/integration/api/enriched-headobject.test.ts(52,13): error TS2358: The left-hand side of an 'instanceof' expression must be of type 'any', an object type or a type parameter.
+tests/integration/api/enriched-headobject.test.ts(53,44): error TS2339: Property 'input' does not exist on type 'never'.
+tests/integration/api/enriched-headobject.test.ts(53,71): error TS2339: Property 'input' does not exist on type 'never'.
+tests/integration/api/enriched-headobject.test.ts(133,13): error TS2358: The left-hand side of an 'instanceof' expression must be of type 'any', an object type or a type parameter.
+tests/integration/api/enriched-headobject.test.ts(134,13): error TS2358: The left-hand side of an 'instanceof' expression must be of type 'any', an object type or a type parameter.
+tests/integration/api/enriched-headobject.test.ts(135,13): error TS2358: The left-hand side of an 'instanceof' expression must be of type 'any', an object type or a type parameter.
+TYPECHECK_EXIT=2
+
+> mediashrink-cloud@0.0.0 lint
+> eslint . --ext .ts,.tsx
+
+LINT_EXIT=0
+
+===== REGRESION corregida: integracion sin infra/** (infra requiere terraform apply, F05-T01) =====
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/integration/auth/routes.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 1083[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/publisher.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 546[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/presign.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 7086[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/download.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 7644[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m Descarga/ZIP/borrado reales en aws-emulator (CA-05)[2m > [22mdescarga individual: la URL firmada devuelve los bytes reales de cada variante [33m546[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/db/job-store.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 6388[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/observability.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 6584[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m summarizeConsumeResult ÔÇö observabilidad E2E (CA-06)[2m > [22mexpone los tres campos de resiliencia de T04 en un snapshot serializable [33m6583[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/routes.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 7005[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/seed/idempotence.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 9246[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22m--dry-run no escribe nada en el emulador [33m691[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mcrea usuarios con hash scrypt de T03 e im├ígenes sint├®ticas reales [33m931[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22muna segunda ejecuci├│n no duplica usuarios ni ├¡tems [33m646[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F01-T04 ÔÇö seed sint├®tico idempotente (CA-04)[2m > [22mrecupera un lote sembrado a medias sin duplicar usuarios ni jobs [33m674[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/enriched-headobject.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 19797[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mel publicador enriquecido consulta HeadObject y el sobre lleva los bytes reales, no el declarado [33m6761[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mun sobre declarado distinto al objeto persistido conserva bytesBefore real en DynamoDB [33m6765[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F05-T02 ÔÇö HeadObject en raw para bytesBefore[2m > [22mfalla cerrado si HeadObject y GetObject divergen en el tama├▒o [33m6268[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/metadata.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 107[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/e2e-persist.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 20834[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mlas 3 variantes existen en optimized y suma(HeadObject.ContentLength) === job.bytesAfter [33m7038[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mGET /jobs/:id/download/:imageId devuelve los bytes exactos de cada objeto persistido [33m6981[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 loop 2 ÔÇö variantes persistidas y m├®tricas ancladas a S3 (A-01)[2m > [22mGET /jobs/:id/download.zip contiene WebP, AVIF y miniatura id├®nticos a los objetos persistidos [33m6813[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/db/isolation.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 6397[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/auth/isolation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 509[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/pipeline.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 122[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/jobs-contract.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 6728[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/db/ttl.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 6204[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/userstore.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 6203[2mms[22m[39m
+[90mstdout[2m | tests/integration/seed/db-check.test.ts[2m > [22m[2mF01-T04 ÔÇö comprobaci├│n del estado en DynamoDB[2m > [22m[2mel emulador contiene exactamente 3 usuarios, 3 jobs y 6 im├ígenes
+[22m[39mDB-CHECK tabla=mediashrink-seed-demo-dbcheck usuarios=3 jobs=3 imagenes=6 total=12
+
+ [32mÔ£ô[39m tests/integration/seed/db-check.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 6984[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/metrics-coherence.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 12405[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m m├®tricas reales y coherentes en DynamoDB (PR-12)[2m > [22m0 %: bytesBefore = bytesAfter se persiste como 0, sin redondeos ni recorte [33m6198[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m m├®tricas reales y coherentes en DynamoDB (PR-12)[2m > [22mnegativo: bytesAfter > bytesBefore se persiste tal cual (-50 %), nunca se oculta [33m6205[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/api/e2e-metrics.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 33977[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mflujo completo: los bytes persistidos son los reales de S3, con savingsPct exacto y exifStripped real [33m6978[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mexifStripped: true solo despu├®s de verificar que las tres salidas no contienen metadatos [33m6677[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mestados coherentes: una imagen FAILED produce PARTIAL y todas FAILED producen FAILED [33m7075[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mobservabilidad: dlqFailures y dlqDeliveryFailed se a├¡slan y skippedAsDuplicate se reporta [33m6828[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-T06 ÔÇö m├®tricas reales e integraci├│n E2E del backend (CA-06)[2m > [22mCONFIRM_INCONSISTENT: pol├¡tica at-most-once, sin reparaci├│n autom├ítica [33m6416[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/worker/consumer.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 57818[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mmensaje v├ílido: procesa, marca COMPLETED con m├®tricas y elimina el mensaje de la cola [33m6767[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintento transitorio: 2 fallos y ├®xito en el 3┬║ intento, sin DLQ [33m6424[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mreintentos agotados: mensaje a DLQ e imagen FAILED (el lote no se aborta) [33m6321[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mfallo parcial: imagen fallida va a DLQ y FAILED; las dem├ís del lote se completan [33m6478[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mel mensaje v├ílido se consume y elimina; no hay bucle infinito ni duplicados [33m6378[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22msiempre usa processImage: la guarda A-05 y el strip real gobiernan el resultado [33m6390[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-01 redelivery: un job terminal no se reabre y la DLQ no se duplica [33m6290[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-02 fallo de la DLQ: se a├¡sla, se registra y el resto del lote contin├║a [33m6408[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m consumidor SQS ÔÇö reintentos y DLQ (CA-04)[2m > [22mA-03 precondici├│n: el consumidor materializa el ImageRecord si falta [33m6359[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m21 passed[39m[22m[90m (21)[39m
+[2m      Tests [22m [1m[32m94 passed[39m[22m[90m (94)[39m
+[2m   Start at [22m 19:45:53
+[2m   Duration [22m 60.44s[2m (transform 4.19s, setup 0ms, collect 16.26s, tests 223.67s, environment 6ms, prepare 3.88s)[22m
+
+INTEGRATION_NOINFRA_EXIT=0
+
+===== typecheck y lint (reintento) =====
+
+
+> mediashrink-cloud@0.0.0 typecheck
+> tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json
+
+TYPECHECK_EXIT=0
+
+> mediashrink-cloud@0.0.0 lint
+> eslint . --ext .ts,.tsx
+
+LINT_EXIT=0

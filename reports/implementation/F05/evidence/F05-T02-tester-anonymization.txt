@@ -1,0 +1,75 @@
+﻿F05-T02 - VERIFICACION INDEPENDIENTE DEL TESTER (P4 anonimizacion / addenda)
+Fecha: 2026-11-18 20:02:26
+
+===== 1) ESCANEO PROPIO reports/** + docs/** =====
+ARCHIVOS_ESCANEADOS=827
+BANNERS_VITEST_ENCONTRADOS=68
+BANNERS_CON_RUTA_ABSOLUTA=0
+COINCIDENCIAS_RUTAS_ABSOLUTAS=46
+reports\audits\F01\F01-T01-auditor.md:96 : | V-10 | Riesgo P4: nuevas rutas locales en artefactos G-6b. | Sin coincidencias de rutas `<ABS> en `backend/src/contracts/**`, `tests/unit/contracts.test.ts`, 
+reports\audits\F02\F02-T02-auditor.md:105 : | **V-2** | **PR-07: rechazo de traversal/absolutos/codificación.** `SAFE_SEGMENT_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/` (`storage/keys.ts` l. 22) + `a
+reports\audits\F02\F02-T02-auditor.md:109 : | **V-6** | **G-3: evidencia sin secretos ni rutas Windows absolutas.** Greps sobre `F02-T02-*.txt`: único `<ABS>\temp` es el nombre de un caso de test rechazad
+reports\audits\F02\F02-T05-auditor.md:127 : | **2. Problema** | **Síntoma:** riesgo de credenciales, rutas Windows absolutas, firma `:9324`, cambio fuera de ámbito o contenedor encendido. **Esperado:** G-
+reports\audits\F04\F04-T01-auditor.md:22 : **Método:** lectura íntegra de los 7 archivos versionados de `infra/terraform/`, del `README.md`, de `.gitignore`, `.env.example`, del contrato de tarea, del re
+reports\audits\F04\F04-T01-auditor.md:32 : | V-3 | Secretos y transporte (G-3/PR-08) | `provider.tf:10-11` usa `shared_credentials_files`/`shared_config_files`; `:31` `custom_ca_bundle`; `:16-21` endpoin
+reports\audits\F04\F04-T01-auditor.md:81 : - **Rutas Windows / secretos en artefactos:** 0 coincidencias de `<ABS> `<ABS> `AKIA`/`ASIA`, `PRIVATE KEY` o volcados de `emulator_credentials` en los 14 artef
+reports\audits\F04\F04-T02-auditor.md:22 : **Método:** lectura íntegra de `infra/terraform/{sqs,provider,variables,versions,data,outputs,s3}.tf` y `README.md`; del contrato `F04-T02-task.md`, del reporte
+reports\audits\F04\F04-T02-auditor.md:34 : | V-5 | Secretos y transporte (G-3/PR-08) | `provider.tf:8-11` credenciales por `shared_credentials_files`/`shared_config_files`, `:31` `custom_ca_bundle`, `:16
+reports\audits\F04\F04-T03-auditor.md:22 : **Método:** lectura íntegra de `infra/terraform/{dynamodb,s3,sqs,provider,variables,versions,data,outputs}.tf` y `README.md`; del contrato `F04-T03-task.md`, de
+reports\audits\F04\F04-T03-auditor.md:34 : | V-5 | Secretos, transporte, ámbito y G-7 | `provider.tf:10-11,31` credenciales por archivo y CA relativo; `:16-21` endpoint único; **0** `access_key`/`secret_
+reports\audits\F04\F04-T03-auditor.md:103 : | **2. Problema** | **Síntoma:** verificación de control de G-3/PR-08, G-7 y ámbito. **Esperado:** credenciales por archivo, CA propio, único transporte `:9297`
+reports\audits\F05\F05-T02-auditor.md:24 : | P4 amplio | `[A-Za-z]:[\\/]` sobre `reports/**` y `docs/**` | Solo URLs/endpoints (`127.0.0.1:9297`, `sqs...amazonaws.com`, `github.com/...`) y literales de t
+reports\audits\F05\F05-T02-auditor.md:73 : | **2. Problema** | **Síntoma:** `F00-T05` registró 7 rutas Windows absolutas en artefactos G-6b y `F04T05-A-06` amplió el alcance a 3 evidencias `F04-T05` con 
+reports\implementation\F00\F00-T01-developer.md:180 : | `docker run -d --name a03-verify --memory=2g --memory-swap=2g --cpus=2.0 -p 127.0.0.1:9297:9297 -e EMULATOR_TELEMETRY=off -e EMULATOR_HEALTHCHECK_PORT=9297 -v
+reports\implementation\F00\F00-T01-developer.md:195 : 3. **Causa:** **HIPÓTESIS (alta).** El compose fija `user: "${UID_GID:-1000:1000}"` con un bind mount `./.local/aws-emulator:/home/emulator/.aws/emulator/9297`;
+reports\implementation\F00\F00-T03-developer.md:35 : 1. **Creado `docker-compose.yml`**: imagen fijada por versión; `cpus: 2.0` + `mem_limit: 2g` + `memswap_limit: 2g` + `deploy.resources.limits` (`cpus: "2.0"`, `
+reports\implementation\F00\F00-T03-developer.md:142 : 1. **Fix del fallo de arranque (Tarea 0, transferida del addendum A-03).** `docker compose up -d` terminaba con `emulator serve failed: server I/O error: Operat
+reports\implementation\F00\F00-T03-developer.md:181 : 3. **Causa:** **DEMOSTRADA** — el bind mount `./.local/aws-emulator:/home/emulator/.aws/emulator/9297` usa el filesystem 9p/virtiofs de Docker Desktop en Window
+reports\implementation\F00\F00-T03-tester.md:40 : | `ca.pem` vía bind mount relativo (CA-03, `.env.example` G-3) | `./.local/aws-emulator:/home/emulator/.aws/emulator/9297` | `F00-T03-tester-config.txt` C08 | N
+reports\implementation\F00\F00-T04-developer.md:40 : | Sin secretos en archivos ni salidas | Rutas relativas, sin valores de credenciales; evidencias redactadas (`<ABS>`, `<TF_BIN>`, `<DOCKER_BIN>`) | Grep de `<AB
+reports\implementation\F00\evidence\F00-T01-A03-emulator-probe.txt:11 :   ./.local/aws-emulator:/home/emulator/.aws/emulator/9297.
+reports\implementation\F00\evidence\F00-T01-A03-emulator-probe.txt:47 :   -v a03-verify-data:/home/emulator/.aws/emulator
+reports\implementation\F00\evidence\F00-T03-config-audit.txt:10 : C05 | PASS | Volumen relativo para ca.pem | ./.local/aws-emulator:/home/emulator/.aws/emulator/9297
+reports\implementation\F00\evidence\F00-T03-healthcheck.txt:6 : docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/ca.pem ./.local/aws-emulator/ca.pem
+reports\implementation\F00\evidence\F00-T03-healthcheck.txt:8 : docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/config ./.local/aws-emulator/config
+reports\implementation\F00\evidence\F00-T03-healthcheck.txt:10 : docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/emulator_credentials ./.local/aws-emulator/emulator_credentials
+reports\implementation\F00\evidence\F00-T03-tester-config.txt:20 :      | ./.local/aws-emulator:/home/emulator/.aws/emulator/9297
+reports\implementation\F01\evidence\F01-T02-emulator-up.txt:23 : $ docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/ca.pem ./.local/aws-emulator/ca.pem
+reports\implementation\F01\evidence\F01-T02-tester-down.txt:34 : $ docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/ca.pem ./.local/aws-emulator/ca.pem   → CP_CA_EXIT=0
+reports\implementation\F01\evidence\F01-T02-tester-down.txt:35 : $ docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/config ./.local/aws-emulator/config   → CP_CONFIG_EXIT=0
+reports\implementation\F01\evidence\F01-T02-tester-down.txt:36 : $ docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/emulator_credentials ./.local/aws-emulator/emulator_credentials → CP_CREDS_EXIT=0
+reports\implementation\F02\F02-T02-tester.md:26 : | 3 | Seguridad de claves y JWT (`F02-T02-tester-keys.txt`) | Sonda propia sobre funciones puras + tests unit/integración: `..`, `.`, vacío, `a/b`, absoluta, `<
+reports\implementation\F02\evidence\F02-T02-emulator-up.txt:24 : $ docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/ca.pem ./.local/aws-emulator/ca.pem
+reports\implementation\F02\evidence\F02-T02-emulator-up.txt:26 : $ docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/config ./.local/aws-emulator/config
+reports\implementation\F02\evidence\F02-T02-emulator-up.txt:28 : $ docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/emulator_credentials ./.local/aws-emulator/emulator_credentials
+reports\implementation\F02\evidence\F02-T02-red.txt:23 :    ├ù claves S3 con prefijo por usuario (CA-02) > rechaza el segmento inseguro "<ABS>\temp" 1ms
+reports\implementation\F02\evidence\F02-T02-red.txt:131 :  FAIL  tests/unit/api/presign-keys.test.ts > claves S3 con prefijo por usuario (CA-02) > rechaza el segmento inseguro "<ABS>\temp"
+reports\implementation\F02\evidence\F02-T02-tester-keys.txt:10 : [sonda Tester] segmento "<ABS>\temp" rechazado=true
+reports\implementation\F02\evidence\F02-T05-red.txt:131 :      26|     expect(String(body.downloadUrl)).toMatch(/^http<ABS>
+reports\implementation\F04\evidence\F04-T05-workflow.txt:101 :           docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/ca.pem .local/aws-emulator/ca.pem
+reports\implementation\F04\evidence\F04-T05-workflow.txt:102 :           docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/config .local/aws-emulator/config
+reports\implementation\F04\evidence\F04-T05-workflow.txt:103 :           docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/emulator_credentials .local/aws-emulator/emulator_credentials
+docs\runbooks\development-workflow.md:43 : docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/ca.pem ./.local/aws-emulator/ca.pem
+docs\runbooks\development-workflow.md:44 : docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/config ./.local/aws-emulator/config
+docs\runbooks\development-workflow.md:45 : docker cp mediashrink-aws-emulator:/home/emulator/.aws/emulator/9297/emulator_credentials ./.local/aws-emulator/emulator_credentials
+
+===== 2) ADDENDA APPEND-ONLY (8 archivos) =====
+reports/audits/F04/F04-T01-auditor.md | lineas HEAD=78 lineas WORK=86 | contenido_original_conservado=True | addendum_presente=True | append_only=True | RESULT=OK
+reports/audits/F04/F04-T02-auditor.md | lineas HEAD=100 lineas WORK=108 | contenido_original_conservado=True | addendum_presente=True | append_only=True | RESULT=OK
+reports/audits/F04/F04-T03-auditor.md | lineas HEAD=116 lineas WORK=124 | contenido_original_conservado=True | addendum_presente=True | append_only=True | RESULT=OK
+reports/audits/F04/F04-T04-auditor.md | lineas HEAD=125 lineas WORK=133 | contenido_original_conservado=True | addendum_presente=True | append_only=True | RESULT=OK
+reports/audits/F04/F04-T05-auditor.md | lineas HEAD=129 lineas WORK=137 | contenido_original_conservado=True | addendum_presente=True | append_only=True | RESULT=OK
+reports/implementation/F04/F04-T05-architect.md | lineas HEAD=20 lineas WORK=28 | contenido_original_conservado=True | addendum_presente=True | append_only=True | RESULT=OK
+reports/verification/F04-architect.md | lineas HEAD=52 lineas WORK=60 | contenido_original_conservado=True | addendum_presente=True | append_only=True | RESULT=OK
+reports/intake/intake-mediashrink.md | lineas HEAD=131 lineas WORK=139 | contenido_original_conservado=True | addendum_presente=True | append_only=True | RESULT=OK
+ADDENDA_OK=8/8
+
+===== 3) CLASIFICACION DEL PATRON AMPLIO =====
+PATRON_P4_EXACTO (unidades de entorno: Projects/Programs/Users/Program Files)=0
+AMPLIO: sintaxis docker/container=23 | documentacion regex=1 | fixtures sinteticos X:\\ o C:\\temp=8
+El resto son referencias ya normalizadas a <ABS> en el cuerpo (numeros de linea, endpoints).
+NOTA: los fixtures sinteticos y la sintaxis de contenedor NO son rutas de entorno filtradas;
+estan en evidencias historicas inalteradas (no modificadas por F05-T02) y forman parte de
+nombres de casos de prueba; sustituirlos alteraria el contenido sustantivo prohibido por CA-02.3.
+
+RESUMEN: archivos=827 P4_exacto=0 amplio=46 addenda_ok=8/8

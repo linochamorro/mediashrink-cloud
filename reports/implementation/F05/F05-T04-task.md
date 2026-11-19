@@ -9,7 +9,7 @@
 
 ## 1. Criterio (`CA-04`)
 - Generar **capturas reales Playwright** del producto en ejecución contra el stack real (no mocks), en modo **Claro y Oscuro**, guardadas en `docs/images/`: portada/banner, login, subida, progreso, comparativa antes/después, métricas, ZIP/descargas, tema Dark.
-- Preparar `README.md` siguiendo **exactamente** `D:\Projects\Bluemind_Lab\docs\templates\readme-github.md`: portada visual en línea 1, badges, título y descripción, nota de alcance para portfolio (datos de demostración), Funcionalidades, Tecnología y estructura (tabla), Inicio local, Comandos (tabla), Imágenes agrupadas con `<details>`, Documentación y Licencia (MIT; crear `LICENSE` si no existe).
+- Preparar `README.md` siguiendo **exactamente** `<LAB_ROOT>\docs\templates\readme-github.md`: portada visual en línea 1, badges, título y descripción, nota de alcance para portfolio (datos de demostración), Funcionalidades, Tecnología y estructura (tabla), Inicio local, Comandos (tabla), Imágenes agrupadas con `<details>`, Documentación y Licencia (MIT; crear `LICENSE` si no existe).
 - **Cero rastros internos**: sin rutas locales, agentes/roles/harnesses ni enlaces a `docs/sdd/`, `docs/runbooks/`, `reports/`, `STATE.md`. Fidelidad estricta con scripts y comandos reales del repo.
 
 ## 2. Entradas y entorno

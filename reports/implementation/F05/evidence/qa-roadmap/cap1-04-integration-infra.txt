@@ -1,0 +1,25 @@
+== CAPA 1 / Comando 7: npx vitest run tests/integration/infra (emulador + terraform reales)
+PATH_PREPEND=<DOCKER_CLI_DIR>;<TF_CLI_DIR>
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+stdout | tests/integration/infra/gsi.test.ts > DescribeTable: la tabla de jobs no declara ├¡ndices secundarios globales
+GSI_COUNT: 0
+
+ Ô£ô tests/integration/infra/gsi.test.ts (1 test) 236ms
+stdout | tests/integration/infra/retention-guard.test.ts > retention_days=30 coincide en Terraform, .env.example y el cat├ílogo congelado
+RETENTION_GUARD: {"EXPECTED_DAYS":30,"EXPECTED_TTL_SECONDS":2592000,"ENV_RETENTION_DAYS":30,"CATALOG_RETENTION_DAYS":30,"CATALOG_TTL_SECONDS":2592000,"TF_DEFAULT_RETENTION_DAYS":30,"TF_APPLIED_RETENTION_DAYS":30,"TF_APPLIED_TTL_SECONDS":2592000}
+
+ Ô£ô tests/integration/infra/retention-guard.test.ts (1 test) 1640ms
+   Ô£ô retention_days=30 coincide en Terraform, .env.example y el cat├ílogo congelado 1639ms
+ Ô£ô tests/integration/infra/resources.test.ts (4 tests) 2169ms
+   Ô£ô infra aplicada contra aws/aws-emulator > aprovisiona ambos buckets con ciclo de vida de 30 d├¡as, CORS expl├¡cito y sin bucles de eventos 329ms
+   Ô£ô infra aplicada contra aws/aws-emulator > la pol├¡tica IAM se deriva de los recursos reales, sin comodines amplios 1638ms
+
+ Test Files  3 passed (3)
+      Tests  6 passed (6)
+   Start at  21:59:10
+   Duration  5.11s (transform 1.41s, setup 0ms, collect 5.03s, tests 4.04s, environment 1ms, prepare 2.26s)
+
+
+EXIT_CODE=0

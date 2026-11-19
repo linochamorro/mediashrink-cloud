@@ -1,0 +1,3 @@
+DOWN_EXIT=0
+DOCKER_PS_A=dazzling_edison
+PORT_3001_AFTER=000

@@ -1,0 +1,17 @@
+=== F05-T04 / LOOP 2/3 — RE-VERIFICACION PROPIA DE F05T04-T-01 ===
+README_LINEA_81=El workflow de CI en `.github/workflows/ci.yml` ejecuta, sobre Node.js 26: checkout, instalación con `npm ci --no-audit --no-fund`, `npm run typecheck`, `npm run lint` y `npm run test:unit` (303 pruebas unitarias aisladas en 32 archivos).
+CIFRA_EXACTA_303_32=true
+REFERENCIAS_277_EN_README_LICENSE=0
+P1 rutas absolutas de host=0
+P2 herramientas de orquestacion=0
+P3 roles internos=0
+P4 documentacion excluida=0
+P5 identificadores internos=0
+P6 coordination interna=0
+P7 cifra obsoleta 277=0
+ENLACES_RELATIVOS=24 MISSING=0
+LINEA1_PORTADA=true
+PNG_COUNT=18 PNG_VALIDOS=18 METADATA_CHUNKS=0
+PNG_TAMANIOS_VS_V1=IDENTICOS (18/18)
+TOTAL_RASTROS=0
+VERDICTO_REVERIFICACION=F05T04-T-01_RESUELTO
