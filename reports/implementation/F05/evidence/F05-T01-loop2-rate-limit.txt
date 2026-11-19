@@ -1,0 +1,48 @@
+CASE_A_DEFAULT_LIMIT=5 (RATE_LIMIT_AUTH_MAX no definido)
+Error: http://127.0.0.1:3001/health is already used, make sure that nothing is running on the port/url or set reuseExistingServer:true in config.webServer.
+
+DEFAULT_LIMIT_EXIT=1
+
+Running 1 test using 1 worker
+
+  Ô£ÿ  1 tests\e2e\real-stack.spec.ts:32:1 ÔÇ║ flujo real: registro ÔåÆ subida S3 ÔåÆ WebP/AVIF/miniatura sin EXIF ÔåÆ comparativa ÔåÆ ZIP ÔåÆ borrado (24.7s)
+
+
+  1) tests\e2e\real-stack.spec.ts:32:1 ÔÇ║ flujo real: registro ÔåÆ subida S3 ÔåÆ WebP/AVIF/miniatura sin EXIF ÔåÆ comparativa ÔåÆ ZIP ÔåÆ borrado 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('region', { name: 'Resultados del lote' }).getByLabel(/Comparativa visual de/).locator('img[alt^="Imagen original"]')
+    Expected: 1
+    Received: 0
+    Timeout:  20000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('region', { name: 'Resultados del lote' }).getByLabel(/Comparativa visual de/).locator('img[alt^="Imagen original"]') with timeout 20000ms
+      - waiting for getByRole('region', { name: 'Resultados del lote' }).getByLabel(/Comparativa visual de/).locator('img[alt^="Imagen original"]')
+        43 ├ù locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      170 |   const original = comparison.locator('img[alt^="Imagen original"]');
+      171 |   const optimized = comparison.locator('img[alt^="Imagen optimizada"]');
+    > 172 |   await expect(original).toHaveCount(1);
+          |                          ^
+      173 |   await expect(optimized).toHaveCount(1);
+      174 |   await expect(comparison.getByText('La vista optimizada no est├í disponible.')).toHaveCount(0);
+      175 |   for (const [label, image] of [['original', original], ['optimizada', optimized]] as const) {
+        at <PROJECT_ROOT>\tests\e2e\real-stack.spec.ts:172:26
+
+    Error Context: reports\implementation\F05\evidence\playwright-real-results\real-stack-flujo-real-regi-d4129-comparativa-ÔåÆ-ZIP-ÔåÆ-borrado\error-context.md
+
+  1 failed
+    tests\e2e\real-stack.spec.ts:32:1 ÔÇ║ flujo real: registro ÔåÆ subida S3 ÔåÆ WebP/AVIF/miniatura sin EXIF ÔåÆ comparativa ÔåÆ ZIP ÔåÆ borrado 
+DEFAULT_LIMIT_EXIT=1
+CASE_B_E2E_RATE_LIMIT=1000 (F05_E2E_RATE_LIMIT_MAX, servidor arrancado por Playwright)
+
+Running 1 test using 1 worker
+
+  Ô£ô  1 tests\e2e\real-stack.spec.ts:32:1 ÔÇ║ flujo real: registro ÔåÆ subida S3 ÔåÆ WebP/AVIF/miniatura sin EXIF ÔåÆ comparativa ÔåÆ ZIP ÔåÆ borrado (6.3s)
+
+  1 passed (12.9s)
+E2E_LIMIT_FIXED_EXIT=0

@@ -118,3 +118,56 @@ Ver `F05-T01-git-sync.txt` y el resumen devuelto al Architect (hash del commit, 
 - **Concerns para el Tester / Architect:** (1) el E2E usa un relay de transporte por la limitación `OPTIONS` del emulador — no es un doble, pero debe revisarse; (2) la anonimización P4 de reportes/evidencias **anteriores** (F02/F03/F04) sigue pendiente y compete a `F05-T02`; (3) queda un contenedor externo `dazzling_edison` (GitHub MCP del harness), preexistente y ajeno al proyecto — no se eliminó; el emulador y la red del proyecto están al 0.
 - **No se ejecutaron** `G-11` (borrado de `temporary/`) ni `G-12` (publicación final). Sin AWS real, sin secretos en logs/reportes, sin rutas Windows absolutas en la evidencia de esta tarea.
 - Se entrega a **Tester** para dictamen independiente; este reporte **no** declara `PASSED` ni cierra `F05-T01`.
+
+---
+
+## Addendum — Loop 2/3 (correctivo, 2026-11-18)
+
+- **Fuente:** `reports/implementation/F05/F05-T01-tester.md`, hallazgos `F05T01-T-01` (429 / no convergencia) y `F05T01-T-02` (no reproducibilidad).
+- **Estado:** `DONE_WITH_CONCERNS`; no se emite `PASSED` ni se cierra la tarea. El historial v1 permanece intacto.
+- **Snapshot:** `HEAD` inicial `8d25498`; cambios solo en `tests/e2e/playwright.real.config.ts` y `tests/e2e/real-stack.spec.ts`, más evidencia nueva. No se tocaron tests ni reportes del Tester.
+
+### Cambios correctivos
+
+1. `tests/e2e/playwright.real.config.ts` define la variable **exacta `F05_E2E_RATE_LIMIT_MAX`** (default `1000`) y la inyecta al proceso del backend como `RATE_LIMIT_AUTH_MAX`. El backend real (`npx tsx backend/src/server.ts`) y la SPA Vite pasan a ser dos `webServer` gestionados por Playwright, con `reuseExistingServer: false`: el presupuesto E2E deja de depender de cómo se lanzara el servidor a mano. El default de producto (`RATE_LIMIT_AUTH_MAX=5`) y `.env.example` **no se modifican**. Interruptor de diagnóstico `F05_E2E_EXTERNAL_BACKEND=1` (solo tests) para comparar contra un servidor externo.
+2. `tests/e2e/real-stack.spec.ts` conserva el relay como adaptador de transporte (misma URL firmada, mismo cuerpo, CA real; sin lógica de bucket/worker/sharp) y normalize las cabeceras de respuesta: se descartan `content-length`, `transfer-encoding` y `connection` para que Playwright recalcule el cuerpo exacto, se conserva el `content-type` real y se exposen solo las cabeceras CORS necesarias. `F05_E2E_RELAY_DEBUG=1` registra metadatos de cada GET sin URL firmada ni credenciales.
+3. Aserciones explícitas añadidas: las dos `<img>` de la comparativa existen, decodifican (`naturalWidth > 0`), su `src` es HTTPS y los bytes descargados de ese mismo `src` son `ffd8ff` (JPEG original) y `RIFF/WEBP` (optimizado, sin marcadores privados); no aparece «La vista optimizada no está disponible». Descarga WEBP (botón visible + magic + sin EXIF), ZIP (botón visible + exactamente 3 entradas: `.avif`, `.webp`, `_thumb.webp` + magic/CRC + sin metadatos) y borrado (diálogo aceptado + desaparición del historial tras «Actualizar historial» y estado vacío).
+
+### Comandos y entorno reproducible
+
+- Comando exacto: `npx playwright test --config=tests/e2e/playwright.real.config.ts`.
+- Variables que afectan al límite: `F05_E2E_RATE_LIMIT_MAX=1000` → `RATE_LIMIT_AUTH_MAX=1000` inyectado al backend; default de producto `5`. Otras: `AWS_ENDPOINT_URL=https://127.0.0.1:9297`, credenciales por archivos generados, `CA_BUNDLE_PATH=./.local/aws-emulator/ca.pem`.
+- Tooling: Edge `157.0.4341.60`, Node `v26.13.0`, Playwright `1.65.1`, Docker `29.9.3`/Compose `v5.7.0`, Terraform `1.17.2`.
+- Sesión por corrida: `docker compose down` → `up -d` (2 GiB / 2.0 CPUs, `user=1000:1000`) → `docker cp` de CA/config/credenciales → healthcheck `ok` → `terraform init/validate/apply -var=is_emulator=true` (**11 recursos**) → Playwright → `down` siempre (0 contenedores y 0 redes del proyecto; `dazzling_edison` ajeno intacto).
+- Resultado: **3/3 corridas propias consecutivas sobre el snapshot final**, `1 passed` y `PLAYWRIGHT_EXIT=0` natural en cada una (21,8 s / 14,2 s / 13,1 s de resumen). `typecheck` y `lint` exit 0.
+
+### Problemas de este loop (7 campos)
+
+#### F05T01-L2-01 — HTTP 429 en la comparativa
+1. **Identificación:** `F05T01-L2-01` · `CA-01` · riesgo 3.
+2. **Problema:** con el límite por defecto (`RATE_LIMIT_AUTH_MAX=5`/60 s por `userId`) el flujo agota las GET de descarga y las `<img>` no se crean; el Tester lo localizó en `:145`.
+3. **Causa:** **DEMOSTRADA** — reproducido en `F05-T01-loop2-rate-limit.txt` CASE_A (servidor externo con default 5): `1 failed`, `toHaveCount(1)` recibe 0 elementos, `DEFAULT_LIMIT_EXIT=1`. El limitador real `downloadLimiter` responde 429 y el frontend no obtiene las URL.
+4. **Solución e intentos fallidos:** variable `F05_E2E_RATE_LIMIT_MAX=1000` inyectada solo al backend del E2E por el `webServer` de Playwright; el default de producto queda intacto. Intento fallido previo: fijar el valor solo en el entorno de Vite no afecta al proceso del backend.
+5. **Verificación:** CASE_B del mismo archivo con el snapshot corregido: `1 passed`, `E2E_LIMIT_FIXED_EXIT=0`; las 3 corridas finales repiten el resultado.
+6. **Pendientes:** que el Tester repita con la variable documentada; no aceptar el cambio como riesgo de producto (no lo es: solo entorno de test).
+7. **Aprendizaje candidato:** el presupuesto de peticiones de un E2E debe gobernarse desde la configuración del runner, no desde el cómo se lanzó el servidor.
+
+#### F05T01-L2-02 — vista optimizada sin `naturalWidth`
+1. **Identificación:** `F05T01-L2-02` · `CA-01`.
+2. **Problema:** el Tester informó `onError` «La vista optimizada no está disponible» incluso con límite relajado; no alcanzó descarga WebP, ZIP ni borrado.
+3. **Causa:** **HIPÓTESIS NO CONFIRMADA COMO DEFECTO DE RELAY/EMULADOR/EDGE.** Con el presupuesto controlado, las tres GET reales del relay devolvieron `200`: original `binary/octet-stream`/766 B (`ffd8ff`) y dos WebP `image/webp`/114 B (`RIFF...WEBP`), con `content-length` y cuerpo coincidentes (`F05-T01-loop2-relay-get.txt`). El síntoma del Tester es compatible con el 429 de L2-01 (sin URL → sin `<img>`), pero su diagnóstico con límite relajado no pudo reproducirse de forma aislada en este loop. **No se afirma causa raíz distinta sin evidencia**; no se simuló ninguna respuesta.
+4. **Solución e intentos fallidos:** se normalizaron las cabeceras hop-by-hop del relay y se añadieron aserciones de bytes sobre el mismo `src` de cada `<img>`. Intentos fallidos: ninguno tras fijar el límite; la corrida con default 5 sigue reproduciendo el fallo.
+5. **Verificación:** 3/3 corridas con las dos imágenes decodificando y sus bytes verificados; ZIP con tres variantes reales; borrado confirmado.
+6. **Pendientes:** si el Tester vuelve a observar el `onError` **con** `F05_E2E_RATE_LIMIT_MAX=1000`, reportar `NEEDS_CONTEXT` con el `error-context.md` y el `F05_RELAY_GET` de esa corrida antes de cualquier cambio adicional.
+7. **Aprendizaje candidato:** un relay de transporte debe auditar también las GET que alimentan `<img>`, no solo la PUT de subida.
+
+#### F05T01-L2-03 — corrida verde no reproducible
+1. **Identificación:** `F05T01-L2-03` · `CA-01`.
+2. **Problema:** `1 passed (10.1 s)` documentado en v1 no fue reproducido por el Tester (3/3 fallos), con `HEAD` idéntico.
+3. **Causa:** **DEMOSTRADA** — la corrida v1 se ejecutó con un servidor arrancado a mano con `RATE_LIMIT_AUTH_MAX=100`; el Tester lo arrancó con el default `5`. El entorno del backend no formaba parte del snapshot reproducible.
+4. **Solución e intentos fallidos:** Playwright gestiona backend y Vite con entorno explícito; se documentan variable exacta, versión de Edge y comando en cada evidencia. Intentos fallidos: el diagnóstico con servidor externo sigue fallando con el default, confirmando la causa.
+5. **Verificación:** tres sesiones independientes con pila fresca, mismas variables y mismo `HEAD` de código → 3/3 `EXIT_CODE=0` natural (`F05-T01-loop2-{all,full-e2e-1,full-e2e-2,full-e2e-3}.txt`).
+6. **Pendientes:** dictamen independiente del Tester sobre este snapshot.
+7. **Aprendizaje candidato:** reproducibilidad = entorno versionado en la configuración del runner + evidencia con comando, variables y versión de navegador.
+
+**Estado del addendum:** `DONE_WITH_CONCERNS`. No se declara `PASSED`, no se cierra `F05-T01`, no se ejecutaron `G-11`/`G-12`, no se borró `temporary/`, no se modificaron reportes ni tests del Tester.

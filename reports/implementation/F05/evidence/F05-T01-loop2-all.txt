@@ -1,0 +1,13 @@
+F05-T01 LOOP 2/3 - RESUMEN FINAL DE TRES CORRIDAS CONSECUTIVAS (PILA FRESCA CADA UNA, SNAPSHOT FINAL)
+COMMAND=npx playwright test --config=tests/e2e/playwright.real.config.ts
+F05_E2E_RATE_LIMIT_MAX=1000 -> RATE_LIMIT_AUTH_MAX=1000 inyectado al backend por Playwright (default de producto 5 intacto)
+EDGE=157.0.4341.60 NODE=v26.13.0 PLAYWRIGHT=1.65.1
+RUN1: UP=0 HEALTHCHECK=0 TF_APPLY=0 (11 recursos) PLAYWRIGHT_EXIT=0 (1 passed, 21.8s) DOWN=0 EMULATOR_CONTAINERS=0
+RUN2: UP=0 HEALTHCHECK=0 TF_APPLY=0 (11 recursos) PLAYWRIGHT_EXIT=0 (1 passed, 14.2s) DOWN=0 EMULATOR_CONTAINERS=0
+RUN3: UP=0 HEALTHCHECK=0 TF_APPLY=0 (11 recursos) PLAYWRIGHT_EXIT=0 (1 passed, 13.1s) DOWN=0 EMULATOR_CONTAINERS=0
+DETALLE: F05-T01-loop2-full-e2e-{1,2,3}.txt
+RED (limite por defecto 5): F05-T01-loop2-rate-limit.txt CASE_A -> 1 failed (sin img, 429)
+GREEN (limite E2E 1000): F05-T01-loop2-rate-limit.txt CASE_B -> 1 passed, EXIT_CODE=0
+RELAY GET (GET reales del emulador): F05-T01-loop2-relay-get.txt
+TYPECHECK_EXIT=0 LINT_EXIT=0 (snapshot final)
+ALL_DONE_FINAL_SNAPSHOT

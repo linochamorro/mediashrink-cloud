@@ -1,0 +1,13 @@
+F05_SERVER_READY {"port":3001,"retentionDays":30}
+=== RELAY GET DIAGNOSTIC (F05_E2E_RELAY_DEBUG=1) ===
+
+Running 1 test using 1 worker
+
+F05_RELAY_GET {"status":200,"contentType":"binary/octet-stream","upstreamContentLength":"766","bodyLength":766,"magic":"├┐├ÿ├┐├í\u0000qhttp:/","headerNames":["accept-ranges","content-length","content-type","date","etag","last-modified","x-amz-expiration","x-amz-id-2","x-amz-request-id","x-amz-server-side-encryption"]}
+F05_RELAY_GET {"status":200,"contentType":"image/webp","upstreamContentLength":"114","bodyLength":114,"magic":"RIFFj\u0000\u0000\u0000WEBP","headerNames":["accept-ranges","content-length","content-type","date","etag","last-modified","x-amz-expiration","x-amz-id-2","x-amz-request-id","x-amz-server-side-encryption"]}
+F05_RELAY_GET {"status":200,"contentType":"image/webp","upstreamContentLength":"114","bodyLength":114,"magic":"RIFFj\u0000\u0000\u0000WEBP","headerNames":["accept-ranges","content-length","content-type","date","etag","last-modified","x-amz-expiration","x-amz-id-2","x-amz-request-id","x-amz-server-side-encryption"]}
+  Ô£ô  1 tests\e2e\real-stack.spec.ts:32:1 ÔÇ║ flujo real: registro ÔåÆ subida S3 ÔåÆ WebP/AVIF/miniatura sin EXIF ÔåÆ comparativa ÔåÆ ZIP ÔåÆ borrado (6.5s)
+
+  1 passed (9.9s)
+DIAG_EXIT=0
+

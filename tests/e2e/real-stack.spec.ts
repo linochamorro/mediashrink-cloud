@@ -98,9 +98,37 @@ test('flujo real: registro → subida S3 → WebP/AVIF/miniatura sin EXIF → co
       if (body) upstream.write(body);
       upstream.end();
     });
+    if (process.env.F05_E2E_RELAY_DEBUG === '1' && route.request().method() === 'GET') {
+      // Diagnóstico temporal (activable solo en tests): nunca imprime la URL
+      // firmada ni credenciales, solo metadatos de la respuesta real.
+      const contentType = response.headers['content-type'] ?? '(sin content-type)';
+      console.log(
+        'F05_RELAY_GET',
+        JSON.stringify({
+          status: response.status,
+          contentType,
+          upstreamContentLength: response.headers['content-length'] ?? null,
+          bodyLength: response.body.length,
+          magic: response.body.subarray(0, 12).toString('latin1'),
+          headerNames: Object.keys(response.headers).sort(),
+        }),
+      );
+    }
+    // Se reenvían las cabeceras REALes del emulador salvo las de transporte,
+    // que Playwright debe recalcular contra el buffer exacto. Sin esto, un
+    // content-length/transfer-encoding heredado puede hacer que Edge descarte
+    // los bytes de la vista optimizada. El tipo de contenido real se conserva.
+    const hopByHop = new Set(['content-length', 'transfer-encoding', 'connection']);
+    const safeHeaders = Object.fromEntries(
+      Object.entries(response.headers).filter(([key]) => !hopByHop.has(key.toLowerCase())),
+    );
     await route.fulfill({
       status: response.status,
-      headers: { ...response.headers, ...cors },
+      headers: {
+        ...safeHeaders,
+        'content-type': response.headers['content-type'] ?? 'application/octet-stream',
+        ...cors,
+      },
       body: response.body,
     });
   });
@@ -136,24 +164,42 @@ test('flujo real: registro → subida S3 → WebP/AVIF/miniatura sin EXIF → co
   await expect(results.getByText(/Ahorro real/)).toBeVisible();
   await expect(results.getByRole('progressbar')).toHaveAttribute('value', '1');
 
-  // Comparativa: las dos URL firmadas reales cargan píxeles en el navegador.
+  // Comparativa: las DOS URL firmadas reales cargan píxeles en el navegador.
   const comparison = results.getByLabel(/Comparativa visual de/);
   await comparison.scrollIntoViewIfNeeded();
   const original = comparison.locator('img[alt^="Imagen original"]');
   const optimized = comparison.locator('img[alt^="Imagen optimizada"]');
-  for (const image of [original, optimized]) {
+  await expect(original).toHaveCount(1);
+  await expect(optimized).toHaveCount(1);
+  await expect(comparison.getByText('La vista optimizada no está disponible.')).toHaveCount(0);
+  for (const [label, image] of [['original', original], ['optimizada', optimized]] as const) {
     await expect(image).toBeVisible();
     await expect
       .poll(() =>
         image.evaluate((node) => {
           const raster = node as unknown as { complete: boolean; naturalWidth: number };
           return raster.complete && raster.naturalWidth > 0;
-        }),
+        }), `la vista ${label} debe decodificar píxeles reales`,
       )
       .toBe(true);
+    const src = await image.getAttribute('src');
+    expect(src, `la vista ${label} debe usar una URL firmada HTTPS`).toMatch(/^https:\/\//);
+    // El navegador recibió la respuesta real del emulador a través del relay:
+    // se vuelve a descargar esa misma URL y se comprueban los bytes/magic.
+    const preview = await page.request.get(src ?? '');
+    expect(preview.ok(), `HTTP de la vista ${label}`).toBe(true);
+    const previewBytes = await preview.body();
+    if (label === 'original') {
+      expect(previewBytes.subarray(0, 3).toString('hex'), 'JPEG original').toBe('ffd8ff');
+    } else {
+      expect(previewBytes.subarray(0, 4).toString('ascii'), 'WebP optimizado').toBe('RIFF');
+      expect(previewBytes.subarray(8, 12).toString('ascii'), 'WebP optimizado').toBe('WEBP');
+      assertNoPrivateMetadata(previewBytes, 'vista optimizada');
+    }
   }
 
   // Descarga individual WEBP: URL presignada real, bytes WebP reales y sin EXIF.
+  await expect(results.getByRole('button', { name: 'Descargar WEBP' })).toBeVisible();
   const webpPopupPromise = page.waitForEvent('popup');
   await results.getByRole('button', { name: 'Descargar WEBP' }).click();
   const webpPopup = await webpPopupPromise;
@@ -168,11 +214,10 @@ test('flujo real: registro → subida S3 → WebP/AVIF/miniatura sin EXIF → co
   await webpPopup.close();
 
   // ZIP real del lote: contiene WebP + AVIF + miniatura, todos sin metadatos.
+  const history = page.getByRole('list', { name: 'Historial de lotes' });
+  await expect(history.getByRole('button', { name: 'Descargar ZIP' })).toBeVisible();
   const downloadPromise = page.waitForEvent('download');
-  await page
-    .getByRole('list', { name: 'Historial de lotes' })
-    .getByRole('button', { name: 'Descargar ZIP' })
-    .click();
+  await history.getByRole('button', { name: 'Descargar ZIP' }).click();
   const download = await downloadPromise;
   expect(download.suggestedFilename()).toBe(`${jobId}.zip`);
   const zipBytes = await download.createReadStream().then(async (stream) => {
@@ -181,6 +226,7 @@ test('flujo real: registro → subida S3 → WebP/AVIF/miniatura sin EXIF → co
     return Buffer.concat(chunks);
   });
   const entries = readZip(zipBytes);
+  expect(entries, 'el ZIP debe contener exactamente tres variantes reales').toHaveLength(3);
   expect(entries.map((entry) => entry.name).sort()).toEqual([
     expect.stringContaining('.avif'),
     expect.stringContaining('.webp'),
@@ -198,11 +244,13 @@ test('flujo real: registro → subida S3 → WebP/AVIF/miniatura sin EXIF → co
   expect(thumbnailMeta.width).toBeLessThanOrEqual(256);
   expect(thumbnailMeta.height).toBeLessThanOrEqual(256);
 
-  // Borrado real: confirmar y comprobar que desaparece del historial.
+  // Borrado real: confirmar y comprobar que desaparece del historial y del API.
+  const deleteButton = history.getByRole('button', { name: 'Borrar' });
+  await expect(deleteButton).toBeVisible();
   page.once('dialog', (dialog) => void dialog.accept());
-  await page
-    .getByRole('list', { name: 'Historial de lotes' })
-    .getByRole('button', { name: 'Borrar' })
-    .click();
+  await deleteButton.click();
   await expect(page.getByRole('button', { name: jobId ?? '' })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Actualizar historial' }).click();
+  await expect(page.getByRole('button', { name: jobId ?? '' })).toHaveCount(0);
+  await expect(page.getByText('Aún no hay lotes.')).toBeVisible();
 });

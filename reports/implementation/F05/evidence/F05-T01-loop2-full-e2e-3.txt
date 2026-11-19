@@ -1,0 +1,35 @@
+RUN=3 EDGE=157.0.4341.60 NODE=v26.13.0 PLAYWRIGHT=Version 1.65.1
+COMMAND=npx playwright test --config=tests/e2e/playwright.real.config.ts
+ENV_F05_E2E_RATE_LIMIT_MAX=1000 ENV_RATE_LIMIT_AUTH_MAX_INJECTED=1000 (default de producto=5, sin cambios)
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Creating 
+ Network mediashrink-cloud_default Created 
+ Network mediashrink-cloud_default Created 
+ Container mediashrink-aws-emulator Creating 
+ Container mediashrink-aws-emulator Created 
+ Container mediashrink-aws-emulator Starting 
+ Container mediashrink-aws-emulator Started 
+UP_EXIT=0
+HEALTHY_AFTER=3
+memory=2147483648 nanoCpus=2000000000 user=1000:1000
+ok
+HEALTHCHECK_EXIT=0
+
+Apply complete! Resources: 11 added, 0 changed, 0 destroyed.
+
+TF_APPLY_EXIT=0
+
+Running 1 test using 1 worker
+
+  Ô£ô  1 tests\e2e\real-stack.spec.ts:32:1 ÔÇ║ flujo real: registro ÔåÆ subida S3 ÔåÆ WebP/AVIF/miniatura sin EXIF ÔåÆ comparativa ÔåÆ ZIP ÔåÆ borrado (6.2s)
+
+  1 passed (13.1s)
+PLAYWRIGHT_EXIT=0
+ Container mediashrink-aws-emulator Stopping 
+ Container mediashrink-aws-emulator Stopped 
+ Container mediashrink-aws-emulator Removing 
+ Container mediashrink-aws-emulator Removed 
+ Network mediashrink-cloud_default Removing 
+ Network mediashrink-cloud_default Removed 
+DOWN_EXIT=0
+EMULATOR_CONTAINERS=0
