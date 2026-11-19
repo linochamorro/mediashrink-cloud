@@ -1,0 +1,108 @@
+
+> mediashrink-cloud@0.0.0 typecheck
+> tsc --noEmit -p backend/tsconfig.json && tsc --noEmit -p frontend/tsconfig.json
+
+EXIT_TYPECHECK=0
+
+> mediashrink-cloud@0.0.0 lint
+> eslint . --ext .ts,.tsx
+
+EXIT_LINT=0
+
+> mediashrink-cloud@0.0.0 build
+> npm run build --workspace=@mediashrink/frontend && npm run build --workspace=@mediashrink/backend
+
+
+> @mediashrink/frontend@0.0.0 build
+> vite build
+
+[36mvite v5.4.21 [32mbuilding for production...[36m[39m
+transforming...
+[32mÔ£ô[39m 35 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                 [39m[1m[2m  0.60 kB[22m[1m[22m[2m Ôöé gzip:  0.38 kB[22m
+[2mdist/[22m[35massets/index-q1UhD0F4.css  [39m[1m[2m 11.18 kB[22m[1m[22m[2m Ôöé gzip:  3.08 kB[22m
+[2mdist/[22m[36massets/index-DOrZLUKZ.js   [39m[1m[2m162.93 kB[22m[1m[22m[2m Ôöé gzip: 52.80 kB[22m
+[32mÔ£ô built in 947ms[39m
+
+> @mediashrink/backend@0.0.0 build
+> tsc --noEmit -p tsconfig.json
+
+EXIT_BUILD=0
+===== npm run test:unit =====
+
+> mediashrink-cloud@0.0.0 test:unit
+> vitest run tests/unit
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [32mÔ£ô[39m tests/unit/frontend/secure-url.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 38[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/config.test.ts [2m([22m[2m37 tests[22m[2m)[22m[90m 43[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/frontend/core.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 39[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/imageHeader.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/contracts.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 83[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/userstore.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 311[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 700[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/service.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1149[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mdevuelve el mismo error para correo desconocido y contrase├▒a incorrecta [33m389[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 879[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/download.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 907[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/routes.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1013[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/stateMachine.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 17[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/jwt.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 59[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/antiBomb.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/antiBomb.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 59[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/processImage.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 104[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-routes.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1124[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/jobs-contract.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 2958[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22macepta todos los MIME raster permitidos y rechaza SVG/GIF/no-raster [33m1096[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22mvalida fileName no vac├¡o sin separadores, NUL ni %xx (sin usarlo en la clave) [33m1133[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-keys.test.ts [2m([22m[2m30 tests[22m[2m)[22m[90m 21[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/authz.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 940[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/savings.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/security-headers.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 343[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1089[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22m/auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 [33m333[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip-cap.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 556[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete-partial.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 390[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/guards.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/confirm.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 442[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/frontend.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/middleware.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/password.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 826[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/health.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+(node:18620) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ [32mÔ£ô[39m tests/unit/seed-table.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 2444[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m34 passed[39m[22m[90m (34)[39m
+[2m      Tests [22m [1m[32m310 passed[39m[22m[90m (310)[39m
+[2m   Start at [22m 02:03:10
+[2m   Duration [22m 9.77s[2m (transform 2.54s, setup 0ms, collect 17.21s, tests 16.65s, environment 13ms, prepare 7.82s)[22m
+
+===== spot tests/integration/seed (emulador caido por sesion concurrente: solo dazzling_edison Up) =====
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+
+ [31mÔØ»[39m tests/integration/seed/db-check.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 328[2mms[22m[39m
+ [31mÔØ»[39m tests/integration/seed/idempotence.test.ts [2m([22m[2m7 tests[22m[2m | [22m[33m7 skipped[39m[2m)[22m[33m 467[2mms[22m[39m
+
+[31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1m[7m Failed Suites 2 [27m[22mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m
+
+[31m[1m[7m FAIL [27m[22m[39m tests/integration/seed/db-check.test.ts[2m > [22mF01-T04 ÔÇö comprobaci├│n del estado en DynamoDB
+[31m[1m[7m FAIL [27m[22m[39m tests/integration/seed/db-check.test.ts[2m > [22mF01-T04 ÔÇö comprobaci├│n del estado en DynamoDB
+[31m[1m[7m FAIL [27m[22m[39m tests/integration/seed/idempotence.test.ts[2m > [22mF01-T04 ÔÇö seed sint├®tico idempotente (CA-04)
+[31m[1m[7m FAIL [27m[22m[39m tests/integration/seed/idempotence.test.ts[2m > [22mF01-T04 ÔÇö seed sint├®tico idempotente (CA-04)
+[31m[1mError[22m: connect ECONNREFUSED 127.0.0.1:9297[39m
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/4]ÔÄ»[22m[39m
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m      Tests [22m [33m8 skipped[39m[90m (8)[39m
+[2m   Start at [22m 02:03:22
+[2m   Duration [22m 1.84s[2m (transform 473ms, setup 0ms, collect 1.48s, tests 795ms, environment 0ms, prepare 404ms)[22m
+
+EXIT_SEEDINT=1

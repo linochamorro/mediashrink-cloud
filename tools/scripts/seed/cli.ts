@@ -107,9 +107,12 @@ async function main(): Promise<void> {
   const dryRun = process.argv.includes('--dry-run');
   const config = loadConfig(resolveEnv());
   assertEmulatorOnly(config);
-  const client = createDynamoDbDocumentClientFromConfig(config);
+  // F05-H01 loop 3/3: en --dry-run no se crea el cliente DynamoDB (lee
+  // ca.pem y falla con ENOENT en la CI unitaria, sin emulador ni `.local/`).
+  // runSeed tampoco lo usa en dry-run (ramas `continue`/else).
+  const client = dryRun ? undefined : createDynamoDbDocumentClientFromConfig(config);
   const summary = await runSeed({ client, tableName: resolveSeedTableName(config) }, { dryRun });
-  client.destroy();
+  client?.destroy();
   console.log(formatReport(summary));
 }
 

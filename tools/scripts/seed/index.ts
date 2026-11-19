@@ -34,7 +34,12 @@ export type { DemoImageSpec, DemoJobSpec, DemoUserSpec } from './demo-data';
 export type { ItemCounts, SeedUserRecord } from './store';
 
 export interface SeedDeps {
-  client: DynamoDBDocumentClient;
+  /**
+   * Cliente DynamoDB. Opcional solo para `--dry-run` (F05-H01 loop 3/3):
+   * en CI unitaria no hay emulador ni `.local/` y crear el cliente lee
+   * `ca.pem` (ENOENT). En escritura es obligatorio.
+   */
+  client?: DynamoDBDocumentClient;
   tableName: string;
   now?: () => string;
 }
@@ -94,11 +99,17 @@ function buildImageRecord(spec: DemoImageSpec, generated: SyntheticImage): Image
 }
 
 export async function runSeed(deps: SeedDeps, options: { dryRun?: boolean } = {}): Promise<SeedSummary> {
-  const { client, tableName } = deps;
+  const { tableName } = deps;
   const now = deps.now ?? (() => new Date().toISOString());
   const dryRun = options.dryRun === true;
+  // En dry-run no se toca DynamoDB: el cliente puede no existir (CI sin
+  // emulador ni `.local/`). En escritura es obligatorio.
+  const client = deps.client ?? null;
+  if (!dryRun && client === null) {
+    throw new Error('runSeed en modo escritura exige un cliente DynamoDB (SeedDeps.client)');
+  }
+  const store = dryRun ? null : createJobStore({ tableName, client: client! });
   const plan = buildSeedPlan();
-  const store = createJobStore({ tableName, client });
 
   const summary: SeedSummary = {
     dryRun,
@@ -112,8 +123,8 @@ export async function runSeed(deps: SeedDeps, options: { dryRun?: boolean } = {}
   };
 
   if (!dryRun) {
-    summary.tableCreated = await ensureSeedTable(client, tableName);
-    summary.countsBefore = await countAllItems(client, tableName);
+    summary.tableCreated = await ensureSeedTable(client!, tableName);
+    summary.countsBefore = await countAllItems(client!, tableName);
   }
 
   const generated = new Map<string, SyntheticImage>();
@@ -131,7 +142,7 @@ export async function runSeed(deps: SeedDeps, options: { dryRun?: boolean } = {}
       summary.users.items.push({ id: user.userId, status: 'would-create', detail });
       continue;
     }
-    const created = await putUserIfAbsent(client, tableName, user, passwordHash, now());
+    const created = await putUserIfAbsent(client!, tableName, user, passwordHash, now());
     if (created) summary.users.created += 1;
     else summary.users.skipped += 1;
     summary.users.items.push({ id: user.userId, status: created ? 'created' : 'skipped', detail });
@@ -144,9 +155,9 @@ export async function runSeed(deps: SeedDeps, options: { dryRun?: boolean } = {}
     if (dryRun) {
       summary.jobs.items.push({ id: job.jobId, status: 'would-create', detail: jobDetail });
     } else {
-      jobCreated = (await store.getJob(job.userId, job.jobId)) === null;
+      jobCreated = (await store!.getJob(job.userId, job.jobId)) === null;
       if (jobCreated) {
-        await store.createJob(buildJob(job, images, now()));
+        await store!.createJob(buildJob(job, images, now()));
         summary.jobs.created += 1;
       } else {
         summary.jobs.skipped += 1;
@@ -165,9 +176,9 @@ export async function runSeed(deps: SeedDeps, options: { dryRun?: boolean } = {}
       }
       // Comprobación por ítem: un lote creado a medias se completa en la
       // siguiente ejecución sin duplicar las imágenes que ya estuvieran.
-      const imageCreated = (await store.getImage(job.userId, job.jobId, image.imageId)) === null;
+      const imageCreated = (await store!.getImage(job.userId, job.jobId, image.imageId)) === null;
       if (imageCreated) {
-        await store.putImage(job.userId, job.jobId, buildImageRecord(image, synthetic));
+        await store!.putImage(job.userId, job.jobId, buildImageRecord(image, synthetic));
         summary.images.created += 1;
       } else {
         summary.images.skipped += 1;
@@ -176,6 +187,6 @@ export async function runSeed(deps: SeedDeps, options: { dryRun?: boolean } = {}
     }
   }
 
-  if (!dryRun) summary.countsAfter = await countAllItems(client, tableName);
+  if (!dryRun) summary.countsAfter = await countAllItems(client!, tableName);
   return summary;
 }

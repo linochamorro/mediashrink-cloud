@@ -117,6 +117,55 @@
 
 ---
 
+## Addendum loop 3/3 (ÚLTIMO) — Corrección del rojo de CI: `--dry-run` ya no crea el cliente DynamoDB
+
+| Campo | Valor |
+|---|---|
+| **Fecha** | `2026-11-19` |
+| **Loop** | `v1 — Loop 3/3 (ÚLTIMO)` (historial de loops 1–2 intacto) |
+| **Disparador** | CI roja tras el push G-6 (commit `978096b`): run `44475902700` (`ci.yml`, job unitario) falla en `tests/unit/seed-table.test.ts#22` — `npm run seed -- --dry-run` aborta con `ENOENT open './.local/aws-emulator/ca.pem'`. En el job unitario de CI no hay emulador ni `.local/` (ignorado). El run infra `44475902646` está en `SUCCESS` |
+| **Estado de entrega** | **`DONE`** (no se emite `PASSED`; verificación por Tester/Architect; sin push: lo hace Architect) |
+
+### Cambios de producto (loop 3, quirúrgicos)
+
+| Archivo | Cambio |
+|---|---|
+| `tools/scripts/seed/cli.ts` | `main()` crea el cliente DynamoDB **solo cuando `!dryRun`** (`dryRun ? undefined : createDynamoDbDocumentClientFromConfig(config)`); `client?.destroy()` condicional |
+| `tools/scripts/seed/index.ts` | `SeedDeps.client` pasa a **opcional** (mínimo necesario); `runSeed` valida cliente obligatorio en escritura (lanza si falta) y crea el `JobStore` solo en escritura; ramas dry-run intactas (`continue`/else, sin uso de `client`/`store`, con `!` en las ramas de escritura) |
+
+Sin cambios en tests, contratos, infra, frontend, README, STATE.md, tasks.md ni reportes ajenos; sin secretos ni rutas nuevas.
+
+### Cronología (loop 3)
+
+1. **Causa raíz confirmada:** `cli.ts:110` creaba el cliente incluso en `--dry-run` → `db/client.ts:31` hace `readFileSync(ca.pem)` → `ENOENT` en CI sin `.local/`. `runSeed` (`index.ts:96-179`) nunca usa `client` en dry-run.
+2. **Simulación CI en local:** `.local` → `.local-bak-ci-sim`, `npm run seed -- --dry-run` EXIT 0 (`Tabla DynamoDB: mediashrink-jobs`) + `npx vitest run tests/unit/seed-table.test.ts` 3/3, `.local` restaurado de inmediato — `F05-H01-loop3-dryrun-fix.txt` + `F05-H01-loop3-ci-sim.txt`.
+3. **Suite:** typecheck/lint/build EXIT 0; `test:unit` **310/310 (34 f.)** — `F05-H01-loop3-suite.txt`.
+4. **Spot `tests/integration/seed`:** no ejecutable — `ECONNREFUSED 127.0.0.1:9297` (el emulador está caído por la sesión concurrente; `docker ps` solo muestra `dazzling_edison` ajeno; contenedor no tocado por restricción). Sin regresión atribuible al cambio: las ramas de escritura son idénticas (`client!`/`store!`).
+
+### Cifras finales (loop 3)
+
+| Suite | Resultado |
+|---|---|
+| `npm run seed -- --dry-run` **sin `.local/`** (simulación CI) | EXIT 0 · `Tabla DynamoDB: mediashrink-jobs` |
+| `tests/unit/seed-table.test.ts` **sin `.local/`** | **3/3** |
+| `npm run typecheck` / `lint` / `build` | EXIT 0 / 0 / 0 |
+| `npm run test:unit` | **310/310 (34 archivos)** |
+| Spot `tests/integration/seed` | No ejecutable (emulador caído por sesión concurrente; documentado en `F05-H01-loop3-suite.txt`, `EXIT_SEEDINT=1` por `ECONNREFUSED`) |
+| `.local/` | **Restaurado** (`ca.pem` presente, sin `.local-bak-ci-sim` residual) |
+
+### Problemas del loop 3 (7 campos)
+
+#### P-07 — `--dry-run` creaba el cliente DynamoDB y rompía la CI unitaria (rojo post-push)
+- **Identificación:** `P-07 / F05-H01 loop 3/3 (rojo CI run 44475902700)` · Severidad Media-Alta (CI roja tras push G-6).
+- **Problema:** `tests/unit/seed-table.test.ts#22` ejecuta `npm run seed -- --dry-run`; el CLI creaba el cliente DynamoDB antes de `runSeed`, y `createDynamoDbDocumentClient` hace `readFileSync('./.local/aws-emulator/ca.pem')` → `ENOENT` en el job unitario de CI (sin emulador ni `.local/`).
+- **Causa (demostrada):** stack del run de CI + lectura de `cli.ts:110` y `db/client.ts:31`; `runSeed` nunca usa `client` en dry-run (usos tras `if (dryRun) continue`/ramas else) → la creación era innecesaria.
+- **Solución e intentos fallidos:** cliente solo en escritura + `SeedDeps.client` opcional con guarda en escritura (un único intento; sin fallidos).
+- **Verificación:** simulación CI sin `.local/` (dry-run EXIT 0 + seed-table 3/3); suite 310/310 + typecheck/lint/build EXIT 0; `.local` restaurado.
+- **Pendientes:** Architect debe hacer push y confirmar el run `ci.yml` en verde; Tester re-verifica el vivo cuando el emulador esté disponible (spot seed pendiente por `ECONNREFUSED` ajeno).
+- **Aprendizaje:** ningún `--dry-run`/modo simulación debe abrir conexiones ni leer artefactos de entorno; el wiring del CLI debe construirse de forma perezosa según el modo.
+
+---
+
 ## Addendum loop 2/3 — Corrección del bloqueante P-01 del Tester (`NO-PASSED`): índice `USER#EMAIL` del seed
 
 | Campo | Valor |
