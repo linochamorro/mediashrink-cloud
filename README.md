@@ -35,9 +35,9 @@ Todo el stack cloud (**S3, SQS + DLQ y DynamoDB** con los SDKs oficiales de AWS 
 
 ## Ingeniería dirigida por IA y orquestación multi-agente (SDD + TDD)
 
-A diferencia de repositorios donde el uso de IA queda oculto, este proyecto publica abiertamente toda su arquitectura de gobierno, especificación y verificación con agentes de IA desde el inicio:
+A diferencia de otros repositorios, este proyecto es asistido en toda su arquitectura de gobierno, especificación y verificación con agentes de IA desde el inicio:
 
-- **Orquestación multi-rol con separación de deberes ([`.agents/roles/`](.agents/roles/), [`AGENTS.md`](AGENTS.md)):** flujo dirigido con aprobación humana en decisiones materiales y gates, delegando la ejecución en 5 roles especializados con fronteras estrictas:
+- **Orquestación multi-rol con separación de deberes ([`.agents/roles/`](.agents/roles/), [`AGENTS.md`](AGENTS.md)):** flujo dirigido con aprobación personal en decisiones materiales y gates, delegando la ejecución en 5 roles especializados con fronteras estrictas:
   - **Architect:** coordina cada fase autorizada, audita entregables y orquesta ciclos correctivos.
   - **Developer y Designer:** implementan lógica y UI siguiendo ciclo **SDD + TDD** (`RED → GREEN → REFACTOR`).
   - **Tester independiente:** ejecuta suites unitarias, integración real contra emulador y E2E human-like en Playwright CLI sin modificar código de producto (`PASSED` / `NO-PASSED`).
