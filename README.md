@@ -1,46 +1,66 @@
 ![MediaShrink Cloud — Estudio de imagen privado](docs/images/01-portada-claro.png)
 
 [![CI](https://github.com/linochamorro/mediashrink-cloud/actions/workflows/ci.yml/badge.svg)](https://github.com/linochamorro/mediashrink-cloud/actions/workflows/ci.yml)
+[![Infra CI](https://github.com/linochamorro/mediashrink-cloud/actions/workflows/infra-integration.yml/badge.svg)](https://github.com/linochamorro/mediashrink-cloud/actions/workflows/infra-integration.yml)
+[![AWS Serverless](https://img.shields.io/badge/AWS-S3%20%C2%B7%20SQS%20%C2%B7%20DynamoDB-ff9900)](https://aws.amazon.com/)
+[![Terraform](https://img.shields.io/badge/Terraform-IaC-7b42bc)](https://www.terraform.io/)
+[![Docker](https://img.shields.io/badge/Docker-aws--emulator-2496ed)](https://github.com/aws/aws-emulator)
 [![React](https://img.shields.io/badge/React-18-149eca)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178c6)](https://www.typescriptlang.org/)
-[![DynamoDB](https://img.shields.io/badge/DynamoDB-AWS-4169e1)](https://aws.amazon.com/dynamodb/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-16a34a.svg)](LICENSE)
 
 # MediaShrink Cloud — Estudio de imagen privado
 
-MediaShrink Cloud optimiza lotes de fotografías privadas: convierte cada imagen a WebP y AVIF, genera miniaturas y elimina metadatos EXIF/GPS antes de mostrar métricas reales de espacio ahorrado. La interfaz en español incluye tema Claro/Oscuro, comparativa antes/después, descarga individual o en ZIP y borrado manual, con autenticación propia y una infraestructura declarativa que se ejecuta por completo en local.
+MediaShrink Cloud es una aplicación web **AWS serverless + Terraform (IaC)** para optimizar lotes de fotografías privadas: convierte cada imagen a **WebP** y **AVIF**, genera miniaturas y elimina todos los metadatos **EXIF/GPS** antes de calcular métricas reales de espacio ahorrado. La SPA en español incluye tema Claro/Oscuro, acceso y sesión integrados en el header, nombre personalizado de lote, historial con fecha y hora, comparativa antes/después, descarga individual o en ZIP y borrado manual.
 
-> **Alcance para portafolio:** esta demostración usa cuentas y datos ficticios generados por el seed local. La documentación describe el código y la configuración de este repositorio; no acredita despliegues ni servicios externos activos.
+Todo el stack cloud (**S3, SQS + DLQ y DynamoDB** con los SDKs oficiales de AWS y Terraform) se ejecuta íntegramente en local y en GitHub Actions a **coste $0** mediante el emulador oficial de AWS ([`aws/aws-emulator`](https://github.com/aws/aws-emulator)) en Docker.
+
+> **Alcance para portafolio:** esta demostración opera sobre el emulador oficial de AWS en local con cuentas y datos ficticios generados por el seed. La arquitectura, los SDKs de AWS y la infraestructura Terraform son reales y reproducibles sin requerir cuenta ni gasto en AWS.
+
+## Arquitectura AWS serverless e IaC (Terraform)
+
+- **Infraestructura declarativa real ([`infra/terraform/`](infra/terraform/)):** aprovisiona **11 recursos de AWS** reproducibles:
+  - **2 buckets S3 separados** (`raw` y `optimized`) para evitar bucles de eventos, con reglas **CORS** y política de ciclo de vida de **30 días**.
+  - **Cola SQS principal + Dead-Letter Queue (DLQ)** con política de redirección (`maxReceiveCount = 3`) para aislar imágenes corruptas sin detener el resto del lote.
+  - **Tabla DynamoDB** con particionado estricto por `userId` (aislamiento multi-usuario anti-IDOR) y **TTL automático de 30 días**.
+- **SDKs oficiales de AWS JS v3 y patrones cloud-native:**
+  - `@aws-sdk/client-s3` y `@aws-sdk/s3-request-presigner` para subidas y descargas mediante URLs firmadas.
+  - `@aws-sdk/client-sqs` con **patrón *Claim Check***: cuando un lote de fotografías reales supera el umbral de 200 KiB (por debajo del límite estricto de 256 KiB de AWS SQS), el mensaje encola solo los metadatos y el worker lee el binario directamente desde S3 `raw`.
+  - `@aws-sdk/client-dynamodb` / `lib-dynamodb` para persistencia transaccional y consultas por usuario.
+  - **Hono** (estándar Web `Request`/`Response`) con adaptador portable entre servidor Node local y **AWS Lambda**, más **Vite + React** compilable como SPA estática para **S3 + CloudFront**.
+- **Emulación local fiel a coste $0 (Docker):**
+  - Se utiliza el emulador oficial de AWS en Rust ([**`aws/aws-emulator`**](https://github.com/aws/aws-emulator)), ejecutado mediante la imagen OCI multi-arquitectura fijada por digest SHA-256 ([`ghcr.io/xsavikx/aws-emulator`](https://github.com/xsavikx/aws-emulator)) definida en [`docker-compose.yml`](docker-compose.yml) con límites de recursos (`2 GiB RAM / 2.0 CPUs`) y credenciales/CA efímeros por arranque.
+  - Con `-var=is_emulator=true`, Terraform aprovisiona sobre el emulador local; con `-var=is_emulator=false` y credenciales reales, **la misma infraestructura despliega en AWS real sin modificar el código de producto**.
 
 ## Funcionalidades
 
-- **Optimización por lotes:** hasta 20 imágenes JPEG, PNG, WebP o AVIF por lote, con tres niveles de compresión (alta calidad, equilibrado y máxima compresión) y validación en el dispositivo antes de subir.
-- **Privacidad por diseño:** eliminación de todos los metadatos de cámara y ubicación, subida mediante URL firmada, aislamiento de datos por usuario y borrado manual del lote y sus archivos.
-- **Comparativa y métricas:** vista antes/después dentro de la ventana de retención, con tamaño original, tamaño optimizado, porcentaje de ahorro real y confirmación de EXIF eliminado.
-- **Descargas y ciclo de vida:** descarga individual de cada variante y descarga del lote completo en ZIP con optimizadas y miniaturas; retención de 30 días y cola con reintentos y DLQ.
-- **Interfaz:** SPA en español con tema Claro/Oscuro, zona de arrastre y suelta, progreso con sondeo automático e historial de lotes.
+- **Optimización por lotes:** hasta 20 imágenes JPEG, PNG, WebP o AVIF por lote (hasta 15 MB por imagen), con **nombre opcional del lote**, tres niveles de compresión (alta calidad, equilibrado y máxima compresión) y validación en el dispositivo antes de subir.
+- **Privacidad por diseño:** eliminación verificada de metadatos de cámara y ubicación GPS (`sharp`/libvips), subida mediante URL firmada, aislamiento estricto de datos por usuario, rate limiting independiente (`/auth` 5 req/min anti-fuerza-bruta vs. API autenticada 120 req/min) y borrado manual completo de DynamoDB y S3.
+- **Comparativa y métricas reales:** vista antes/después dentro de la ventana de retención, con tamaño original confirmado por `HeadObject`, tamaño optimizado, porcentaje de ahorro real y badge `✓ EXIF eliminado`.
+- **Descargas y resiliencia:** descarga individual (Original, WebP, AVIF) y descarga del lote completo en ZIP con optimizadas y miniaturas; reintentos automáticos y DLQ para archivos dañados (`Completado parcialmente` / `Fallido`).
+- **Interfaz:** SPA en español con tema Claro/Oscuro persistente, **acceso y sesión en el header** junto al selector de tema, zona de arrastre y suelta, sondeo automático e **historial ordenado con nombre, fecha y hora**.
 
-La vista general del sistema está documentada en [docs/architecture/00-overview.md](docs/architecture/00-overview.md).
+La vista general del sistema está documentada en [docs/architecture/00-overview.md](docs/architecture/00-overview.md) y las decisiones técnicas en [docs/decisions/ADR-001-stack-and-aws-emulator.md](docs/decisions/ADR-001-stack-and-aws-emulator.md).
 
 ## Tecnología y estructura
 
-Vite + React + TypeScript · Hono + Zod + JWT propio · `sharp` (libvips) · DynamoDB, S3 y SQS/DLQ aprovisionados con Terraform · Vitest y Playwright sobre `aws/aws-emulator`.
+Vite + React + TypeScript · Hono + Zod + JWT propio · `sharp` (libvips) · AWS SDK JS v3 (S3, SQS/DLQ, DynamoDB) · Terraform (IaC) · Docker ([`aws/aws-emulator`](https://github.com/aws/aws-emulator)) · Vitest y Playwright CLI.
 
 | Ruta | Contenido |
 |---|---|
-| `frontend/src/` | SPA React: autenticación, carga drag & drop, presets, sondeo, comparativa y métricas |
-| `backend/src/` | API Hono, contratos Zod, worker `sharp` y servidor local con consumidor SQS |
-| `infra/terraform/` | Buckets S3 `raw` y `optimized`, SQS + DLQ, DynamoDB, CORS y ciclo de vida |
+| `frontend/src/` | SPA React: acceso/sesión en header, carga drag & drop, nombre de lote, presets, sondeo, comparativa y métricas |
+| `backend/src/` | API Hono, contratos Zod `v1.1.0`, worker `sharp`, Claim Check SQS/S3 y servidor local |
+| `infra/terraform/` | Infraestructura AWS (11 recursos): buckets S3 `raw`/`optimized`, SQS + DLQ, DynamoDB, CORS y ciclo de vida 30 d |
 | `tools/scripts/seed/` | Datos demo sintéticos e idempotentes para el emulador local |
-| `tests/unit/` | Pruebas unitarias aisladas (reglas, contratos y configuración) |
-| `tests/integration/` | Pruebas de integración S3/SQS/DynamoDB contra el emulador |
-| `tests/e2e/` | Pruebas de extremo a extremo y capturas reales con Playwright |
-| `docs/architecture/`, `docs/decisions/` | Documentación técnica y decisiones arquitectónicas |
-| `docs/images/` | Capturas de la interfaz del producto |
+| `tests/unit/` | 355 pruebas unitarias aisladas en 37 archivos (reglas, contratos, seguridad, Claim Check y UI) |
+| `tests/integration/` | Pruebas de integración reales S3/SQS/DynamoDB contra `aws/aws-emulator` (incluyendo lotes > 400 KiB) |
+| `tests/e2e/` | Pruebas E2E reales con Playwright CLI (31/31 escenarios human-like sin mocks ni muletas) y capturas |
+| `docs/architecture/`, `docs/decisions/` | Documentación técnica y decisiones arquitectónicas (ADR) |
+| `docs/images/` | 18 capturas reales de la interfaz en Claro y Oscuro |
 
 ## Inicio local
 
-Requisitos: Node.js 26, npm 11, Docker con motor Linux y Terraform 1.17 para el emulador local (sin cuenta AWS).
+Requisitos: Node.js 26, npm 11, Docker con motor Linux y Terraform 1.17 para el emulador local (`aws/aws-emulator`, **sin cuenta AWS**).
 
 ```bash
 git clone https://github.com/linochamorro/mediashrink-cloud.git
@@ -61,24 +81,26 @@ npm run dev:backend
 npm run dev:frontend
 ```
 
-La API y el worker quedan en `http://localhost:3001` y la SPA en `http://localhost:5173`. Las credenciales del emulador son efímeras y se renuevan en cada arranque: repite el bloque de `docker cp` tras cada inicio. Para servir el backend sin recarga está disponible `npm start --workspace=@mediashrink/backend`. El seed solo opera sobre el emulador local y es idempotente; apaga el contenedor con `docker compose down` cuando termines.
+La API y el worker quedan en `http://localhost:3001` y la SPA en `http://localhost:5173`. Las credenciales del emulador son efímeras y se renuevan en cada arranque: repite el bloque de `docker cp` tras cada inicio. El seed solo opera sobre el emulador local y es idempotente; apaga el contenedor con `docker compose down` cuando termines.
 
 ## Comandos del proyecto
 
 | Comando | Uso |
 |---|---|
 | `npm ci` | Instalación reproducible desde `package-lock.json` |
-| `npm run dev:frontend` | Servidor de desarrollo de la SPA (Vite) |
-| `npm run dev:backend` | API y worker en modo desarrollo |
+| `npm run dev:frontend` | Servidor de desarrollo de la SPA (Vite + proxy y relay local del emulador) |
+| `npm run dev:backend` | API Hono y consumidor SQS en modo desarrollo (carga `.env` automáticamente) |
 | `npm run build` | Compilación de producción de frontend y backend |
 | `npm run typecheck` | Comprobación estática de tipos |
 | `npm run lint` | Análisis estático (ESLint) |
-| `npm run test:unit` | Pruebas unitarias aisladas sin BD ni `.env` |
+| `npm run test:unit` | 355 pruebas unitarias aisladas sin BD ni `.env` |
 | `npm run seed` | Seed sintético idempotente contra el emulador local |
-| `npx vitest run tests/integration` | Pruebas de integración (requiere emulador y Terraform aplicado) |
+| `npx vitest run tests/integration` | Pruebas de integración reales (requiere emulador y Terraform aplicado) |
 | `npx playwright test --config=tests/e2e/playwright.real.config.ts` | Flujo de extremo a extremo real (requiere emulador, Terraform y backend) |
 
-El workflow de CI en `.github/workflows/ci.yml` ejecuta, sobre Node.js 26: checkout, instalación con `npm ci --no-audit --no-fund`, `npm run typecheck`, `npm run lint` y `npm run test:unit` (303 pruebas unitarias aisladas en 32 archivos).
+**Integración continua (GitHub Actions):**
+- [`.github/workflows/ci.yml`](.github/workflows/ci.yml): ejecuta en Node.js 26 instalación reproducible (`npm ci`), `typecheck`, `lint` y `test:unit` (**355 pruebas unitarias en 37 archivos**).
+- [`.github/workflows/infra-integration.yml`](.github/workflows/infra-integration.yml): levanta el emulador [`aws/aws-emulator`](https://github.com/aws/aws-emulator) en Docker, valida y aplica **Terraform** (`fmt`, `init`, `validate`, `apply`), ejecuta las **pruebas de integración reales** contra S3/SQS/DynamoDB y apaga el contenedor limpiamente.
 
 ## Imágenes
 
@@ -108,10 +130,10 @@ El workflow de CI en `.github/workflows/ci.yml` ejecuta, sobre Node.js 26: check
 ![Zona de arrastre y suelta en tema Oscuro](docs/images/03-subida-oscuro.png)
 ![Progreso del lote en tema Oscuro](docs/images/04-progreso-oscuro.png)
 ![Comparativa antes y después en tema Oscuro](docs/images/05-comparativa-oscuro.png)
-![Métricas reales en tema Oscuro](docs/images/06-metricas-oscuro.png)
+![Métricas reales de original, optimizado, ahorro y EXIF en tema Oscuro](docs/images/06-metricas-oscuro.png)
 ![Descarga individual en tema Oscuro](docs/images/07-descarga-individual-oscuro.png)
 ![Historial de lotes en tema Oscuro](docs/images/08-zip-oscuro.png)
-![Estado vacío en tema Oscuro](docs/images/09-borrado-oscuro.png)
+![Estado vacío tras borrar el lote en tema Oscuro](docs/images/09-borrado-oscuro.png)
 
 </details>
 
@@ -119,6 +141,7 @@ El workflow de CI en `.github/workflows/ci.yml` ejecuta, sobre Node.js 26: check
 
 - [Arquitectura del sistema](docs/architecture/00-overview.md)
 - [Índice de decisiones técnicas (ADR)](docs/decisions/index.md)
+- [Flujo de desarrollo local y emulador AWS](docs/runbooks/development-workflow.md)
 
 ## Licencia
 

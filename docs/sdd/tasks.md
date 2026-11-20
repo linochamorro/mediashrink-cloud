@@ -117,10 +117,10 @@ Fase Final: Integración, E2E, auditoría de seguridad, pruebas de Lino,
 |---|---|---|---|---|
 | `F05-T01` | Integración global y suite completa (unit/integration/E2E) | `F02`,`F03`,`F04` | Tester | Suite verde; reporte en `reports/verification/` |
 | `F05-T02` | Auditoría final de seguridad y privacidad | `F05-T01` | Auditor | Sin hallazgos críticos/altos; EXIF/GPS y aislamiento verificados |
-| `F05-T03` | Pruebas exploratorias de Lino y correcciones TDD | `F05-T02` | Architect/Developer | Tabla de observaciones y addendum por hallazgo |
-| `F05-T04` | README público y selección de archivos (G-6b) | `F05-T02` | Designer | Portada, badges, estructura, comandos, galería; sin rutas locales ni secretos |
-| `F05-T05` | Borrado verificado de `temporary/` y reejecución de build/tests | `F05-T04` | Architect (G-11) | `temporary/` inexistente; build y tests siguen pasando |
-| `F05-T06` | Publicación en GitHub y cierre (`STATE.md`, `PROJECTS.md`) | `F05-T05` (G-12) | Architect/CTO | Push autorizado por Lino; estado final «Producto terminado» |
+| `F05-T03` | Pruebas exploratorias de Lino y correcciones TDD | `F05-T02` | Architect/Developer | **CERRADA (2026-11-20):** `F05-AUDIT-FULL`, `F05-QA-HUMAN` (`31/31 PASSED`), `F05-UX-HEADER-AUTH` (`31/31 PASSED`) y validación manual de Lino |
+| `F05-T04` | README público y selección de archivos (G-6b) | `F05-T02` | Designer/CTO | **CERRADA (2026-11-20):** Portada, badges AWS/Terraform/Docker/CI, arquitectura AWS serverless + `aws/aws-emulator`, 18 PNG, `355/355` unitarias |
+| `F05-T05` | Borrado verificado de `temporary/` y reejecución de build/tests | `F05-T04` | Architect (G-11) | **CERRADA (`PASSED`):** `temporary/` inexistente; build y tests pasan sin él |
+| `F05-T06` | Publicación en GitHub y cierre (`STATE.md`, `PROJECTS.md`) | `F05-T05` (G-12) | CTO | **CERRADA (2026-11-20):** Push final autorizado por Lino (`G-12`); estado final **«Producto terminado»** |
 
 ---
 
