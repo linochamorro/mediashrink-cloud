@@ -79,7 +79,47 @@ describe('rate limit no suplantable (cierra T03-A-01)', () => {
     expect((await getJson(app, '/jobs', token)).status).toBe(200);
     expect((await getJson(app, '/jobs', token)).status).toBe(429);
 
-    setNow(Date.now() + config.rateLimit.authWindowMs + 1);
+    setNow(Date.now() + config.rateLimit.apiWindowMs + 1);
     expect((await getJson(app, '/jobs', token)).status).toBe(200);
+  });
+
+  it('mantiene independientes las ventanas de auth y API', async () => {
+    const authChanged = createApiTestApp(
+      { RATE_LIMIT_AUTH_WINDOW_MS: '1000', RATE_LIMIT_API_MAX: '1' },
+      undefined,
+      true,
+    );
+    authChanged.setNow(0);
+    const authChangedSession = await authChanged.register('auth-window@example.com');
+
+    expect((await getJson(authChanged.app, '/jobs', authChangedSession.token)).status).toBe(200);
+    expect((await getJson(authChanged.app, '/jobs', authChangedSession.token)).status).toBe(429);
+    authChanged.setNow(1001);
+    expect((await getJson(authChanged.app, '/jobs', authChangedSession.token)).status).toBe(429);
+
+    const apiChanged = createApiTestApp(
+      { RATE_LIMIT_API_WINDOW_MS: '2000', RATE_LIMIT_API_MAX: '1' },
+      undefined,
+      true,
+    );
+    apiChanged.setNow(0);
+    const apiChangedSession = await apiChanged.register('api-window@example.com');
+
+    expect((await getJson(apiChanged.app, '/jobs', apiChangedSession.token)).status).toBe(200);
+    expect((await getJson(apiChanged.app, '/jobs', apiChangedSession.token)).status).toBe(429);
+    apiChanged.setNow(2001);
+    expect((await getJson(apiChanged.app, '/jobs', apiChangedSession.token)).status).toBe(200);
+
+    const authOnly = createApiTestApp({
+      RATE_LIMIT_API_WINDOW_MS: '2000',
+      RATE_LIMIT_AUTH_WINDOW_MS: '1000',
+      RATE_LIMIT_AUTH_MAX: '1',
+    });
+    authOnly.setNow(0);
+    const credentials = { email: 'demo@example.com', password: 'Segura1234' };
+    expect((await postJson(authOnly.app, '/auth/login', credentials)).status).toBe(401);
+    expect((await postJson(authOnly.app, '/auth/login', credentials)).status).toBe(429);
+    authOnly.setNow(1001);
+    expect((await postJson(authOnly.app, '/auth/login', credentials)).status).toBe(401);
   });
 });

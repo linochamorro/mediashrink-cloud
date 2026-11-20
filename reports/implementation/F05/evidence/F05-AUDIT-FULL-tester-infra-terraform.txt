@@ -1,0 +1,189 @@
+COMMAND=terraform -chdir=infra/terraform fmt -check
+EXIT_CODE_FMT=0
+COMMAND=terraform -chdir=infra/terraform validate
+[32m[1mSuccess![0m The configuration is valid.
+[0m
+EXIT_CODE_VALIDATE=0
+COMMAND=terraform -chdir=infra/terraform apply -auto-approve -var=is_emulator=true
+[0m[1mdata.aws_caller_identity.emulator: Reading...[0m[0m
+[0m[1maws_dynamodb_table.jobs: Refreshing state... [id=mediashrink-jobs][0m
+[0m[1maws_s3_bucket.optimized: Refreshing state... [id=mediashrink-optimized-local][0m
+[0m[1maws_s3_bucket.raw: Refreshing state... [id=mediashrink-raw-local][0m
+[0m[1maws_sqs_queue.dlq: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq][0m
+[0m[1maws_iam_role.app: Refreshing state... [id=mediashrink-app-role][0m
+[0m[1mdata.aws_caller_identity.emulator: Read complete after 0s [id=000000000000][0m
+[0m[1maws_sqs_queue.jobs: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs][0m
+[0m[1mdata.aws_iam_role.app: Reading...[0m[0m
+[0m[1mdata.aws_iam_role.app: Read complete after 0s [id=mediashrink-app-role][0m
+[0m[1maws_s3_bucket_lifecycle_configuration.optimized: Refreshing state... [id=mediashrink-optimized-local][0m
+[0m[1maws_s3_bucket_cors_configuration.optimized: Refreshing state... [id=mediashrink-optimized-local][0m
+[0m[1maws_s3_bucket_lifecycle_configuration.raw: Refreshing state... [id=mediashrink-raw-local][0m
+[0m[1maws_s3_bucket_cors_configuration.raw: Refreshing state... [id=mediashrink-raw-local][0m
+[0m[1maws_iam_role_policy.app: Refreshing state... [id=mediashrink-app-role:mediashrink-least-privilege][0m
+
+[0m[1m[32mNo changes.[0m[1m Your infrastructure matches the configuration.[0m
+
+[0mTerraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+[0m[1m[32m
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.[0m
+[0m[1m[32m
+Outputs:
+
+[0mauthenticated_account_id = "000000000000"
+dynamodb_table_jobs = "mediashrink-jobs"
+dynamodb_table_jobs_arn = "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs"
+dynamodb_ttl_attribute = "ttl"
+dynamodb_ttl_item_policy = {
+  "image_items_carry_ttl" = true
+  "job_items_carry_ttl" = true
+  "user_accounts_expire" = false
+  "user_profile_items_carry_ttl" = false
+}
+dynamodb_ttl_seconds = 2592000
+emulator_endpoint = "https://127.0.0.1:9297"
+iam_inline_policy = {
+  "Statement" = [
+    {
+      "Action" = [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject",
+      ]
+      "Effect" = "Allow"
+      "Resource" = [
+        "arn:aws:s3:::mediashrink-raw-local/*",
+      ]
+      "Sid" = "S3RawObjectsReadWrite"
+    },
+    {
+      "Action" = [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject",
+      ]
+      "Effect" = "Allow"
+      "Resource" = [
+        "arn:aws:s3:::mediashrink-optimized-local/*",
+      ]
+      "Sid" = "S3OptimizedObjectsReadWrite"
+    },
+    {
+      "Action" = [
+        "s3:ListBucket",
+      ]
+      "Effect" = "Allow"
+      "Resource" = [
+        "arn:aws:s3:::mediashrink-raw-local",
+        "arn:aws:s3:::mediashrink-optimized-local",
+      ]
+      "Sid" = "S3ListOnlyNamedBuckets"
+    },
+    {
+      "Action" = [
+        "sqs:SendMessage",
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage",
+        "sqs:ChangeMessageVisibility",
+        "sqs:GetQueueAttributes",
+        "sqs:GetQueueUrl",
+      ]
+      "Effect" = "Allow"
+      "Resource" = [
+        "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs",
+        "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq",
+      ]
+      "Sid" = "SqsJobsAndDlqMessaging"
+    },
+    {
+      "Action" = [
+        "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:Query",
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:DescribeTable",
+      ]
+      "Effect" = "Allow"
+      "Resource" = [
+        "arn:aws:dynamodb:us-east-1:000000000000:table/mediashrink-jobs",
+      ]
+      "Sid" = "DynamoDbJobsTableCrud"
+    },
+  ]
+  "Version" = "2012-10-17"
+}
+iam_role_arn = "arn:aws:iam::000000000000:role/mediashrink-app-role"
+iam_role_name = "mediashrink-app-role"
+iam_trust_policy = {
+  "Statement" = [
+    {
+      "Action" = "sts:AssumeRole"
+      "Effect" = "Allow"
+      "Principal" = {
+        "Service" = "lambda.amazonaws.com"
+      }
+      "Sid" = "LambdaAssumeRoleOnly"
+    },
+  ]
+  "Version" = "2012-10-17"
+}
+provider_region = "us-east-1"
+s3_bucket_optimized = "mediashrink-optimized-local"
+s3_bucket_raw = "mediashrink-raw-local"
+s3_cors_configuration = [
+  {
+    "allowed_headers" = [
+      "authorization",
+      "content-type",
+      "content-md5",
+      "etag",
+      "x-amz-content-sha256",
+      "x-amz-date",
+      "x-amz-security-token",
+      "x-amz-server-side-encryption",
+    ]
+    "allowed_methods" = [
+      "GET",
+      "PUT",
+    ]
+    "allowed_origins" = [
+      "http://localhost:5173",
+    ]
+    "expose_headers" = [
+      "content-type",
+      "etag",
+      "x-amz-id-2",
+      "x-amz-request-id",
+    ]
+    "max_age_seconds" = 3000
+  },
+]
+s3_lifecycle_expiration_days = 30
+sqs_dlq_arn = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs-dlq"
+sqs_dlq_url = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs-dlq"
+sqs_max_receive_count = 3
+sqs_queue_arn = "arn:aws:sqs:us-east-1:000000000000:mediashrink-jobs"
+sqs_queue_url = "https://sqs.us-east-1.amazonaws.com/000000000000/mediashrink-jobs"
+sqs_visibility_timeout_seconds = 120
+EXIT_CODE_APPLY=0
+COMMAND=terraform -chdir=infra/terraform state list
+data.aws_caller_identity.emulator
+data.aws_iam_role.app
+aws_dynamodb_table.jobs
+aws_iam_role.app
+aws_iam_role_policy.app
+aws_s3_bucket.optimized
+aws_s3_bucket.raw
+aws_s3_bucket_cors_configuration.optimized
+aws_s3_bucket_cors_configuration.raw
+aws_s3_bucket_lifecycle_configuration.optimized
+aws_s3_bucket_lifecycle_configuration.raw
+aws_sqs_queue.dlq
+aws_sqs_queue.jobs
+STATE_ENTRY_COUNT=13
+MANAGED_RESOURCE_COUNT=11
+EXIT_CODE_STATE_LIST=0
+EXIT_CODE=0

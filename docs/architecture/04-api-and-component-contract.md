@@ -41,7 +41,7 @@ Todos son `v1` dentro de la versión global `1.0.0`.
 | `OutputFormat` | enum | `webp`, `avif`. |
 | `ImageRecord` | objeto | `imageId`, `status`, `bytesBefore?`, `bytesAfter?`, `failureReason?`, `exifStripped`. |
 | `JobMetrics` | objeto | `bytesBefore`, `bytesAfter`, `savingsPct`, `exifStripped` + coherencia de ahorro. |
-| `Job` | objeto | `jobId`, `userId`, `status`, `preset`, `formats`, métricas, `createdAt`, `updatedAt`, `ttl` + coherencia de ahorro y TTL. |
+| `Job` | objeto | `jobId`, `userId`, `name?` (opcional, ≤ 80 caracteres), `status`, `preset`, `formats`, métricas, `createdAt`, `updatedAt`, `ttl` + coherencia de ahorro y TTL. |
 | `LimitsConfig` | objeto | `maxFileSizeMb`, `maxImagesPerBatch`, `maxPixels` (enteros > 0), leídos desde `AppConfig.limits`. |
 | `AwsTransport` | objeto | `region`, `accountId` (12 dígitos), `endpointUrl`, `queueUrl`, `dlqUrl` + regla de colas canónicas. |
 | `RetentionPolicy` | objeto | `retentionDays: 30`, `ttlSeconds: 2592000` (literales). |

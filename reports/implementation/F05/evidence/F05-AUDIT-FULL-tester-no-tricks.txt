@@ -1,0 +1,16 @@
+COMMAND=grep acceptance files for no-tricks patterns
+PATTERN=F05_E2E_RATE_LIMIT_MAX|RATE_LIMIT_AUTH_MAX|RATE_LIMIT_API_MAX|context.route|page.route|route.fulfill|installS3Relay
+tests/e2e/f05-audit-full.spec.ts MATCH_COUNT=0
+tests/e2e/playwright.f05-full.config.ts MATCH_COUNT=0
+tests/e2e/real-stack.spec.ts MATCH_COUNT=0
+tests/e2e/playwright.real.config.ts MATCH_COUNT=0
+ACCEPTANCE_TOTAL_MATCH_COUNT=0
+
+AUXILIARY_SPECS_WITH_DOUBLES_OR_RELAYS (transparency; excluded from acceptance gate)
+tests/e2e/frontend-flow.spec.ts MATCH_COUNT=22
+tests/e2e/screenshots.spec.ts MATCH_COUNT=5
+tests/e2e/playwright.screenshots.config.ts MATCH_COUNT=4
+tests/e2e/qa-roadmap.spec.ts MATCH_COUNT=5
+PURPOSE=tests/e2e/frontend-flow.spec.ts: UI/contract doubles by design for isolated frontend states, auth errors, refresh, polling, downloads and logout; not product integration evidence.
+PURPOSE=tests/e2e/screenshots.spec.ts + tests/e2e/playwright.screenshots.config.ts: deterministic README capture harness; real API/storage but Playwright S3 transport relay and a raised screenshot-only rate-limit setting; not acceptance evidence.
+PURPOSE=tests/e2e/qa-roadmap.spec.ts: QA roadmap capture harness; real API/storage and transport-only S3 relay for emulator CORS, with a deliberately corrupt image for PARTIAL/DLQ coverage; not acceptance evidence.

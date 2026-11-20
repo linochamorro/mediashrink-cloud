@@ -1,0 +1,78 @@
+
+> mediashrink-cloud@0.0.0 test:unit
+> vitest run tests/unit
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32m✓[39m tests/unit/frontend/secure-url.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 43[2mms[22m[39m
+ [32m✓[39m tests/unit/domain/imageHeader.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 68[2mms[22m[39m
+ [32m✓[39m tests/unit/frontend/core.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 147[2mms[22m[39m
+ [32m✓[39m tests/unit/config.test.ts [2m([22m[2m37 tests[22m[2m)[22m[90m 186[2mms[22m[39m
+ [32m✓[39m tests/unit/contracts.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 99[2mms[22m[39m
+ [32m✓[39m tests/unit/api/userstore.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 969[2mms[22m[39m
+   [33m[2m✓[22m[39m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mAuthService registra y hace login sobre el adaptador DynamoDB [33m942[2mms[22m[39m
+ [32m✓[39m tests/unit/api/delete.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1308[2mms[22m[39m
+   [33m[2m✓[22m[39m DELETE /jobs/:id (CA-05)[2m > [22m404 indistinto para lote ajeno e inexistente, sin borrar nada [33m490[2mms[22m[39m
+ [32m✓[39m tests/unit/api/download.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 1930[2mms[22m[39m
+   [33m[2m✓[22m[39m GET /jobs/:id/download/:imageId (CA-05)[2m > [22mdevuelve una URL HTTPS presignada para la variante webp del usuario [33m408[2mms[22m[39m
+   [33m[2m✓[22m[39m GET /jobs/:id/download/:imageId (CA-05)[2m > [22mdevuelve 404 indistinto para lote ajeno y lote inexistente [33m641[2mms[22m[39m
+ [32m✓[39m tests/unit/api/routes.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 2071[2mms[22m[39m
+   [33m[2m✓[22m[39m rutas /jobs (F02-T01, CA-01)[2m > [22mPOST /jobs crea un PENDING con userId del token, formatos congelados y TTL válido [33m423[2mms[22m[39m
+   [33m[2m✓[22m[39m rutas /jobs (F02-T01, CA-01)[2m > [22mPOST /jobs rechaza preset inválido con 400 y no crea el lote [33m323[2mms[22m[39m
+   [33m[2m✓[22m[39m rutas /jobs (F02-T01, CA-01)[2m > [22mGET /jobs devuelve solo los lotes del usuario autenticado [33m490[2mms[22m[39m
+ [32m✓[39m tests/unit/api/zip.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2260[2mms[22m[39m
+   [33m[2m✓[22m[39m GET /jobs/:id/download.zip (CA-05)[2m > [22mdevuelve un ZIP con WebP, AVIF y miniatura de cada imagen del lote [33m528[2mms[22m[39m
+   [33m[2m✓[22m[39m GET /jobs/:id/download.zip (CA-05)[2m > [22momite variantes ausentes de un lote parcial sin fallar [33m338[2mms[22m[39m
+   [33m[2m✓[22m[39m GET /jobs/:id/download.zip (CA-05)[2m > [22mno incluye binarios de otro usuario ni de otro lote [33m480[2mms[22m[39m
+   [33m[2m✓[22m[39m GET /jobs/:id/download.zip (CA-05)[2m > [22m404 indistinto para lote ajeno e inexistente [33m476[2mms[22m[39m
+ [32m✓[39m tests/unit/domain/stateMachine.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 20[2mms[22m[39m
+ [32m✓[39m tests/unit/f05-audit-full.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 121[2mms[22m[39m
+ [32m✓[39m tests/unit/auth/service.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1880[2mms[22m[39m
+   [33m[2m✓[22m[39m AuthService — registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mregistra un usuario hasheado y devuelve un par de tokens sin exponer el hash [33m367[2mms[22m[39m
+   [33m[2m✓[22m[39m AuthService — registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mdevuelve el mismo error para correo desconocido y contraseña incorrecta [33m657[2mms[22m[39m
+ [32m✓[39m tests/unit/worker/antiBomb.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 343[2mms[22m[39m
+ [32m✓[39m tests/unit/api/jobs-contract.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 5446[2mms[22m[39m
+   [33m[2m✓[22m[39m F02-AUD-01 — POST /jobs contrato { files } → { job, uploads }[2m > [22m201 devuelve job PENDING y uploads con imageId seguro, URL HTTPS PUT y sin bucket/key [33m460[2mms[22m[39m
+   [33m[2m✓[22m[39m F02-AUD-01 — POST /jobs contrato { files } → { job, uploads }[2m > [22mgenera un imageId nuevo por archivo con randomUUID y nunca lo deriva del fileName [33m306[2mms[22m[39m
+   [33m[2m✓[22m[39m F02-AUD-01 — POST /jobs contrato { files } → { job, uploads }[2m > [22macepta todos los MIME raster permitidos y rechaza SVG/GIF/no-raster [33m2017[2mms[22m[39m
+   [33m[2m✓[22m[39m F02-AUD-01 — POST /jobs contrato { files } → { job, uploads }[2m > [22mvalida fileName no vacío sin separadores, NUL ni %xx (sin usarlo en la clave) [33m1983[2mms[22m[39m
+ [32m✓[39m tests/unit/api/presign-routes.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1781[2mms[22m[39m
+ [32m✓[39m tests/unit/auth/jwt.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 154[2mms[22m[39m
+ [32m✓[39m tests/unit/domain/antiBomb.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+ [32m✓[39m tests/unit/api/presign-keys.test.ts [2m([22m[2m30 tests[22m[2m)[22m[90m 21[2mms[22m[39m
+ [32m✓[39m tests/unit/worker/processImage.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2887[2mms[22m[39m
+   [33m[2m✓[22m[39m worker — formatos y métricas (CA-03 / IN-01 / FR-12)[2m > [22mproduce WebP, AVIF y miniatura WebP con bytes reales y dimensiones válidas [33m2741[2mms[22m[39m
+ [32m✓[39m tests/unit/api/authz.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1337[2mms[22m[39m
+   [33m[2m✓[22m[39m autorización y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mun token manipulado y un refresh token no autorizan /jobs [33m347[2mms[22m[39m
+   [33m[2m✓[22m[39m autorización y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mPOST /jobs/:id/confirm ajeno devuelve 404 y no publica [33m314[2mms[22m[39m
+   [33m[2m✓[22m[39m autorización y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mel userId del token no se puede suplantar con x-user-id ni con el path [33m342[2mms[22m[39m
+ [32m✓[39m tests/unit/api/security-headers.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 446[2mms[22m[39m
+ [32m✓[39m tests/unit/api/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1506[2mms[22m[39m
+   [33m[2m✓[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22mla clave de /jobs deriva del userId: agotar A no afecta a B [33m378[2mms[22m[39m
+   [33m[2m✓[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22muna cabecera con el userId ajeno no consume el cupo de ese usuario [33m407[2mms[22m[39m
+   [33m[2m✓[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22m/auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 [33m408[2mms[22m[39m
+ [32m✓[39m tests/unit/domain/savings.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+ [32m✓[39m tests/unit/api/zip-cap.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 605[2mms[22m[39m
+ [32m✓[39m tests/unit/api/delete-partial.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 610[2mms[22m[39m
+ [32m✓[39m tests/unit/domain/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 13[2mms[22m[39m
+ [32m✓[39m tests/unit/auth/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32m✓[39m tests/unit/domain/guards.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32m✓[39m tests/unit/api/confirm.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 744[2mms[22m[39m
+   [33m[2m✓[22m[39m confirmación de lotes bajo concurrencia y fallos (A-01/A-02)[2m > [22msi falla la publicación y la reversión funciona, responde PUBLISH_FAILED y el reintento publica [33m337[2mms[22m[39m
+ [32m✓[39m tests/unit/frontend.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/auth/middleware.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32m✓[39m tests/unit/auth/password.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1296[2mms[22m[39m
+   [33m[2m✓[22m[39m hash de contraseñas — scrypt (A-02, IN-05)[2m > [22mverifica la contraseña correcta y rechaza una incorrecta [33m432[2mms[22m[39m
+ [32m✓[39m tests/unit/health.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 22[2mms[22m[39m
+(node:17820) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ [32m✓[39m tests/unit/seed-table.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 5023[2mms[22m[39m
+   [33m[2m✓[22m[39m F05-H01 — el seed escribe en DYNAMODB_TABLE_JOBS (RED)[2m > [22mstore.ts ya no exporta SEED_TABLE_NAME como destino de escritura [33m309[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m35 passed[39m[22m[90m (35)[39m
+[2m      Tests [22m [1m[32m322 passed[39m[22m[90m (322)[39m
+[2m   Start at [22m 21:04:01
+[2m   Duration [22m 22.10s[2m (transform 13.38s, setup 0ms, collect 42.69s, tests 33.41s, environment 14ms, prepare 14.34s)[22m
+
+EXIT_CODE=0

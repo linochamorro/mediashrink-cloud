@@ -30,6 +30,7 @@ import {
   createObjectAccessServiceFromConfig,
   type OptimizedObjectWriter,
 } from '../storage/index';
+import { rawImageKey } from '../storage/keys';
 import { parseJobQueueMessage, type DeadLetterMessage } from './messages';
 import { processImage, type ProcessImageOptions, type ProcessImageResult } from './processImage';
 
@@ -84,6 +85,22 @@ export interface PollOptions {
 
 /** Mensaje estable para fallos lanzados por el procesador (G-3: sin rutas ni entorno). */
 const TRANSIENT_FAILURE_REASON = 'No se pudo procesar la imagen con sharp';
+
+/** Error genérico de Claim Check: nunca incluye clave, imageId ni otro valor rechazado. */
+const RAW_OBJECT_UNAVAILABLE_MESSAGE = 'Objeto raw no disponible para la imagen del lote';
+
+/**
+ * Construye la clave raw mediante la única invariante canónica de S3.
+ * Un segmento inseguro se traduce al mismo error genérico que un objeto
+ * ausente: el valor rechazado nunca se imprime (G-3).
+ */
+function claimCheckRawKey(userId: string, jobId: string, imageId: string): string {
+  try {
+    return rawImageKey({ userId, jobId, imageId });
+  } catch {
+    throw new Error(RAW_OBJECT_UNAVAILABLE_MESSAGE);
+  }
+}
 
 /** Un estado es terminal cuando la máquina de estados congelada no tiene salidas. */
 function terminalStatus(status: JobStatus): 'COMPLETED' | 'PARTIAL' | 'FAILED' | null {
@@ -170,6 +187,13 @@ export async function handleJobMessage(
   const outcomes: ImageOutcome[] = [];
   let dlqFailures = 0;
   for (const image of message.images) {
+    const hasInlineContent = image.contentBase64 !== undefined && image.contentBase64 !== '';
+    // La frontera identidad → clave S3 se valida antes de tocar S3 o DynamoDB.
+    // El transporte sigue usando assertOpaqueId; solo Claim Check necesita la
+    // allowlist estricta porque recupera un objeto por esa clave.
+    const rawKey = hasInlineContent
+      ? undefined
+      : claimCheckRawKey(userId, jobId, image.imageId);
     const { alreadyFailed } = await ensureImageRecord(deps.jobs, userId, jobId, image.imageId);
     const options: ProcessImageOptions = {
       config: deps.config,
@@ -179,17 +203,16 @@ export async function handleJobMessage(
       ...(image.preset === undefined ? {} : { preset: image.preset }),
     };
     let bytes: Buffer;
-    if (image.contentBase64 !== undefined && image.contentBase64 !== '') {
-      bytes = Buffer.from(image.contentBase64, 'base64');
-    } else {
+    if (rawKey !== undefined) {
       const rawBucket = deps.config.resources.s3BucketRaw;
-      const rawKey = `${userId}/${jobId}/raw/${image.imageId}`;
       const s3 = getS3();
       const object = await s3.send(new GetObjectCommand({ Bucket: rawBucket, Key: rawKey }));
       if (object.Body === undefined) {
-        throw new Error(`Objeto S3 raw no disponible: ${rawKey}`);
+        throw new Error(RAW_OBJECT_UNAVAILABLE_MESSAGE);
       }
       bytes = Buffer.from(await object.Body.transformToByteArray());
+    } else {
+      bytes = Buffer.from(image.contentBase64 ?? '', 'base64');
     }
 
     let attempt = 0;

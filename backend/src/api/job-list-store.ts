@@ -24,6 +24,7 @@ export interface DynamoJobListStoreOptions {
 export const JOB_FIELDS = [
   'jobId',
   'userId',
+  'name',
   'status',
   'preset',
   'formats',
@@ -57,7 +58,9 @@ export function createDynamoJobListStore(options: DynamoJobListStoreOptions): Jo
         for (const item of result.Items ?? []) {
           if (item.itemType !== JOB_ITEM_TYPE) continue;
           const candidate: Record<string, unknown> = {};
-          for (const field of JOB_FIELDS) candidate[field] = item[field];
+          for (const field of JOB_FIELDS) {
+            if (item[field] !== undefined) candidate[field] = item[field];
+          }
           jobs.push(schemas.Job.parse(candidate));
         }
         lastKey = result.LastEvaluatedKey;

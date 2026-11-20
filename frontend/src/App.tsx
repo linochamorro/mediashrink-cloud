@@ -169,7 +169,8 @@ export default function App() {
       if (!popup) throw new Error('Permite ventanas emergentes para abrir la descarga.');
       popup.opener = null;
       const link = await authorized((token) => createJobsClient(apiBaseUrl).download(token, jobId, imageId, variant));
-      popup.location.replace(link.downloadUrl);
+      // URL absoluta: el popup puede abrir una ruta relativa del relay local.
+      popup.location.replace(new URL(link.downloadUrl, window.location.origin).href);
     } catch (reason) { popup?.close(); setJobError(reason instanceof Error ? reason.message : 'No se pudo preparar la descarga.'); }
   }
 

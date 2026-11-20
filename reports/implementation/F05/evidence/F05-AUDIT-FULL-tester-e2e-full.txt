@@ -1,0 +1,7 @@
+
+Running 1 test using 1 worker
+
+  ok 1 tests\e2e\f05-audit-full.spec.ts:173:1 › F05 real: lote nombrado → processing → completed → comparativa → descargas → aislamiento → borrado (24.4s)
+
+  1 passed (34.1s)
+EXIT_CODE=0

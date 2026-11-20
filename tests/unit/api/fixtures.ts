@@ -256,6 +256,7 @@ export interface ApiTestApp {
 export function createApiTestApp(
   overrides: Record<string, string> = {},
   jobsMax?: number,
+  useDefaultJobsLimiter = false,
 ): ApiTestApp {
   const config = loadConfig(apiTestEnv(overrides));
   const users = new InMemoryUserStore();
@@ -270,7 +271,7 @@ export function createApiTestApp(
   // registrar varios usuarios sin agotar el cubo de autenticación.
   const jobsLimiter = new FixedWindowRateLimiter(
     jobsMax ?? config.rateLimit.authMax,
-    config.rateLimit.authWindowMs,
+    config.rateLimit.apiWindowMs,
     now,
   );
 
@@ -285,7 +286,7 @@ export function createApiTestApp(
       },
     },
     jobTransition,
-    jobsLimiter,
+    ...(useDefaultJobsLimiter ? {} : { jobsLimiter }),
     now,
     presignService: presign,
   });

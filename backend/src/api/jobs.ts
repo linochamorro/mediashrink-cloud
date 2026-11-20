@@ -79,6 +79,15 @@ const ALLOWED_CONTENT_TYPES = new Set([
   'image/avif',
 ]);
 
+/** UX-02: nombre opcional del lote, recortado y acotado a 80 caracteres. */
+export function sanitizeBatchName(value: unknown): string | undefined {
+  if (value === undefined || value === null) return undefined;
+  if (typeof value !== 'string') return undefined;
+  const trimmed = value.trim();
+  if (trimmed.length === 0) return undefined;
+  return trimmed.slice(0, 80);
+}
+
 /** El fileName se valida pero nunca se usa en la clave S3 (anti-traversal). */
 function isSafeFileName(value: unknown): value is string {
   return (
@@ -108,17 +117,8 @@ function parseCreateBody(raw: unknown, config: AppConfig): CreateJobInput | null
   const preset = parseWith<Preset>(schemas.Preset, body.preset);
   if (preset === null) return null;
 
-  let name: string | undefined;
-  if (body.name !== undefined) {
-    if (typeof body.name !== 'string') return null;
-    const trimmed = body.name.trim();
-    if (trimmed.length === 0) {
-      name = undefined;
-    } else {
-      if (trimmed.length > 80) return null;
-      name = trimmed;
-    }
-  }
+  if (body.name !== undefined && typeof body.name !== 'string') return null;
+  const name = sanitizeBatchName(body.name);
   if (!Array.isArray(body.files)) return null;
   if (body.files.length < 1 || body.files.length > config.limits.maxImagesPerBatch) return null;
 

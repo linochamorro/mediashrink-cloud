@@ -1,0 +1,12 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32m✓[39m tests/integration/api/f05-name-large.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 11078[2mms[22m[39m
+   [33m[2m✓[22m[39m F05-AUDIT-FULL — imagen > 400 KiB + Claim Check + name persistido[2m > [22mcompleta el lote, conserva name y genera las 3 variantes [33m11077[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m   Start at [22m 21:08:47
+[2m   Duration [22m 13.81s[2m (transform 716ms, setup 0ms, collect 2.03s, tests 11.08s, environment 0ms, prepare 210ms)[22m
+
+EXIT_CODE=0

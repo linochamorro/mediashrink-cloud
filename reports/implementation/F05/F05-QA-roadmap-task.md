@@ -26,7 +26,7 @@ En `reports/implementation/F05/evidence/qa-roadmap/`, capturados con Playwright 
 `01-auth-login-claro.png`, `02-auth-error-credenciales.png`, `03-auth-registro.png`, `04-dashboard-tema-oscuro.png`, `05-upload-validacion-error.png`, `06-upload-lote-preset-progreso.png`, `07-resultados-comparativa-metricas.png`, `08-descarga-individual-y-zip.png`, `09-lote-parcial-o-error.png`, `10-borrado-manual-lote.png`, `11-aislamiento-usuario-b.png`, `12-logout-limpio.png`.
 
 ## 3. Entradas y entorno
-- Binarios fuera de PATH: Docker `D:\Programs\DevApps\Containers\Docker\Desktop\resources\bin`, Terraform `D:\Programs\DevApps\DevOps\Terraform\CLI`.
+- Binarios fuera de PATH: Docker `<DOCKER_CLI_DIR>`, Terraform `<TF_CLI_DIR>`.
 - Cuentas seed: `ana.demo@example.com`/`DemoAna2026!`, `bruno.demo@example.com`/`DemoBruno2026!`, `carla.demo@example.com`/`DemoCarla2026!` (ficticias, no secretos).
 - `docker cp` de CA/config/credenciales en **cada** arranque; **`docker compose down` obligatorio al terminar**.
 - **G-12 RETENIDO:** prohibido `git push`, commit, release o deploy.

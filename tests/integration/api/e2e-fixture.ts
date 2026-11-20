@@ -42,6 +42,7 @@ export interface E2eEnv {
   createUploadedJob(input: {
     token: string;
     preset: Preset;
+    name?: string;
     images: readonly { imageId: string; declaredBytes: number; bytes: Uint8Array }[];
   }): Promise<{ jobId: string; realBytes: Readonly<Record<string, number>> }>;
   confirm(token: string, jobId: string): Promise<Response>;
@@ -103,12 +104,13 @@ export async function createE2eEnv(tag: string): Promise<E2eEnv> {
         const body = (await response.json()) as { accessToken: string; user: { userId: string } };
         return { token: body.accessToken, userId: body.user.userId };
       },
-      createUploadedJob: async ({ token, preset, images }) => {
+      createUploadedJob: async ({ token, preset, name, images }) => {
         const created = await postJson(
           app,
           '/jobs',
           {
             preset,
+            ...(name === undefined ? {} : { name }),
             files: images.map((image) => ({
               // fileName es solo un dato validado: la clave S3 la construye el
               // servidor con un imageId aleatorio. El id lógico se conserva como

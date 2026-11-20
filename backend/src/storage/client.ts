@@ -26,6 +26,30 @@ export interface S3ClientOptions {
   useSsl?: boolean;
 }
 
+/**
+ * Canonicaliza únicamente el loopback textual `localhost` al host numérico
+ * `127.0.0.1`. El relay local reenvía siempre al host numérico y el CA del
+ * emulador está emitido para él; así la firma SigV4 y el `Host` transmitido
+ * coinciden. Cualquier otro host, puerto, ruta, query o fragmento se conserva
+ * literalmente. Los endpoints no absolutos o inválidos tampoco se transforman.
+ */
+export function canonicalizeStorageEndpoint(endpointUrl: string): string {
+  let parsed: URL;
+  try {
+    parsed = new URL(endpointUrl);
+  } catch {
+    return endpointUrl;
+  }
+  if (parsed.hostname !== 'localhost') return endpointUrl;
+
+  const match = /^([a-z][a-z\d+.-]*:\/\/)([^/?#]+)(.*)$/i.exec(endpointUrl);
+  if (match === null) return endpointUrl;
+  const authority = /^(localhost)(:\d+)?$/i.exec(match[2]);
+  if (authority === null) return endpointUrl;
+
+  return `${match[1]}127.0.0.1${authority[2] ?? ''}${match[3]}`;
+}
+
 export function createS3Client(options: S3ClientOptions): S3Client {
   const httpsAgent =
     options.useSsl !== false && options.caBundlePath !== undefined
@@ -34,7 +58,7 @@ export function createS3Client(options: S3ClientOptions): S3Client {
 
   return new S3Client({
     region: options.region,
-    endpoint: options.endpointUrl,
+    endpoint: canonicalizeStorageEndpoint(options.endpointUrl),
     forcePathStyle: true,
     credentials: fromIni({
       filepath: options.sharedCredentialsFile,

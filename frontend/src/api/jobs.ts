@@ -68,14 +68,35 @@ function isValidUploadPlan(value: unknown): value is JobUploadPlan {
   return plan.job !== undefined && Array.isArray(plan.uploads);
 }
 
-export function resolveDevStorageUrl(url: string): string {
-  if (url.startsWith('https://127.0.0.1:9297/')) {
-    return `/__s3_local/${url.slice('https://127.0.0.1:9297/'.length)}`;
+/** El relay local de S3 solo existe en desarrollo (`vite serve`). */
+export function isDevStorageRelayEnabled(): boolean {
+  const meta = import.meta as ImportMeta & { env?: Record<string, unknown> };
+  return meta.env?.DEV !== false;
+}
+
+/** Hosts y puerto EXACTOS del emulador local que el relay de desarrollo acepta. */
+const DEV_STORAGE_HOSTS = new Set(['127.0.0.1', 'localhost']);
+const DEV_STORAGE_PORT = '9297';
+
+/**
+ * M-04: en desarrollo, las URL firmadas del emulador se reescriben al prefijo
+ * local `/__s3_local/` que sirve el propio `dev:frontend`. El destino FIJO es el
+ * emulador (`127.0.0.1:9297`/`localhost:9297`): ningún host de producción se
+ * toca y la validación `validateSecureUrl` sigue aplicando antes de esto.
+ */
+export function resolveDevStorageUrl(url: string, enabled: boolean = isDevStorageRelayEnabled()): string {
+  if (!enabled) return url;
+  let parsed: URL;
+  try { parsed = new URL(url); }
+  catch { return url; }
+  if (
+    parsed.protocol !== 'https:' ||
+    parsed.port !== DEV_STORAGE_PORT ||
+    !DEV_STORAGE_HOSTS.has(parsed.hostname)
+  ) {
+    return url;
   }
-  if (url.startsWith('https://localhost:9297/')) {
-    return `/__s3_local/${url.slice('https://localhost:9297/'.length)}`;
-  }
-  return url;
+  return `/__s3_local${parsed.pathname}${parsed.search}`;
 }
 
 export function createJobsClient(baseUrl = '', fetcher: Fetcher = fetch, options: JobsClientOptions = {}) {

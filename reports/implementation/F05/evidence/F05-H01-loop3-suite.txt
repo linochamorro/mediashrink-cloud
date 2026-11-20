@@ -36,7 +36,7 @@ EXIT_BUILD=0
 > vitest run tests/unit
 
 
-[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
 
  [32mÔ£ô[39m tests/unit/frontend/secure-url.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 38[2mms[22m[39m
  [32mÔ£ô[39m tests/unit/config.test.ts [2m([22m[2m37 tests[22m[2m)[22m[90m 43[2mms[22m[39m
@@ -86,7 +86,7 @@ EXIT_BUILD=0
 
 ===== spot tests/integration/seed (emulador caido por sesion concurrente: solo dazzling_edison Up) =====
 
-[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Projects/Bluemind_Lab/projects/portfolio/mediashrink-cloud[39m
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
 
  [31mÔØ»[39m tests/integration/seed/db-check.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 328[2mms[22m[39m
  [31mÔØ»[39m tests/integration/seed/idempotence.test.ts [2m([22m[2m7 tests[22m[2m | [22m[33m7 skipped[39m[2m)[22m[33m 467[2mms[22m[39m

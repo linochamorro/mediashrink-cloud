@@ -1,0 +1,26 @@
+DIAGNOSTIC=v1 live name/persistence probe (first execution)
+
+LOGIN_STATUS=200
+ACCESS_TOKEN_PRESENT=true (valor redactado)
+LIST_STATUS=200
+LEGACY_JOB_FOUND=True
+LEGACY_NAME_FIELD_PRESENT=False
+CREATE_STATUS=201
+CREATE_NAME_PRESENT=True
+CREATE_NAME_VALUE=Verificacion Tester
+DETAIL_STATUS=200
+DETAIL_NAME_PRESENT=True
+DETAIL_NAME_VALUE=Verificacion Tester
+LIST_AFTER_CREATE_STATUS=200
+LIST_AFTER_CREATE_JOB_FOUND=True
+LIST_AFTER_CREATE_NAME_PRESENT=True
+LIST_AFTER_CREATE_NAME_VALUE=Verificacion Tester
+LONG_CREATE_STATUS=201
+LONG_NAME_LENGTH=80
+NON_STRING_NAME_STATUS=400
+DELETE_PRIMARY_STATUS=204
+DELETE_LONG_STATUS=204
+TEST_JOB_REMAINS=False
+ASSERTIONS_PASSED=False
+
+DIAGNOSIS=El probe del harness exigía DELETE_STATUS=200, pero el endpoint real respondió 204 y eliminó ambos lotes. No fue un defecto de producto; se repitió el bloque con 200/204 aceptados como éxito. Sin acceso/refresh token ni cuerpos con secretos.

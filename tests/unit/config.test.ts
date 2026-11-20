@@ -31,6 +31,8 @@ const BASE_ENV: Record<string, string> = {
   JWT_REFRESH_TTL: '604800',
   RATE_LIMIT_AUTH_MAX: '5',
   RATE_LIMIT_AUTH_WINDOW_MS: '60000',
+  RATE_LIMIT_API_MAX: '120',
+  RATE_LIMIT_API_WINDOW_MS: '60000',
   AWS_REGION: 'us-east-1',
   AWS_ENDPOINT_URL: 'https://127.0.0.1:9297',
   AWS_SHARED_CREDENTIALS_FILE: './.local/aws-emulator/emulator_credentials',
@@ -73,6 +75,8 @@ describe('loadConfig — caso positivo', () => {
     expect(config.jwt.refreshTtlSeconds).toBe(604_800);
     expect(config.rateLimit.authMax).toBe(5);
     expect(config.rateLimit.authWindowMs).toBe(60_000);
+    expect(config.rateLimit.apiMax).toBe(120);
+    expect(config.rateLimit.apiWindowMs).toBe(60_000);
     expect(config.aws.useSsl).toBe(true);
     expect(config.resources.dynamodbTableJobs).toBe('mediashrink-jobs');
     expect(config.worker.retentionDays).toBe(30);
@@ -98,6 +102,10 @@ describe('loadConfig — caso positivo', () => {
     expect(config.app.port).toBe(3001);
     expect(config.limits.maxFileSizeMb).toBe(15);
     expect(config.limits.maxImagesPerBatch).toBe(20);
+    expect(config.rateLimit.authMax).toBe(5);
+    expect(config.rateLimit.authWindowMs).toBe(60_000);
+    expect(config.rateLimit.apiMax).toBe(120);
+    expect(config.rateLimit.apiWindowMs).toBe(60_000);
     expect(config.worker.retentionDays).toBe(30);
     expect(config.worker.sqsMaxRetries).toBe(3);
     expect(config.worker.pollIntervalMs).toBe(2000);
@@ -124,6 +132,16 @@ describe('loadConfig — caso positivo', () => {
     const testConfig = loadConfig(withOverride('NODE_ENV', 'test'));
     expect(testConfig.app.env).toBe('test');
   });
+
+  it('mantiene independientes las ventanas de auth y API', () => {
+    const authChanged = loadConfig(withOverride('RATE_LIMIT_AUTH_WINDOW_MS', '1000'));
+    expect(authChanged.rateLimit.authWindowMs).toBe(1000);
+    expect(authChanged.rateLimit.apiWindowMs).toBe(60_000);
+
+    const apiChanged = loadConfig(withOverride('RATE_LIMIT_API_WINDOW_MS', '2000'));
+    expect(apiChanged.rateLimit.authWindowMs).toBe(60_000);
+    expect(apiChanged.rateLimit.apiWindowMs).toBe(2000);
+  });
 });
 
 describe('loadConfig — casos negativos', () => {
@@ -146,6 +164,8 @@ describe('loadConfig — casos negativos', () => {
     ['JWT_REFRESH_TTL', 'no-es-numero'],
     ['RATE_LIMIT_AUTH_MAX', '1e3'],
     ['RATE_LIMIT_AUTH_WINDOW_MS', 'abc'],
+    ['RATE_LIMIT_API_MAX', '1e3'],
+    ['RATE_LIMIT_API_WINDOW_MS', 'abc'],
     ['RETENTION_DAYS', '-30'],
     ['SQS_MAX_RETRIES', '0'],
     ['POLL_INTERVAL_MS', 'abc'],

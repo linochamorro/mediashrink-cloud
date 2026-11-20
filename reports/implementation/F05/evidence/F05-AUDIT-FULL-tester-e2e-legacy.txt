@@ -1,0 +1,7 @@
+
+Running 1 test using 1 worker
+
+  ok 1 tests\e2e\real-stack.spec.ts:30:1 › flujo real: registro → subida S3 → WebP/AVIF/miniatura sin EXIF → comparativa → ZIP → borrado (6.3s)
+
+  1 passed (13.5s)
+EXIT_CODE=0

@@ -103,7 +103,7 @@ const validTransport = () => ({
 
 describe('F01-T01 — inventario y convenios congelados', () => {
   it('versiona los contratos y fija exactamente tres presets', () => {
-    expect(CONTRACTS_VERSION).toBe('1.0.0');
+    expect(CONTRACTS_VERSION).toBe('1.1.0');
     expect(PRESETS).toEqual(['HIGH', 'BALANCED', 'MAX_COMPRESSION']);
   });
 

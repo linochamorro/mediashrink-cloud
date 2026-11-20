@@ -1,0 +1,12 @@
+COMMAND=docker compose up -d
+ Container mediashrink-aws-emulator Running 
+COMMAND=docker cp emulator ca.pem/config/emulator_credentials
+COMMAND=curl.exe --cacert ./.local/aws-emulator/ca.pem https://127.0.0.1:9297/__admin/health
+ok
+
+COMMAND=docker inspect (límites efectivos G-7)
+memory=2147483648 nanoCpus=2000000000 user=1000:1000 status=running health=healthy
+COMMAND=docker compose ps
+NAME                       IMAGE                                                                                                  COMMAND                  SERVICE        CREATED       STATUS                 PORTS
+mediashrink-aws-emulator   ghcr.io/xsavikx/aws-emulator@sha256:9cd91ae8a722eaf518a26135955d4b8f2a5a4c6c60062278740ec59f68368376   "aws-emulator -b 0.0…"   aws-emulator   5 hours ago   Up 5 hours (healthy)   127.0.0.1:9297->9297/tcp
+EXIT_CODE=0

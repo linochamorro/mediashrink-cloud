@@ -1,7 +1,7 @@
 /**
  * ARCHIVO GENERADO — NO EDITAR A MANO.
  * Fuente canónica: <PROJECT_ROOT>/backend/src/contracts/catalog.ts
- * Contratos v1.0.0 · hash SHA-256 del catálogo: 110ddd82b9fcacc0afb95eedd53c50575bdf4813fcd363c0e5d089e299af0c2d
+ * Contratos v1.1.0 · hash SHA-256 del catálogo: ab548c7f50c72874c18fa71d5fb4df65ff953bc43196593723002786e840bc52
  * Regenerar: npm run generate:types --workspace=@mediashrink/backend
  */
 

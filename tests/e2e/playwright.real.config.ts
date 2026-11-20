@@ -15,14 +15,6 @@ const repoRoot = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 const port = Number(process.env.F05_E2E_PORT ?? 5173);
 const apiPort = Number(process.env.F05_E2E_API_PORT ?? 3001);
 
-/**
- * Presupuesto de peticiones SOLO del E2E. El flujo de UI necesita varias
- * descargas (original + optimizada + individual + ZIP) en la misma ventana de
- * 60 s; el default de producto `RATE_LIMIT_AUTH_MAX=5` se agota y produce 429.
- * Esta variable se inyecta EXCLUSIVAMENTE en el proceso del servidor que
- * arranca Playwright; no cambia el default ni `.env.example`.
- */
-const e2eRateLimitMax = process.env.F05_E2E_RATE_LIMIT_MAX ?? '1000';
 /** Diagnóstico controlado: permite comparar contra un servidor arrancado a mano. */
 const externalBackend = process.env.F05_E2E_EXTERNAL_BACKEND === '1';
 const shutdownToken = randomBytes(32).toString('hex');
@@ -30,7 +22,6 @@ const shutdownToken = randomBytes(32).toString('hex');
 process.env.F03_E2E_PORT = String(port);
 process.env.F03_E2E_SHUTDOWN_TOKEN = shutdownToken;
 process.env.F05_E2E_API_PORT = String(apiPort);
-process.env.F05_E2E_RATE_LIMIT_MAX = e2eRateLimitMax;
 
 /** Entorno del backend real: credenciales efímeras del emulador, nunca secretos fijos. */
 const backendEnv: Record<string, string> = {
@@ -42,7 +33,6 @@ const backendEnv: Record<string, string> = {
   CORS_ORIGIN: `http://localhost:${port}`,
   JWT_ACCESS_SECRET: 'REPLACE_WITH_LOCAL_DEV_SECRET_32_CHARS',
   JWT_REFRESH_SECRET: 'REPLACE_WITH_LOCAL_DEV_SECRET_32_CHARS',
-  RATE_LIMIT_AUTH_MAX: e2eRateLimitMax,
   AWS_ENDPOINT_URL: 'https://127.0.0.1:9297',
   AWS_REGION: 'us-east-1',
   AWS_SHARED_CREDENTIALS_FILE: './.local/aws-emulator/emulator_credentials',
@@ -99,7 +89,6 @@ export default defineConfig({
         F03_E2E_PORT: String(port),
         F03_E2E_SHUTDOWN_TOKEN: shutdownToken,
         F05_E2E_API_PORT: String(apiPort),
-        F05_E2E_RATE_LIMIT_MAX: e2eRateLimitMax,
       },
       url: `http://127.0.0.1:${port}`,
       reuseExistingServer: false,

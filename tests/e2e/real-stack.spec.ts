@@ -1,6 +1,3 @@
-import { readFileSync } from 'node:fs';
-import { request as httpsRequest } from 'node:https';
-
 import { expect, test } from '@playwright/test';
 import sharp from 'sharp';
 
@@ -12,7 +9,8 @@ import { createJpegWithMetadata } from '../unit/worker/fixtures';
  *
  * Requisitos previos (fuera del test): emulador + terraform apply + backend real.
  * La SPA se sirve en 5173 y Vite proxifica /auth y /jobs al backend; las
- * subidas/descargas van directamente a S3 con las URL presignadas reales.
+ * subidas/descargas usan el relay local del producto hacia S3 con las URL
+ * presignadas reales.
  */
 
 const PRIVATE_MARKERS = [
@@ -31,7 +29,6 @@ function assertNoPrivateMetadata(bytes: Buffer, label: string): void {
 
 test('flujo real: registro → subida S3 → WebP/AVIF/miniatura sin EXIF → comparativa → ZIP → borrado', async ({
   page,
-  context,
 }) => {
   // Control positivo: la muestrasubida SÍ contiene EXIF/GPS/XMP/IPTC.
   const source = Buffer.from(await createJpegWithMetadata(120, 90));
@@ -43,95 +40,6 @@ test('flujo real: registro → subida S3 → WebP/AVIF/miniatura sin EXIF → co
   }
 
   const email = `f05-e2e-${Date.now()}@example.test`;
-
-  // El emulador no implementa OPTIONS y el navegador exige preflight para S3.
-  // Este relay transporta la petición REAL (misma URL firmada, mismo cuerpo) via
-  // https desde el proceso del test y devuelve la respuesta REAL del emulador,
-  // añadiendo solo las cabeceras CORS que el emulador no emite. No hay dobles:
-  // los bytes viajan al bucket y se verifican desde la UI y desde el ZIP.
-  await context.route('https://127.0.0.1:9297/**', async (route) => {
-    const origin = 'http://localhost:5173';
-    const cors = {
-      'access-control-allow-origin': origin,
-      'access-control-expose-headers': '*',
-    };
-    if (route.request().method() === 'OPTIONS') {
-      await route.fulfill({
-        status: 204,
-        headers: {
-          ...cors,
-          'access-control-allow-methods': 'GET, PUT',
-          'access-control-allow-headers': '*',
-        },
-      });
-      return;
-    }
-    const signed = new URL(route.request().url());
-    const body = route.request().postDataBuffer() ?? undefined;
-    const response = await new Promise<{
-      status: number;
-      headers: Record<string, string>;
-      body: Buffer;
-    }>((resolve, reject) => {
-      const upstream = httpsRequest(
-        {
-          hostname: signed.hostname,
-          port: signed.port || 443,
-          path: `${signed.pathname}${signed.search}`,
-          method: route.request().method(),
-          headers: { host: signed.host, ...(body ? { 'content-length': String(body.length) } : {}) },
-          ca: readFileSync('.local/aws-emulator/ca.pem'),
-        },
-        (res) => {
-          const chunks: Buffer[] = [];
-          res.on('data', (chunk: Buffer) => chunks.push(chunk));
-          res.on('end', () =>
-            resolve({
-              status: res.statusCode ?? 502,
-              headers: res.headers as Record<string, string>,
-              body: Buffer.concat(chunks),
-            }),
-          );
-        },
-      );
-      upstream.once('error', reject);
-      if (body) upstream.write(body);
-      upstream.end();
-    });
-    if (process.env.F05_E2E_RELAY_DEBUG === '1' && route.request().method() === 'GET') {
-      // Diagnóstico temporal (activable solo en tests): nunca imprime la URL
-      // firmada ni credenciales, solo metadatos de la respuesta real.
-      const contentType = response.headers['content-type'] ?? '(sin content-type)';
-      console.log(
-        'F05_RELAY_GET',
-        JSON.stringify({
-          status: response.status,
-          contentType,
-          upstreamContentLength: response.headers['content-length'] ?? null,
-          bodyLength: response.body.length,
-          magic: response.body.subarray(0, 12).toString('latin1'),
-          headerNames: Object.keys(response.headers).sort(),
-        }),
-      );
-    }
-    // Se reenvían las cabeceras REALes del emulador salvo las de transporte,
-    // que Playwright debe recalcular contra el buffer exacto. Sin esto, un
-    // content-length/transfer-encoding heredado puede hacer que Edge descarte
-    // los bytes de la vista optimizada. El tipo de contenido real se conserva.
-    const hopByHop = new Set(['content-length', 'transfer-encoding', 'connection']);
-    const safeHeaders = Object.fromEntries(
-      Object.entries(response.headers).filter(([key]) => !hopByHop.has(key.toLowerCase())),
-    );
-    await route.fulfill({
-      status: response.status,
-      headers: {
-        ...safeHeaders,
-        'content-type': response.headers['content-type'] ?? 'application/octet-stream',
-        ...cors,
-      },
-      body: response.body,
-    });
-  });
 
   await page.goto('/');
   const submitAuth = page.locator('form.auth-form button[type="submit"]');
@@ -183,9 +91,10 @@ test('flujo real: registro → subida S3 → WebP/AVIF/miniatura sin EXIF → co
       )
       .toBe(true);
     const src = await image.getAttribute('src');
-    expect(src, `la vista ${label} debe usar una URL firmada HTTPS`).toMatch(/^https:\/\//);
-    // El navegador recibió la respuesta real del emulador a través del relay:
-    // se vuelve a descargar esa misma URL y se comprueban los bytes/magic.
+    expect(src, `la vista ${label} debe usar el relay local del producto`).toMatch(/^\/__s3_local\//);
+    expect(src, `la vista ${label} debe ser una ruta del mismo origen`).not.toMatch(/^https?:\/\//);
+    // El navegador recibió la respuesta real del emulador a través del relay
+    // de desarrollo del propio producto; se vuelve a descargar esa misma ruta.
     const preview = await page.request.get(src ?? '');
     expect(preview.ok(), `HTTP de la vista ${label}`).toBe(true);
     const previewBytes = await preview.body();
@@ -203,8 +112,9 @@ test('flujo real: registro → subida S3 → WebP/AVIF/miniatura sin EXIF → co
   const webpPopupPromise = page.waitForEvent('popup');
   await results.getByRole('button', { name: 'Descargar WEBP' }).click();
   const webpPopup = await webpPopupPromise;
-  await webpPopup.waitForURL(/^https:\/\//, { timeout: 30_000 });
+  await webpPopup.waitForURL((url) => url.pathname.startsWith('/__s3_local/'), { timeout: 30_000 });
   await webpPopup.waitForLoadState('domcontentloaded');
+  expect(new URL(webpPopup.url()).origin).toBe(new URL(page.url()).origin);
   const webpResponse = await page.request.get(webpPopup.url());
   expect(webpResponse.ok()).toBe(true);
   const webpBytes = await webpResponse.body();

@@ -16,7 +16,7 @@
 
 ## 2. Entradas y entorno
 - Hallazgo: `F05-qa-roadmap-architect.md` §4 (H-01 Media). Seed en `tools/scripts/seed/{cli,index,store}.ts`; tests en `tests/integration/seed/` + `tests/unit/**` donde aplique.
-- Binarios fuera de PATH: Docker `D:\Programs\DevApps\Containers\Docker\Desktop\resources\bin`, Terraform `D:\Programs\DevApps\DevOps\Terraform\CLI`.
+- Binarios fuera de PATH: Docker `<DOCKER_CLI_DIR>`, Terraform `<TF_CLI_DIR>`.
 - `docker cp` de CA/config/credenciales en cada arranque; `docker compose down` **obligatorio al terminar**; sin AWS real.
 - **G-12 RETENIDO:** push de avances autorizado (G-6) pero sin declarar `F05-T06` ni cierre final.
 

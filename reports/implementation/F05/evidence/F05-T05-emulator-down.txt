@@ -2,7 +2,7 @@ F05-T05 — Evidencia 9/9: apagado del emulador Docker (G-7) e higiene final
 Fecha: 2026-11-18 · Rol: Tester · Loop 1/3
 
 COMANDO 1 (PowerShell, desde <PROJECT_ROOT>, Docker CLI prependido):
-  $env:PATH = "D:\Programs\DevApps\Containers\Docker\Desktop\resources\bin;" + $env:PATH
+  $env:PATH = "<DOCKER_CLI_DIR>;" + $env:PATH
   docker compose down
 
 SALIDA 1:

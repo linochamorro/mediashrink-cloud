@@ -31,7 +31,7 @@ export interface AppConfig {
     accessTtlSeconds: number;
     refreshTtlSeconds: number;
   };
-  rateLimit: { authMax: number; authWindowMs: number; apiMax: number };
+  rateLimit: { authMax: number; authWindowMs: number; apiMax: number; apiWindowMs: number };
   aws: {
     region: string;
     endpointUrl: string;
@@ -69,6 +69,7 @@ export const ALL_ENV_KEYS: readonly string[] = [
   'RATE_LIMIT_AUTH_MAX',
   'RATE_LIMIT_AUTH_WINDOW_MS',
   'RATE_LIMIT_API_MAX',
+  'RATE_LIMIT_API_WINDOW_MS',
   'AWS_REGION',
   'AWS_ENDPOINT_URL',
   'AWS_SHARED_CREDENTIALS_FILE',
@@ -320,6 +321,7 @@ export function loadConfig(env: EnvSource = process.env): AppConfig {
       authMax: readPositiveInt(env, 'RATE_LIMIT_AUTH_MAX', 5),
       authWindowMs: readPositiveInt(env, 'RATE_LIMIT_AUTH_WINDOW_MS', 60_000),
       apiMax: readPositiveInt(env, 'RATE_LIMIT_API_MAX', 120),
+      apiWindowMs: readPositiveInt(env, 'RATE_LIMIT_API_WINDOW_MS', 60_000),
     },
     aws: {
       region: readString(env, 'AWS_REGION', 'us-east-1'),

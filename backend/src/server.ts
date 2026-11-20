@@ -11,7 +11,7 @@
  */
 
 import { existsSync, readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { dirname, isAbsolute, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { loadConfig, parseEnvFile } from './config/index';
@@ -25,18 +25,34 @@ import { drainQueue, type ConsumeDependencies } from './worker/consumer';
 
 const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 
-/** Carga .env de la raíz del proyecto (o del cwd) antes de validar config (M-01). */
-function loadDotEnv(): void {
+/** Variables cuyo valor es una RUTA relativa al directorio del `.env`. */
+const RELATIVE_PATH_KEYS = [
+  'AWS_SHARED_CREDENTIALS_FILE',
+  'AWS_CONFIG_FILE',
+  'CA_BUNDLE_PATH',
+] as const;
+
+/**
+ * Carga `.env` de la raíz del proyecto (o del cwd) antes de validar config (M-01).
+ *
+ * Las rutas relativas del `.env` (`./.local/...`) se resuelven contra el
+ * directorio del propio `.env`, de modo que el arranque funciona igual con
+ * `npm run dev:backend` desde la raíz (cwd=backend/) o desde el backend.
+ */
+export function loadDotEnv(cwd: string = process.cwd(), env: NodeJS.ProcessEnv = process.env): void {
   const candidates = [
-    resolve(process.cwd(), '.env'),
-    resolve(process.cwd(), '..', '.env'),
+    resolve(cwd, '.env'),
+    resolve(cwd, '..', '.env'),
     resolve(fileURLToPath(new URL('.', import.meta.url)), '..', '..', '.env'),
   ];
   for (const candidate of candidates) {
     if (!existsSync(candidate)) continue;
     const parsed = parseEnvFile(readFileSync(candidate, 'utf8'));
+    const baseDir = dirname(candidate);
     for (const [key, value] of Object.entries(parsed)) {
-      if (process.env[key] === undefined) process.env[key] = value;
+      if (env[key] !== undefined) continue;
+      const isRelativePath = (RELATIVE_PATH_KEYS as readonly string[]).includes(key);
+      env[key] = isRelativePath && !isAbsolute(value) ? resolve(baseDir, value) : value;
     }
     break;
   }

@@ -1,0 +1,70 @@
+COMMAND=npm run test:unit
+CONTEXT=Re-verificacion independiente del Tester (consolidacion F05-AUDIT-FULL): el evidence suite-unit.txt (21:04) capturo 322/322 en 35 archivos antes del loop 2; el arbol actual tiene 37 archivos.
+
+> mediashrink-cloud@0.0.0 test:unit
+> vitest run tests/unit
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/frontend/secure-url.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 43[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/imageHeader.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 32[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/frontend/core.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 69[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/config.test.ts [2m([22m[2m40 tests[22m[2m)[22m[90m 123[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/contracts.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 135[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/userstore.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 525[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mAuthService registra y hace login sobre el adaptador DynamoDB [33m499[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/f05-audit-full.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 40[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 938[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/download.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 1249[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m GET /jobs/:id/download/:imageId (CA-05)[2m > [22mdevuelve 404 indistinto para lote ajeno y lote inexistente [33m304[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1324[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m GET /jobs/:id/download.zip (CA-05)[2m > [22mno incluye binarios de otro usuario ni de otro lote [33m306[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/routes.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1419[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/stateMachine.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 19[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/consumer-claim-check.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/processImage.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 214[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/service.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1674[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mregistra un usuario hasheado y devuelve un par de tokens sin exponer el hash [33m321[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mdevuelve el mismo error para correo desconocido y contrase├▒a incorrecta [33m548[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/jobs-contract.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 3991[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22macepta todos los MIME raster permitidos y rechaza SVG/GIF/no-raster [33m1471[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22mvalida fileName no vac├¡o sin separadores, NUL ni %xx (sin usarlo en la clave) [33m1535[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/antiBomb.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 101[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/rate-limit.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2164[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22mla clave de /jobs deriva del userId: agotar A no afecta a B [33m395[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22muna cabecera con el userId ajeno no consume el cupo de ese usuario [33m315[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22m/auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 [33m464[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22mmantiene independientes las ventanas de auth y API [33m678[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/jwt.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 61[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-routes.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1483[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/antiBomb.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 17[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-keys.test.ts [2m([22m[2m30 tests[22m[2m)[22m[90m 25[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/authz.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1348[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mun token manipulado y un refresh token no autorizan /jobs [33m368[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mGET /jobs/:id de un lote ajeno devuelve 404 id├®ntico al inexistente [33m323[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m autorizaci├│n y aislamiento de /jobs (FR-21, PR-07, T03-A-01)[2m > [22mPOST /jobs/:id/confirm ajeno devuelve 404 y no publica [33m322[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/savings.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 17[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/security-headers.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 448[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 14[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/confirm.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 515[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete-partial.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 554[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip-cap.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 618[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/storage/client.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 27[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/guards.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/frontend.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/middleware.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/password.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1020[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m hash de contrase├▒as ÔÇö scrypt (A-02, IN-05)[2m > [22mverifica la contrase├▒a correcta y rechaza una incorrecta [33m339[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/health.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+(node:17956) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ [32mÔ£ô[39m tests/unit/seed-table.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 2946[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m37 passed[39m[22m[90m (37)[39m
+[2m      Tests [22m [1m[32m338 passed[39m[22m[90m (338)[39m
+[2m   Start at [22m 23:11:44
+[2m   Duration [22m 14.49s[2m (transform 4.52s, setup 0ms, collect 25.14s, tests 23.24s, environment 18ms, prepare 11.79s)[22m
+
+EXIT_CODE=0

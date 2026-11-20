@@ -110,7 +110,7 @@ Fase Final: Integración, E2E, auditoría de seguridad, pruebas de Lino,
 
 ## Fase Final — Integración, verificación y entrega (`F05`)
 
-- **Estado:** `EN EJECUCIÓN (P-05 en OpenCode)` (`docs/sdd/packages/P-05-final-integration-and-delivery.md`; `G-2` autorizado por Lino el 2026-11-18)
+- **Estado:** `CERRADA — producto` (2026-11-19) — `F05-AUDIT-FULL`: fix `name` persistido + UX-01..03, tests TDD 338/338 (loop 2: AUD-02 Claim Check canónico, AUD-03 contrato v1.1.0, AUD-05 ventana API propia, AUD-06 host S3 canónico), integración real Claim Check > 400 KiB, E2E real sin muletas 1/1 + 1/1 legacy, rate limits 5/min auth vs 120/min API, P4 0 fugas en worktree; 3 reportes (tester/auditor/architect) + `STATE.md` actualizados; `G-12` retenido |
 - **Riesgo:** 3 (auditoría final de seguridad) → Auditor obligatorio.
 
 | ID | Tarea | Depende de | Rol | Criterio verificable |

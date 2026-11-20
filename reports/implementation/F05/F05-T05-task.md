@@ -16,7 +16,7 @@
 
 ## 2. Entradas y entorno
 - Roadmap QA: `docs/runbooks/qa-testing-roadmap.md` (capa 0 = esta verificación).
-- Binarios fuera de PATH: Docker `D:\Programs\DevApps\Containers\Docker\Desktop\resources\bin`, Terraform `D:\Programs\DevApps\DevOps\Terraform\CLI`.
+- Binarios fuera de PATH: Docker `<DOCKER_CLI_DIR>`, Terraform `<TF_CLI_DIR>`.
 - Los tests de integración `tests/integration/infra/**` requieren `terraform apply` previo (emulador con `--memory=2g --cpus="2.0"`), `docker cp` de CA/credenciales y **`docker compose down` al terminar**.
 - **G-12 RETENIDO:** prohibido `git push`, commit final, release o deploy.
 

@@ -16,7 +16,7 @@
 
 | Elemento | PK (HASH) | SK (RANGE) | Atributos propios |
 |---|---|---|---|
-| Job (lote) | `userId` | `jobId` | `status`, `preset`, `formats`, `bytesBefore`, `bytesAfter`, `savingsPct`, `exifStripped`, `createdAt`, `updatedAt`, `ttl`, `itemType = JOB` |
+| Job (lote) | `userId` | `jobId` | `name?` (opcional, ≤ 80), `status`, `preset`, `formats`, `bytesBefore`, `bytesAfter`, `savingsPct`, `exifStripped`, `createdAt`, `updatedAt`, `ttl`, `itemType = JOB` |
 | Imagen (hijo) | `userId` | `IMAGE#<jobId>#<imageId>` | `parentJobId`, `imageId`, `status`, `bytesBefore?`, `bytesAfter?`, `failureReason?`, `exifStripped`, `ttl`, `itemType = IMAGE` |
 
 - **Índice por `userId`:** la propia clave de partición. No se necesita un GSI: todo acceso

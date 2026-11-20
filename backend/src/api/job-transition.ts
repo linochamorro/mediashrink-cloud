@@ -49,7 +49,9 @@ function isConditionalFailure(error: unknown): boolean {
 
 function parseUpdatedJob(attributes: Record<string, unknown> | undefined): Job {
   const candidate: Record<string, unknown> = {};
-  for (const field of JOB_FIELDS) candidate[field] = attributes?.[field];
+  for (const field of JOB_FIELDS) {
+    if (attributes?.[field] !== undefined) candidate[field] = attributes[field];
+  }
   return schemas.Job.parse(candidate);
 }
 

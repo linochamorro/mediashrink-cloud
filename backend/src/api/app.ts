@@ -61,7 +61,7 @@ export function createApiApp(deps: ApiAppDeps): Hono {
     new NonSpoofableAuthLimiter(config.rateLimit.authMax, config.rateLimit.authWindowMs, now);
   const jobsLimiter =
     deps.jobsLimiter ??
-    new FixedWindowRateLimiter(config.rateLimit.apiMax, config.rateLimit.authWindowMs, now);
+    new FixedWindowRateLimiter(config.rateLimit.apiMax, config.rateLimit.apiWindowMs, now);
   // Cliente DynamoDB perezoso: los tests unitarios inyectan ambos puertos y
   // no deben depender del certificado/emulador (G-4/G-7).
   let documentClient: ReturnType<typeof createDynamoDbDocumentClientFromConfig> | undefined;
@@ -74,14 +74,14 @@ export function createApiApp(deps: ApiAppDeps): Hono {
   const getPresignService = () => (presignService ??= createPresignServiceFromConfig(config));
   const presignLimiter =
     deps.presignLimiter ??
-    new FixedWindowRateLimiter(config.rateLimit.apiMax, config.rateLimit.authWindowMs, now);
+    new FixedWindowRateLimiter(config.rateLimit.apiMax, config.rateLimit.apiWindowMs, now);
 
   // Servicio de objetos de T05: perezoso por el mismo motivo que el de presign.
   let objectAccess: ObjectAccessService | undefined = deps.objectAccess;
   const getObjectAccess = () => (objectAccess ??= createObjectAccessServiceFromConfig(config));
   const downloadLimiter =
     deps.downloadLimiter ??
-    new FixedWindowRateLimiter(config.rateLimit.apiMax, config.rateLimit.authWindowMs, now);
+    new FixedWindowRateLimiter(config.rateLimit.apiMax, config.rateLimit.apiWindowMs, now);
 
   const lister =
     deps.jobLister ??

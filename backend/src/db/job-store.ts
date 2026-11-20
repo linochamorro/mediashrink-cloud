@@ -71,6 +71,8 @@ function parseStoredJob(item: StoredItem | undefined): Job | null {
   ]) {
     job[key] = item[key];
   }
+  // UX-02: el nombre es opcional y retrocompatible con lotes antiguos/seed.
+  if (typeof item.name === 'string' && item.name.trim() !== '') job.name = item.name;
   return schemas.Job.parse(job);
 }
 

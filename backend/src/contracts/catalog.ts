@@ -12,7 +12,7 @@
 
 import { createHash } from 'node:crypto';
 
-export const CONTRACTS_VERSION = '1.0.0';
+export const CONTRACTS_VERSION = '1.1.0';
 export const RETENTION_DAYS = 30;
 /** Literal explícito (30 × 24 × 60 × 60) para conservar el tipo literal en el contrato. */
 export const TTL_SECONDS = 2_592_000;
