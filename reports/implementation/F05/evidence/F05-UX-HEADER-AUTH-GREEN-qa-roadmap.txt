@@ -1,0 +1,42 @@
+
+Running 1 test using 1 worker
+
+F05_QA 01: tema claro por defecto y formulario de acceso visibles
+F05_QA browser console.error: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+F05_QA 02: 401 INVALID_CREDENTIALS mostrado como mensaje publico acotado
+F05_QA browser console.error: Failed to load resource: the server responded with a status of 409 (Conflict)
+F05_QA 03: cuenta ya registrada en una corrida previa; acceso con la misma
+F05_QA 04: tema oscuro y sesion restaurada tras recargar (localStorage)
+F05_QA 05: SVG rechazado en cliente antes de subir nada
+F05_QA 06: 3 presets (HIGH/BALANCED/MAX_COMPRESSION) seleccionables
+F05_QA 06: lote A 118f07ef-2e99-4d51-9f6e-ac36bc8ea889 confirmado por el backend real
+F05_QA 06: progreso observado 0/1 (parcial=true)
+F05_QA 07: COMPLETED con comparativa real, metricas y badge EXIF eliminado
+  x  1 tests\e2e\qa-roadmap.spec.ts:214:1 ÔÇ║ F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks) (38.1s)
+
+
+  1) tests\e2e\qa-roadmap.spec.ts:214:1 ÔÇ║ F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks) ÔÇ║ 08 ÔÇö descarga individual (WebP) y ZIP del lote 
+
+    TimeoutError: page.waitForURL: Timeout 30000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+      navigated to "<PRESIGNED_S3_URL_REDACTED>"
+    ============================================================
+
+      416 |       await results.getByRole('button', { name: 'Descargar WEBP' }).first().click();
+      417 |       const popup = await popupPromise;
+    > 418 |       await popup.waitForURL(/^https:\/\//, { timeout: 30_000 });
+          |                   ^
+      419 |       await popup.waitForLoadState('domcontentloaded');
+      420 |       const webpResponse = await page.request.get(popup.url());
+      421 |       expect(webpResponse.ok(), 'la URL presignada real responde 2xx').toBe(true);
+        at <PROJECT_ROOT>\tests\e2e\qa-roadmap.spec.ts:418:19
+        at <PROJECT_ROOT>\tests\e2e\qa-roadmap.spec.ts:411:5
+
+    Error Context: reports\implementation\F05\evidence\qa-roadmap\playwright-results-local\qa-roadmap-F05-QA-roadmap--53122-bre-la-pila-real-sin-mocks-\error-context.md
+
+  1 failed
+    tests\e2e\qa-roadmap.spec.ts:214:1 ÔÇ║ F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks) 
+
+COMMAND=npx playwright test --config=temporary/ux-header-auth/playwright.qa-roadmap.local.config.ts (efímero)
+EXIT_CODE=1

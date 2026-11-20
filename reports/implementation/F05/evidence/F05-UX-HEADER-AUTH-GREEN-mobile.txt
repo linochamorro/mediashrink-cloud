@@ -1,0 +1,10 @@
+
+Running 2 tests using 1 worker
+
+  ok 1 temporary\ux-header-auth\mobile.spec.ts:6:3 ÔÇ║ panel accesible y dentro del viewport a 390px (2.1s)
+  ok 2 temporary\ux-header-auth\mobile.spec.ts:6:3 ÔÇ║ panel accesible y dentro del viewport a 320px (931ms)
+
+  2 passed (6.4s)
+
+COMMAND=npx playwright test --config=temporary/ux-header-auth/playwright.mobile.local.config.ts (efímero)
+EXIT_CODE=0

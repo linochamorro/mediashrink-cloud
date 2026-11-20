@@ -1,0 +1,2017 @@
+{
+  "task": "F05-UX-HEADER-AUTH",
+  "role": "Tester independiente (riesgo 2)",
+  "startedAt": "2026-11-20T18:35:21.293Z",
+  "updatedAt": "2026-11-20T18:38:26.455Z",
+  "results": [
+    {
+      "id": "E0-01",
+      "result": "PASS",
+      "observation": "backend /health 200; SPA 200; emulador healthy (2GiB/2CPU), terraform plan 0 cambios, seed idempotente, sin overrides"
+    },
+    {
+      "id": "E0-02",
+      "result": "PASS",
+      "observation": "UI en español, Optimizar deshabilitado, header sin sesión con trigger de acceso, 0 .auth-strip/.session-bar, 0 errores"
+    },
+    {
+      "id": "E0-03",
+      "result": "PASS",
+      "observation": "Claro→Oscuro→Claro persistente tras dos F5; header oscuro capturado"
+    },
+    {
+      "id": "E1-01",
+      "result": "PASS",
+      "observation": "Panel accesible (aria-modal, aria-expanded); correo inválido/vacío detenido, 0 POST /auth/login; Escape cierra"
+    },
+    {
+      "id": "E1-02",
+      "result": "PASS",
+      "observation": "Ana + clave errónea → 401 mensaje genérico sin stack/rutas"
+    },
+    {
+      "id": "E1-03",
+      "result": "PASS",
+      "observation": "Correo inexistente → 401 byte-idéntico a E1-02 (anti-enumeración)"
+    },
+    {
+      "id": "E1-04",
+      "result": "PASS",
+      "observation": "Clave <8 sin POST; duplicado → 409 con mensaje exacto y sin hostil/stack"
+    },
+    {
+      "id": "E1-05",
+      "result": "PASS",
+      "observation": "Registro 201; sesión en el header con correo compacto; panel cerrado; estado vacío"
+    },
+    {
+      "id": "E1-06",
+      "result": "PASS",
+      "observation": "Logout desde el header limpió estado privado; persistente tras F5"
+    },
+    {
+      "id": "E1-07",
+      "result": "PASS",
+      "observation": "Login Ana desde header + F5; correo en banner; solo refreshToken; 0 accessToken en storage"
+    },
+    {
+      "id": "E2-01",
+      "result": "PASS",
+      "observation": "4/4 formatos rechazados con aviso; Optimizar deshabilitado"
+    },
+    {
+      "id": "E2-02",
+      "result": "PASS",
+      "observation": "16 MB rechazados antes de subir por límite de 15 MB"
+    },
+    {
+      "id": "E2-03",
+      "result": "PASS",
+      "observation": "21 archivos rechazados por tope de 20; Optimizar deshabilitado"
+    },
+    {
+      "id": "E2-04",
+      "result": "PASS",
+      "observation": "Mixto: 1 imagen lista, 1 aviso por malo.txt, Optimizar habilitado, 0 POST prematuros"
+    },
+    {
+      "id": "E2-05",
+      "result": "PASS",
+      "observation": "Espacios, >80 acotado a 80, XSS literal, 0 dialog"
+    },
+    {
+      "id": "E2-06",
+      "result": "PASS",
+      "observation": "3 presets seleccionables; activo Equilibrado"
+    },
+    {
+      "id": "E3-01",
+      "result": "PASS",
+      "observation": "3 JPEG reales de 969644/1025560/1026048 bytes (>350 KiB), EXIF inyectado, nombre y preset correctos"
+    },
+    {
+      "id": "E3-02",
+      "result": "PASS",
+      "observation": "POST /jobs 201, confirm 200 sin 503, botón bloqueado, ZIP deshabilitado en \"Procesando\", 6 polls 200, 0×429"
+    },
+    {
+      "id": "E3-03",
+      "result": "PASS",
+      "observation": "Historial arriba con fecha dd/mm/aaaa,hh:mm; Original 2.88 MB, Optimizado 2.04 MB, Ahorro 29.28%, ✓ EXIF eliminado; 6 comparativas naturalWidth>0"
+    },
+    {
+      "id": "E3-04",
+      "result": "PASS",
+      "observation": "Tras F5 sesión en header, lote y métricas idénticas, 6 comparativas recuperadas"
+    },
+    {
+      "id": "E4-01",
+      "result": "PASS",
+      "observation": "3 optimizadas 0 EXIF (inyectado detectado: true); descargas HTTP 200 · 969644/318588/338992 bytes"
+    },
+    {
+      "id": "E4-02",
+      "result": "PASS",
+      "observation": "ZIP 0760eeae-a8ec-485b-b09f-7147d50b3e06.zip válido (2137995 bytes) con 9 entradas"
+    },
+    {
+      "id": "E5-01",
+      "result": "PASS",
+      "observation": "Truncada → Completado parcialmente, aviso, sana con comparativa, WEBP/AVIF deshabilitados, dlqMessages=1; attempts=3; reason=RENDER_FAILED, 0×404 (delta). Aviso espera: SÍ"
+    },
+    {
+      "id": "E5-02",
+      "result": "PASS",
+      "observation": "Texto .jpg rechazado por magic bytes → Fallido, ZIP deshabilitado, aviso, WEBP/AVIF deshabilitados, XSS literal, 0×404 (delta)"
+    },
+    {
+      "id": "E6-01",
+      "result": "PASS",
+      "observation": "Cancelar borrado conserva el lote"
+    },
+    {
+      "id": "E6-02",
+      "result": "PASS",
+      "observation": "Borrado confirmado y lote ausente tras F5 + Actualizar historial"
+    },
+    {
+      "id": "E6-03",
+      "result": "PASS",
+      "observation": "Logout desde header + login Bruno; aislamiento total: 0 lotes/nombre/jobId de Ana"
+    },
+    {
+      "id": "E6-04",
+      "result": "PASS",
+      "observation": "5×401 + 6.º 429 con mensaje RATE_LIMITED en español, al final"
+    },
+    {
+      "id": "E7-01",
+      "result": "PASS",
+      "observation": "0 pageerror, 0×404, 10 HTTP-error todas esperadas (401/409/429), 10 errores de consola esperados"
+    },
+    {
+      "id": "E7-02",
+      "result": "PASS",
+      "observation": "19 capturas PNG E0…E7 (incluye header claro/oscuro y panel)"
+    },
+    {
+      "id": "E7-03",
+      "result": "PASS",
+      "observation": "Evidencia saneada desde escritura: 0 rutas de host, 0 rutas Vite sin normalizar, 0 tokens, 0 query strings"
+    }
+  ],
+  "diagnostics": {
+    "consoleErrors": [
+      {
+        "stage": "E1",
+        "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "source": "http://localhost:5173/auth/login"
+      },
+      {
+        "stage": "E1",
+        "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "source": "http://localhost:5173/auth/login"
+      },
+      {
+        "stage": "E1",
+        "text": "Failed to load resource: the server responded with a status of 409 (Conflict)",
+        "source": "http://localhost:5173/auth/register"
+      },
+      {
+        "stage": "E1",
+        "text": "Failed to load resource: the server responded with a status of 409 (Conflict)",
+        "source": "http://localhost:5173/auth/register"
+      },
+      {
+        "stage": "E6",
+        "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "source": "http://localhost:5173/auth/login"
+      },
+      {
+        "stage": "E6",
+        "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "source": "http://localhost:5173/auth/login"
+      },
+      {
+        "stage": "E6",
+        "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "source": "http://localhost:5173/auth/login"
+      },
+      {
+        "stage": "E6",
+        "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "source": "http://localhost:5173/auth/login"
+      },
+      {
+        "stage": "E6",
+        "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "source": "http://localhost:5173/auth/login"
+      },
+      {
+        "stage": "E6",
+        "text": "Failed to load resource: the server responded with a status of 429 (Too Many Requests)",
+        "source": "http://localhost:5173/auth/login"
+      }
+    ],
+    "pageErrors": [],
+    "responses": [
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/",
+        "ts": 1795199721411
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/main.tsx",
+        "ts": 1795199721661
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/@react-refresh",
+        "ts": 1795199721680
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react.js",
+        "ts": 1795199721680
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react-dom_client.js",
+        "ts": 1795199721682
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react_jsx-dev-runtime.js",
+        "ts": 1795199721684
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/App.tsx",
+        "ts": 1795199721688
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-7MWJYWZE.js",
+        "ts": 1795199721696
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/auth.ts",
+        "ts": 1795199721717
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/image-availability.ts",
+        "ts": 1795199721719
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/upload/validation.ts",
+        "ts": 1795199721720
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/theme.ts",
+        "ts": 1795199721722
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/jobs.ts",
+        "ts": 1795199721722
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/styles.css",
+        "ts": 1795199721723
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-MVJA7NKE.js",
+        "ts": 1795199721761
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/@vite/client",
+        "ts": 1795199721779
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/@fs/<PROJECT_ROOT>/[redacted]",
+        "ts": 1795199721795
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/",
+        "ts": 1795199723495
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/@vite/client",
+        "ts": 1795199723523
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/main.tsx",
+        "ts": 1795199723524
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/@react-refresh",
+        "ts": 1795199723526
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react_jsx-dev-runtime.js",
+        "ts": 1795199723530
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react.js",
+        "ts": 1795199723534
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react-dom_client.js",
+        "ts": 1795199723535
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-7MWJYWZE.js",
+        "ts": 1795199723535
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-MVJA7NKE.js",
+        "ts": 1795199723535
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/@fs/<PROJECT_ROOT>/[redacted]",
+        "ts": 1795199723536
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/App.tsx",
+        "ts": 1795199723537
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/api/auth.ts",
+        "ts": 1795199723547
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/api/image-availability.ts",
+        "ts": 1795199723549
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/api/jobs.ts",
+        "ts": 1795199723550
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/upload/validation.ts",
+        "ts": 1795199723551
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/theme.ts",
+        "ts": 1795199723551
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/styles.css",
+        "ts": 1795199723551
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/",
+        "ts": 1795199723842
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/@vite/client",
+        "ts": 1795199723869
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/main.tsx",
+        "ts": 1795199723874
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/@react-refresh",
+        "ts": 1795199723875
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react_jsx-dev-runtime.js",
+        "ts": 1795199723877
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react.js",
+        "ts": 1795199723877
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react-dom_client.js",
+        "ts": 1795199723877
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-7MWJYWZE.js",
+        "ts": 1795199723880
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-MVJA7NKE.js",
+        "ts": 1795199723880
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/@fs/<PROJECT_ROOT>/[redacted]",
+        "ts": 1795199723880
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/App.tsx",
+        "ts": 1795199723881
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/api/auth.ts",
+        "ts": 1795199723891
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/api/image-availability.ts",
+        "ts": 1795199723892
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/api/jobs.ts",
+        "ts": 1795199723893
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/upload/validation.ts",
+        "ts": 1795199723893
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/theme.ts",
+        "ts": 1795199723894
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/styles.css",
+        "ts": 1795199723894
+      },
+      {
+        "stage": "E1",
+        "method": "POST",
+        "status": 401,
+        "path": "/auth/login",
+        "ts": 1795199725088
+      },
+      {
+        "stage": "E1",
+        "method": "POST",
+        "status": 401,
+        "path": "/auth/login",
+        "ts": 1795199725454
+      },
+      {
+        "stage": "E1",
+        "method": "POST",
+        "status": 409,
+        "path": "/auth/register",
+        "ts": 1795199725888
+      },
+      {
+        "stage": "E1",
+        "method": "POST",
+        "status": 409,
+        "path": "/auth/register",
+        "ts": 1795199726238
+      },
+      {
+        "stage": "E1",
+        "method": "POST",
+        "status": 201,
+        "path": "/auth/register",
+        "ts": 1795199726323
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/",
+        "ts": 1795199726566
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 304,
+        "path": "/@vite/client",
+        "ts": 1795199726593
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/main.tsx",
+        "ts": 1795199726598
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 304,
+        "path": "/@react-refresh",
+        "ts": 1795199726599
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react_jsx-dev-runtime.js",
+        "ts": 1795199726600
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react.js",
+        "ts": 1795199726600
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react-dom_client.js",
+        "ts": 1795199726600
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-7MWJYWZE.js",
+        "ts": 1795199726602
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-MVJA7NKE.js",
+        "ts": 1795199726602
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 304,
+        "path": "/@fs/<PROJECT_ROOT>/[redacted]",
+        "ts": 1795199726603
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/App.tsx",
+        "ts": 1795199726604
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/api/auth.ts",
+        "ts": 1795199726617
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/api/image-availability.ts",
+        "ts": 1795199726618
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/api/jobs.ts",
+        "ts": 1795199726619
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/upload/validation.ts",
+        "ts": 1795199726619
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/theme.ts",
+        "ts": 1795199726620
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/styles.css",
+        "ts": 1795199726620
+      },
+      {
+        "stage": "E1",
+        "method": "POST",
+        "status": 200,
+        "path": "/auth/login",
+        "ts": 1795199761796
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/",
+        "ts": 1795199761942
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/main.tsx",
+        "ts": 1795199761985
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/@vite/client",
+        "ts": 1795199761986
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react_jsx-dev-runtime.js",
+        "ts": 1795199761990
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react.js",
+        "ts": 1795199761992
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react-dom_client.js",
+        "ts": 1795199761993
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-7MWJYWZE.js",
+        "ts": 1795199761993
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/@react-refresh",
+        "ts": 1795199761993
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-MVJA7NKE.js",
+        "ts": 1795199761995
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/@fs/<PROJECT_ROOT>/[redacted]",
+        "ts": 1795199761997
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/App.tsx",
+        "ts": 1795199761998
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/auth.ts",
+        "ts": 1795199762020
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/image-availability.ts",
+        "ts": 1795199762021
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/upload/validation.ts",
+        "ts": 1795199762021
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/theme.ts",
+        "ts": 1795199762021
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/jobs.ts",
+        "ts": 1795199762021
+      },
+      {
+        "stage": "E1",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/styles.css",
+        "ts": 1795199762022
+      },
+      {
+        "stage": "E1",
+        "method": "POST",
+        "status": 200,
+        "path": "/auth/refresh",
+        "ts": 1795199762093
+      },
+      {
+        "stage": "E1",
+        "method": "POST",
+        "status": 200,
+        "path": "/auth/refresh",
+        "ts": 1795199762143
+      },
+      {
+        "stage": "E3",
+        "method": "POST",
+        "status": 201,
+        "path": "/jobs",
+        "ts": 1795199767462
+      },
+      {
+        "stage": "E3",
+        "method": "PUT",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/raw/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb",
+        "ts": 1795199767546
+      },
+      {
+        "stage": "E3",
+        "method": "PUT",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/raw/b91daacf-44e9-48dd-ae86-82468d2b06b7",
+        "ts": 1795199767581
+      },
+      {
+        "stage": "E3",
+        "method": "PUT",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/raw/22a55c86-a725-4cf8-84f1-9196066873de",
+        "ts": 1795199767622
+      },
+      {
+        "stage": "E3",
+        "method": "POST",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/confirm",
+        "ts": 1795199767924
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs",
+        "ts": 1795199767966
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06",
+        "ts": 1795199767992
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06",
+        "ts": 1795199770043
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06",
+        "ts": 1795199772079
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06",
+        "ts": 1795199774116
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06",
+        "ts": 1795199776164
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06",
+        "ts": 1795199778199
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/22a55c86-a725-4cf8-84f1-9196066873de",
+        "ts": 1795199778547
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/b91daacf-44e9-48dd-ae86-82468d2b06b7",
+        "ts": 1795199778603
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/22a55c86-a725-4cf8-84f1-9196066873de",
+        "ts": 1795199778610
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/b91daacf-44e9-48dd-ae86-82468d2b06b7",
+        "ts": 1795199778628
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb",
+        "ts": 1795199778647
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb",
+        "ts": 1795199778657
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/raw/22a55c86-a725-4cf8-84f1-9196066873de",
+        "ts": 1795199778661
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-optimized-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/optimized/22a55c86-a725-4cf8-84f1-9196066873de.webp",
+        "ts": 1795199778669
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/raw/b91daacf-44e9-48dd-ae86-82468d2b06b7",
+        "ts": 1795199778713
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-optimized-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/optimized/b91daacf-44e9-48dd-ae86-82468d2b06b7.webp",
+        "ts": 1795199778734
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/raw/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb",
+        "ts": 1795199778766
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-optimized-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/optimized/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb.webp",
+        "ts": 1795199778768
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/",
+        "ts": 1795199779252
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/main.tsx",
+        "ts": 1795199779283
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react_jsx-dev-runtime.js",
+        "ts": 1795199779284
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react.js",
+        "ts": 1795199779286
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react-dom_client.js",
+        "ts": 1795199779286
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/@vite/client",
+        "ts": 1795199779287
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-7MWJYWZE.js",
+        "ts": 1795199779287
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-MVJA7NKE.js",
+        "ts": 1795199779287
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/@react-refresh",
+        "ts": 1795199779288
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/@fs/<PROJECT_ROOT>/[redacted]",
+        "ts": 1795199779290
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/App.tsx",
+        "ts": 1795199779291
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/image-availability.ts",
+        "ts": 1795199779309
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/auth.ts",
+        "ts": 1795199779309
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/theme.ts",
+        "ts": 1795199779310
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/upload/validation.ts",
+        "ts": 1795199779310
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/styles.css",
+        "ts": 1795199779311
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/jobs.ts",
+        "ts": 1795199779311
+      },
+      {
+        "stage": "E3",
+        "method": "POST",
+        "status": 200,
+        "path": "/auth/refresh",
+        "ts": 1795199779357
+      },
+      {
+        "stage": "E3",
+        "method": "POST",
+        "status": 200,
+        "path": "/auth/refresh",
+        "ts": 1795199779359
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs",
+        "ts": 1795199779462
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06",
+        "ts": 1795199779532
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/b91daacf-44e9-48dd-ae86-82468d2b06b7",
+        "ts": 1795199779683
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/b91daacf-44e9-48dd-ae86-82468d2b06b7",
+        "ts": 1795199779694
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/22a55c86-a725-4cf8-84f1-9196066873de",
+        "ts": 1795199779700
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/22a55c86-a725-4cf8-84f1-9196066873de",
+        "ts": 1795199779719
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-optimized-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/optimized/b91daacf-44e9-48dd-ae86-82468d2b06b7.webp",
+        "ts": 1795199779723
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/raw/b91daacf-44e9-48dd-ae86-82468d2b06b7",
+        "ts": 1795199779726
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb",
+        "ts": 1795199779753
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb",
+        "ts": 1795199779756
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-optimized-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/optimized/22a55c86-a725-4cf8-84f1-9196066873de.webp",
+        "ts": 1795199779770
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/raw/22a55c86-a725-4cf8-84f1-9196066873de",
+        "ts": 1795199779790
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/raw/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb",
+        "ts": 1795199779805
+      },
+      {
+        "stage": "E3",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-optimized-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/optimized/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb.webp",
+        "ts": 1795199779825
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb",
+        "ts": 1795199780782
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/raw/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb",
+        "ts": 1795199780807
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb",
+        "ts": 1795199781047
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-optimized-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/optimized/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb.webp",
+        "ts": 1795199781073
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/",
+        "ts": 1795199781179
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/downloads-hub-app.css",
+        "ts": 1795199781267
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/downloads-header.css",
+        "ts": 1795199781269
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/edge-hub-header.css",
+        "ts": 1795199781269
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mai-button.css",
+        "ts": 1795199781269
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mai-text-input.css",
+        "ts": 1795199781269
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/edge-hub-toolbar.css",
+        "ts": 1795199781271
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mai-message-bar.css",
+        "ts": 1795199781272
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/downloads-list.css",
+        "ts": 1795199781272
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mai-text.css",
+        "ts": 1795199781272
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/download-group.css",
+        "ts": 1795199781272
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/download-item.css",
+        "ts": 1795199781272
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mai-link.css",
+        "ts": 1795199781272
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mai-progress-bar.css",
+        "ts": 1795199781272
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/downloads-modal-dialog.css",
+        "ts": 1795199781274
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mai-menu-list.css",
+        "ts": 1795199781274
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mai-menu-item.css",
+        "ts": 1795199781274
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/hub.js",
+        "ts": 1795199781275
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199781275
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/js/edge-color-change-listener.js",
+        "ts": 1795199781275
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199781283
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199781319
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/chunk-KUQL5BKG.js",
+        "ts": 1795199781325
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/js/edge-error-reporting.js",
+        "ts": 1795199781326
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/",
+        "ts": 1795199781348
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/js/load_time_data.js",
+        "ts": 1795199781349
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/js/assert.js",
+        "ts": 1795199781350
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/edge_downloads.mojom-webui.js",
+        "ts": 1795199781411
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mojo/mojo/public/js/bindings.js",
+        "ts": 1795199781415
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mojo/mojo/public/mojom/base/string16.mojom-webui.js",
+        "ts": 1795199781416
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mojo/url/mojom/url.mojom-webui.js",
+        "ts": 1795199781416
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mojo/mojo_browser_proxy.js",
+        "ts": 1795199781417
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mojo/mojo/public/mojom/base/big_buffer.mojom-webui.js",
+        "ts": 1795199781420
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mojo/mojo/public/mojom/base/string16.mojom-converters.js",
+        "ts": 1795199781420
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mojo/mojo/public/mojom/base/string16_converter.js",
+        "ts": 1795199781421
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mojo/url/mojom/url.mojom-converters.js",
+        "ts": 1795199781422
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/mojo/url/mojom/url_converter.js",
+        "ts": 1795199781422
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/edge_downloads_btr.mojom-webui.js",
+        "ts": 1795199781428
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199781487
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199781499
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199781499
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/js/edge_color_change_listener_browser_proxy-2FITRY4R.js",
+        "ts": 1795199781501
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/js/edge_color_change_listener.mojom-webui.js",
+        "ts": 1795199781503
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb",
+        "ts": 1795199783173
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-optimized-local/demo-user-ana/0760eeae-a8ec-485b-b09f-7147d50b3e06/optimized/1d5a3b17-dfb6-4234-9d57-74d0f0ddafbb.avif",
+        "ts": 1795199783197
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0760eeae-a8ec-485b-b09f-7147d50b3e06/download.zip",
+        "ts": 1795199783737
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199784022
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199784026
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/",
+        "ts": 1795199784027
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199784106
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199784110
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199784114
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199784134
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199784162
+      },
+      {
+        "stage": "E4",
+        "method": "GET",
+        "status": 200,
+        "path": "/icons.svg",
+        "ts": 1795199784162
+      },
+      {
+        "stage": "E5",
+        "method": "POST",
+        "status": 201,
+        "path": "/jobs",
+        "ts": 1795199786411
+      },
+      {
+        "stage": "E5",
+        "method": "PUT",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/09cca8d3-150c-406d-90a3-2ea9470c5fe2/raw/5ceea5fa-50c6-4780-bb16-f1d805fc8e99",
+        "ts": 1795199786440
+      },
+      {
+        "stage": "E5",
+        "method": "PUT",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/09cca8d3-150c-406d-90a3-2ea9470c5fe2/raw/a3442846-6a73-4251-8484-f9bb19a2b028",
+        "ts": 1795199786453
+      },
+      {
+        "stage": "E5",
+        "method": "POST",
+        "status": 200,
+        "path": "/jobs/09cca8d3-150c-406d-90a3-2ea9470c5fe2/confirm",
+        "ts": 1795199786628
+      },
+      {
+        "stage": "E5",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs",
+        "ts": 1795199786651
+      },
+      {
+        "stage": "E5",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/09cca8d3-150c-406d-90a3-2ea9470c5fe2",
+        "ts": 1795199786659
+      },
+      {
+        "stage": "E5",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/09cca8d3-150c-406d-90a3-2ea9470c5fe2",
+        "ts": 1795199788701
+      },
+      {
+        "stage": "E5",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/09cca8d3-150c-406d-90a3-2ea9470c5fe2",
+        "ts": 1795199790731
+      },
+      {
+        "stage": "E5",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/09cca8d3-150c-406d-90a3-2ea9470c5fe2/download/5ceea5fa-50c6-4780-bb16-f1d805fc8e99",
+        "ts": 1795199791251
+      },
+      {
+        "stage": "E5",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/09cca8d3-150c-406d-90a3-2ea9470c5fe2/download/5ceea5fa-50c6-4780-bb16-f1d805fc8e99",
+        "ts": 1795199791254
+      },
+      {
+        "stage": "E5",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/09cca8d3-150c-406d-90a3-2ea9470c5fe2/raw/5ceea5fa-50c6-4780-bb16-f1d805fc8e99",
+        "ts": 1795199792251
+      },
+      {
+        "stage": "E5",
+        "method": "GET",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-optimized-local/demo-user-ana/09cca8d3-150c-406d-90a3-2ea9470c5fe2/optimized/5ceea5fa-50c6-4780-bb16-f1d805fc8e99.webp",
+        "ts": 1795199792268
+      },
+      {
+        "stage": "E5",
+        "method": "POST",
+        "status": 201,
+        "path": "/jobs",
+        "ts": 1795199798517
+      },
+      {
+        "stage": "E5",
+        "method": "PUT",
+        "status": 200,
+        "path": "/__s3_local/mediashrink-raw-local/demo-user-ana/0fa1e532-328c-4c42-932c-560e87a55d73/raw/6a0cbcc9-88a7-4118-8cde-c35542c0694b",
+        "ts": 1795199798579
+      },
+      {
+        "stage": "E5",
+        "method": "POST",
+        "status": 200,
+        "path": "/jobs/0fa1e532-328c-4c42-932c-560e87a55d73/confirm",
+        "ts": 1795199798768
+      },
+      {
+        "stage": "E5",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs",
+        "ts": 1795199798791
+      },
+      {
+        "stage": "E5",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0fa1e532-328c-4c42-932c-560e87a55d73",
+        "ts": 1795199798797
+      },
+      {
+        "stage": "E5",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs/0fa1e532-328c-4c42-932c-560e87a55d73",
+        "ts": 1795199800822
+      },
+      {
+        "stage": "E6",
+        "method": "DELETE",
+        "status": 204,
+        "path": "/jobs/09cca8d3-150c-406d-90a3-2ea9470c5fe2",
+        "ts": 1795199808304
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/",
+        "ts": 1795199821522
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/main.tsx",
+        "ts": 1795199821562
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/@react-refresh",
+        "ts": 1795199821563
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/@vite/client",
+        "ts": 1795199821564
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react_jsx-dev-runtime.js",
+        "ts": 1795199821570
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react.js",
+        "ts": 1795199821574
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react-dom_client.js",
+        "ts": 1795199821575
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/@fs/<PROJECT_ROOT>/[redacted]",
+        "ts": 1795199821577
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/App.tsx",
+        "ts": 1795199821580
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-7MWJYWZE.js",
+        "ts": 1795199821583
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/image-availability.ts",
+        "ts": 1795199821609
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/auth.ts",
+        "ts": 1795199821609
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/theme.ts",
+        "ts": 1795199821611
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/upload/validation.ts",
+        "ts": 1795199821611
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/styles.css",
+        "ts": 1795199821611
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/jobs.ts",
+        "ts": 1795199821611
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-MVJA7NKE.js",
+        "ts": 1795199821627
+      },
+      {
+        "stage": "E6",
+        "method": "POST",
+        "status": 200,
+        "path": "/auth/refresh",
+        "ts": 1795199821710
+      },
+      {
+        "stage": "E6",
+        "method": "POST",
+        "status": 200,
+        "path": "/auth/refresh",
+        "ts": 1795199821717
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs",
+        "ts": 1795199823787
+      },
+      {
+        "stage": "E6",
+        "method": "POST",
+        "status": 200,
+        "path": "/auth/login",
+        "ts": 1795199829848
+      },
+      {
+        "stage": "E6",
+        "method": "GET",
+        "status": 200,
+        "path": "/jobs",
+        "ts": 1795199831837
+      },
+      {
+        "stage": "E6",
+        "method": "POST",
+        "status": 401,
+        "path": "/auth/login",
+        "ts": 1795199884690
+      },
+      {
+        "stage": "E6",
+        "method": "POST",
+        "status": 401,
+        "path": "/auth/login",
+        "ts": 1795199888686
+      },
+      {
+        "stage": "E6",
+        "method": "POST",
+        "status": 401,
+        "path": "/auth/login",
+        "ts": 1795199892710
+      },
+      {
+        "stage": "E6",
+        "method": "POST",
+        "status": 401,
+        "path": "/auth/login",
+        "ts": 1795199896752
+      },
+      {
+        "stage": "E6",
+        "method": "POST",
+        "status": 401,
+        "path": "/auth/login",
+        "ts": 1795199900796
+      },
+      {
+        "stage": "E6",
+        "method": "POST",
+        "status": 429,
+        "path": "/auth/login",
+        "ts": 1795199904805
+      }
+    ],
+    "dialogs": [
+      "¿Borrar el lote 09cca8d3-150c-406d-90a3-2ea9470c5fe2 y sus archivos? Esta acción no se puede deshacer.",
+      "¿Borrar el lote 09cca8d3-150c-406d-90a3-2ea9470c5fe2 y sus archivos? Esta acción no se puede deshacer."
+    ]
+  },
+  "note": "P4 desde escritura: rutas Vite internas normalizadas a <PROJECT_ROOT>, URLs a origin+pathname, sin query strings ni tokens."
+}

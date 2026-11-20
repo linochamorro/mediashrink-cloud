@@ -236,7 +236,10 @@ test('F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks)', 
       await page.goto('/');
       await expect(page.getByRole('heading', { name: /Menos peso/ })).toBeVisible();
       await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
-      await expect(page.locator('.auth-strip')).toBeVisible();
+      // F05-UX-HEADER-AUTH: acceso compacto en el <header>; el formulario vive en el panel.
+      await expect(page.getByRole('button', { name: 'Abrir panel de acceso' })).toBeVisible();
+      await page.getByRole('button', { name: 'Abrir panel de acceso' }).click();
+      await expect(page.getByRole('dialog')).toBeVisible();
       await expect(page.getByLabel('Correo electrónico')).toBeVisible();
       await shotPage(page, PNGS[0]);
       console.log('F05_QA 01: tema claro por defecto y formulario de acceso visibles');
@@ -248,10 +251,10 @@ test('F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks)', 
       await page.locator('form.auth-form button[type="submit"]').click();
       // Coincidencia EXACTA: ningún detalle interno (stack, tabla, ruta o SQL)
       // puede acompañar al mensaje público.
-      await expect(page.locator('.auth-strip .error-message')).toHaveText(
+      await expect(page.locator('.auth-panel .error-message')).toHaveText(
         'El correo o la contraseña no son correctos.',
       );
-      await shotElement(page.locator('.auth-strip'), PNGS[1]);
+      await shotElement(page.locator('.auth-panel'), PNGS[1]);
       console.log('F05_QA 02: 401 INVALID_CREDENTIALS mostrado como mensaje publico acotado');
     });
 
@@ -259,16 +262,16 @@ test('F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks)', 
       await page.getByRole('button', { name: 'Crear cuenta', exact: true }).click();
       await page.getByLabel('Correo electrónico').fill('ana.demo@example.com');
       await page.getByLabel('Contraseña').fill('DemoAna2026!');
-      await shotElement(page.locator('.auth-strip'), PNGS[2]);
+      await shotElement(page.locator('.auth-panel'), PNGS[2]);
       await page.locator('form.auth-form button[type="submit"]').click();
       // Idempotencia de corrida: si la cuenta ficticia ya la registró una
       // corrida anterior (409), se entra con la MISMA cuenta. La captura 03 se
       // emitió antes de enviar, con el formulario publico de registro visible.
       const outcome = await page
-        .waitForSelector('.session-bar, .auth-strip .error-message', { timeout: 15_000 })
+        .waitForSelector('.session-email, .auth-panel .error-message', { timeout: 15_000 })
         .catch(() => null);
       expect(outcome, 'el backend responde con sesion o con un error publico').not.toBeNull();
-      if ((await page.locator('.session-bar').count()) > 0) {
+      if ((await page.locator('.session-email').count()) > 0) {
         console.log('F05_QA 03: registro ana.demo@example.com aceptado por el backend real');
       } else {
         console.log('F05_QA 03: cuenta ya registrada en una corrida previa; acceso con la misma');
@@ -276,10 +279,9 @@ test('F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks)', 
         await page.getByLabel('Correo electrónico').fill('ana.demo@example.com');
         await page.getByLabel('Contraseña').fill('DemoAna2026!');
         await page.locator('form.auth-form button[type="submit"]').click();
-        await expect(page.getByText('Sesión iniciada como')).toBeVisible({ timeout: 15_000 });
+        await expect(page.getByRole('banner').getByText('ana.demo@example.com')).toBeVisible({ timeout: 15_000 });
       }
-      await expect(page.getByText('Sesión iniciada como')).toBeVisible();
-      await expect(page.getByText('ana.demo@example.com')).toBeVisible();
+      await expect(page.getByRole('banner').getByText('ana.demo@example.com')).toBeVisible();
     });
 
     await test.step('04 — tema Oscuro persistente tras recargar', async () => {
@@ -288,7 +290,7 @@ test('F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks)', 
       expect(await page.evaluate(() => localStorage.getItem('mediashrink-theme'))).toBe('dark');
       await page.reload();
       await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-      await expect(page.getByText('Sesión iniciada como')).toBeVisible({ timeout: 30_000 });
+      await expect(page.getByRole('banner').getByText('ana.demo@example.com')).toBeVisible({ timeout: 30_000 });
       await expect(page.getByText('ana.demo@example.com')).toBeVisible();
       await shotPage(page, PNGS[3]);
       console.log('F05_QA 04: tema oscuro y sesion restaurada tras recargar (localStorage)');
@@ -376,7 +378,7 @@ test('F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks)', 
       // sessionStorage) y se reabre el lote para pedir las vistas con los
       // objetos ya disponibles. Sin dobles de API.
       await page.reload();
-      await expect(page.getByText('Sesión iniciada como')).toBeVisible({ timeout: 30_000 });
+      await expect(page.getByRole('banner').getByText('ana.demo@example.com')).toBeVisible({ timeout: 30_000 });
       await page.getByRole('button', { name: 'Actualizar historial' }).click();
       await page.getByRole('button', { name: jobA }).click();
       await expect(results).toBeVisible({ timeout: 30_000 });
@@ -512,7 +514,9 @@ test('F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks)', 
 
     await test.step('11 — aislamiento: bruno.demo no ve los lotes de ana.demo', async () => {
       await page.getByRole('button', { name: 'Cerrar sesión' }).click();
-      await expect(page.locator('.auth-strip')).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Abrir panel de acceso' })).toBeVisible();
+      await page.getByRole('button', { name: 'Abrir panel de acceso' }).click();
+      await expect(page.getByRole('dialog')).toBeVisible();
       await expect(page.getByRole('region', { name: 'Resultados del lote' })).toHaveCount(0);
       await expect(page.locator('.jobs-list')).toHaveCount(0);
       expect(await page.evaluate(() => sessionStorage.getItem('mediashrink-session'))).toBeNull();
@@ -520,7 +524,7 @@ test('F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks)', 
       await page.getByLabel('Correo electrónico').fill('bruno.demo@example.com');
       await page.getByLabel('Contraseña').fill('DemoBruno2026!');
       await page.locator('form.auth-form button[type="submit"]').click();
-      await expect(page.getByText('Sesión iniciada como')).toBeVisible();
+      await expect(page.getByRole('banner').getByText('bruno.demo@example.com')).toBeVisible();
       await expect(page.getByText('bruno.demo@example.com')).toBeVisible();
 
       // El historial REAL de bruno no contiene los lotes de ana (el de bruno
@@ -557,7 +561,7 @@ test('F05-QA roadmap: 12 capturas obligatorias sobre la pila real (sin mocks)', 
       await page.getByRole('button', { name: 'Cerrar sesión' }).click();
       await expect(page.getByRole('region', { name: 'Resultados del lote' })).toHaveCount(0);
       await expect(page.locator('.jobs-list')).toHaveCount(0);
-      await expect(page.locator('.auth-strip')).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Abrir panel de acceso' })).toBeVisible();
       await expect(page.getByText('bruno.demo@example.com')).toHaveCount(0);
       await expect(page.locator('img[alt^="Imagen "]')).toHaveCount(0);
       expect(await page.evaluate(() => sessionStorage.getItem('mediashrink-session'))).toBeNull();

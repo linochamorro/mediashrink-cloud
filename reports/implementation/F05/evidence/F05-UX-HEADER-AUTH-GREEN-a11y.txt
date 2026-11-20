@@ -1,0 +1,9 @@
+
+Running 1 test using 1 worker
+
+  ok 1 temporary\ux-header-auth\header-a11y.spec.ts:3:1 ÔÇ║ panel de acceso: sem├íntica, foco, Escape y bot├│n cerrar (2.0s)
+
+  1 passed (5.3s)
+
+COMMAND=npx playwright test --config=temporary/ux-header-auth/playwright.a11y.local.config.ts (efímero)
+EXIT_CODE=0

@@ -42,6 +42,9 @@ test('flujo real: registro → subida S3 → WebP/AVIF/miniatura sin EXIF → co
   const email = `f05-e2e-${Date.now()}@example.test`;
 
   await page.goto('/');
+  // F05-UX-HEADER-AUTH: abrir el panel de acceso desde el <header>.
+  await page.getByRole('button', { name: 'Abrir panel de acceso' }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
   const submitAuth = page.locator('form.auth-form button[type="submit"]');
   if (!(await submitAuth.textContent())?.includes('Crear cuenta')) {
     await page.getByRole('button', { name: 'Crear cuenta', exact: true }).click();
@@ -49,8 +52,7 @@ test('flujo real: registro → subida S3 → WebP/AVIF/miniatura sin EXIF → co
   await page.getByLabel('Correo electrónico').fill(email);
   await page.getByLabel('Contraseña').fill('password123');
   await submitAuth.click();
-  await expect(page.getByText('Sesión iniciada como')).toBeVisible();
-  await expect(page.getByText(email)).toBeVisible();
+  await expect(page.getByRole('banner').getByText(email)).toBeVisible();
 
   await page.locator('#file-picker').setInputFiles([
     { name: 'privada-con-gps.jpg', mimeType: 'image/jpeg', buffer: source },

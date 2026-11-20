@@ -1,6 +1,8 @@
 # Guía paso a paso de pruebas manuales (Lino) — MediaShrink Cloud
 
-Vigente: 2026-11-19 · Uso: validación manual completa de extremo a extremo en tu máquina local contra `aws/aws-emulator` (sin cuenta AWS real).
+Vigente: 2026-11-20 · Uso: validación manual completa de extremo a extremo en tu máquina local contra `aws/aws-emulator` (sin cuenta AWS real).
+
+> **Acceso de cuenta (F05-UX-HEADER-AUTH):** el botón **Iniciar sesión** está en el **encabezado** (junto a Claro/Oscuro). Al pulsarlo se abre un panel accesible con el formulario; ciérralo con **Escape**, con la **×** del panel o al autenticar. Con sesión iniciada, el encabezado muestra tu correo compacto y el botón **Cerrar sesión**. Ya no hay formulario ni barra de sesión bajo «Prepara un lote».
 
 > **Prerrequisito:** ejecutar después de que OpenCode cierre la corrección `H-01` (seed apuntando a `mediashrink-jobs`) y sincronice los cambios.
 
@@ -47,15 +49,17 @@ Luego abre **dos terminales adicionales** en la misma carpeta:
    - **Resultado esperado:** la interfaz cambia a modo **Oscuro** y **conserva** el tema Oscuro tras recargar. Vuelve a **Claro** si lo prefieres.
 
 ### Prueba 2 — Error seguro de credenciales inválidas (Seguridad Auth)
-1. En el formulario de inicio de sesión, escribe `ana.demo@example.com` y contraseña incorrecta `ClaveIncorrecta123!`.
-2. Haz clic en **Iniciar sesión**.
-   - **Resultado esperado:** aparece un mensaje de error claro en español (sin mostrar stack traces, rutas internas ni decir si el correo existe o no).
+1. Haz clic en **Iniciar sesión** en el encabezado (esquina superior derecha) para abrir el panel de acceso.
+2. En el formulario del panel, escribe `ana.demo@example.com` y contraseña incorrecta `ClaveIncorrecta123!`.
+3. Haz clic en **Iniciar sesión** (botón del formulario).
+   - **Resultado esperado:** aparece un mensaje de error claro en español dentro del panel (sin mostrar stack traces, rutas internas ni decir si el correo existe o no). El panel permanece abierto para corregir el error.
 
 ### Prueba 3 — Inicio de sesión con cuenta seed (`H-01`)
-1. Inicia sesión con:
+1. Si aún no está abierto, haz clic en **Iniciar sesión** en el encabezado para abrir el panel de acceso.
+2. Inicia sesión con:
    - Correo: `ana.demo@example.com`
    - Contraseña: `DemoAna2026!`
-   - **Resultado esperado:** acceso concedido (`200 OK`), desaparece el formulario de login y aparece el historial de lotes demo de Ana.
+   - **Resultado esperado:** acceso concedido (`200 OK`), el panel se cierra automáticamente y el encabezado muestra el correo `ana.demo@example.com` junto al botón **Cerrar sesión**. Aparece el historial de lotes demo de Ana.
 
 ### Prueba 4 — Validación de seguridad de archivos en cliente
 1. Intenta arrastrar o seleccionar un archivo **no permitido** (por ejemplo, cualquier archivo `.svg`, `.txt`, `.pdf` o una imagen > `15 MB`).
@@ -84,9 +88,9 @@ Luego abre **dos terminales adicionales** en la misma carpeta:
      - Si pasa con cabecera JPEG válida pero contenido truncado/corrupto: el worker reintenta 3 veces, envía ese ítem a la **DLQ**, marca esa imagen como fallida y el lote termina en **`Completado parcialmente`** conservando la imagen sana optimizada.
 
 ### Prueba 8 — Registro de usuario nuevo y aislamiento multi-usuario (Anti-IDOR)
-1. Haz clic en **Cerrar sesión**.
-   - **Resultado esperado:** se borran de la pantalla todos los lotes, métricas y previsualizaciones de Ana (nada queda visible en memoria).
-2. Haz clic en **Crear cuenta**, registra `prueba.manual@example.com` / `MiClaveSegura2026!` e inicia sesión (o inicia sesión con `bruno.demo@example.com` / `DemoBruno2026!`).
+1. Haz clic en **Cerrar sesión** en el encabezado.
+   - **Resultado esperado:** se borran de la pantalla todos los lotes, métricas y previsualizaciones de Ana (nada queda visible en memoria) y el encabezado vuelve a mostrar **Iniciar sesión**.
+2. Haz clic en **Iniciar sesión** en el encabezado para abrir el panel y, dentro de él, haz clic en **Crear cuenta**; registra `prueba.manual@example.com` / `MiClaveSegura2026!` e inicia sesión (o cambia a «Ya tengo cuenta» y accede con `bruno.demo@example.com` / `DemoBruno2026!`).
    - **Resultado esperado:** ves únicamente los lotes del nuevo usuario (o de Bruno), **nunca** los lotes de Ana.
 
 ### Prueba 9 — Borrado manual de lote (`DELETE /jobs/:id`)

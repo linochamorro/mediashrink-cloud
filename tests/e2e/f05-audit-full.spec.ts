@@ -113,10 +113,14 @@ function monitorContext(
 
 async function login(page: Page, email: string, password: string): Promise<void> {
   await page.goto('/');
+  // F05-UX-HEADER-AUTH: el acceso se abre desde el <header>, no bajo «Prepara un lote».
+  await page.getByRole('button', { name: 'Abrir panel de acceso' }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
   await page.getByLabel('Correo electrónico').fill(email);
   await page.getByLabel('Contraseña').fill(password);
   await page.getByRole('button', { name: /Iniciar sesión/ }).click();
-  await expect(page.getByText('Sesión iniciada como', { exact: false })).toBeVisible();
+  // La sesión se verifica por el correo compacto dentro de getByRole('banner').
+  await expect(page.getByRole('banner').getByText(email)).toBeVisible();
 }
 
 /**

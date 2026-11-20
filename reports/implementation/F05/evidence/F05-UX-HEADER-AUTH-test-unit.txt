@@ -1,0 +1,63 @@
+
+> mediashrink-cloud@0.0.0 test:unit
+> vitest run tests/unit
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/frontend/secure-url.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 42[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/config.test.ts [2m([22m[2m40 tests[22m[2m)[22m[33m 537[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m parseEnvFile y .env.example[2m > [22mcontiene todas las variables declaradas como requeridas por el loader [33m484[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/frontend/core.test.ts [2m([22m[2m28 tests[22m[2m)[22m[90m 54[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/imageHeader.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 44[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/contracts.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 87[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/userstore.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 356[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m adaptador DynamoDB de UserStore (cierra T03-A-04)[2m > [22mAuthService registra y hace login sobre el adaptador DynamoDB [33m335[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/f05-audit-full.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 33[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 701[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/download.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 934[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 935[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/routes.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1050[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/stateMachine.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/consumer-claim-check.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 24[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/processImage.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 100[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/worker/antiBomb.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 62[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/service.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1300[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03)[2m > [22mdevuelve el mismo error para correo desconocido y contrase├▒a incorrecta [33m401[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/jobs-contract.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 3122[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22macepta todos los MIME raster permitidos y rechaza SVG/GIF/no-raster [33m1203[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads }[2m > [22mvalida fileName no vac├¡o sin separadores, NUL ni %xx (sin usarlo en la clave) [33m1175[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/rate-limit.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1664[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22mla clave de /jobs deriva del userId: agotar A no afecta a B [33m326[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22m/auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 [33m308[2mms[22m[39m
+   [33m[2mÔ£ô[22m[39m rate limit no suplantable (cierra T03-A-01)[2m > [22mmantiene independientes las ventanas de auth y API [33m566[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/jwt.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 48[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-routes.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1213[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/antiBomb.test.ts [2m([22m[2m6 tests[22m[2m)[22m[90m 14[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/presign-keys.test.ts [2m([22m[2m30 tests[22m[2m)[22m[90m 22[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/authz.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1108[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/savings.test.ts [2m([22m[2m7 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/security-headers.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 316[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/delete-partial.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 426[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/confirm.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 417[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/api/zip-cap.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 507[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/rate-limit.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/domain/guards.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/storage/client.test.ts [2m([22m[2m5 tests[22m[2m)[22m[90m 19[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/frontend.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/middleware.test.ts [2m([22m[2m3 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/auth/password.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 802[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/health.test.ts [2m([22m[2m2 tests[22m[2m)[22m[90m 12[2mms[22m[39m
+(node:12120) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ [32mÔ£ô[39m tests/unit/seed-table.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 2275[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m37 passed[39m[22m[90m (37)[39m
+[2m      Tests [22m [1m[32m355 passed[39m[22m[90m (355)[39m
+[2m   Start at [22m 13:15:58
+[2m   Duration [22m 12.15s[2m (transform 5.80s, setup 0ms, collect 24.02s, tests 18.30s, environment 14ms, prepare 12.07s)[22m
+
+
+COMMAND=npm run test:unit
+EXIT_CODE=0

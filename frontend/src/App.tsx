@@ -14,6 +14,7 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? '';
 export default function App() {
   const [theme, setTheme] = useState<Theme>(readTheme);
   const [mode, setMode] = useState<'login' | 'register'>('login');
+  const [authOpen, setAuthOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [session, setSession] = useState<AuthSession | null>(null);
@@ -39,6 +40,8 @@ export default function App() {
     setError(''); setPassword(''); setEmail('');
   }
   const [sourcesResetKey, setSourcesResetKey] = useState(0);
+  const authTriggerRef = useRef<HTMLButtonElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
 
   const authorized = useCallback(async function authorizedRequest<T>(request: (accessToken: string) => Promise<T>): Promise<T> {
     if (!session) throw new Error('Inicia sesión para continuar.');
@@ -83,6 +86,19 @@ export default function App() {
     } catch { sessionStorage.removeItem('mediashrink-session'); }
   }, []);
 
+  // F05-UX-HEADER-AUTH — foco al primer campo al abrir el panel de acceso.
+  useEffect(() => { if (authOpen) emailInputRef.current?.focus(); }, [authOpen]);
+
+  // F05-UX-HEADER-AUTH — cierre con Escape y devolución del foco al trigger.
+  useEffect(() => {
+    if (!authOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { event.preventDefault(); closeAuthPanel(); }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [authOpen]);
+
   useEffect(() => {
     if (!session || !activeJob) return;
     let cancelled = false;
@@ -111,12 +127,20 @@ export default function App() {
     return () => { cancelled = true; if (timer) window.clearTimeout(timer); };
   }, [session, activeJob]);
 
+  function openAuthPanel() { setError(''); setAuthOpen(true); }
+
+  function closeAuthPanel(restoreFocus = true) {
+    setAuthOpen(false); setError(''); setPassword('');
+    if (restoreFocus) authTriggerRef.current?.focus();
+  }
+
   async function submitAuth(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault(); setError('');
     try {
       const client = createAuthClient(apiBaseUrl);
       const next = mode === 'register' ? await client.register({ email, password }) : await client.login({ email, password });
       setSession(next); sessionStorage.setItem('mediashrink-session', serializeStoredRefreshToken(next)); setPassword('');
+      closeAuthPanel(false); // el trigger desaparece al autenticar: no hay foco al que volver
     } catch (reason) { setError(reason instanceof Error ? reason.message : 'No se pudo completar el acceso.'); }
   }
 
@@ -198,12 +222,32 @@ export default function App() {
   return <div className="app-shell">
     <header className="topbar"><a className="brand" href="/" aria-label="MediaShrink, inicio"><span className="brand-mark">M</span><span>media<span className="brand-strong">shrink</span><small>ESTUDIO DE IMAGEN</small></span></a>
       <nav aria-label="Navegación principal"><a href="#optimizar">Optimizar</a><a href="#privacidad">Privacidad</a></nav>
-      <div className="top-actions"><span className="secure-label"><span aria-hidden="true">●</span> Tus imágenes, bajo tu control</span><button className="theme-toggle" type="button" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} aria-label={`Cambiar a tema ${theme === 'light' ? 'oscuro' : 'claro'}`}>{theme === 'light' ? '☾' : '☀'} <span>{theme === 'light' ? 'Oscuro' : 'Claro'}</span></button></div>
+      <div className="top-actions">
+        <span className="secure-label"><span aria-hidden="true">●</span> Tus imágenes, bajo tu control</span>
+        <div className="auth-control">
+          {!session ? <>
+            <button ref={authTriggerRef} className="auth-trigger" type="button" aria-label="Abrir panel de acceso" aria-expanded={authOpen} aria-controls="auth-panel" aria-haspopup="dialog" onClick={openAuthPanel}>Iniciar sesión</button>
+            {authOpen && <div className="auth-panel" id="auth-panel" role="dialog" aria-modal="true" aria-label="Acceso a tu cuenta">
+              <button className="auth-panel-close" type="button" aria-label="Cerrar panel de acceso" onClick={() => closeAuthPanel()}>×</button>
+              <form onSubmit={submitAuth} className="auth-form">
+                <label>Correo electrónico<input ref={emailInputRef} type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required /></label>
+                <label>Contraseña<input type="password" autoComplete={mode === 'register' ? 'new-password' : 'current-password'} minLength={mode === 'register' ? 8 : 1} maxLength={128} value={password} onChange={(event) => setPassword(event.target.value)} required /></label>
+                <button className="primary-button" type="submit">{mode === 'register' ? 'Crear cuenta' : 'Iniciar sesión'} <span aria-hidden="true">↗</span></button>
+                <button className="text-button" type="button" onClick={() => { setMode(mode === 'login' ? 'register' : 'login'); setError(''); }}>{mode === 'login' ? 'Crear cuenta' : 'Ya tengo cuenta'}</button>
+              </form>
+              {error && <p role="alert" className="error-message">{error}</p>}
+            </div>}
+          </> : <>
+            <span className="session-email">{session.user.email}</span>
+            <button className="text-button logout-button" type="button" onClick={clearPrivateState}>Cerrar sesión</button>
+          </>}
+        </div>
+        <button className="theme-toggle" type="button" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} aria-label={`Cambiar a tema ${theme === 'light' ? 'oscuro' : 'claro'}`}>{theme === 'light' ? '☾' : '☀'} <span>{theme === 'light' ? 'Oscuro' : 'Claro'}</span></button>
+      </div>
     </header>
     <main>
       <section className="intro"><p className="eyebrow">UN TALLER PARA TUS FOTOGRAFÍAS</p><h1>Menos peso.<br/><em>La misma imagen.</em></h1><p className="intro-copy">Optimiza tus fotos en privado. Conserva cada detalle y recupera espacio, con métricas claras en cada paso.</p><div className="intro-notes"><span>↗ WebP + AVIF</span><span>⌁ Metadatos privados</span><span>◷ Tú decides cuándo borrar</span></div></section>
       <section className="workspace" id="optimizar" aria-labelledby="workspace-title"><div className="section-heading"><div><p className="eyebrow">TU ESPACIO DE TRABAJO</p><h2 id="workspace-title">Prepara un lote</h2></div><span className="step-pill"><b>01</b> · Añade fotografías</span></div>
-        {!session ? <div className="auth-strip"><form onSubmit={submitAuth} className="auth-form"><label>Correo electrónico<input type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required /></label><label>Contraseña<input type="password" autoComplete={mode === 'register' ? 'new-password' : 'current-password'} minLength={mode === 'register' ? 8 : 1} maxLength={128} value={password} onChange={(event) => setPassword(event.target.value)} required /></label><button className="primary-button" type="submit">{mode === 'register' ? 'Crear cuenta' : 'Iniciar sesión'} <span aria-hidden="true">↗</span></button><button className="text-button" type="button" onClick={() => { setMode(mode === 'login' ? 'register' : 'login'); setError(''); }}>{mode === 'login' ? 'Crear cuenta' : 'Ya tengo cuenta'}</button></form>{error && <p role="alert" className="error-message">{error}</p>}</div> : <div className="session-bar"><span>Sesión iniciada como <strong>{session.user.email}</strong></span><button className="text-button" onClick={clearPrivateState}>Cerrar sesión</button></div>}
         <div className={`dropzone ${dragging ? 'is-dragging' : ''}`} onDragOver={(event) => { event.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={(event) => { event.preventDefault(); setDragging(false); acceptFiles(event.dataTransfer.files); }}>
           <input id="file-picker" className="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp,image/avif" multiple onChange={(event) => { if (event.target.files) acceptFiles(event.target.files); }} />
           <div className="upload-icon" aria-hidden="true">↑</div><h3>Arrastra tus imágenes aquí</h3><p>o <label htmlFor="file-picker" className="inline-link">explora tus archivos</label></p><small>JPEG, PNG, WebP o AVIF · Hasta {limits.maxFileSizeMb} MB por imagen · Máximo {limits.maxImagesPerBatch} imágenes</small>

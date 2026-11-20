@@ -1,0 +1,51 @@
+
+Running 2 tests using 1 worker
+
+  x  1 tests\e2e\screenshots.spec.ts:270:1 ÔÇ║ capturas reales del flujo completo en tema Claro (32.2s)
+  x  2 tests\e2e\screenshots.spec.ts:274:1 ÔÇ║ capturas reales del flujo completo en tema Oscuro (32.0s)
+
+
+  1) tests\e2e\screenshots.spec.ts:270:1 ÔÇ║ capturas reales del flujo completo en tema Claro ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+    TimeoutError: locator.click: Timeout 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Abrir panel de acceso' })
+
+
+      187 |
+      188 |     // F05-UX-HEADER-AUTH: el acceso se abre en un panel desde el <header>.
+    > 189 |     await page.getByRole('button', { name: 'Abrir panel de acceso' }).click();
+          |                                                                       ^
+      190 |     await expect(page.getByRole('dialog')).toBeVisible();
+      191 |     await shot(page.locator('.auth-panel'), `02-acceso-${theme}.png`);
+      192 |
+        at runFlow (<PROJECT_ROOT>\tests\e2e\screenshots.spec.ts:189:71)
+        at <PROJECT_ROOT>\tests\e2e\screenshots.spec.ts:271:3
+
+    Error Context: reports\implementation\F05\evidence\playwright-screenshots-results\screenshots-capturas-reales-del-flujo-completo-en-tema-Claro\error-context.md
+
+  2) tests\e2e\screenshots.spec.ts:274:1 ÔÇ║ capturas reales del flujo completo en tema Oscuro ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+    TimeoutError: locator.click: Timeout 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Abrir panel de acceso' })
+
+
+      187 |
+      188 |     // F05-UX-HEADER-AUTH: el acceso se abre en un panel desde el <header>.
+    > 189 |     await page.getByRole('button', { name: 'Abrir panel de acceso' }).click();
+          |                                                                       ^
+      190 |     await expect(page.getByRole('dialog')).toBeVisible();
+      191 |     await shot(page.locator('.auth-panel'), `02-acceso-${theme}.png`);
+      192 |
+        at runFlow (<PROJECT_ROOT>\tests\e2e\screenshots.spec.ts:189:71)
+        at <PROJECT_ROOT>\tests\e2e\screenshots.spec.ts:275:3
+
+    Error Context: reports\implementation\F05\evidence\playwright-screenshots-results\screenshots-capturas-reale-1b5b0-ujo-completo-en-tema-Oscuro\error-context.md
+
+  2 failed
+    tests\e2e\screenshots.spec.ts:270:1 ÔÇ║ capturas reales del flujo completo en tema Claro ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    tests\e2e\screenshots.spec.ts:274:1 ÔÇ║ capturas reales del flujo completo en tema Oscuro ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+COMMAND=npx playwright test --config=tests/e2e/playwright.screenshots.config.ts (RED, UI antigua)
+EXIT_CODE=1

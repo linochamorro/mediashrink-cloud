@@ -1,0 +1,24 @@
+
+> mediashrink-cloud@0.0.0 build
+> npm run build --workspace=@mediashrink/frontend && npm run build --workspace=@mediashrink/backend
+
+
+> @mediashrink/frontend@0.0.0 build
+> vite build
+
+vite v5.4.21 building for production...
+transforming...
+Ô£ô 36 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.66 kB Ôöé gzip:  0.40 kB
+dist/assets/index-Cgi-WxqT.css   12.76 kB Ôöé gzip:  3.39 kB
+dist/assets/index-BfnPhTEs.js   165.96 kB Ôöé gzip: 53.81 kB
+Ô£ô built in 960ms
+
+> @mediashrink/backend@0.0.0 build
+> tsc --noEmit -p tsconfig.json
+
+
+EXIT_CODE=0
+

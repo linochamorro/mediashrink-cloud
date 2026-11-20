@@ -62,6 +62,9 @@ test('registro, error seguro, refresh, upload, polling, resultados, descargas y 
   });
 
   await page.goto('/');
+  // F05-UX-HEADER-AUTH: abrir el panel de acceso desde el <header>.
+  await page.getByRole('button', { name: 'Abrir panel de acceso' }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
   await page.getByRole('button', { name: 'Crear cuenta', exact: true }).click();
   await page.getByLabel('Correo electrónico').fill('demo@example.test');
   await page.getByLabel('Contraseña').fill('password123');
@@ -75,7 +78,7 @@ test('registro, error seguro, refresh, upload, polling, resultados, descargas y 
   await expect(page.getByRole('alert')).toContainText('no son correctos');
   await page.getByLabel('Correo electrónico').fill('demo@example.test');
   await page.getByRole('button', { name: /Iniciar sesión/ }).click();
-  await expect(page.getByText('Sesión iniciada como')).toBeVisible();
+  await expect(page.getByRole('banner').getByText('demo@example.test')).toBeVisible();
   expect(await page.evaluate(() => JSON.parse(sessionStorage.getItem('mediashrink-session') ?? '{}'))).toEqual({ refreshToken: 'refresh-demo' });
 
   const picker = page.locator('#file-picker');

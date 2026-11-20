@@ -185,8 +185,10 @@ async function runFlow(browser: import('@playwright/test').Browser, theme: 'clar
     }
     await shot(page, `01-portada-${theme}.png`);
 
-    await page.locator('.workspace').scrollIntoViewIfNeeded();
-    await shot(page.locator('.auth-strip'), `02-acceso-${theme}.png`);
+    // F05-UX-HEADER-AUTH: el acceso se abre en un panel desde el <header>.
+    await page.getByRole('button', { name: 'Abrir panel de acceso' }).click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await shot(page.locator('.auth-panel'), `02-acceso-${theme}.png`);
 
     const email = `diseno-${theme}-${Date.now()}@example.test`;
     const submitAuth = page.locator('form.auth-form button[type="submit"]');
@@ -196,8 +198,7 @@ async function runFlow(browser: import('@playwright/test').Browser, theme: 'clar
     await page.getByLabel('Correo electrónico').fill(email);
     await page.getByLabel('Contraseña').fill('DemoPassword2026!');
     await submitAuth.click();
-    await expect(page.getByText('Sesión iniciada como')).toBeVisible();
-    await expect(page.getByText(email)).toBeVisible();
+    await expect(page.getByRole('banner').getByText(email)).toBeVisible();
 
     const photos = await Promise.all(
       Array.from({ length: photoCount }, (_, index) => createDemoPhoto(index + 1)),
@@ -226,7 +227,7 @@ async function runFlow(browser: import('@playwright/test').Browser, theme: 'clar
     // sessionStorage + historial) y se reabre el lote para que las vistas se
     // soliciten con los objetos ya disponibles. No hay dobles de API.
     await page.reload();
-    await expect(page.getByText('Sesión iniciada como')).toBeVisible({ timeout: 30_000 });
+    await expect(page.getByRole('banner').getByText(email)).toBeVisible({ timeout: 30_000 });
     await page.getByRole('button', { name: 'Actualizar historial' }).click();
     await expect(page.getByRole('button', { name: jobId ?? '' })).toBeVisible();
     await page.getByRole('button', { name: jobId ?? '' }).click();
