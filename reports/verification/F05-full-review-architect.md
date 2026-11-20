@@ -106,8 +106,8 @@ El gate de push se abre solo cuando se cumplen **todas**:
 1. **3 reportes presentes — SATISFECHO:** `reports/implementation/F05/F05-audit-full-tester.md`, `reports/audits/F05/F05-audit-full-auditor.md`, `reports/verification/F05-full-review-architect.md`.
 2. **Tester `PASSED` real — SATISFECHO:** verificación independiente (338/338 unit con re-verificación propia, 103/103 integración + `f05-name-large` 1/1, E2E 34,1 s sin muletas, rate limits en vivo, `docker compose down` y puertos 3001/5173/9297 cerrados). CTO auditó y aprobó el resultado.
 3. **Auditor sin `CRITICAL`/`HIGH` propios y sin fugas P4 — SATISFECHO para el push:** 0 `CRITICAL`/`HIGH` propios; P4 redactada en worktree y **0 rutas de host en el diff** comprobadas por este Architect antes del commit. La revalidación P4 ligada al commit candidato es un seguimiento formal del cierre de `F05-AF-AUD-01`, no un bloqueo de `G-6` tras la aprobación del CTO.
-4. **Commit + `git push origin main` (sin `--force`) — EN EJECUCIÓN** por este Architect.
-5. **CI verde: `ci.yml` e `infra-integration.yml` en `success` — PENDIENTE** de verificación sobre el nuevo `HEAD` (`gh run list` / `gh run view`).
+4. **Commit + `git push origin main` (sin `--force`) — SATISFECHO:** commit `8c64028b784a584112e7b602515504c8a145f7cd`, push `6804f28..8c64028  main -> main` (exit 0).
+5. **CI verde: `ci.yml` e `infra-integration.yml` en `success` — SATISFECHO:** runs `44729142380` y `44729142475`, ambos `success` sobre `8c64028b784a584112e7b602515504c8a145f7cd` (detalle en §9).
 
 **`G-12` sigue RETENIDO:** no se marca, no se publica release, no se despliega a AWS real.
 
@@ -119,8 +119,8 @@ El gate de push se abre solo cuando se cumplen **todas**:
 2. ~~Recibir el dictamen del Tester~~ — **HECHO**: `PASSED`, sin loop correctivo.
 3. Revalidación P4 ligada al commit candidato y, si procede, addendum del Auditor (cierre formal de `F05-AF-AUD-01`) — **seguimiento post-`G-6`**; no bloquea este cierre tras la aprobación del CTO.
 4. ~~Actualizar `STATE.md` y este informe con el veredicto final~~ — **HECHO**, sin cerrar `G-12`.
-5. **Commit + `git push origin main` (sin `--force`)** — en ejecución por este Architect.
-6. **Verificar `ci.yml` e `infra-integration.yml` en `success`** sobre el nuevo `HEAD` (`gh run list` / `gh run view`).
+5. ~~Commit + `git push origin main` (sin `--force`)~~ — **HECHO**: `8c64028`, push exit 0.
+6. ~~Verificar `ci.yml` e `infra-integration.yml` en `success`~~ — **HECHO**: ambos `success` sobre el nuevo `HEAD`.
 
 ---
 
@@ -144,4 +144,21 @@ El gate de push se abre solo cuando se cumplen **todas**:
 | `2026-11-19` | Architect | Preparación de relanzamiento del Tester en otra sesión (actualización de docs + prompt) | Pendiente de ejecución en nueva sesión |
 | `2026-11-19` | Tester (sesión de consolidación) | Revisión de las 19 evidencias + re-verificación independiente de la suite unitaria + cierre G-7 | **`PASSED` (1/3)**: 338/338 en 37 archivos, 103/103 + 1/1, E2E real 34,1 s, rate limits en vivo, P4=0; informe `F05-audit-full-tester.md`; emulador apagado y puertos 3001/5173/9297 cerrados |
 | `2026-11-20` | CTO (Atenea) | Auditoría y aprobación del resultado del Tester | **APROBADO**; autorizado únicamente el cierre de `G-6`, con `G-12` retenido |
-| `2026-11-20` | Architect | Actualización de este informe y `STATE.md` con el `PASSED` final + higiene pre-push + commit/push + verificación CI | En curso (detalle y hash en el retorno al CTO) |
+| `2026-11-20` | Architect | Actualización de este informe y `STATE.md` con el `PASSED` final + higiene pre-push + commit/push + verificación CI | **CERRADO**: commit `8c64028`, push exit 0, ambos CI en `success` (§9) |
+| `2026-11-20` | Architect | Registro documental del cierre `G-6` (hash + runs de CI) en este informe y `STATE.md` | Addendum append-only; `G-12` sigue retenido |
+
+---
+
+## 9. Cierre de `G-6` — resultado final (2026-11-20)
+
+| Concepto | Resultado verificable |
+|---|---|
+| **Higiene pre-push** | `git ls-files` → 0 archivos prohibidos; `.env`, `.local/`, `temporary/`, `.terraform/`, `*.tfstate*` excluidos por `.gitignore`; `git add -A` exit 0 (67 archivos, 2.520 inserciones / 210 borrados); `git grep --cached` → **0 rutas absolutas de host** y **0 secretos reales**; `git diff --check` exit 0 (solo avisos LF/CRLF) |
+| **Commit funcional** | `8c64028b784a584112e7b602515504c8a145f7cd` — `F05-AUDIT-FULL: Tester PASSED y cierre de G-6 (G-12 retenido)` |
+| **Push** | `git push origin main` → `6804f28..8c64028  main -> main`, exit 0, **sin `--force`** |
+| **CI `ci.yml`** | Run **`44729142380`** → `success` sobre `8c64028` (Install, Typecheck, Lint, Test unit: todos `success`). https://github.com/linochamorro/mediashrink-cloud/actions/runs/44729142380 |
+| **CI `infra-integration.yml`** | Run **`44729142475`** → `success` sobre `8c64028` (1 m 50 s: Terraform fmt/init/validate/apply contra emulador, Integration tests (infra) y Stop aws-emulator: todos `success`). https://github.com/linochamorro/mediashrink-cloud/actions/runs/44729142475 |
+| **Aviso no bloqueante** | GitHub Actions anuncia la deprecación de Node 20 en `checkout@v4`, `setup-node@v4` y `setup-terraform@v3` (el runner los ejecuta con Node 24). No afecta al resultado; seguimiento de deuda de CI. |
+| **Gate G-12** | **RETENIDO**: no se publica release, no se despliega a AWS real. |
+
+El push quedó limitado al cierre de `G-6` autorizado por el CTO. Los cinco requisitos de §6 están satisfechos; este cierre no declara `FASE_COMPLETA` definitiva ni agota `G-11`/`G-12`.
