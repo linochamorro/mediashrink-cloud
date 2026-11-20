@@ -7,11 +7,12 @@
 [![Docker](https://img.shields.io/badge/Docker-aws--emulator-2496ed)](https://github.com/aws/aws-emulator)
 [![React](https://img.shields.io/badge/React-18-149eca)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178c6)](https://www.typescriptlang.org/)
+[![AI Engineering](https://img.shields.io/badge/AI%20Agents-SDD%20%2B%20TDD-0f766e)](docs/sdd/spec.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-16a34a.svg)](LICENSE)
 
 # MediaShrink Cloud — Estudio de imagen privado
 
-MediaShrink Cloud es una aplicación web **AWS serverless + Terraform (IaC)** para optimizar lotes de fotografías privadas: convierte cada imagen a **WebP** y **AVIF**, genera miniaturas y elimina todos los metadatos **EXIF/GPS** antes de calcular métricas reales de espacio ahorrado. La SPA en español incluye tema Claro/Oscuro, acceso y sesión integrados en el header, nombre personalizado de lote, historial con fecha y hora, comparativa antes/después, descarga individual o en ZIP y borrado manual.
+MediaShrink Cloud es una aplicación web **AWS serverless + Terraform (IaC)** desarrollada mediante **ingeniería orquestada con agentes de IA (SDD + TDD)** con trazabilidad pública completa desde la Fase 0. Optimiza lotes de fotografías privadas: convierte cada imagen a **WebP** y **AVIF**, genera miniaturas y elimina todos los metadatos **EXIF/GPS** antes de calcular métricas reales de espacio ahorrado. La SPA en español incluye tema Claro/Oscuro, acceso y sesión integrados en el header, nombre personalizado de lote, historial con fecha y hora, comparativa antes/después, descarga individual o en ZIP y borrado manual.
 
 Todo el stack cloud (**S3, SQS + DLQ y DynamoDB** con los SDKs oficiales de AWS y Terraform) se ejecuta íntegramente en local y en GitHub Actions a **coste $0** mediante el emulador oficial de AWS ([`aws/aws-emulator`](https://github.com/aws/aws-emulator)) en Docker.
 
@@ -31,6 +32,18 @@ Todo el stack cloud (**S3, SQS + DLQ y DynamoDB** con los SDKs oficiales de AWS 
 - **Emulación local fiel a coste $0 (Docker):**
   - Se utiliza el emulador oficial de AWS en Rust ([**`aws/aws-emulator`**](https://github.com/aws/aws-emulator)), ejecutado mediante la imagen OCI multi-arquitectura fijada por digest SHA-256 ([`ghcr.io/xsavikx/aws-emulator`](https://github.com/xsavikx/aws-emulator)) definida en [`docker-compose.yml`](docker-compose.yml) con límites de recursos (`2 GiB RAM / 2.0 CPUs`) y credenciales/CA efímeros por arranque.
   - Con `-var=is_emulator=true`, Terraform aprovisiona sobre el emulador local; con `-var=is_emulator=false` y credenciales reales, **la misma infraestructura despliega en AWS real sin modificar el código de producto**.
+
+## Ingeniería dirigida por IA y orquestación multi-agente (SDD + TDD)
+
+A diferencia de repositorios donde el uso de IA queda oculto, este proyecto publica abiertamente toda su arquitectura de gobierno, especificación y verificación con agentes de IA desde el inicio:
+
+- **Orquestación multi-rol con separación de deberes ([`.agents/roles/`](.agents/roles/), [`AGENTS.md`](AGENTS.md)):** flujo dirigido con aprobación humana en decisiones materiales y gates, delegando la ejecución en 5 roles especializados con fronteras estrictas:
+  - **Architect:** coordina cada fase autorizada, audita entregables y orquesta ciclos correctivos.
+  - **Developer y Designer:** implementan lógica y UI siguiendo ciclo **SDD + TDD** (`RED → GREEN → REFACTOR`).
+  - **Tester independiente:** ejecuta suites unitarias, integración real contra emulador y E2E human-like en Playwright CLI sin modificar código de producto (`PASSED` / `NO-PASSED`).
+  - **Auditor de seguridad:** realiza revisiones estáticas independientes (secretos, CORS/SSRF, anti-enumeración, aislamiento anti-IDOR, contratos e higiene de rutas).
+- **Spec-Driven Development ([`docs/sdd/`](docs/sdd/)):** constitución técnica, especificación funcional, plan arquitectónico, contratos Zod congelados (`v1.1.0`) y paquetes por fase (`P-00` a `P-05`) antes de escribir código.
+- **Trazabilidad y evidencia pública ([`STATE.md`](STATE.md), [`reports/`](reports/)):** historial completo de levantamiento (`reports/intake/`), reportes por fase y evidencias (`reports/implementation/`), auditorías (`reports/audits/`) y verificaciones finales (`reports/verification/`).
 
 ## Funcionalidades
 
@@ -56,6 +69,8 @@ Vite + React + TypeScript · Hono + Zod + JWT propio · `sharp` (libvips) · AWS
 | `tests/integration/` | Pruebas de integración reales S3/SQS/DynamoDB contra `aws/aws-emulator` (incluyendo lotes > 400 KiB) |
 | `tests/e2e/` | Pruebas E2E reales con Playwright CLI (31/31 escenarios human-like sin mocks ni muletas) y capturas |
 | `docs/architecture/`, `docs/decisions/` | Documentación técnica y decisiones arquitectónicas (ADR) |
+| `docs/sdd/`, `reports/` | Especificación SDD, paquetes por fase (`P-00`–`P-05`), auditorías y evidencias de QA |
+| `.agents/roles/`, `AGENTS.md`, `STATE.md` | Contratos de los 5 roles de agentes IA, reglas operativas y estado trazable |
 | `docs/images/` | 18 capturas reales de la interfaz en Claro y Oscuro |
 
 ## Inicio local
@@ -141,6 +156,8 @@ La API y el worker quedan en `http://localhost:3001` y la SPA en `http://localho
 
 - [Arquitectura del sistema](docs/architecture/00-overview.md)
 - [Índice de decisiones técnicas (ADR)](docs/decisions/index.md)
+- [Especificación y plan SDD](docs/sdd/spec.md)
+- [Contratos de agentes IA y estado operativo](AGENTS.md) · [STATE.md](STATE.md)
 - [Flujo de desarrollo local y emulador AWS](docs/runbooks/development-workflow.md)
 
 ## Licencia
