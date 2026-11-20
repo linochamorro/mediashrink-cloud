@@ -72,4 +72,6 @@ Condición del push (`PASSED` 31/31 y `P4=0`) **satisfecha**: higiene pre-push, 
 2. **Cifras:** `test:unit` 355/355 en 37 archivos; typecheck/lint/build 0; roadmap 31/31 en 2 corridas limpias; 0×404; E7-01 PASS.
 3. **Capturas:** 18/18 PNG de `docs/images/` regeneradas y verificadas como fieles; 19 capturas propias del header en Claro/Oscuro; runbook actualizado.
 4. **Cierre G-7 y P4:** confirmados (0 listeners; P4/G-3 = 0).
-5. **Hash en `main` y CI:** ver §7 (addendum append-only, tras el push).
+5. **Hash en `main` y CI:** commit **`4af2348282c052b6d5d50c832f80046a705f7907`** (68 archivos), push `c62873c..4af2348  main -> main` exit 0 sin `--force`; `ci.yml` run `44795687198` → `success` (32 s: Install, Typecheck, Lint, Test unit) e `infra-integration.yml` run `44795687277` → `success` (1 m 51 s: Terraform fmt/init/validate/apply contra emulador, Integration tests (infra), Stop aws-emulator), ambos sobre `4af2348`. Aviso no bloqueante: deprecación de Node 20 en `checkout@v4`/`setup-node@v4`/`setup-terraform@v3`.
+
+Durante la higiene pre-push se detectó y redactó **1 ruta de host** en el banner de Vitest de `F05-UX-HEADER-AUTH-test-unit.txt` → `<PROJECT_ROOT>`; re-escaneo: 0 rutas de host en artefactos de texto nuevos. Los matches en PNG y los `AKIA…` son falsos positivos ya clasificados (bytes comprimidos y fixtures sintéticos documentados). **`G-6` CERRADO. `G-12` RETENIDO.** Sin `G-10`.
