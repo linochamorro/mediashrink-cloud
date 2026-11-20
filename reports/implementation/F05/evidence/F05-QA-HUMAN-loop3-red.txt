@@ -1,0 +1,56 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ❯ tests/unit/frontend/core.test.ts (17 tests | 3 failed) 30ms
+   × selección de archivos válidos (QA-HUMAN-02, E2-04) > conserva solo el archivo válido y reporta un error por el inválido en una selección mixta 5ms
+     → selectValidFiles is not a function
+   × selección de archivos válidos (QA-HUMAN-02, E2-04) > no acepta ningún archivo cuando todos son inválidos y devuelve un error por cada uno 1ms
+     → selectValidFiles is not a function
+   × selección de archivos válidos (QA-HUMAN-02, E2-04) > rechaza el lote completo al superar el tope de 20 imágenes (E2-03) 1ms
+     → selectValidFiles is not a function
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/frontend/core.test.ts > selección de archivos válidos (QA-HUMAN-02, E2-04) > conserva solo el archivo válido y reporta un error por el inválido en una selección mixta
+TypeError: selectValidFiles is not a function
+ ❯ tests/unit/frontend/core.test.ts:159:20
+    157| 
+    158|   it('conserva solo el archivo válido y reporta un error por el inváli…
+    159|     const result = selectValidFiles([file('valida.jpg', 'image/jpeg'),…
+       |                    ^
+    160|     expect(result.accepted.map((item) => item.name)).toEqual(['valida.…
+    161|     expect(result.errors).toHaveLength(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/unit/frontend/core.test.ts > selección de archivos válidos (QA-HUMAN-02, E2-04) > no acepta ningún archivo cuando todos son inválidos y devuelve un error por cada uno
+TypeError: selectValidFiles is not a function
+ ❯ tests/unit/frontend/core.test.ts:167:20
+    165| 
+    166|   it('no acepta ningún archivo cuando todos son inválidos y devuelve u…
+    167|     const result = selectValidFiles([file('malo.txt', 'text/plain'), f…
+       |                    ^
+    168|     expect(result.accepted).toEqual([]);
+    169|     expect(result.errors).toHaveLength(2);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/unit/frontend/core.test.ts > selección de archivos válidos (QA-HUMAN-02, E2-04) > rechaza el lote completo al superar el tope de 20 imágenes (E2-03)
+TypeError: selectValidFiles is not a function
+ ❯ tests/unit/frontend/core.test.ts:177:20
+    175|     const batchLimits = { maxFileSizeMb: 15, maxImagesPerBatch: 20 };
+    176|     const many = Array.from({ length: 21 }, (_, index) => file(`foto-$…
+    177|     const result = selectValidFiles(many, batchLimits);
+       |                    ^
+    178|     expect(result.accepted).toEqual([]);
+    179|     expect(result.errors).toEqual(['El máximo es 20 imágenes por lote.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 14 passed (17)
+   Start at  08:14:52
+   Duration  814ms (transform 146ms, setup 0ms, collect 203ms, tests 30ms, environment 0ms, prepare 187ms)
+
+
+EXIT_CODE=1

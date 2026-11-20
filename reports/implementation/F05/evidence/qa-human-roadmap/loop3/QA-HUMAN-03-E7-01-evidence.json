@@ -1,0 +1,32 @@
+{
+  "finding": "QA-HUMAN-03",
+  "case": "E7-01",
+  "loop": 3,
+  "verdict": "NO-PASSED",
+  "severity": "MENOR (ruido de consola / peticiones innecesarias; sin pérdida funcional ni fuga de datos)",
+  "observed": {
+    "pageErrors": 0,
+    "httpErrorsTotal": 11,
+    "expectedHttpErrors": "2×401 login (E1-02/E1-03), 1×409 register (E1-04), 5×401 + 1×429 login (E6-04)",
+    "unexpectedHttpErrors": 2,
+    "unexpectedDetail": [
+      "GET 404 /__s3_local/mediashrink-optimized-local/demo-user-ana/b241c33f-6aff-4538-9491-d527f2a1bc7a/optimized/e7d46ea3-b402-47e5-b6a6-0b0d7c0a1aa5.webp (stage E5-01: imagen corrupta, sin optimizado)",
+      "GET 404 /__s3_local/mediashrink-optimized-local/demo-user-ana/107aabf9-bd22-4627-899f-eb1a506530c7/optimized/4bf3055f-5f67-414e-a292-4e4467b70e84.webp (stage E5-02: texto renombrado, sin optimizado)"
+    ],
+    "consoleErrorsUnexpected": 2,
+    "consoleText": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  },
+  "rootCause": {
+    "file": "frontend/src/App.tsx",
+    "component": "ImageComparison",
+    "detail": "La SPA renderiza la comparativa para TODAS las imágenes del lote, incluidas las de estado FAILED. loadImageSources() pide el original y el optimizado aunque el worker no haya escrito la variante optimizada; S3 devuelve 404. El componente muestra 'Vista no disponible' (onError), pero el navegador registra el 404 y el error de consola."
+  },
+  "proposedFix": "Omitir <ImageComparison> (o no pedir la variante optimizada) cuando image.status === 'FAILED', mostrando directamente el estado de error. Añadir aserción E2E de 0×404 en los lotes E5-01/E5-02.",
+  "captures": [
+    "E5-01-parcial-dlq.png",
+    "E5-02-fallido.png",
+    "qa-human-results.json",
+    "playwright-results/qa-human-roadmap-F05-QA-HU-017c5-E7-03-sin-dobles-ni-muletas/error-context.md"
+  ],
+  "context": "Los 28 casos funcionales anteriores (E0-01…E6-04) pasaron, incluidas las regresiones anti E2-01/E2-02/E2-03/E5-02 y el DLQ con attempts=3."
+}

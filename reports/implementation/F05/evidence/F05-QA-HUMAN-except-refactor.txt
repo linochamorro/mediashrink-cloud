@@ -1,0 +1,12 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/frontend/core.test.ts (22 tests) 30ms
+
+ Test Files  1 passed (1)
+      Tests  22 passed (22)
+   Start at  09:41:26
+   Duration  928ms (transform 196ms, setup 0ms, collect 289ms, tests 30ms, environment 0ms, prepare 195ms)
+
+
+EXIT_CODE=0

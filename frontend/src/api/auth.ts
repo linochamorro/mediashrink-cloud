@@ -22,6 +22,9 @@ async function request<T>(fetcher: Fetcher, url: string, body: unknown): Promise
         VALIDATION_ERROR: 'Revisa el correo y la contraseña e inténtalo de nuevo.',
         INVALID_CREDENTIALS: 'El correo o la contraseña no son correctos.',
         EMAIL_ALREADY_EXISTS: 'Ya existe una cuenta con ese correo.',
+        REGISTRATION_FAILED: 'No se pudo completar el registro. Revisa tus datos o inicia sesión si ya tienes cuenta.',
+        INVALID_TOKEN: 'Tu sesión no es válida. Inicia sesión otra vez.',
+        TOKEN_EXPIRED: 'Tu sesión ha caducado. Inicia sesión otra vez.',
         UNAUTHORIZED: 'Tu sesión no es válida. Inicia sesión otra vez.',
         RATE_LIMITED: 'Has realizado demasiados intentos. Espera un momento e inténtalo de nuevo.',
       };

@@ -2,7 +2,9 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { createAuthClient, serializeStoredRefreshToken } from '../../../frontend/src/api/auth';
 import { createJobsClient, validateSecureUrl } from '../../../frontend/src/api/jobs';
-import { validateFiles } from '../../../frontend/src/upload/validation';
+import { failedImageMessage, pendingImageMessage, shouldLoadOptimized } from '../../../frontend/src/api/image-availability';
+import type { ImageRecord } from '../../../frontend/src/api/types.generated';
+import { selectValidFiles, validateFiles } from '../../../frontend/src/upload/validation';
 import { readTheme, saveTheme } from '../../../frontend/src/theme';
 
 const response = (body: unknown, status = 200) =>
@@ -51,6 +53,42 @@ describe('cliente de autenticación', () => {
     await expect(client.login({ email: 'a@b.co', password: 'secret' })).rejects.toMatchObject({ message: 'El correo o la contraseña no son correctos.', status: 401 });
     fetcher.mockResolvedValue(response({ error: { code: 'OTHER', message: 'stack secret token' } }, 500));
     await expect(client.login({ email: 'a@b.co', password: 'secret' })).rejects.toMatchObject({ message: 'No se pudo completar la solicitud. Inténtalo de nuevo.' });
+  });
+
+  it('mapea REGISTRATION_FAILED a un mensaje claro sin reflejar el texto hostil del backend', async () => {
+    const fetcher = vi.fn().mockResolvedValue(response({ error: { code: 'REGISTRATION_FAILED', message: 'stack secret token' } }, 409));
+    const client = createAuthClient('/api', fetcher);
+    const request = client.register({ email: 'ana.demo@example.com', password: 'ClaveSegura2026!' });
+    await expect(request).rejects.toMatchObject({ message: 'No se pudo completar el registro. Revisa tus datos o inicia sesión si ya tienes cuenta.', status: 409 });
+    const error = await request.then(
+      () => { throw new Error('Expected request to reject'); },
+      (e) => e as Error,
+    );
+    expect(error.message).not.toContain('stack secret');
+  });
+
+  it('mapea INVALID_TOKEN a un mensaje claro sin reflejar el texto hostil del backend', async () => {
+    const fetcher = vi.fn().mockResolvedValue(response({ error: { code: 'INVALID_TOKEN', message: 'stack secret token' } }, 401));
+    const client = createAuthClient('/api', fetcher);
+    const request = client.refresh('refresh-invalido');
+    await expect(request).rejects.toMatchObject({ message: 'Tu sesión no es válida. Inicia sesión otra vez.', status: 401 });
+    const error = await request.then(
+      () => { throw new Error('Expected request to reject'); },
+      (e) => e as Error,
+    );
+    expect(error.message).not.toContain('stack secret');
+  });
+
+  it('mapea TOKEN_EXPIRED a un mensaje claro sin reflejar el texto hostil del backend', async () => {
+    const fetcher = vi.fn().mockResolvedValue(response({ error: { code: 'TOKEN_EXPIRED', message: 'stack secret token' } }, 401));
+    const client = createAuthClient('/api', fetcher);
+    const request = client.refresh('refresh-caducado');
+    await expect(request).rejects.toMatchObject({ message: 'Tu sesión ha caducado. Inicia sesión otra vez.', status: 401 });
+    const error = await request.then(
+      () => { throw new Error('Expected request to reject'); },
+      (e) => e as Error,
+    );
+    expect(error.message).not.toContain('stack secret');
   });
 });
 
@@ -112,5 +150,89 @@ describe('validación local de archivos', () => {
     const result = validateFiles([file('vector.svg', 'image/svg+xml'), file('grande.jpg', 'image/jpeg', 1_048_577), file('otra.png', 'image/png')], limits);
     expect(result.valid).toBe(false);
     expect(result.errors).toHaveLength(3);
+  });
+});
+
+describe('selección de archivos válidos (QA-HUMAN-02, E2-04)', () => {
+  const limits = { maxFileSizeMb: 1, maxImagesPerBatch: 2 };
+  const file = (name: string, type: string, size = 10) => new File(['x'.repeat(size)], name, { type });
+
+  it('conserva solo el archivo válido y reporta un error por el inválido en una selección mixta', () => {
+    const result = selectValidFiles([file('valida.jpg', 'image/jpeg'), file('malo.txt', 'text/plain')], limits);
+    expect(result.accepted.map((item) => item.name)).toEqual(['valida.jpg']);
+    expect(result.errors).toHaveLength(1);
+    expect(result.errors[0]).toContain('malo.txt');
+    expect(result.errors[0]).toContain('formato no permitido');
+  });
+
+  it('no acepta ningún archivo cuando todos son inválidos y devuelve un error por cada uno', () => {
+    const result = selectValidFiles([file('malo.txt', 'text/plain'), file('vector.svg', 'image/svg+xml')], limits);
+    expect(result.accepted).toEqual([]);
+    expect(result.errors).toHaveLength(2);
+    expect(result.errors.some((message) => message.includes('malo.txt'))).toBe(true);
+    expect(result.errors.some((message) => message.includes('vector.svg'))).toBe(true);
+  });
+
+  it('rechaza el lote completo al superar el tope de 20 imágenes (E2-03)', () => {
+    const batchLimits = { maxFileSizeMb: 15, maxImagesPerBatch: 20 };
+    const many = Array.from({ length: 21 }, (_, index) => file(`foto-${index}.jpg`, 'image/jpeg'));
+    const result = selectValidFiles(many, batchLimits);
+    expect(result.accepted).toEqual([]);
+    expect(result.errors).toEqual(['El máximo es 20 imágenes por lote.']);
+  });
+});
+
+describe('disponibilidad de la variante optimizada (QA-HUMAN-03, E7-01)', () => {
+  it('no debe cargar la optimizada para una imagen FAILED', () => {
+    expect(shouldLoadOptimized({ status: 'FAILED' })).toBe(false);
+  });
+
+  it('debe cargar la optimizada para una imagen COMPLETED', () => {
+    expect(shouldLoadOptimized({ status: 'COMPLETED' })).toBe(true);
+  });
+
+  it('no debe cargar la optimizada para una imagen PARTIAL (artefacto aún no confirmado)', () => {
+    expect(shouldLoadOptimized({ status: 'PARTIAL' })).toBe(false);
+  });
+
+  it('un failureReason presente no altera el booleano y estados desconocidos devuelven false', () => {
+    expect(shouldLoadOptimized({ status: 'FAILED', failureReason: 'RENDER_FAILED' })).toBe(false);
+    expect(shouldLoadOptimized({ status: 'COMPLETED', failureReason: 'RENDER_FAILED' })).toBe(true);
+    const unknown = { status: 'UNKNOWN' } as unknown as Pick<ImageRecord, 'status' | 'failureReason'>;
+    expect(shouldLoadOptimized(unknown)).toBe(false);
+  });
+
+  it('el aviso de imagen fallida está en español, incluye el motivo solo si existe y no filtra secretos', () => {
+    const withReason = failedImageMessage({ status: 'FAILED', failureReason: 'RENDER_FAILED' });
+    expect(withReason).toContain('Imagen no procesada');
+    expect(withReason).toContain('Motivo: RENDER_FAILED');
+    expect(withReason).not.toMatch(/Bearer|AKIA|accessToken|password|secret|token/i);
+    const withoutReason = failedImageMessage({ status: 'FAILED' });
+    expect(withoutReason).toBe('Imagen no procesada.');
+    expect(withoutReason).not.toContain('Motivo');
+  });
+});
+
+describe('matriz de estados de disponibilidad (QA-HUMAN-04, E5-01)', () => {
+  it.each([
+    ['PENDING', false],
+    ['PROCESSING', false],
+    ['FAILED', false],
+    ['COMPLETED', true],
+  ] as const)('estado %s → shouldLoadOptimized devuelve %s', (status, expected) => {
+    expect(shouldLoadOptimized({ status })).toBe(expected);
+  });
+
+  it('el mensaje de espera es español, anuncia la comparativa y no filtra secretos', () => {
+    const waiting = pendingImageMessage({ status: 'PROCESSING' });
+    expect(waiting).toContain('procesamiento');
+    expect(waiting).toMatch(/comparativa/i);
+    expect(waiting).not.toMatch(/Bearer|AKIA|accessToken|password|secret|token/i);
+    expect(pendingImageMessage({ status: 'PENDING' })).toBe(waiting);
+  });
+
+  it('failedImageMessage sigue incluyendo failureReason solo si está presente', () => {
+    expect(failedImageMessage({ status: 'FAILED', failureReason: 'RENDER_FAILED' })).toContain('Motivo: RENDER_FAILED');
+    expect(failedImageMessage({ status: 'FAILED' })).not.toContain('Motivo');
   });
 });

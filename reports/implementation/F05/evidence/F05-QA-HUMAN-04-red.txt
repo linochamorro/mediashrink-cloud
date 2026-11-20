@@ -1,0 +1,37 @@
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ ÔØ» tests/unit/frontend/core.test.ts (26 tests | 2 failed) 33ms
+   ├ù matriz de estados de disponibilidad (QA-HUMAN-04, E5-01) > estado PENDING ÔåÆ shouldLoadOptimized devuelve false 7ms
+     ÔåÆ expected true to be false // Object.is equality
+   ├ù matriz de estados de disponibilidad (QA-HUMAN-04, E5-01) > estado PROCESSING ÔåÆ shouldLoadOptimized devuelve false 1ms
+     ÔåÆ expected true to be false // Object.is equality
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 2 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/unit/frontend/core.test.ts > matriz de estados de disponibilidad (QA-HUMAN-04, E5-01) > estado PENDING ÔåÆ shouldLoadOptimized devuelve false
+ FAIL  tests/unit/frontend/core.test.ts > matriz de estados de disponibilidad (QA-HUMAN-04, E5-01) > estado PROCESSING ÔåÆ shouldLoadOptimized devuelve false
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ÔØ» tests/unit/frontend/core.test.ts:223:45
+    221|     ['COMPLETED', true],
+    222|   ] as const)('estado %s ÔåÆ shouldLoadOptimized devuelve %s', (status, ÔÇª
+    223|     expect(shouldLoadOptimized({ status })).toBe(expected);
+       |                                             ^
+    224|   });
+    225| });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/2]ÔÄ»
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 24 passed (26)
+   Start at  11:10:02
+   Duration  861ms (transform 154ms, setup 0ms, collect 220ms, tests 33ms, environment 0ms, prepare 199ms)
+
+EXIT_CODE=1

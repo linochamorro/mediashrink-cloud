@@ -1,0 +1,29 @@
+{
+  "cycle": "ciclo final QA-HUMAN-04 (CTO)",
+  "role": "Tester independiente (riesgo 3)",
+  "date": "2026-11-20",
+  "verdict": "PASSED",
+  "cases": { "total": 31, "passed": 31, "failed": 0, "failedIds": [] },
+  "gates": {
+    "typecheck": 0,
+    "lint": 0,
+    "build": 0,
+    "test_unit": { "exit": 0, "passed": 355, "total": 355, "files": 37 }
+  },
+  "focus": {
+    "E5_01": "Completado parcialmente; aviso 'Imagen no procesada. Motivo: …'; imagen sana con comparativa naturalWidth>0; WEBP/AVIF deshabilitados; original activo; DLQ real dlqMessages=1, attempts=3, reasonCode=RENDER_FAILED; 0x404 (delta)",
+    "E5_02": "Texto renombrado .jpg rechazado por magic bytes; Fallido; ZIP deshabilitado; aviso en espanol; WEBP/AVIF deshabilitados; XSS literal; 0x404 (delta)",
+    "E7_01": "0 pageerror; 0x404 en todo el roadmap; 9 HTTP-error TODOS esperados (7x401 login, 1x409 register, 1x429 login); 9 errores de consola esperados",
+    "aviso_espera_PROCESANDO": "capturado via MutationObserver = 'Imagen en procesamiento. La comparativa estara disponible al completarse.'",
+    "no_regresion": "E2-01/02/03/04, E3-03 (6 comparativas naturalWidth>0), E4-01 (descargas WEBP/AVIF), E4-02 (ZIP 9 entradas), E5-02 y DLQ attempts=3: TODOS PASS"
+  },
+  "determinism": {
+    "clean_runs": 3,
+    "runs_31_31": 2,
+    "runs_with_harness_race": 1,
+    "note": "La unica corrida con un FAIL (E5-01) fue una carrera del contador de comparativa del harness, NO del producto: 0x404 y 0 pageerror en esa corrida. Corregida con expect.poll explicito. Tras la correccion, corrida 3 = 31/31. En 3/3 corridas el producto produjo 0x404."
+  },
+  "closure": { "docker_down": true, "ports_3001_5173_9297_listeners": 0, "container_network": 0, "temporary_removed": true },
+  "hygiene": { "p4_host_paths": 0, "p4_fs_paths": 0, "query_strings": 0, "tokens_secrets": 0, "signed_urls": 0 },
+  "scope": { "commit": false, "push": false, "product_modified_by_tester": false }
+}

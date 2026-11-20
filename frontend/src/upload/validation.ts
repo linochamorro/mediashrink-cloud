@@ -15,3 +15,22 @@ export function validateFiles(files: readonly Pick<File, 'name' | 'type' | 'size
   }
   return { valid: errors.length === 0, errors };
 }
+
+// El tope de lote se comprueba antes que los archivos individuales para no relajar E2-03.
+export function selectValidFiles<T extends Pick<File, 'name' | 'type' | 'size'>>(
+  files: readonly T[],
+  limits: UploadLimits,
+): { accepted: T[]; errors: string[] } {
+  const errors: string[] = [];
+  if (files.length === 0) errors.push('Selecciona al menos una imagen.');
+  if (files.length > limits.maxImagesPerBatch) errors.push(`El máximo es ${limits.maxImagesPerBatch} imágenes por lote.`);
+  if (errors.length > 0) return { accepted: [], errors };
+
+  const accepted: T[] = [];
+  for (const file of files) {
+    const result = validateFiles([file], limits);
+    if (result.valid) accepted.push(file);
+    else errors.push(...result.errors);
+  }
+  return { accepted, errors };
+}

@@ -1,0 +1,374 @@
+{
+  "task": "F05-QA-HUMAN",
+  "role": "Tester independiente (riesgo 3)",
+  "startedAt": "2026-11-20T12:11:07.986Z",
+  "updatedAt": "2026-11-20T12:11:58.818Z",
+  "results": [
+    {
+      "id": "E0-01",
+      "result": "PASS",
+      "observation": "backend /health 200; SPA HTTP 200; emulador healthy (2GiB/2CPU), terraform plan 0 cambios, seed idempotente, .env sin overrides de rate limit"
+    },
+    {
+      "id": "E0-02",
+      "result": "PASS",
+      "observation": "UI en español, Optimizar deshabilitado sin sesión/archivos, tema claro, 0 pageerror y 0 HTTP de error"
+    },
+    {
+      "id": "E0-03",
+      "result": "PASS",
+      "observation": "Claro→Oscuro→Claro con persistencia verificada tras dos recargas (localStorage mediashrink-theme)"
+    },
+    {
+      "id": "E1-01",
+      "result": "PASS",
+      "observation": "Correo mal formado y campos vacíos detenidos por validación HTML5; 0 POST /auth/login"
+    },
+    {
+      "id": "E1-02",
+      "result": "PASS",
+      "observation": "Clave incorrecta de Ana → 401 con mensaje genérico en español, sin stack/rutas/indicio de existencia"
+    },
+    {
+      "id": "E1-03",
+      "result": "PASS",
+      "observation": "Correo inexistente → 401 con mensaje BYTE-IDÉNTICO a E1-02 (anti-enumeración)"
+    },
+    {
+      "id": "E1-04",
+      "result": "FAIL",
+      "observation": "expect(locator).toHaveText(expected) failed\n\nLocator:  getByRole('alert').first()\nExpected: \"Ya existe una cuenta con ese correo.\"\nReceived: \"No se pudo completar la solicitud. Inténtalo de nuevo.\"\nTimeout:  30000ms\n\nCall log:\n  - Expect \"toHaveText\" getByRole('alert').first() with timeout 30000ms\n  - waiting for getByRole('alert').first()\n    61 × locator resolved to <p role=\"alert\" class=\"error-message\">No se pudo completar la solicitud. Inténtalo de n…</p>\n       - unexpected value \"No se pudo completar la solicitud. Inténtalo de nuevo.\"\n"
+    }
+  ],
+  "diagnostics": {
+    "consoleErrors": [
+      {
+        "stage": "E1",
+        "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "source": "http://localhost:5173/auth/login"
+      },
+      {
+        "stage": "E1",
+        "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "source": "http://localhost:5173/auth/login"
+      },
+      {
+        "stage": "E1",
+        "text": "Failed to load resource: the server responded with a status of 409 (Conflict)",
+        "source": "http://localhost:5173/auth/register"
+      }
+    ],
+    "pageErrors": [],
+    "responses": [
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/@react-refresh"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/@vite/client"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/main.tsx"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/@fs/<PROJECT_ROOT>/node_modules/vite/dist/client/env.mjs"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react_jsx-dev-runtime.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react-dom_client.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/App.tsx"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-7MWJYWZE.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/styles.css"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/theme.ts"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/upload/validation.ts"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/auth.ts"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/src/api/jobs.ts"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-MVJA7NKE.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/@vite/client"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/main.tsx"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/@react-refresh"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react_jsx-dev-runtime.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react-dom_client.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-7MWJYWZE.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/@fs/<PROJECT_ROOT>/node_modules/vite/dist/client/env.mjs"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-MVJA7NKE.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/App.tsx"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/api/auth.ts"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/api/jobs.ts"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/upload/validation.ts"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/theme.ts"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/styles.css"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/@vite/client"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/main.tsx"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/@react-refresh"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react_jsx-dev-runtime.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/react-dom_client.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-7MWJYWZE.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 200,
+        "path": "/node_modules/.vite/deps/chunk-MVJA7NKE.js"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/@fs/<PROJECT_ROOT>/node_modules/vite/dist/client/env.mjs"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/App.tsx"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/api/auth.ts"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/api/jobs.ts"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/upload/validation.ts"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/theme.ts"
+      },
+      {
+        "stage": "E0",
+        "method": "GET",
+        "status": 304,
+        "path": "/src/styles.css"
+      },
+      {
+        "stage": "E1",
+        "method": "POST",
+        "status": 401,
+        "path": "/auth/login"
+      },
+      {
+        "stage": "E1",
+        "method": "POST",
+        "status": 401,
+        "path": "/auth/login"
+      },
+      {
+        "stage": "E1",
+        "method": "POST",
+        "status": 409,
+        "path": "/auth/register"
+      }
+    ],
+    "dialogs": []
+  },
+  "note": "Sin secretos ni query strings: todas las URLs se reducen a path; los mensajes se sanearon.",
+  "sanitized": true
+}

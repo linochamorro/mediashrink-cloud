@@ -1,0 +1,43 @@
+{
+  "finding": "QA-HUMAN-02",
+  "case": "E2-04",
+  "loop": 2,
+  "verdict": "NO-PASSED",
+  "captured": "2026-11-20",
+  "reproduction": {
+    "session": "ana.demo@example.com (seed, contraseña ficticia)",
+    "input": [
+      { "name": "valida.jpg", "mimeType": "image/jpeg", "bytes": 632, "valid": true },
+      { "name": "malo.txt", "mimeType": "text/plain", "bytes": 1, "valid": false }
+    ],
+    "expected": "Solo la imagen válida queda lista ('1 imágenes listas'), el inválido se descarta con motivo y Optimizar queda habilitado",
+    "observed": {
+      "fileSummary": "AUSENTE (ningún archivo queda listo)",
+      "validationError": "malo.txt: formato no permitido. Usa JPEG, PNG, WebP o AVIF.",
+      "startButton": "Optimizar tus imágenes [disabled]",
+      "postJobs": "0 (ninguna subida)"
+    }
+  },
+  "rootCause": {
+    "file": "frontend/src/App.tsx",
+    "line": 126,
+    "code": "setFiles(result.valid ? chosen : [])",
+    "detail": "validateFiles devuelve valid=false si CUALQUIER archivo tiene error; acceptFiles entonces sustituye la selección completa por [] y descarta también los archivos válidos."
+  },
+  "browserDiagnostics": {
+    "pageErrors": 0,
+    "consoleErrors": [
+      "E1: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "E1: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "E1: Failed to load resource: the server responded with a status of 409 (Conflict)"
+    ],
+    "httpErrors": ["POST 401 /auth/login", "POST 401 /auth/login", "POST 409 /auth/register"],
+    "note": "Todos los errores de consola/HTTP son los esperados de E1-02/E1-03/E1-04; E2-04 no generó tráfico de red."
+  },
+  "captures": [
+    "FAIL-E2-04.png",
+    "E2-01-formatos.png",
+    "qa-human-results.json",
+    "playwright-results/qa-human-roadmap-F05-QA-HU-60fcb-E7-03-sin-dobles-ni-muletas/error-context.md"
+  ]
+}

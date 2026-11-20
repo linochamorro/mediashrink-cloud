@@ -1,0 +1,22 @@
+REFACTOR (post-GREEN, sin cambio semantico): el helper de captura del error usaba
+  const error = await request.catch((e) => e as Error)
+lo que ensanchaba el tipo a 'AuthSession | Error' y provocaba TS2339 en typecheck/build.
+Se sustituye por un .then de dos argumentos totalmente tipado:
+  const error = await request.then(() => { throw new Error('Expected request to reject'); }, (e) => e as Error);
+Las 3 aserciones de mensaje y status son identicas; solo cambia el tipado del helper.
+Tras el ajuste se re-ejecutan el test enfocado y TODA la verificacion (typecheck/lint/build/test:unit), todas en EXIT_CODE=0.
+
+--- Re-ejecucion enfocada tras REFACTOR (copia de green) ---
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [32mÔ£ô[39m tests/unit/frontend/core.test.ts [2m([22m[2m14 tests[22m[2m)[22m[90m 23[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m14 passed[39m[22m[90m (14)[39m
+[2m   Start at [22m 07:50:09
+[2m   Duration [22m 870ms[2m (transform 186ms, setup 0ms, collect 241ms, tests 23ms, environment 0ms, prepare 200ms)[22m
+
+
+EXIT_CODE=0
+

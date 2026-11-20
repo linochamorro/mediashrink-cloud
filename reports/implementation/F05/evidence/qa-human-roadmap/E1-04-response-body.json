@@ -1,0 +1,17 @@
+{
+  "case": "E1-04",
+  "request": {
+    "method": "POST",
+    "path": "/auth/register",
+    "email": "ana.demo@example.com"
+  },
+  "response": {
+    "status": 409,
+    "body": {
+      "error": {
+        "code": "REGISTRATION_FAILED",
+        "message": "No se pudo completar el registro"
+      }
+    }
+  }
+}

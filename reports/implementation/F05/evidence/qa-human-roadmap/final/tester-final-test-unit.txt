@@ -1,0 +1,61 @@
+
+> mediashrink-cloud@0.0.0 test:unit
+> vitest run tests/unit
+
+
+ RUN  v2.1.9 <PROJECT_ROOT>
+
+ Ô£ô tests/unit/frontend/secure-url.test.ts (26 tests) 36ms
+ Ô£ô tests/unit/config.test.ts (40 tests) 56ms
+ Ô£ô tests/unit/domain/imageHeader.test.ts (15 tests) 23ms
+ Ô£ô tests/unit/frontend/core.test.ts (28 tests) 52ms
+ Ô£ô tests/unit/contracts.test.ts (32 tests) 64ms
+ Ô£ô tests/unit/api/userstore.test.ts (6 tests) 353ms
+   Ô£ô adaptador DynamoDB de UserStore (cierra T03-A-04) > AuthService registra y hace login sobre el adaptador DynamoDB 331ms
+ Ô£ô tests/unit/api/delete.test.ts (5 tests) 674ms
+ Ô£ô tests/unit/f05-audit-full.test.ts (12 tests) 47ms
+ Ô£ô tests/unit/api/download.test.ts (7 tests) 906ms
+ Ô£ô tests/unit/api/zip.test.ts (6 tests) 922ms
+ Ô£ô tests/unit/api/routes.test.ts (8 tests) 1080ms
+ Ô£ô tests/unit/domain/stateMachine.test.ts (13 tests) 18ms
+ Ô£ô tests/unit/worker/consumer-claim-check.test.ts (7 tests) 20ms
+ Ô£ô tests/unit/worker/processImage.test.ts (4 tests) 119ms
+ Ô£ô tests/unit/worker/antiBomb.test.ts (7 tests) 76ms
+ Ô£ô tests/unit/auth/service.test.ts (10 tests) 1317ms
+   Ô£ô AuthService ÔÇö registro, login y refresh (FR-01/FR-02/FR-03) > devuelve el mismo error para correo desconocido y contrase├▒a incorrecta 393ms
+ Ô£ô tests/unit/api/jobs-contract.test.ts (9 tests) 3068ms
+   Ô£ô F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads } > acepta todos los MIME raster permitidos y rechaza SVG/GIF/no-raster 1148ms
+   Ô£ô F02-AUD-01 ÔÇö POST /jobs contrato { files } ÔåÆ { job, uploads } > valida fileName no vac├¡o sin separadores, NUL ni %xx (sin usarlo en la clave) 1187ms
+ Ô£ô tests/unit/api/rate-limit.test.ts (6 tests) 1645ms
+   Ô£ô rate limit no suplantable (cierra T03-A-01) > la clave de /jobs deriva del userId: agotar A no afecta a B 327ms
+   Ô£ô rate limit no suplantable (cierra T03-A-01) > /auth/login ignora x-forwarded-for: rotar la cabecera no elude el 429 306ms
+   Ô£ô rate limit no suplantable (cierra T03-A-01) > mantiene independientes las ventanas de auth y API 528ms
+ Ô£ô tests/unit/auth/jwt.test.ts (7 tests) 51ms
+ Ô£ô tests/unit/api/presign-routes.test.ts (12 tests) 1179ms
+ Ô£ô tests/unit/domain/antiBomb.test.ts (6 tests) 14ms
+ Ô£ô tests/unit/api/presign-keys.test.ts (30 tests) 23ms
+ Ô£ô tests/unit/domain/savings.test.ts (7 tests) 11ms
+ Ô£ô tests/unit/api/authz.test.ts (5 tests) 1049ms
+ Ô£ô tests/unit/api/security-headers.test.ts (4 tests) 400ms
+ Ô£ô tests/unit/domain/index.test.ts (1 test) 10ms
+ Ô£ô tests/unit/api/delete-partial.test.ts (3 tests) 409ms
+ Ô£ô tests/unit/api/zip-cap.test.ts (4 tests) 524ms
+ Ô£ô tests/unit/api/confirm.test.ts (3 tests) 428ms
+ Ô£ô tests/unit/auth/rate-limit.test.ts (5 tests) 10ms
+ Ô£ô tests/unit/storage/client.test.ts (5 tests) 22ms
+ Ô£ô tests/unit/domain/guards.test.ts (5 tests) 10ms
+ Ô£ô tests/unit/frontend.test.ts (3 tests) 9ms
+ Ô£ô tests/unit/auth/middleware.test.ts (3 tests) 10ms
+ Ô£ô tests/unit/auth/password.test.ts (6 tests) 914ms
+   Ô£ô hash de contrase├▒as ÔÇö scrypt (A-02, IN-05) > verifica la contrase├▒a correcta y rechaza una incorrecta 305ms
+ Ô£ô tests/unit/health.test.ts (2 tests) 11ms
+ Ô£ô tests/unit/seed-table.test.ts (3 tests) 2434ms
+
+ Test Files  37 passed (37)
+      Tests  355 passed (355)
+   Start at  11:17:41
+   Duration  10.79s (transform 3.96s, setup 0ms, collect 20.10s, tests 18.00s, environment 13ms, prepare 8.51s)
+
+
+EXIT_CODE=0
+

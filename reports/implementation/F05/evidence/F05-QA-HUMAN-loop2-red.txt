@@ -1,0 +1,92 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90m<PROJECT_ROOT>[39m
+
+ [31mÔØ»[39m tests/unit/frontend/core.test.ts [2m([22m[2m14 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[90m 52[2mms[22m[39m
+[31m   [31m├ù[31m cliente de autenticaci├│n[2m > [22mmapea REGISTRATION_FAILED a un mensaje claro sin reflejar el texto hostil del backend[90m 16[2mms[22m[31m[39m
+[31m     ÔåÆ expected ApiError: No se pudo completar la solicitÔÇª { status: ÔÇª } to match object { ÔÇª(2) }
+(1 matching property omitted from actual)[39m
+[31m   [31m├ù[31m cliente de autenticaci├│n[2m > [22mmapea INVALID_TOKEN a un mensaje claro sin reflejar el texto hostil del backend[90m 2[2mms[22m[31m[39m
+[31m     ÔåÆ expected ApiError: No se pudo completar la solicitÔÇª { status: ÔÇª } to match object { ÔÇª(2) }
+(1 matching property omitted from actual)[39m
+[31m   [31m├ù[31m cliente de autenticaci├│n[2m > [22mmapea TOKEN_EXPIRED a un mensaje claro sin reflejar el texto hostil del backend[90m 3[2mms[22m[31m[39m
+[31m     ÔåÆ expected ApiError: No se pudo completar la solicitÔÇª { status: ÔÇª } to match object { ÔÇª(2) }
+(1 matching property omitted from actual)[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 3 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  tests/unit/frontend/core.test.ts > cliente de autenticaci├│n > mapea REGISTRATION_FAILED a un mensaje claro sin reflejar el texto hostil del backend
+AssertionError: expected ApiError: No se pudo completar la solicitÔÇª { status: ÔÇª } to match object { ÔÇª(2) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+- Object {
+-   "message": "No se pudo completar el registro. Revisa tus datos o inicia sesi├│n si ya tienes cuenta.",
++ ApiError {
+    "status": 409,
+  }
+
+ ÔØ» tests/unit/frontend/core.test.ts:60:5
+     58|     const client = createAuthClient('/api', fetcher);
+     59|     const request = client.register({ email: 'ana.demo@example.com', pÔÇª
+     60|     await expect(request).rejects.toMatchObject({ message: 'No se pudoÔÇª
+       |     ^
+     61|     const error = await request.catch((e) => e as Error);
+     62|     expect(error.message).not.toContain('stack secret');
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/3]ÔÄ»
+
+ FAIL  tests/unit/frontend/core.test.ts > cliente de autenticaci├│n > mapea INVALID_TOKEN a un mensaje claro sin reflejar el texto hostil del backend
+AssertionError: expected ApiError: No se pudo completar la solicitÔÇª { status: ÔÇª } to match object { ÔÇª(2) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+- Object {
+-   "message": "Tu sesi├│n no es v├ílida. Inicia sesi├│n otra vez.",
++ ApiError {
+    "status": 401,
+  }
+
+ ÔØ» tests/unit/frontend/core.test.ts:69:5
+     67|     const client = createAuthClient('/api', fetcher);
+     68|     const request = client.refresh('refresh-invalido');
+[2m      Tests [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m11 passed[39m[22m[90m (14)[39m
+[2m   Start at [22m 07:47:31
+[2m   Duration [22m 3.49s[2m (transform 787ms, setup 0ms, collect 832ms, tests 52ms, environment 0ms, prepare 1.82s)[22m
+
+     69|     await expect(request).rejects.toMatchObject({ message: 'Tu sesi├│n ÔÇª
+       |     ^
+     70|     const error = await request.catch((e) => e as Error);
+     71|     expect(error.message).not.toContain('stack secret');
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/3]ÔÄ»
+
+ FAIL  tests/unit/frontend/core.test.ts > cliente de autenticaci├│n > mapea TOKEN_EXPIRED a un mensaje claro sin reflejar el texto hostil del backend
+AssertionError: expected ApiError: No se pudo completar la solicitÔÇª { status: ÔÇª } to match object { ÔÇª(2) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+- Object {
+-   "message": "Tu sesi├│n ha caducado. Inicia sesi├│n otra vez.",
++ ApiError {
+    "status": 401,
+  }
+
+ ÔØ» tests/unit/frontend/core.test.ts:78:5
+     76|     const client = createAuthClient('/api', fetcher);
+     77|     const request = client.refresh('refresh-caducado');
+     78|     await expect(request).rejects.toMatchObject({ message: 'Tu sesi├│n ÔÇª
+       |     ^
+     79|     const error = await request.catch((e) => e as Error);
+     80|     expect(error.message).not.toContain('stack secret');
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/3]ÔÄ»
+
+
+EXIT_CODE=1

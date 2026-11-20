@@ -1,0 +1,34 @@
+{
+  "finding": "QA-HUMAN-04",
+  "case": "E5-01 / E7-01",
+  "cycle": "micro-ciclo excepcional (CTO+Lino, Opción A)",
+  "verdict": "NO-PASSED",
+  "severity": "MENOR-MEDIA (salud del navegador: 404 transient durante PROCESANDO; UI graceful, 0 pageerror, sin fuga)",
+  "reproduction": {
+    "runs": 3,
+    "clean_environments": 3,
+    "result": "1×404 determinista en E5-01 en 3/3 corridas limpias",
+    "input": "Lote 'Lote Mixto Corrupto': 1 JPEG sana + 1 JPEG truncada (SOI válido)",
+    "jobId": "bdf5e133-2ad5-47e9-97be-706777126013",
+    "failedImageId": "c96c98cd-8e9b-4acd-98e8-8b9fc10c108d"
+  },
+  "timeline": [
+    "ts=...184706 POST 201 /jobs",
+    "ts=...184924 POST 200 /jobs/<job>/confirm",
+    "ts=...184747 PUT 200 raw de la imagen corrupta",
+    "ts=...185485 GET 200 /jobs/<job>/download/<failedImageId> (x2: original + optimizada)",
+    "ts=...186467 GET 200 relay raw del original",
+    "ts=...186520 GET 404 relay optimizado <failedImageId>.webp  ← estado aún PROCESANDO"
+  ],
+  "what_the_fix_covered": "El estado terminal FAILED ya NO monta ImageComparison: aviso 'Imagen no procesada. Motivo: …' visible, 0 .visual-comparison img, Descargar WEBP/AVIF deshabilitados y Descargar original activo. E5-02 (texto renombrado) pasó con 0×404 own.",
+  "what_remains": "Durante PROCESANDO (antes de que el worker marque FAILED), ImageComparison se monta igualmente y pide la variante optimizada. Para una imagen que el worker nunca procesará, S3 responde 404.",
+  "rootCause": {
+    "file": "frontend/src/api/image-availability.ts",
+    "code": "shouldLoadOptimized(image) { return image.status !== 'FAILED'; }",
+    "detail": "Solo excluye el estado terminal FAILED; PENDING/PROCESSING siguen cargando la vista optimizada. La guarda debería exigir un artefacto optimizado confirmado (p. ej. solo COMPLETED/PARTIAL con bytesAfter > 0)."
+  },
+  "proposedFix": "Hacer shouldLoadOptimized total para estados no terminales: devolver false también para PENDING/PROCESSING (o condicionar a image.status ∈ {COMPLETED, PARTIAL}). El progreso del lote ya se comunica con el <progress> y el chip de estado, por lo que no se pierde información. Añadir aserción E2E de 0×404 en el lote E5-01 desde el primer render.",
+  "verification": "Evidencia: qa-human-results.json (31 filas: 28 PASS / 3 FAIL registrados), FAIL-E5-01.png, error-context.md. pageErrors=0. 11 HTTP de error: 10 esperados (2×401 E1, 1×409 E1, 5×401+1×429 E6) + 1×404 inesperado. DLQ real verificado: attempts=3, RENDER_FAILED.",
+  "note_on_E5-02": "El FAIL registrado en E5-02 es un artefacto del contador acumulativo del harness (e5_404 se acumuló desde E5-01): el delta propio de E5-02 fue 0×404 y todas sus aserciones de producto pasaron funcionalmente.",
+  "captures": ["FAIL-E5-01.png", "E4-01-descargas.png", "qa-human-results.json", "playwright-results/qa-human-roadmap-F05-QA-HU-41e52-eal-E0-01-…-E7-03-31-casos-/error-context.md"]
+}
